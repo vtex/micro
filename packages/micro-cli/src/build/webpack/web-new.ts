@@ -135,9 +135,7 @@ export const prod = ({
     // watch?: boolean;
     // watchOptions?: Options.WatchOptions;
     /** Include polyfills or mocks for various node stuff */
-    node: {
-      global: true,
-    },
+    node: false,
     /** Set the value of require.amd and define.amd. */
     // amd?: { [moduleName: string]: boolean };
     /** Used for recordsInputPath and recordsOutputPath */
@@ -166,6 +164,39 @@ export const prod = ({
     /** Limit the number of parallel processed modules. Can be used to fine tune performance or to get more reliable profiling results */
     // parallelism?: number;
     /** Optimization options */
-    // optimization: {}
+    optimization: {
+      runtimeChunk: {
+        name: 'micro-runtime'
+      },
+      splitChunks: {
+        maxInitialRequests: 30,
+        maxAsyncRequests: 10,
+        cacheGroups: {
+          'micro-runtime': {
+            test: /react$|react-dom|\@loadable/,
+            reuseExistingChunk: true,
+            name: 'micro-runtime',
+            chunks: 'all',
+            enforce: true
+          }
+        } 
+      },
+      noEmitOnErrors: true,
+      namedModules: false,
+      namedChunks: false,
+      moduleIds: 'size',
+      chunkIds: 'total-size',
+      nodeEnv: 'production',
+      removeAvailableModules: true,
+      removeEmptyChunks: true,
+      mergeDuplicateChunks: true,
+      flagIncludedChunks: true,
+      occurrenceOrder: true,
+      providedExports: true,
+      usedExports: true,
+      concatenateModules: true,
+      sideEffects: true,
+      portableRecords: false
+    }
   }
 }

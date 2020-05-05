@@ -149,7 +149,7 @@ export const prod = ({
     // watch?: boolean;
     // watchOptions?: Options.WatchOptions;
     /** Include polyfills or mocks for various node stuff */
-    // node: false,
+    node: false,
     /** Set the value of require.amd and define.amd. */
     // amd?: { [moduleName: string]: boolean };
     /** Used for recordsInputPath and recordsOutputPath */

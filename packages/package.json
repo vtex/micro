@@ -1,8 +1,7 @@
 {
-  "name": "micro-workspace",
+  "name": "micro",
   "version": "1.0.0",
-  "repository": "git@github.com:vtex-apps/micro.git",
-  "author": "Tiago Gimenes <tlgimenes@gmail.com>",
+  "description": "Micro React Framework Packages",
   "license": "MIT",
   "private": true,
   "workspaces": [

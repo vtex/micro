@@ -74,7 +74,7 @@ export const prod = ({
     },
     /** Like resolve but for loaders. */
     resolveLoader: {
-      modules: [`node_modules/${name}/node_modules`]
+      modules: [`node_modules/${name}/node_modules`, 'node_modules']
     },
     /**
      * Specify dependencies that shouldn’t be resolved by webpack, but should become dependencies of the resulting bundle.

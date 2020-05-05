@@ -4,9 +4,10 @@ import { SERVER_PORT } from './constants'
 import { parseOptions } from './parse'
 import { loadProject } from './project'
 import { startServer } from './server'
+import { name, version } from '../package.json'
 
 const main = async () => {
-  console.log('🦄 Welcome to micro')
+  console.log(`🦄 Welcome to ${name}@${version}`)
 
   const { projectPath, production, serve, build } = await parseOptions()
 

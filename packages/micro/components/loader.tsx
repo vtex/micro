@@ -3,7 +3,7 @@ import { canUseDOM } from 'exenv'
 import React from 'react'
 import { hydrate, render } from 'react-dom'
 
-export const loadMicroComponent = (App: React.ReactType) => {
+export const LoadMicroComponent = (App: React.ReactType) => {
   const renderOrHydrate = () => {
     const container = document.getElementById('micro')
     if (!container) {

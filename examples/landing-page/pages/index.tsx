@@ -2,7 +2,7 @@ import 'uikit/dist/css/uikit.css'
 
 import React, { Fragment } from 'react'
 import loadable from '@loadable/component'
-import { loadMicroComponent } from 'micro/loaders'
+import { LoadMicroComponent } from '@vtex/micro'
 
 import AboveTheFold from '../components/aboveTheFold'
 
@@ -23,4 +23,4 @@ const App: React.SFC = () => {
   )
 }
 
-export default loadMicroComponent(App)
+export default LoadMicroComponent(App)

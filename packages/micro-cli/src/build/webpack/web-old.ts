@@ -21,15 +21,9 @@ export const prod = ({
   const { 
     root: buildDir,
     project: { 
-      root: projectPath, 
-      modules 
+      files
     }
   } = build
-  
-  const paths = syncGlob(`!(node_modules)/**/*`,  { 
-    cwd: projectPath,
-    nodir: true 
-  }).map(path => join(projectPath, path))
 
   return {
     /** Enable production optimizations or development hints. */
@@ -54,7 +48,7 @@ export const prod = ({
       rules: [
         {
           test: /\.tsx?$/,
-          exclude: excludeFromModules(modules),
+          exclude: excludeFromModules(files),
           use: {
             loader: 'babel-loader',
             options: {
@@ -143,10 +137,7 @@ export const prod = ({
         filename: "[name].css",
       }),
       new PurgeCSSPlugin({
-        paths,
-        whitelistPatterns: () => [
-          /^(?!uk-).*/,
-        ]
+        paths: files,
       }),
     ],
     /** Stats options for logging  */

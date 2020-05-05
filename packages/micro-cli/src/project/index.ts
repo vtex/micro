@@ -1,6 +1,6 @@
-import { loadUserConfig, UserConfig } from './userConfig'
 import { loadManifest, Manifest } from './manifest'
-import { resolveModules } from './modules'
+import { resolveMicroPackages } from './packages'
+import { loadUserConfig, UserConfig } from './userConfig'
 
 interface Options {
   projectPath: string
@@ -9,24 +9,40 @@ interface Options {
 export class Project {
   public loaded: boolean = false
   public root: string
-  public modules: string[] = []
-  public manifest: Manifest = {} as Manifest
-  public userConfig: UserConfig | null = null
+  public _manifest: Manifest = {} as Manifest
+  public _userConfig: UserConfig | null | undefined = undefined
+  public _files: string[] = [] // Paths to all tsx files, including micro dependencies
+  public _microPackages: Record<string, string[]> = {}
 
   constructor({ projectPath }: Options) {
     this.root = projectPath
   }
 
-  public load = async () => {
-    this.manifest = await loadManifest(this.root)
-    this.userConfig = await loadUserConfig(this.root)
-    this.modules = await resolveModules(this.root, this.manifest)
-    this.loaded = true
+  get userConfig () {
+    if (this._userConfig === undefined) {
+      this._userConfig = loadUserConfig(this.root)
+    }
+    return this._userConfig
   }
-}
 
-export const loadProject = async (options: Options): Promise<Project> => {
-  const project = new Project(options)
-  await project.load()
-  return project
+  get microPackages () {
+    if (Object.keys(this._microPackages).length === 0) {
+      this._microPackages = resolveMicroPackages(this.root, this.manifest)
+    }
+    return this._microPackages
+  }
+
+  get manifest () {
+    if (Object.keys(this._manifest).length === 0) {
+      this._manifest = loadManifest(this.root)
+    }
+    return this._manifest
+  }
+
+  get files () {
+    if (this._files.length == 0) {
+      this._files = Object.values(this.microPackages).flat()
+    }
+    return this._files
+  }
 }

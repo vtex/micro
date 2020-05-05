@@ -3,20 +3,23 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "build": "micro-cli --project ."
+    "build": "yarn run micro-cli --project . --build",
+    "start": "yarn run micro-cli --project . --serve",
+    "dev": "yarn run micro-cli --project . --dev"
   },
   "dependencies": {
-    "micro": "../../packages/micro",
-    "micro-cli": "../../packages/micro-cli",
+    "@vtex/micro": "^1.0.2",
+    "@vtex/micro-cli": "^1.0.1-beta.14",
+    "purgecss-webpack-plugin": "^2.1.2",
     "uikit": "^3.4.2"
   },
   "devDependencies": {
-    "@types/exenv": "^1.2.0",
     "@types/loadable__component": "^5.10.0",
     "@types/node": "^13.13.4",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.7",
     "@types/uikit": "^3.3.0",
     "typescript": "^3.8.3"
-  }
+  },
+  "micro": {}
 }

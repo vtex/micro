@@ -1,19 +1,14 @@
 import { mergeDeepWith } from 'ramda'
 import { Configuration } from 'webpack'
 
-export const excludeFromModules = (modules: string[]) => {
-  const modulesToInclude = modules.filter(
-    module => !module.endsWith('node_modules')
-  )
-  return (path: string) => {
-    if (!/node_modules/.test(path)) {
-      return false
-    }
-    const include = modulesToInclude.some(
-      module => path.startsWith(module)
-    )
-    return !include
+export const excludeFromModules = (files: string[]) => (path: string) => {
+  if (!/node_modules/.test(path)) {
+    return false
   }
+  const include = files.some(
+    module => path.startsWith(module)
+  )
+  return !include
 }
 
 export const mergeConfigs = (a: Configuration, b: Configuration) => mergeDeepWith(

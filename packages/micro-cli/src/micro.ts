@@ -1,17 +1,17 @@
 #!/usr/bin/env node
+
 import { loadBuild, newBuild } from './build'
 import { SERVER_PORT } from './constants'
 import { parseOptions } from './parse'
-import { loadProject } from './project'
+import { Project } from './project'
 import { startServer } from './server'
-import { name, version } from '../package.json'
 
 const main = async () => {
-  console.log(`🦄 Welcome to ${name}@${version}`)
+  console.log(`🦄 Welcome to Micro`)
 
   const { projectPath, production, serve, build } = await parseOptions()
 
-  const project = await loadProject({ projectPath })
+  const project = new Project({ projectPath })
   
   if (serve) {
     console.log(`🦄 Loading build for ${project.manifest.name}@${project.manifest.version}`)

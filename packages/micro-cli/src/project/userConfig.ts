@@ -1,4 +1,4 @@
-import { pathExists } from 'fs-extra'
+import { pathExistsSync } from 'fs-extra'
 import { join } from 'path'
 import { Configuration } from 'webpack'
 
@@ -8,9 +8,9 @@ export interface UserConfig {
   webpack: (microBaseConfig: Configuration) => Configuration
 }
 
-export const loadUserConfig = async (projectPath: string) => {
+export const loadUserConfig = (projectPath: string) => {
   const scriptPath = join(projectPath, USER_CONFIG)
-  const exists = await pathExists(scriptPath)
+  const exists = pathExistsSync(scriptPath)
   
   if (!exists) {
     return null  

@@ -1,26 +1,24 @@
-import { pathExists, readJSON } from 'fs-extra'
+import { pathExistsSync, readJSONSync } from 'fs-extra'
 import { join } from 'path'
-import { isEmpty } from 'ramda'
 
 import { MANIFEST_FILE } from '../constants'
 
 type Semver = string
 
+type MicroProjectOptions = {}
+
 export interface Manifest {
   name: string
   version: Semver
-  dependencies: Record<string, string | Semver>
+  dependencies?: Record<string, string | Semver>
   devDependencies: Record<string, string | Semver>
-  micro?: {
-    exposes: string[]
-  }
+  micro?: MicroProjectOptions
 }
 
 export const parseAsMicroManifest = (obj: any) => {
   if (
     typeof obj?.name === 'string' && 
-    typeof obj?.version === 'string' && 
-    (obj?.dependencies != null && !isEmpty(obj?.dependencies))
+    typeof obj?.version === 'string'
   ) {
     return { 
       manifest: obj as Manifest, 
@@ -33,15 +31,15 @@ export const parseAsMicroManifest = (obj: any) => {
   }
 }
 
-export const loadManifest = async (projectPath: string) => { 
+export const loadManifest = (projectPath: string) => { 
   const manifestPath = join(projectPath, MANIFEST_FILE)
-  const exists = await pathExists(manifestPath)
+  const exists = pathExistsSync(manifestPath)
   
   if (!exists) {
     throw new Error(`You need to have a ${MANIFEST_FILE} in ${projectPath}`)
   }
   
-  const rawManifest = await readJSON(manifestPath)
+  const rawManifest = readJSONSync(manifestPath)
   
   const { errors, manifest } = parseAsMicroManifest(rawManifest)
   

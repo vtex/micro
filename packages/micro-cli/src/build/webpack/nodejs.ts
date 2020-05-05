@@ -99,9 +99,9 @@ export const prod = ({
                 ]
               ],
               plugins: [
+                '@loadable/babel-plugin',
                 '@babel/plugin-proposal-class-properties',
                 '@babel/plugin-syntax-dynamic-import',
-                '@loadable/babel-plugin',
               ]
             },
           }

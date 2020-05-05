@@ -21,7 +21,8 @@ const main = async () => {
     console.log(`🦄 Starting build in production:${production} for ${project.manifest.name}@${project.manifest.version}`)
     const build = await newBuild({ project, production })
     const configs = await build.config()
-    await build.run(configs)
+    const statsJSON = await build.run(configs)
+    await build.saveStats(statsJSON)
   } else if (!production) {
     const build = await newBuild({ project, production })
     const configs = await build.config()

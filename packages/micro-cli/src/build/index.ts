@@ -70,16 +70,13 @@ export class Build {
     return configs
   }
 
-  public run = (configs: Configuration[]) => {
+  public run = async (configs: Configuration[]) => {
     const compiler = webpack(configs)
 
     return new Promise<Stats.ToJsonOutput>(
-      (resolve, reject) => compiler.run(async (err, stats) => {
-        if (err) {
-          reject(err)
-        }
-
-        const statsJSON = stats.toJson({
+      (resolve, reject) => compiler.run((err, stats) => err
+        ? reject(err)
+        : resolve(stats?.toJson({
           hash: true,
           publicPath: true,
           assets: true,
@@ -88,14 +85,12 @@ export class Build {
           source: false,
           errorDetails: false,
           timings: false,
-        })
-
-        await outputJSON(join(this.root, ARTIFACTS_FILE), statsJSON)
-
-        resolve(statsJSON)
-      })
+        }))
+      )
     )
   }
+
+  public saveStats = (statsJSON: Stats.ToJsonOutput) => outputJSON(join(this.root, ARTIFACTS_FILE), statsJSON)
 
   public loadStats = () => readJSON(join(this.root, ARTIFACTS_FILE)) as Promise<Stats.ToJsonOutput>
 }

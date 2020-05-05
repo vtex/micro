@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "es2020",
+    "lib": ["dom"],
+    "skipLibCheck": true,
+    "jsx": "preserve",
+    "strict": true,
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true
+  }
+}

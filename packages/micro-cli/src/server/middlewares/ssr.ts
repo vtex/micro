@@ -9,10 +9,15 @@ import { target as nodeJSTarget } from '../../build/webpack/nodejs'
 import { target as webNewTarget } from '../../build/webpack/web-new'
 import { Context } from '../typings'
 import { MICRO_BUILD_DIR } from './../../constants'
+import { MicroServerConfig } from '../config'
 
 (global as any).react = React
 
-const ok = (extractor: ChunkExtractor, body: string) => `
+const ok = (
+  extractor: ChunkExtractor, 
+  server: MicroServerConfig,
+  body: string,
+) => `
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,14 +29,18 @@ ${extractor.getStyleTags()}
 </head>
 <body>
 <div id="micro">${body}</div>
+${server.getScriptTags()}
 ${extractor.getScriptTags()}
 </body>
 </html>
 `
 
+;(global as any).window = {}
+
 export const middleware = async (ctx: Context, next: Next) => {
   const { 
     state: { 
+      server,
       stats: { children }, 
       features: { disableSSR, page },
       project: { root }
@@ -45,12 +54,13 @@ export const middleware = async (ctx: Context, next: Next) => {
   }
 
   const webNewExtractor = new ChunkExtractor({
-	  entrypoints: [page],
+    entrypoints: [page],
+    publicPath: server.assetsBasePath,
 	  stats: webNewStats
   })
 
   const nodeJSExtractor = new ChunkExtractor({
-    entrypoints: [page], 
+    entrypoints: [page],
     outputPath: join(root, MICRO_BUILD_DIR, nodeJSTarget),
     stats: nodeJSStats
   })
@@ -63,7 +73,7 @@ export const middleware = async (ctx: Context, next: Next) => {
     ? renderToString(webNewExtractor.collectChunks(createElement(App))) 
     : ''
 
-  ctx.body = ok(webNewExtractor, body)
+  ctx.body = ok(webNewExtractor, server, body)
 
   await next()
 }

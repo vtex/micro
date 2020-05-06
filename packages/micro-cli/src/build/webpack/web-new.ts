@@ -2,14 +2,12 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import { join } from 'path'
 import PurgeCSSPlugin from 'purgecss-webpack-plugin'
 import { Configuration } from 'webpack'
-import WebpackMessagesPlugin from 'webpack-messages'
+import DynamicPublicPathPlugin from 'webpack-dynamic-public-path'
+import MessagesPlugin from 'webpack-messages'
 
 import { Build } from '..'
-import {
-  ASSETS_PATH,
-  MICRO_REACT_RUNTIME,
-  MICRO_REACT_TEST,
-} from '../../constants'
+import { MICRO_REACT_RUNTIME, MICRO_REACT_TEST } from '../../constants'
+import { PUBLIC_PATH_VAR } from '../../server/config'
 import { excludeFromModules } from './utils'
 
 export const target = 'web-new'
@@ -44,7 +42,7 @@ export const prod = ({
     /** Options affecting the output. */
     output: {
       path: toBuildPath(buildDir),
-      publicPath: ASSETS_PATH,
+      publicPath: '/assets',
     },
     /** Options affecting the normal modules (NormalModuleFactory) */
     module: {
@@ -150,16 +148,19 @@ export const prod = ({
     // recordsOutputPath?: string;
     /** Add additional plugins to the compiler. */
     plugins: [
-      new WebpackMessagesPlugin({
+      new MessagesPlugin({
         name: target,
         logger: (str: any) => console.log(`>> ${str}`)
       }),
       new MiniCssExtractPlugin({
-        filename: "[name].css",
+        filename: '[name].css',
       }),
       new PurgeCSSPlugin({
         paths: files
       }),
+      new DynamicPublicPathPlugin({
+        externalPublicPath: PUBLIC_PATH_VAR
+      })
     ],
     /** Stats options for logging  */
     // stats?: Options.Stats;

@@ -1,8 +1,9 @@
+import '../components/publicPath'
 import 'uikit/dist/css/uikit.css'
 
-import React, { Fragment } from 'react'
 import loadable from '@loadable/component'
 import { LoadMicroComponent } from '@vtex/micro-react'
+import React, { Fragment } from 'react'
 
 import AboveTheFold from '../components/aboveTheFold'
 

@@ -6072,6 +6072,11 @@ watchpack@^1.6.1:
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
 
+webpack-dynamic-public-path@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/webpack-dynamic-public-path/-/webpack-dynamic-public-path-1.0.5.tgz#4d092ab625a6143e7d82151eb4f21591f29b9b31"
+  integrity sha512-bevrldpi8DBcOk+F9Sk1hj9+fmcBoXA5G8bKCg1++8BiARl2LjwVx+nRAIfZ1AEyyPPMebslO17YLYOWpmsh/g==
+
 webpack-format-messages@^2.0.0:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/webpack-format-messages/-/webpack-format-messages-2.0.6.tgz#d8bb0d4fb2e9171efc8a252d6294f29c50d7ecd2"

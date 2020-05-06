@@ -55,7 +55,7 @@ export const middleware = async (ctx: Context, next: Next) => {
 
   const webNewExtractor = new ChunkExtractor({
     entrypoints: [page],
-    publicPath: server.assetsBasePath,
+    publicPath: server.publicPath,
 	  stats: webNewStats
   })
 

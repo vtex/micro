@@ -34,7 +34,7 @@ const injectState = (project: Project, server: MicroServerConfig, stats: Stats.T
 }
 
 export const startServer = async (project: Project, stats: Stats.ToJsonOutput, port: number) => {
-  const server = new MicroServerConfig()
+  const server = new MicroServerConfig(project)
   const app = new Koa()
   
   const router = new Router
@@ -43,7 +43,7 @@ export const startServer = async (project: Project, stats: Stats.ToJsonOutput, p
   app.use(compress())
   app.use(injectState(project, server, stats))
 
-  router.get(`${server.assetsBasePath}:asset`, ...assets)
+  router.get(`${server.publicPath}:asset`, ...assets)
   router.get('*', ...render)
 
   app.use(router.routes())

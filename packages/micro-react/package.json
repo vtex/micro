@@ -1,13 +1,11 @@
 {
   "name": "@vtex/micro-react",
-  "version": "1.0.3-beta.0",
+  "version": "1.0.3-beta.1",
   "license": "MIT",
   "main": "./components/index.ts",
   "micro": {},
   "dependencies": {
-    "exenv": "^1.2.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "exenv": "^1.2.2"
   },
   "devDependencies": {
     "@types/exenv": "^1.2.0",

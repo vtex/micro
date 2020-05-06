@@ -1,4 +1,3 @@
-import { sync as syncGlob } from 'glob'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import { join } from 'path'
 import PurgeCSSPlugin from 'purgecss-webpack-plugin'
@@ -6,7 +5,11 @@ import { Configuration } from 'webpack'
 import WebpackMessagesPlugin from 'webpack-messages'
 
 import { Build } from '..'
-import { ASSETS_PATH } from '../../constants'
+import {
+  ASSETS_PATH,
+  MICRO_REACT_RUNTIME,
+  MICRO_REACT_TEST,
+} from '../../constants'
 import { excludeFromModules } from './utils'
 
 export const target = 'web-new'
@@ -59,6 +62,7 @@ export const prod = ({
                     targets: {
                       esmodules: true
                     },
+                    modules: false,
                     exclude: [
                       '@babel/plugin-proposal-object-rest-spread',
                       '@babel/plugin-proposal-async-generator-functions',
@@ -85,9 +89,9 @@ export const prod = ({
                 ]
               ],
               plugins: [
-                '@loadable/babel-plugin',
                 '@babel/plugin-proposal-class-properties',
                 '@babel/plugin-syntax-dynamic-import',
+                '@loadable/babel-plugin',
               ]
             },
           }
@@ -166,16 +170,16 @@ export const prod = ({
     /** Optimization options */
     optimization: {
       runtimeChunk: {
-        name: 'micro-runtime'
+        name: MICRO_REACT_RUNTIME
       },
       splitChunks: {
         maxInitialRequests: 30,
         maxAsyncRequests: 10,
         cacheGroups: {
-          'micro-runtime': {
-            test: /react$|react-dom|\@loadable/,
+          [MICRO_REACT_RUNTIME]: {
+            test: MICRO_REACT_TEST,
             reuseExistingChunk: true,
-            name: 'micro-runtime',
+            name: MICRO_REACT_RUNTIME,
             chunks: 'all',
             enforce: true
           }

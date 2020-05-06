@@ -1,3 +1,4 @@
+import { resolvePages } from './files'
 import { loadManifest, Manifest } from './manifest'
 import { resolveMicroPackages } from './packages'
 import { loadUserConfig, UserConfig } from './userConfig'
@@ -13,6 +14,7 @@ export class Project {
   public _userConfig: UserConfig | null | undefined = undefined
   public _files: string[] = [] // Paths to all tsx files, including micro dependencies
   public _microPackages: Record<string, string[]> = {}
+  public _pages: string[] = []
 
   constructor({ projectPath }: Options) {
     this.root = projectPath
@@ -44,5 +46,15 @@ export class Project {
       this._files = Object.values(this.microPackages).flat()
     }
     return this._files
+  }
+
+  get pages () {
+    if (this._pages.length == 0) { 
+      this._pages = resolvePages(this.root)
+      this._pages.forEach(page => console.log(
+        `📄 Page Found: ${page}`
+      ))
+    }
+    return this._pages
   }
 }

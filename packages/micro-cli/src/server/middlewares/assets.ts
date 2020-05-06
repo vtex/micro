@@ -1,10 +1,11 @@
 import { createReadStream } from 'fs'
 import { Next } from 'koa'
 import { join } from 'path'
+import { Stats } from 'webpack'
 
+import { target as webNewTarget } from '../../build/webpack/web-new'
 import { MICRO_BUILD_DIR } from '../../constants'
 import { Context } from '../typings'
-import { target as webNewTarget } from '../../build/webpack/web-new'
 
 const delay = async (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -16,13 +17,14 @@ const mimeTypeByExtensions = {
 
 const extensionToMimeType = (ext: keyof typeof mimeTypeByExtensions) => `${mimeTypeByExtensions[ext]}; charset=utf-8`
 
-const isAssetCritical = (asset: string) => asset.includes('main')
+const isAssetCritical = (asset: string, entrypoint: string, webNewStats: Stats.ToJsonOutput) => 
+  webNewStats.entrypoints?.[entrypoint]?.assets.includes(asset)
 
 export const middleware = async (ctx: Context, next: Next) => {
   const { 
     state: { 
       stats: { children },
-      features: { delayNonCriticalAssets, delayCriticalAssets },
+      features: { delayNonCriticalAssets, delayCriticalAssets, page },
       project: { root }
     }, 
     params 
@@ -40,7 +42,7 @@ export const middleware = async (ctx: Context, next: Next) => {
   }
 
   // Delay for showcasing features
-  const isCritical = isAssetCritical(assetPath)
+  const isCritical = isAssetCritical(assetPath, page, webNewStats)
   if (isCritical && typeof delayCriticalAssets === 'number') {
     console.log('Delay !!', delayCriticalAssets, 'ms')
     await delay(delayCriticalAssets)

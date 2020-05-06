@@ -4,20 +4,20 @@ import React, { Fragment } from 'react'
 import loadable from '@loadable/component'
 import { LoadMicroComponent } from '@vtex/micro-react'
 
-import AboveTheFold from '../components/aboveTheFold'
+import BellowTheFold from '../components/bellowTheFold'
 
-const BellowTheFold = loadable(() => import(
-  /* webpackChunkName: "BellowTheFold" */
+const AboveTheFold = loadable(() => import(
+  /* webpackChunkName: "AboveTheFold" */
   /* webpackPreload: true */
-  '../components/bellowTheFold'
+  '../components/aboveTheFold'
 ), { ssr: false })
 
 const App: React.SFC = () => {
 
   return (
     <Fragment>
-      <AboveTheFold />
-      <BellowTheFold fallback={<div>loading...</div>}/>
+      <BellowTheFold />
+      <AboveTheFold fallback={<div>loading...</div>}/>
     </Fragment>
   )
 }

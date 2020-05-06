@@ -93,9 +93,9 @@ export const prod = ({
                 ]
               ],
               plugins: [
-                '@loadable/babel-plugin',
                 '@babel/plugin-proposal-class-properties',
                 '@babel/plugin-syntax-dynamic-import',
+                '@loadable/babel-plugin',
               ]
             },
           }
@@ -178,18 +178,7 @@ export const prod = ({
     /** Limit the number of parallel processed modules. Can be used to fine tune performance or to get more reliable profiling results */
     // parallelism?: number;
     /** Optimization options */
-    // optimization: {
-    //   minimizer: [
-    //     new TerserJSPlugin({
-    //       extractComments: true
-    //     }),
-    //     new OptimizeCSSAssetsPlugin({
-    //       cssProcessorPluginOptions: {
-    //         preset: ['default', { discardComments: { removeAll: true } }],
-    //       },
-    //     })
-    //   ],
-    // },
+    optimization: {},
   }
 }
 

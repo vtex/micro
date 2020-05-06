@@ -1,16 +1,8 @@
-import { sync as syncGlob } from 'glob'
-import { join, dirname } from 'path'
+import { dirname, join } from 'path'
 
 import { MANIFEST_FILE } from './../constants'
+import { resolveFiles } from './files'
 import { loadManifest, Manifest } from './manifest'
-
-const resolveFiles = (packagePath: string) => syncGlob(
-  '@(pages|components)/**/*.ts?(x)',
-  { 
-    cwd: packagePath,
-    nodir: true 
-  }
-).map(path => join(packagePath, path))
 
 const resolvePackage = (projectPath: string, name: string) => {
   const paths = [

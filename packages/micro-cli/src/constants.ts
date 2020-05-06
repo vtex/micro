@@ -1,5 +1,9 @@
 export const SERVER_PORT = Number.parseInt(process.env.PORT || '3000')
 
+export const MICRO_REACT_RUNTIME = 'micro-react'
+
+export const MICRO_REACT_TEST = /react$|react-dom|\@loadable/
+
 export const ARTIFACTS_FILE = 'artifacts.json'
 
 export const USER_CONFIG = 'micro.config.js'

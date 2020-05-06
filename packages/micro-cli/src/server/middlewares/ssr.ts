@@ -33,7 +33,7 @@ export const middleware = async (ctx: Context, next: Next) => {
   const { 
     state: { 
       stats: { children }, 
-      features: { disableSSR },
+      features: { disableSSR, page },
       project: { root }
     } 
   } = ctx
@@ -44,15 +44,13 @@ export const middleware = async (ctx: Context, next: Next) => {
     throw new Error('Could not find (nodejs|web-new) build from webpack in statsJSON')
   }
 
-  const entrypoints = 'main'
-
   const webNewExtractor = new ChunkExtractor({
-	  entrypoints,
+	  entrypoints: [page],
 	  stats: webNewStats
   })
 
   const nodeJSExtractor = new ChunkExtractor({
-    entrypoints, 
+    entrypoints: [page], 
     outputPath: join(root, MICRO_BUILD_DIR, nodeJSTarget),
     stats: nodeJSStats
   })

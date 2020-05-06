@@ -6,10 +6,12 @@ export interface Features {
   disableSSR: boolean
   delayCriticalAssets?: number
   delayNonCriticalAssets?: number
+  page: string
 }
 
 const DEFAULT_FEATURES: Features = {
-  disableSSR: false
+  disableSSR: false,
+  page: 'main'
 } 
 
 export const middleware = async (ctx: Context, next: Next) => {

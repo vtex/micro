@@ -5,8 +5,17 @@ import TerserJSPlugin from 'terser-webpack-plugin'
 import { Configuration } from 'webpack'
 
 import { Build } from '..'
-import { name } from '../../../package.json'
 import { ASSETS_PATH } from '../../constants'
+import { basename } from 'path'
+
+const entriesFromPages = (pages: string[]) => pages.reduce(
+  (acc, path) => {
+    const name = basename(path, '.tsx')
+    acc[name] = path
+    return acc
+  },
+  {} as Record<string, string>
+)
 
 export const prod = ({
   build,
@@ -15,7 +24,8 @@ export const prod = ({
 }): Configuration => {
   const { 
     project: { 
-      root: projectPath
+      root: projectPath,
+      pages,
     }
   } = build
   
@@ -27,7 +37,7 @@ export const prod = ({
      * If `output.pathinfo` is set, the included pathinfo is shortened to this directory.
      */
     context: projectPath,
-    entry: './pages/index.tsx',
+    entry: entriesFromPages(pages),
     /** Choose a style of source mapping to enhance the debugging process. These values can affect build and rebuild speed dramatically. */
     // devtool?: Options.Devtool;
     /** Options affecting the output. */
@@ -74,7 +84,7 @@ export const prod = ({
     },
     /** Like resolve but for loaders. */
     resolveLoader: {
-      modules: [`node_modules/${name}/node_modules`, 'node_modules']
+      modules: ['node_modules']
     },
     /**
      * Specify dependencies that shouldn’t be resolved by webpack, but should become dependencies of the resulting bundle.

@@ -1,6 +1,6 @@
 {
   "name": "@vtex/micro-react",
-  "version": "1.0.10-beta.0",
+  "version": "1.0.10-beta.1",
   "license": "MIT",
   "micro": {},
   "main": "./dist/utils/index.js",

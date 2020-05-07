@@ -1,8 +1,15 @@
 {
   "name": "@vtex/micro-react",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "license": "MIT",
   "micro": {},
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "rm -rf dist && yarn run tsc",
+    "watch": "rm -rf dist && yarn run tsc --watch",
+    "start": "nodemon --watch ./dist ./dist/micro.js"
+  },
   "dependencies": {
     "@loadable/component": "^5.12.0",
     "exenv": "^1.2.2",
@@ -13,6 +20,8 @@
     "@types/exenv": "^1.2.0",
     "@types/loadable__component": "^5.10.0",
     "@types/react": "^16.9.34",
-    "@types/react-dom": "^16.9.7"
+    "@types/react-dom": "^16.9.7",
+    "nodemon": "^2.0.3",
+    "typescript": "^3.8.3"
   }
 }

@@ -4,27 +4,25 @@ import PurgeCSSPlugin from 'purgecss-webpack-plugin'
 import { Configuration } from 'webpack'
 import DynamicPublicPathPlugin from 'webpack-dynamic-public-path'
 import MessagesPlugin from 'webpack-messages'
+import CopyPlugin from 'copy-webpack-plugin'
 
-import { Build } from '..'
-import { MICRO_REACT_RUNTIME, MICRO_REACT_TEST } from '../../constants'
-import { PUBLIC_PATH_VAR } from '../../server/config'
-import { excludeFromModules } from './utils'
+import { excludeFromModules, WebpackBuildConfig } from './utils'
 
 export const target = 'web-new'
 
 export const toBuildPath = (baseRoot: string) => join(baseRoot, target)
 
 export const prod = ({
-  build,
-}: {
-  build: Build
-}): Configuration => {
-  const { 
-    root: buildDir,
-    project: { 
-      files,
-    }
-  } = build
+  root: buildDir, 
+  project: { files, root },
+  publicPath: {
+    variable
+  },
+  runtime: {
+    name: runtimeName,
+    test: runtimeTest
+  }
+}: WebpackBuildConfig): Configuration => {
 
   return {
     /** Enable production optimizations or development hints. */
@@ -159,8 +157,12 @@ export const prod = ({
         paths: files
       }),
       new DynamicPublicPathPlugin({
-        externalPublicPath: PUBLIC_PATH_VAR
-      })
+        externalPublicPath: variable
+      }),
+      // Plugin to Copy Favicon.ico
+      new CopyPlugin([
+        { from: join(root, 'assets/favicon.ico'), to: toBuildPath(buildDir) }
+      ]),
     ],
     /** Stats options for logging  */
     // stats?: Options.Stats;
@@ -171,16 +173,16 @@ export const prod = ({
     /** Optimization options */
     optimization: {
       runtimeChunk: {
-        name: MICRO_REACT_RUNTIME
+        name: runtimeName
       },
       splitChunks: {
         maxInitialRequests: 30,
         maxAsyncRequests: 10,
         cacheGroups: {
-          [MICRO_REACT_RUNTIME]: {
-            test: MICRO_REACT_TEST,
+          [runtimeName]: {
+            test: runtimeTest,
             reuseExistingChunk: true,
-            name: MICRO_REACT_RUNTIME,
+            name: runtimeName,
             chunks: 'all',
             enforce: true
           }

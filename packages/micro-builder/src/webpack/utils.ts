@@ -1,5 +1,19 @@
+import { Project } from '@vtex/micro'
 import { mergeDeepWith } from 'ramda'
 import { Configuration } from 'webpack'
+
+export interface WebpackBuildConfig {
+  root: string
+  publicPath: {
+    variable: string,
+    path: string
+  }
+  project: Project
+  runtime: {
+    name: string,
+    test: RegExp
+  }
+}
 
 export const excludeFromModules = (files: string[]) => (path: string) => {
   if (!/node_modules/.test(path)) {

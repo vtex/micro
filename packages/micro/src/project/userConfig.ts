@@ -4,8 +4,18 @@ import { Configuration } from 'webpack'
 
 import { USER_CONFIG } from '../constants'
 
+type EntryInfo = any
+
+export interface ResolvedEntry {
+  entry: string
+  context: any
+  status: number
+  path: string
+}
+
 export interface UserConfig {
-  webpack: (microBaseConfig: Configuration) => Configuration
+  webpack?: (microBaseConfig: Configuration) => Configuration
+  router?: (path: string, entries: Record<string, EntryInfo>) => ResolvedEntry | undefined
 }
 
 export const loadUserConfig = (projectPath: string) => {

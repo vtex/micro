@@ -1,1 +1,0 @@
-(window as any).__webpack_public_path__ = '/_v/public/assets/'

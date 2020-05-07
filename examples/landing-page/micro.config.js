@@ -18,8 +18,37 @@ const webpack = (config) => {
   return config
 }
 
+const router = (path, entrypoints) => {
+  if (path === '/') {
+    const entry = 'index'
+    return {
+      entry,
+      context: {
+        entry
+      },
+      status: 200,
+      path
+    }
+  } else if (path === '/inverted') {
+    const entry = 'index2'
+    return {
+      entry,
+      context: { 
+        entry,
+        data: {
+          a: 2 
+        }
+      },
+      status: 200,
+      path
+    }
+  }
+  return {
+    status: 404
+  }
+}
 
 module.exports = () => ({
   webpack,
-  module,
+  router,
 })

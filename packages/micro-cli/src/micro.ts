@@ -1,10 +1,10 @@
 #!/usr/bin/env node
+import { Project } from '@vtex/micro'
+import { Build, loadBuild, saveBuildState } from '@vtex/micro-builder'
+import { startServer } from '@vtex/micro-server'
 
-import { loadBuild, newBuild } from './build'
-import { SERVER_PORT } from './constants'
+import { HOST, SERVER_PORT } from './constants'
 import { parseOptions } from './parse'
-import { Project } from './project'
-import { startServer } from './server'
 
 const main = async () => {
   console.log(`🦄 Welcome to Micro`)
@@ -15,19 +15,28 @@ const main = async () => {
   
   if (serve) {
     console.log(`🦄 Loading build for ${project.manifest.name}@${project.manifest.version}`)
-    const statsJSON = await loadBuild({ project, production })
-    startServer(project, statsJSON, SERVER_PORT)
+    
+    const build = await loadBuild(project)
+    startServer(project, build, SERVER_PORT, HOST)
+    
   } else if (build) {
-    console.log(`🦄 Starting build in production:${production} for ${project.manifest.name}@${project.manifest.version}`)
-    const build = await newBuild({ project, production })
-    const configs = await build.config()
-    const statsJSON = await build.run(configs)
-    await build.saveStats(statsJSON)
+    console.log(`🦄 Starting Production build for ${project.manifest.name}@${project.manifest.version}`)
+
+    const build = new Build(production, project)
+    await build.clear()
+    const configs = await build.webpack.getConfig()
+    await build.webpack.run(configs)
+    await saveBuildState(build)
+    
   } else if (!production) {
-    const build = await newBuild({ project, production })
-    const configs = await build.config()
-    const statsJSON = await build.run(configs)
-    startServer(project, statsJSON, SERVER_PORT)
+    console.log(`🦄 Starting Development build for ${project.manifest.name}@${project.manifest.version}`)
+
+    const build = new Build(production, project)
+    await build.clear()
+    const configs = await build.webpack.getConfig()
+    await build.webpack.run(configs)
+    startServer(project, build, SERVER_PORT, HOST)
+    
   } else {
     console.log('🙉Could not understand what you mean')
   }

@@ -1,97 +1,88 @@
-import { sync as syncGlob } from 'glob'
+import WebpackLoadablePlugin from '@loadable/webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
-import { join } from 'path'
-import PurgeCSSPlugin from 'purgecss-webpack-plugin'
+import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'
+import { basename } from 'path'
+import TerserJSPlugin from 'terser-webpack-plugin'
 import { Configuration } from 'webpack'
-import WebpackMessagesPlugin from 'webpack-messages'
 
-import { Build } from '..'
-import { ASSETS_PATH } from '../../constants'
-import { excludeFromModules } from './utils'
+import { WebpackBuildConfig } from './utils'
 
-export const target = 'web-old'
-
-export const toBuildPath = (baseRoot: string) => join(baseRoot, target)
+const entriesFromPages = (pages: string[]) => pages.reduce(
+  (acc, path) => {
+    const name = basename(path, '.tsx')
+    acc[name] = path
+    return acc
+  },
+  {} as Record<string, string>
+)
 
 export const prod = ({
-  build,
-}: {
-  build: Build
-}): Configuration => {
-  const { 
-    root: buildDir,
-    project: { 
-      files
-    }
-  } = build
+  project: { root: projectPath, pages }, 
+  publicPath: { path }
+}: WebpackBuildConfig): Configuration => {
 
   return {
     /** Enable production optimizations or development hints. */
-    // mode: "production",
-    /** Name of the configuration. Used when loading multiple configurations. */
-    name: target,
+    mode: "production",
     /**
      * The base directory (absolute path!) for resolving the `entry` option.
      * If `output.pathinfo` is set, the included pathinfo is shortened to this directory.
      */
-    // context: projectPath,
-    // entry: './react/index.tsx',
+    context: projectPath,
+    entry: entriesFromPages(pages),
     /** Choose a style of source mapping to enhance the debugging process. These values can affect build and rebuild speed dramatically. */
     // devtool?: Options.Devtool;
     /** Options affecting the output. */
-    output: {
-      path: toBuildPath(buildDir),
-      publicPath: ASSETS_PATH,
-    },
+    // output: {
+    //   path: toBuildPath(tmpDir)
+    // },
     /** Options affecting the normal modules (NormalModuleFactory) */
     module: {
       rules: [
         {
-          test: /\.tsx?$/,
-          exclude: excludeFromModules(files),
-          use: {
-            loader: 'babel-loader',
-            options: {
-              caller: { target },
-              presets: [
-                ['@babel/preset-env', {
-                  targets: {
-                    browsers: 'cover 99.5%'
-                  }
-                }],
-                '@babel/preset-react',
-                [
-                  '@babel/preset-typescript', {
-                    isTSX: true,
-                    allExtensions: true
-                  }
-                ]
-              ],
-              plugins: [
-                '@babel/plugin-proposal-class-properties',
-                '@babel/plugin-syntax-dynamic-import',
-                '@loadable/babel-plugin'
-              ]
+          test: /\.css$/,
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                esModule: true,
+              },
             },
-          }
+            'css-loader'
+          ],
         },
+        {
+          test: /\.(png|svg|jpg|gif)$/,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                publicPath: path,
+              }
+            }
+          ],
+        },
+        {
+          test: /\.mjs$/,
+          include: /node_modules/,
+          type: "javascript/auto",
+        }
       ]
     },
     /** Options affecting the resolving of modules. */
-    // resolve: {
-    //   extensions: ['.tsx', '.ts', '.js', '.jsx'],
-    //   modules: [
-    //     join(projectPath, 'node_modules'),
-    //     join(projectPath, 'node_modules/micro/node_modules')
-    //   ]
-    // },
+    resolve: {
+      extensions: ['.tsx', '.ts', '.js', '.jsx', ".mjs", ".json"],
+      modules: ['node_modules']
+    },
     /** Like resolve but for loaders. */
-    // resolveLoader?: ResolveLoader;
+    resolveLoader: {
+      modules: ['node_modules']
+    },
     /**
      * Specify dependencies that shouldn’t be resolved by webpack, but should become dependencies of the resulting bundle.
      * The kind of the dependency depends on output.libraryTarget.
      */
-    // externals?: ExternalsElement | ExternalsElement[];
+    // externals: {},
     /**
      * - "web" Compile for usage in a browser-like environment (default).
      * - "webworker" Compile as WebWorker.
@@ -107,18 +98,18 @@ export const prod = ({
      * - "atom" Alias for electron-main.
      * - "electron" Alias for electron-main.
      */
-    target: 'web',
+    // target: 'web',
     /** Report the first error as a hard error instead of tolerating it. */
-    // bail: true,
+    bail: true,
     /** Capture timing information for each module. */
-    // profile: true,
+    profile: true,
     /** Cache generated modules and chunks to improve performance for multiple incremental builds. */
     // cache?: boolean | object;
     /** Enter watch mode, which rebuilds on file change. */
     // watch?: boolean;
     // watchOptions?: Options.WatchOptions;
     /** Include polyfills or mocks for various node stuff */
-    // node: false,
+    node: false,
     /** Set the value of require.amd and define.amd. */
     // amd?: { [moduleName: string]: boolean };
     /** Used for recordsInputPath and recordsOutputPath */
@@ -129,16 +120,10 @@ export const prod = ({
     // recordsOutputPath?: string;
     /** Add additional plugins to the compiler. */
     plugins: [
-      new WebpackMessagesPlugin({
-        name: target,
-        logger: (str: any) => console.log(`>> ${str}`)
-      }),
-      new MiniCssExtractPlugin({
-        filename: "[name].css",
-      }),
-      new PurgeCSSPlugin({
-        paths: files,
-      }),
+      new WebpackLoadablePlugin({
+        outputAsset: false,
+        writeToDisk: false
+      }) 
     ],
     /** Stats options for logging  */
     // stats?: Options.Stats;
@@ -147,17 +132,28 @@ export const prod = ({
     /** Limit the number of parallel processed modules. Can be used to fine tune performance or to get more reliable profiling results */
     // parallelism?: number;
     /** Optimization options */
-    // optimization: {
-    //   minimizer: [
-    //     new TerserJSPlugin({
-    //       extractComments: true
-    //     }),
-    //     new OptimizeCSSAssetsPlugin({
-    //       cssProcessorPluginOptions: {
-    //         preset: ['default', { discardComments: { removeAll: true } }],
-    //       },
-    //     })
-    //   ],
-    // },
+    optimization: {
+      minimizer: [
+        new TerserJSPlugin({
+          extractComments: true
+        }),
+        new OptimizeCSSAssetsPlugin({
+          cssProcessorPluginOptions: {
+            preset: ['default', { discardComments: { removeAll: true } }],
+          },
+        })
+      ],
+    },
+  }
+}
+
+
+export const dev = (config: WebpackBuildConfig): Configuration => {
+  const prodConf = prod(config)
+
+  return {
+    ...prodConf,
+    mode: 'development',
+    optimization: {},
   }
 }

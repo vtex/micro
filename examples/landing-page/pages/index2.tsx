@@ -12,8 +12,7 @@ const AboveTheFold = loadable(() => import(
   '../components/aboveTheFold'
 ), { ssr: false })
 
-const App: React.SFC = () => {
-
+const App: React.SFC = ({children, ...rest}) => {
   return (
     <Fragment>
       <BellowTheFold />

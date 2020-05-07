@@ -1,28 +1,16 @@
-import { sync as syncGlob } from 'glob'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import { join } from 'path'
 import PurgeCSSPlugin from 'purgecss-webpack-plugin'
 import { Configuration } from 'webpack'
 import WebpackMessagesPlugin from 'webpack-messages'
 
-import { Build } from '..'
-import { excludeFromModules } from './utils'
+import { excludeFromModules, WebpackBuildConfig } from './utils'
 
 export const target = 'nodejs'
 
 export const toBuildPath = (baseRoot: string) => join(baseRoot, target)
 
-export const prod = ({
-  build,
-}: {
-  build: Build
-}): Configuration => {
-  const { 
-    root: buildDir,
-    project: { 
-      files
-    }
-  } = build
+export const prod = ({root: buildDir, project: { files }}: WebpackBuildConfig): Configuration => {
 
   return {
     /** Enable production optimizations or development hints. */
@@ -182,13 +170,9 @@ export const prod = ({
   }
 }
 
-export const dev = ({
-  build,
-}: {
-  build: Build
-}): Configuration => {
-  const prodConf = prod({ build })
-  
+export const dev = (config: WebpackBuildConfig): Configuration => {
+  const prodConf = prod(config)
+
   return {
     ...prodConf,
     mode: 'development',

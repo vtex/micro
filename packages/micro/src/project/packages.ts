@@ -1,6 +1,6 @@
 import { dirname, join } from 'path'
 
-import { MANIFEST_FILE } from './../constants'
+import { MANIFEST_FILE } from '../constants'
 import { resolveFiles } from './files'
 import { loadManifest, Manifest } from './manifest'
 

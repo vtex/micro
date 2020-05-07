@@ -1,0 +1,17 @@
+{
+  "name": "@vtex/micro",
+  "version": "1.0.4",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "rm -rf dist && yarn run tsc",
+    "watch": "rm -rf dist && yarn run tsc --watch",
+    "start": "nodemon --watch ./dist ./dist/micro.js"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {}
+}

@@ -1,8 +1,7 @@
 {
   "name": "@vtex/micro-react",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "license": "MIT",
-  "main": "./components/index.ts",
   "micro": {},
   "dependencies": {
     "@loadable/component": "^5.12.0",

@@ -1,6 +1,6 @@
 {
   "name": "@vtex/micro-cli",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "repository": "git@github.com:vtex-apps/micro.git",
   "author": "Tiago Gimenes <tlgimenes@gmail.com>",
   "license": "MIT",

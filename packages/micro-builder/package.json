@@ -1,14 +1,13 @@
 {
   "name": "@vtex/micro-builder",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
-  "main": "./dist/src/index.js",
-  "bin": "./dist/src/index.js",
-  "types": "./dist/src/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "rm -rf dist && yarn run tsc",
     "watch": "rm -rf dist && yarn run tsc --watch",
-    "start": "nodemon --watch ./dist ./dist/src/micro.js"
+    "start": "nodemon --watch ./dist ./dist/micro.js"
   },
   "dependencies": {
     "@babel/core": "^7.9.6",
@@ -19,7 +18,7 @@
     "@babel/preset-typescript": "^7.9.0",
     "@loadable/babel-plugin": "^5.12.0",
     "@loadable/webpack-plugin": "^5.12.0",
-    "@vtex/micro": "^1.0.2",
+    "@vtex/micro": "^1.0.4",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.5.3",
     "file-loader": "^6.0.0",

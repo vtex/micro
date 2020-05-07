@@ -1,10 +1,10 @@
 {
   "name": "@vtex/micro-react",
-  "version": "1.0.9",
+  "version": "1.0.10-beta.0",
   "license": "MIT",
   "micro": {},
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/utils/index.js",
+  "types": "./dist/utils/index.d.ts",
   "scripts": {
     "build": "rm -rf dist && yarn run tsc",
     "watch": "rm -rf dist && yarn run tsc --watch",

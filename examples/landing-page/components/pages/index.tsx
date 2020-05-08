@@ -12,11 +12,11 @@ const BellowTheFold = loadable(() => import(
 ), { ssr: false })
 
 interface Props {
-  data: any
+  context: any
 }
 
-const Page: React.SFC<Props> = ({ data }) => {
-  // console.log(Object.keys(data).length > 10 ? 'Have Data' : 'DATA MISSING !!!', data)
+const Page: React.SFC<Props> = ({ context }) => {
+  console.log(context)
   return (
     <Fragment>
       <AboveTheFold />

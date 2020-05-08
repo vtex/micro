@@ -1,12 +1,14 @@
 import 'uikit/dist/css/uikit.css'
 
-import React, { Fragment } from 'react'
+import React from 'react'
+
+import Layout from '../layout'
 
 const Page: React.SFC = () => {
   return (
-    <Fragment>
+    <Layout>
       <div>Custom Page: Not Found ✨</div>
-    </Fragment>
+    </Layout>
   )
 }
 

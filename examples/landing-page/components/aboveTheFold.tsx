@@ -1,13 +1,12 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 
 import { Grid } from './grid'
-import NavBar from './navbar'
+import Layout from './layout'
 
-const App: React.SFC = () => (
-  <Fragment>
-    <NavBar />
+const AboveTheFold: React.SFC = () => (
+  <Layout>
     <Grid />
-  </Fragment>
+  </Layout>
 )
 
-export default App
+export default AboveTheFold

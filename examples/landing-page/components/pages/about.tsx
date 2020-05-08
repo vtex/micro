@@ -3,20 +3,19 @@ import 'uikit/dist/css/uikit.css'
 import loadable from '@loadable/component'
 import React, { Fragment } from 'react'
 
-import BellowTheFold from '../bellowTheFold'
+import Layout from '../layout'
 
-const AboveTheFold = loadable(() => import(
+const BellowTheFold = loadable(() => import(
   /* webpackChunkName: "AboveTheFold" */
   /* webpackPreload: true */
-  '../aboveTheFold'
+  '../bellowTheFold'
 ), { ssr: false })
 
 const Page: React.SFC = () => {
   return (
-    <Fragment>
+    <Layout>
       <BellowTheFold />
-      <AboveTheFold fallback={<div>loading...</div>}/>
-    </Fragment>
+    </Layout>
   )
 }
 export default Page

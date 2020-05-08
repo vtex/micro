@@ -10,6 +10,9 @@ const NavBar: React.SFC = () => {
             <Link to='/' >Home</Link>
           </li>
           <li>
+            <Link to='/about' >About</Link>
+          </li>
+          <li>
             <Link to='/fresh' >Fresh</Link>
           </li>
           <li>

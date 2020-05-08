@@ -57,9 +57,12 @@ export const withRouter = (
     const runtime = useContext(Runtime)
     
     const prefetchPage = async (location: LocationDescriptorObject) => {
-      const page = await fetchPage(runtime.paths.context, location)
-      // we need to add the page in the last position because of React Router's resolution algorithm
-      addPage(pages => [...pages, page])
+      const exists = pages.find(x => x.path === location.pathname)
+      if (!exists) {
+        const page = await fetchPage(runtime.paths.context, location)
+        // we need to add the page in the last position because of React Router's resolution algorithm
+        addPage(pages => [...pages, page])
+      }
     }
 
     if (canUseDOM) {

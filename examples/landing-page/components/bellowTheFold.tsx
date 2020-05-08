@@ -11,11 +11,6 @@ const App: React.SFC = () => {
       <hr className="uk-divider-icon" />
       <MoreContent />
       <MoreContent />
-      <MoreContent />
-      <MoreContent />
-      <MoreContent />
-      <MoreContent />
-      <MoreContent />
     </Fragment>
   )
 }

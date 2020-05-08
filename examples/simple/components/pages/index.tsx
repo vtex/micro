@@ -16,7 +16,6 @@ interface Props {
 }
 
 const Page: React.SFC<Props> = ({ context }) => {
-  console.log(context)
   return (
     <Fragment>
       <AboveTheFold />

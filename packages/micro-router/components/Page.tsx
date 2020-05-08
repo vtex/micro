@@ -1,4 +1,4 @@
-import { useContext, Fragment } from 'react'
+import React, { useContext, Fragment } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { PagesContext } from './Router'

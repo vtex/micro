@@ -20,7 +20,7 @@ interface Cache {
 
 export interface UserConfig {
   webpack?: (microBaseConfig: Configuration) => Configuration
-  router?: <T>(path: string, entries: Record<string, EntryInfo>) => Promise<ResolvedEntry<T> | undefined>
+  router?: (path: string, entries: Record<string, EntryInfo>) => Promise<ResolvedEntry<any> | undefined>
   htmlCache?: () => Cache
 }
 

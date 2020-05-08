@@ -21,14 +21,7 @@ export class Pages extends PagesManager {
   }
 
   public async prefetch (location: LocationDescriptorObject) {
-    const loaded = this.pageLoaded(location.pathname) 
-    if (!loaded) {
-      const page = await this.doFetch(location)
-      if (isPage(page)) {
-        this.pages = this.pages.concat(page)
-        this.onPageFetched(this.pages)
-      }
-    }
+    this.fetch(location)
   }
 
   public async fetch (location: LocationDescriptorObject) {

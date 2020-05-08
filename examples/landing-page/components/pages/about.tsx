@@ -1,18 +1,17 @@
 import 'uikit/dist/css/uikit.css'
 
-import React, { Fragment } from 'react'
 import loadable from '@loadable/component'
-import { LoadMicroComponent } from '@vtex/micro-react'
+import React, { Fragment } from 'react'
 
-import BellowTheFold from '../components/bellowTheFold'
+import BellowTheFold from '../bellowTheFold'
 
 const AboveTheFold = loadable(() => import(
   /* webpackChunkName: "AboveTheFold" */
   /* webpackPreload: true */
-  '../components/aboveTheFold'
+  '../aboveTheFold'
 ), { ssr: false })
 
-const App: React.SFC = ({children, ...rest}) => {
+const Page: React.SFC = () => {
   return (
     <Fragment>
       <BellowTheFold />
@@ -20,5 +19,4 @@ const App: React.SFC = ({children, ...rest}) => {
     </Fragment>
   )
 }
-
-export default LoadMicroComponent(App)
+export default Page

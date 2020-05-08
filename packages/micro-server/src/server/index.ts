@@ -1,12 +1,13 @@
 import { Project } from '@vtex/micro'
 import { Build } from '@vtex/micro-builder'
+import { PublicPaths } from '@vtex/micro-react'
 import Koa, { Context, Next } from 'koa'
 import compress from 'koa-compress'
 import logger from 'koa-logger'
 import Router from 'koa-router'
 
 import { Extractor } from '../extractor'
-import { publicPathFromProject, PublicPaths } from '../publicPath'
+import { publicPathFromProject } from '../publicPath'
 import { featuresFromCtx } from './features'
 import { middleware as load } from './middlewares/assets'
 import { middleware as headers } from './middlewares/headers'
@@ -68,7 +69,7 @@ export const startServer = (
   app.use(injectState(build, project, publicPaths))
 
   router.get('/favicon.ico', injectParams({asset: 'favicon.ico'}), ...assets)
-  router.get(`${publicPaths.navigation}:path*`, ...navigation)
+  router.get(`${publicPaths.context}:path*`, ...navigation)
   router.get(`${publicPaths.assets}:asset`, ...assets)
   router.get(`${publicPaths.entry}:entry`, ...entry)
   router.get('/:path*', ...render)

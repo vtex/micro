@@ -2,7 +2,7 @@ import { sync as syncGlob } from 'glob'
 import { join } from 'path'
 
 export const resolveFiles = (packagePath: string) => syncGlob(
-  '@(pages|components)/**/*.ts?(x)',
+  '@(pages|components|utils)/**/*.ts?(x)',
   { 
     cwd: packagePath,
     nodir: true 

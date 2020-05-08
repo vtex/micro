@@ -10,7 +10,10 @@ export const target = 'nodejs'
 
 export const toBuildPath = (baseRoot: string) => join(baseRoot, target)
 
-export const prod = ({root: buildDir, project: { files }}: WebpackBuildConfig): Configuration => {
+export const prod = ({
+  root: buildDir, 
+  project: { files }
+}: WebpackBuildConfig): Configuration => {
 
   return {
     /** Enable production optimizations or development hints. */
@@ -39,13 +42,16 @@ export const prod = ({root: buildDir, project: { files }}: WebpackBuildConfig): 
           use: {
             loader: 'babel-loader',
             options: {
+              comments: true,
+              minified: false,
+              retainLines: true,
+              shouldPrintComment: () => true,
               caller: { target },
               presets: [
                 [
                   '@babel/preset-env', {
                     targets: {
                       node: process.versions.node,
-                      esmodules: true
                     },
                     /** 
                      * Here are unicorns ! 🦄
@@ -82,6 +88,7 @@ export const prod = ({root: buildDir, project: { files }}: WebpackBuildConfig): 
               ],
               plugins: [
                 '@babel/plugin-proposal-class-properties',
+                '@babel/plugin-proposal-optional-chaining',
                 '@babel/plugin-syntax-dynamic-import',
                 '@loadable/babel-plugin',
               ]
@@ -106,7 +113,8 @@ export const prod = ({root: buildDir, project: { files }}: WebpackBuildConfig): 
      */
     externals: [
       {
-        'react': 'root react',
+        'react': 'root React',
+        'react-router-dom': 'root ReactRouterDom',
         'react-dom': 'commonjs2 react-dom',
         '@loadable/component': 'commonjs2 @loadable/component',
       }
@@ -166,7 +174,7 @@ export const prod = ({root: buildDir, project: { files }}: WebpackBuildConfig): 
     /** Limit the number of parallel processed modules. Can be used to fine tune performance or to get more reliable profiling results */
     // parallelism?: number;
     /** Optimization options */
-    optimization: {},
+    optimization: {}
   }
 }
 

@@ -2,6 +2,7 @@ import { webNewTarget } from '@vtex/micro-builder'
 import { Next } from 'koa'
 
 import { Context } from '../typings'
+import { pathFromContext } from './../utils/path'
 
 export const middleware = async (ctx: Context, next: Next) => {
   const {
@@ -12,11 +13,11 @@ export const middleware = async (ctx: Context, next: Next) => {
   const entries = webNewStats?.entrypoints
   
   // Should work in / and in /navigate middlewares
-  const path = `/${ctx.params.path || ''}`
+  const path = pathFromContext(ctx)
   
   if (userConfig?.router && entries) {
     const { router } = userConfig
-    const resolvedEntry = router(path, entries)
+    const resolvedEntry = await router(path, entries)
 
     if (!resolvedEntry) {
       throw new Error(`💣 Entry not resovled for path ${path}`)

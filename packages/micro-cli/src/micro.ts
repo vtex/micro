@@ -35,6 +35,7 @@ const main = async () => {
     await build.clear()
     const configs = await build.webpack.getConfig()
     await build.webpack.run(configs)
+    await saveBuildState(build)
     startServer(project, build, SERVER_PORT, HOST)
     
   } else {

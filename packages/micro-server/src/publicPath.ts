@@ -1,10 +1,5 @@
 import { Project } from '@vtex/micro'
-
-export interface PublicPaths {
-  assets: string
-  entry: string
-  navigation: string
-}
+import { PublicPaths } from '@vtex/micro-react'
 
 export const publicPathFromProject = (project: Project): PublicPaths => {
   const { 
@@ -14,6 +9,6 @@ export const publicPathFromProject = (project: Project): PublicPaths => {
   return {
     assets: `/assets/${name}/${version}/`,
     entry: `/entry/${name}/${version}/`,
-    navigation: `/navigation/${name}/${version}/`,
+    context: `/context/${name}/${version}/`,
   }
 }

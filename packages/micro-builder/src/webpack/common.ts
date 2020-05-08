@@ -1,4 +1,4 @@
-import WebpackLoadablePlugin from '@loadable/webpack-plugin'
+import LoadablePlugin from '@loadable/webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'
 import { basename } from 'path'
@@ -120,7 +120,7 @@ export const prod = ({
     // recordsOutputPath?: string;
     /** Add additional plugins to the compiler. */
     plugins: [
-      new WebpackLoadablePlugin({
+      new LoadablePlugin({
         outputAsset: false,
         writeToDisk: false
       }) 

@@ -9,8 +9,6 @@ export const middleware = async (ctx: Context, next: Next) => {
     state: { server: { resolvedEntry } }
   } = ctx
 
-  await delay(5e3)
-
   if (!resolvedEntry) {
     throw new Error('💣 Something went wrong while navigating')
   }

@@ -3,18 +3,31 @@ import { canUseDOM } from 'exenv'
 import React from 'react'
 import { hydrate, render } from 'react-dom'
 
-const renderOrHydrate = (App: React.ReactType) => () => {
-  const container = document.getElementById('micro')
-  if (!container) {
-    throw new Error('Something went wrong while loading the container')
-  }
+import { PageData } from '../utils/pageData'
+import { Runtime } from '../utils/runtime'
+import { Runtime as MicroRuntime } from './context/Runtime'
+
+const renderOrHydrate = (App: React.ReactType) => async () => {
+  const runtime = new Runtime()
+  const container = runtime.getContainer()
+  const runtimeData = runtime.hydrate()
+  
+  // This should be preloaded by now
+  let error = null
+  const context = await new PageData().fetch().catch(err => { error = err })
+  
+  const AppWithContext = (
+    <MicroRuntime.Provider value={runtimeData}>
+      <App context={context} error={error} />
+    </MicroRuntime.Provider>
+  )
 
   if (container.children.length > 0) {
-    console.log('Hydrating Micro ...')
-    hydrate(<App />, container)
+    console.log('✨✨ Hydrating Micro ...')
+    hydrate(AppWithContext, container)
   } else {
-    console.log('Rendering Micro ...')
-    render(<App />, container)
+    console.log('✨ Rendering Micro ...')
+    render(AppWithContext, container)
   }
 }
 

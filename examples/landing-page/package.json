@@ -8,9 +8,11 @@
     "dev": "yarn run micro-cli --project . --dev"
   },
   "dependencies": {
-    "@loadable/babel-plugin": "^5.12.0",
-    "@vtex/micro-cli": "^1.0.5",
-    "@vtex/micro-react": "^1.0.6",
+    "@vtex/micro": "^1.0.5-beta.0",
+    "@vtex/micro-cli": "^1.0.6-beta.2",
+    "@vtex/micro-react": "^1.0.10-beta.4",
+    "@vtex/micro-router": "^1.0.0-beta.0",
+    "node-fetch": "^2.6.0",
     "purgecss-webpack-plugin": "^2.1.2",
     "uikit": "^3.4.2"
   },

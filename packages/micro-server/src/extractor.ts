@@ -2,14 +2,15 @@ import { ChunkExtractor } from '@loadable/server'
 import { Project, ResolvedEntry } from '@vtex/micro'
 import { Build, nodeJSTarget, webNewTarget } from '@vtex/micro-builder'
 import { join } from 'path'
+import { PublicPaths, Runtime, PageData } from '@vtex/micro-react'
 
-import { publicPathFromProject, PublicPaths } from './publicPath'
+import { publicPathFromProject } from './publicPath'
 
 export class Extractor {
   private _extractors: Record<string, ChunkExtractor> | null = null
-  private publicPath: PublicPaths
+  private publicPaths: PublicPaths
   public assetsPath: Record<string, string>
-  public resolvedEntry: ResolvedEntry = {
+  public resolvedEntry: ResolvedEntry<any> = {
     entry: 'main',
     context: null,
     status: 200,
@@ -19,14 +20,18 @@ export class Extractor {
   constructor(
     public build: Build,
     public project: Project,
-    publicPath?: PublicPaths
-
+    publicPath?: PublicPaths,
+    public runtime = new Runtime()
   ) {
     this.assetsPath = {
       [webNewTarget]: join(this.project.root, this.build.buildDir, webNewTarget),
       [nodeJSTarget]: join(this.project.root, this.build.buildDir, nodeJSTarget),
     }
-    this.publicPath = publicPath || publicPathFromProject(this.project)
+    this.publicPaths = publicPath || publicPathFromProject(this.project)
+    
+    this.runtime.setRuntime({
+      paths: this.publicPaths
+    })
   }
   
   get extractors () {
@@ -44,7 +49,7 @@ export class Extractor {
       this._extractors = {
         [webNewTarget]: new ChunkExtractor({
           entrypoints: [this.resolvedEntry.entry],
-          publicPath: this.publicPath.assets,
+          publicPath: this.publicPaths.assets,
           stats: webNewStats!
         }),
         [nodeJSTarget]: new ChunkExtractor({
@@ -62,24 +67,23 @@ export class Extractor {
   public collectChunks = (element: JSX.Element) => this.extractors[webNewTarget].collectChunks(element)
 
   public getScriptTags = () => {
-    const { path, entry } = this.resolvedEntry
-
     let scriptTags = this.extractors[webNewTarget].getScriptTags()
+    scriptTags = this.runtime.getScriptTags() + '\n' + scriptTags
 
-    const shouldChangePublicPath = this.build.buildConfig.publicPath.path !== this.publicPath.assets
+    const shouldChangePublicPath = this.build.buildConfig.publicPath.path !== this.publicPaths.assets
     if (shouldChangePublicPath) {
-      scriptTags = `<script type="application/javascript">${this.build.buildConfig.publicPath.variable} = "${this.publicPath.assets}"</script>\n` + scriptTags
+      scriptTags = this.getPublicPathScriptTag() + '\n' + scriptTags
     }
 
     return scriptTags
   }
 
   public getLinkTags = () => {
-    const { path, entry } = this.resolvedEntry
     let linkTags = this.extractors[webNewTarget].getLinkTags()
-
+    
+    const { path, entry } = this.resolvedEntry
     if (path && entry) {
-      linkTags += `\n<link data-chunk="${entry}" rel="preload" as="fetch" href="${join(this.publicPath.navigation, path)}" crossorigin="anonymous">`
+      linkTags = linkTags + `\n` + new PageData().getLinkTags({entry, path, publicPaths: this.publicPaths})
     }
 
     return linkTags
@@ -87,9 +91,11 @@ export class Extractor {
 
   public getStyleTags = () => this.extractors[webNewTarget].getStyleTags()
 
-  public getBodyTags = (body: string) => `<div id="micro">${body}</div>`
+  public getBodyTags = (body: string) => this.runtime.wrapContainer(body)
 
   public getStatsForTarget = (target: string) => this.build.webpack.stats?.children?.find(
     ({ name }) => name === target
   )
+
+  public getPublicPathScriptTag = () => `<script type="application/javascript">${this.build.buildConfig.publicPath.variable}="${this.publicPaths.assets}"</script>`
 }

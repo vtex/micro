@@ -21,6 +21,10 @@ export const prod = ({
   runtime: {
     name: runtimeName,
     test: runtimeTest
+  },
+  framework: {
+    name: frameworkName,
+    test: frameworkTest
   }
 }: WebpackBuildConfig): Configuration => {
 
@@ -183,6 +187,13 @@ export const prod = ({
             test: runtimeTest,
             reuseExistingChunk: true,
             name: runtimeName,
+            chunks: 'all',
+            enforce: true
+          },
+          [frameworkName]: {
+            test: frameworkTest,
+            reuseExistingChunk: true,
+            name: frameworkName,
             chunks: 'all',
             enforce: true
           }

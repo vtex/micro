@@ -5,6 +5,6 @@
   "license": "MIT",
   "private": true,
   "workspaces": [
-    "micro*"
+    "packages/*"
   ]
 }

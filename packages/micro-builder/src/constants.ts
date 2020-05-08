@@ -4,8 +4,12 @@ export const DEFAULT_BUILD_CONFIG = {
     path: '/assets/'
   },
   runtime: {
-    name: 'micro-react',
-    test: /react$|react-dom|\@loadable/
+    name: 'micro-runtime',
+    test: /react$|react-dom|react-router|\@loadable/
+  },
+  framework: {
+    name: 'micro-framework',
+    test: /@vtex\/micro/
   }
 }
 

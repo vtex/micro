@@ -13,6 +13,10 @@ export interface WebpackBuildConfig {
     name: string,
     test: RegExp
   }
+  framework: {
+    name: string,
+    test: RegExp
+  }
 }
 
 export const excludeFromModules = (files: string[]) => (path: string) => {

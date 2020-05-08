@@ -1,9 +1,11 @@
 import { Next } from 'koa'
 import React, { createElement } from 'react'
 import { renderToString } from 'react-dom/server'
+import ReactRouterDom, { StaticRouter } from 'react-router-dom'
 
 import { Extractor } from '../../extractor'
 import { Context } from '../typings'
+import { pathFromContext } from './../utils/path'
 
 const ok = (
   server: Extractor,
@@ -25,7 +27,8 @@ ${server.getScriptTags()}
 </html>
 `
 
-;(global as any).react = React
+;(global as any).React = React
+;(global as any).ReactRouterDom = ReactRouterDom
 
 export const middleware = async (ctx: Context, next: Next) => {
   const { 
@@ -45,7 +48,11 @@ export const middleware = async (ctx: Context, next: Next) => {
       default: App
     } = server.requirePage()
 
-    body = renderToString(server.collectChunks(createElement(App, context))) 
+    
+    const AppElement = createElement(App, { context } as any)
+    const WithRouter = createElement(StaticRouter, { children: AppElement, location: pathFromContext(ctx) } as any)
+
+    body = renderToString(server.collectChunks(WithRouter))
   }
 
   ctx.body = ok(server, body)

@@ -6,16 +6,22 @@ import { USER_CONFIG } from '../constants'
 
 type EntryInfo = any
 
-export interface ResolvedEntry {
+export interface ResolvedEntry<T> {
   entry: string
-  context: any
+  context: T
   status: number
   path: string
 }
 
+interface Cache {
+  set: (key: string, html: string) => boolean
+  get: (key: string) => Promise<string>
+}
+
 export interface UserConfig {
   webpack?: (microBaseConfig: Configuration) => Configuration
-  router?: (path: string, entries: Record<string, EntryInfo>) => ResolvedEntry | undefined
+  router?: <T>(path: string, entries: Record<string, EntryInfo>) => Promise<ResolvedEntry<T> | undefined>
+  htmlCache?: () => Cache
 }
 
 export const loadUserConfig = (projectPath: string) => {

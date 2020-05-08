@@ -1,9 +1,12 @@
 import { LoadableComponent } from '@loadable/component'
 import { canUseDOM, Runtime } from '@vtex/micro-react/components'
-import { join } from '@vtex/micro-react/utils'
-import { LocationDescriptorObject } from 'history'
 import React, { useContext, useState } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
+
+import { FetchCurrentPage } from './Page'
+import { Page, PagesManager } from './Pages'
+import { Pages as PagesWeb, Pages } from './Pages/browser'
+import { Pages as PagesSSR } from './Pages/ssr'
 
 export interface PageProps {
   context: any
@@ -13,88 +16,59 @@ export interface AsyncPageProps extends PageProps {
   entrypoint: string
 }
 
-export interface Page {
-  entrypoint: string
-  path: string
-  context: string
-}
 
 interface RouterProps {
   context: Page
   error: any
 }
 
-const fetchPage = async (contextPath: string, location: LocationDescriptorObject): Promise<Page> => {
-  if (!location.pathname) {
-    throw new Error('💣 You need a pathname for fecthing a page')
-  }
-  const contextPathname = join(contextPath, location.pathname)
-  const response = await fetch(contextPathname)
-  return response.json()
-}
+export const PagesContext = React.createContext<PagesManager | null>(null)
+PagesContext.displayName = 'PagesManagerContext'
 
-interface RouterContext {
-  prefetchPage: (location: LocationDescriptorObject) => Promise<void>
-  fetchPage: (location: LocationDescriptorObject) => Promise<void>
-}
-
-export const Router = React.createContext<RouterContext>({
-  prefetchPage: () => { throw new Error('PrefetchPage not implemented') },
-  fetchPage: () => { throw new Error('PrefetchPage not implemented') },
-})
-
-const routerContextSSR: RouterContext = {
-  prefetchPage: () => { throw new Error('PrefetchPage not allowed in SSR') },
-  fetchPage: () => { throw new Error('PrefetchPage not allowed in SSR') },
-}
+const pagesWeb = new PagesWeb()
+const pagesSSR = new PagesSSR()
 
 export const withRouter = (
   InitialPage: React.ElementType<PageProps>,
   AsyncPage: LoadableComponent<AsyncPageProps>,
 ): React.SFC<RouterProps> => {
   return ({ context, error }) => {
-    const [pages, addPage] = useState([] as Page[])
     const runtime = useContext(Runtime)
+    const [pages, setPages] = useState([] as Page[])
     
-    const prefetchPage = async (location: LocationDescriptorObject) => {
-      const exists = pages.find(x => x.path === location.pathname)
-      if (!exists) {
-        const page = await fetchPage(runtime.paths.context, location)
-        // we need to add the page in the last position because of React Router's resolution algorithm
-        addPage(pages => [...pages, page])
-      }
-    }
-
+    pagesWeb.initialize(runtime, setPages, context)
+    
     if (canUseDOM) {
       return (
-        <Router.Provider value={{prefetchPage, fetchPage: prefetchPage}}>
+        <PagesContext.Provider value={pagesWeb}>
           <BrowserRouter>
             <Switch>
               <Route exact path={context.path}>
                 <InitialPage context={context.context} />
               </Route>
+
               {pages.map(({ path, context, entrypoint }) => (
                 <Route exact path={path}>
                   <AsyncPage entrypoint={entrypoint} context={context} fallback={<div>loading...</div>}/>
                 </Route>
               ))}
               
-              {/* No Route Match, a page should be loading now */}
+              {/* No Route Match, let's fetch this page */}
               <Route path="*">
-                <div>Maybe loading page</div>
+                <FetchCurrentPage>
+                  <div>Maybe loading page</div>
+                </FetchCurrentPage >
               </Route>
             </Switch>
           </BrowserRouter>
-        </Router.Provider>
+        </PagesContext.Provider>
       )
     } else {
       // On SSR, we already know what we should render by this point
       return (
-        <Router.Provider value={routerContextSSR}>
-          <Route exact path={context.path}>
-            <InitialPage context={context.context} />
-          </Route>
-        </Router.Provider>
+        <PagesContext.Provider value={pagesSSR}>
+          <InitialPage context={context.context} />
+        </PagesContext.Provider>
       )
     }
   }

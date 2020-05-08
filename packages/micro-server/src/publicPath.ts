@@ -8,7 +8,6 @@ export const publicPathFromProject = (project: Project): PublicPaths => {
 
   return {
     assets: `/assets/${name}/${version}/`,
-    entry: `/entry/${name}/${version}/`,
     context: `/context/${name}/${version}/`,
   }
 }

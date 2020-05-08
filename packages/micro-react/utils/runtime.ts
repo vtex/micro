@@ -10,7 +10,6 @@ const isRuntimeData = (obj: any): obj is RuntimeData => {
   const paths = obj?.paths
   return paths 
     && typeof paths?.assets === 'string'
-    && typeof paths?.entry === 'string'
     && typeof paths?.context === 'string'
 }
 

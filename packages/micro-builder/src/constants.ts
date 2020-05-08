@@ -9,7 +9,7 @@ export const DEFAULT_BUILD_CONFIG = {
   },
   framework: {
     name: 'micro-framework',
-    test: /@vtex\/micro/
+    test: /micro$|micro-react|micro-router/
   }
 }
 

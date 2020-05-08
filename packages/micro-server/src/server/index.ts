@@ -14,7 +14,6 @@ import { middleware as headers } from './middlewares/headers'
 import { middleware as ssr } from './middlewares/ssr'
 import { middleware as router } from './middlewares/router'
 import { middleware as context } from './middlewares/navigate'
-import { middleware as page } from './middlewares/entry'
 
 const render = [
   headers,
@@ -31,11 +30,6 @@ const navigation = [
   headers,
   router,
   context,
-]
-
-const entry = [
-  headers,
-  page
 ]
 
 const injectState = (build: Build, project: Project, publicPath: PublicPaths) => async (ctx: Context, next: Next) => {
@@ -71,7 +65,6 @@ export const startServer = (
   router.get('/favicon.ico', injectParams({asset: 'favicon.ico'}), ...assets)
   router.get(`${publicPaths.context}:path*`, ...navigation)
   router.get(`${publicPaths.assets}:asset`, ...assets)
-  router.get(`${publicPaths.entry}:entry`, ...entry)
   router.get('/:path*', ...render)
 
   app.use(router.routes())

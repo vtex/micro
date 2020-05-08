@@ -18,7 +18,7 @@ interface Props {
 const Page: React.SFC<Props> = ({ context }) => {
   return (
     <Layout>
-      <BellowTheFold fallback={<div className="uk-position-center" uk-spinner="ratio: 2"> loading ... </div>}/>
+      <BellowTheFold fallback={<div>loading...</div>}/>
     </Layout>
   )
 }

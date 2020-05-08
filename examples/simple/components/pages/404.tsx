@@ -1,13 +1,21 @@
 import 'uikit/dist/css/uikit.css'
 
-import React from 'react'
+import React, { Fragment } from 'react'
 
-import Layout from '../layout'
+import Layout from '../Layout'
 
-const Page: React.SFC = () => {
+interface Props {
+  context: any
+}
+
+const Page: React.SFC<Props> = () => {
   return (
     <Layout>
-      <div>Custom Page: Not Found ✨</div>
+      <Fragment>
+        <div className="uk-text-center uk-text-large uk-text-light">
+          404 | Page Not Found
+        </div>
+      </Fragment>
     </Layout>
   )
 }

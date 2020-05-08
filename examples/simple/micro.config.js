@@ -19,43 +19,65 @@ const webpack = (config) => {
   return config
 }
 
-const fetchData = () => {
-  console.log('Here you should fetch')
-  return {
-    a: 1
+const loadDepOrBrandContext = ({ params: { search }}) => {
+  if (search === 'brand') {
+    return {
+      name: 'My Awesome Brand'
+    }
   }
+  if (search === 'department') {
+    return {
+      name: 'My Awesome Department'
+    }
+  }
+  throw new Error('💣 depOrBrand not found')
 }
  
+const logContext = msg => () => {
+  console.log(msg)
+  return null
+}
+
 const routes = [
   {
     entry: 'about',
-    loadContext: () => fetchData(),
+    loadContext: logContext('about'),
     status: 200,
     path: '/about'
   },
   {
-    entry: '404',
-    loadContext: () => null,
-    status: 404,
-    path: '/404',
+    entry: 'product',
+    loadContext: logContext('product'),
+    status: 200,
+    exact: true,
+    path: '/:slug/p',
+  }, 
+  {
+    entry: 'search',
+    loadContext: logContext('/:deparment/:category'),
+    status: 200,
+    exact: true,
+    path: '/:deparment/:category',
+  },
+  {
+    entry: 'search',
+    loadContext: loadDepOrBrandContext,
+    status: 200,
+    exact: true,
+    path: '/:search',
   }, 
   {
     entry: 'index',
-    loadContext: ({params: { selector }}) => {
-      if (selector === 'fresh') {
-        return fetchData()
-      } else {
-        return fetchData()
-      }
-    },
+    loadContext: logContext('index'),
     status: 200,
-    path: '/:selector'
+    exact: true,
+    path: '/'
   },
   {
-    entry: 'index',
-    loadContext: () => fetchData(),
-    status: 200,
-    path: '/'
+    entry: '404',
+    loadContext: logContext('404'),
+    status: 404,
+    path: '/',
   },
 ]
 

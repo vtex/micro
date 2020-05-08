@@ -1,12 +1,13 @@
 import React, { Fragment } from 'react'
 
-import { Grid } from './grid'
-import NavBar from './navbar'
+import Footer from './Footer'
+import Header from './Header'
 
 const Layout: React.SFC = ({ children }) => (
   <Fragment>
-    <NavBar />
+    <Header />
     { children }
+    <Footer />
   </Fragment>
 )
 

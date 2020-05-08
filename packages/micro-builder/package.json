@@ -1,6 +1,6 @@
 {
   "name": "@vtex/micro-builder",
-  "version": "1.0.4-beta.1",
+  "version": "1.0.4-beta.2",
   "license": "MIT",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -19,7 +19,7 @@
     "@babel/preset-typescript": "^7.9.0",
     "@loadable/babel-plugin": "^5.12.0",
     "@loadable/webpack-plugin": "^5.12.0",
-    "@vtex/micro": "1.0.5-beta.0",
+    "@vtex/micro": "1.0.5-beta.1",
     "babel-loader": "^8.1.0",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.5.3",

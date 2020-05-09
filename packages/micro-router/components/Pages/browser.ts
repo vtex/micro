@@ -1,16 +1,17 @@
 import { join, RuntimeData } from '@vtex/micro-react'
 import { LocationDescriptorObject } from 'history'
+import inflight from 'promise-inflight'
 
-import { isPage, OnPageFetched, Page, PagesManager } from '.'
+import { isPage, OnPageFetched, Page, PagesManager } from './index'
 
 export class Pages extends PagesManager {
   public pages: Page[] = []
 
-  public initialize (
+  public initialize = (
     runtime: RuntimeData,
     onPageFetched: OnPageFetched,
     initalPage?: Page
-  ) {
+  ) => {
     this.runtime = runtime
     this.onPageFetched = onPageFetched
 
@@ -20,31 +21,37 @@ export class Pages extends PagesManager {
     }
   }
 
-  public async prefetch (location: LocationDescriptorObject) {
+  public prefetch = async (location: LocationDescriptorObject) => {
     this.fetch(location)
   }
 
-  public async fetch (location: LocationDescriptorObject) {
+  public fetch = async (location: LocationDescriptorObject) => {
     const loaded = this.pageLoaded(location.pathname) 
     if (!loaded) {
-      const page = await this.doFetch(location)
-      if (isPage(page)) {
-        this.pages = this.pages.concat(page)
-        this.onPageFetched(this.pages)
-      }
+      await this.fetchAndUpdate(location)
     }
   }
 
-  protected pageLoaded (path: string) {
-    return this.pages.find(x => x.path === path)!!
+  protected pageLoaded = (path: string) => {
+    const found = this.pages.find(x => x.path === path)
+    return !!found
   }
   
-  protected async doFetch (location: LocationDescriptorObject): Promise<any> {
-    const response = await fetch(this.locationToPath(location))
-    return response.json()
+  protected async fetchAndUpdate (location: LocationDescriptorObject): Promise<any> {
+    const path = this.locationToPath(location)
+    return inflight(path, async () => {
+      const response = await fetch(path)
+      const page = await response.json()
+      if (isPage(page)) {
+        this.pages = this.pages.concat(page)
+        this.onPageFetched(this.pages)
+      } else {
+        throw new Error(`💣 Fetched location was not a valid page: ${location.pathname}`)
+      }
+    })
   }
 
-  protected locationToPath (location: LocationDescriptorObject) {
+  protected locationToPath = (location: LocationDescriptorObject) => {
     if (typeof location.pathname !== 'string') {
       throw new Error('💣 You need a pathname for fecthing a page')
     }

@@ -1119,6 +1119,11 @@
   dependencies:
     "@types/webpack" "*"
 
+"@types/promise-inflight@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/promise-inflight/-/promise-inflight-1.0.0.tgz#3f391254c743015866182a8ae6f4d743b13006c4"
+  integrity sha512-R2lwwyFvS+DQmr0p6BBmI79K3VvwcunXWn+5LTrENGnmxMHV1h5LKQv3Rip1lTflVPh9Zjm4vinWfGq36oRuuw==
+
 "@types/prop-types@*":
   version "15.7.3"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"

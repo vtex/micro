@@ -217,3 +217,13 @@ export const prod = ({
     }
   }
 }
+
+export const dev = (config: WebpackBuildConfig): Configuration => {
+  const prodConf = prod(config)
+
+  return {
+    ...prodConf,
+    mode: 'development',
+    optimization: {}
+  }
+}

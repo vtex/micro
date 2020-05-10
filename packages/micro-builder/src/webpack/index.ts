@@ -7,7 +7,11 @@ import {
   target as nodeJSTarget
 } from './nodejs'
 import { mergeConfigs, WebpackBuildConfig } from './utils'
-import { prod as webNewProdConfig, target as webNewtarget } from './web-new'
+import {
+  dev as webNewDevConfig,
+  prod as webNewProdConfig,
+  target as webNewtarget
+} from './web-new'
 
 export class MicroWebpack {
   public stats: Stats.ToJsonOutput | null | undefined = null
@@ -22,7 +26,7 @@ export class MicroWebpack {
       [webNewtarget]: webNewProdConfig(this.buildConfig),
       [nodeJSTarget]: nodeJSProdConfig(this.buildConfig)
     } : {
-      [webNewtarget]: webNewProdConfig(this.buildConfig),
+      [webNewtarget]: webNewDevConfig(this.buildConfig),
       [nodeJSTarget]: nodeJSDevConfig(this.buildConfig)
     }
     const commonConfig = this.production

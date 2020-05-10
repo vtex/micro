@@ -13,7 +13,7 @@ import { middleware as headers } from './middlewares/headers'
 import { middleware as context } from './middlewares/navigate'
 import { middleware as router } from './middlewares/router'
 import { middleware as ssr } from './middlewares/ssr'
-import { Req, Res, Next } from './typings'
+import { Next, Req, Res } from './typings'
 
 const render = [
   headers,
@@ -46,17 +46,18 @@ const injectParams = (params: Record<string, string>) => async (req: Req, res: R
   next()
 }
 
-export const startServer = (
+export const startServer = async (
   project: Project,
   build: Build,
   port: number,
   host: string
 ) => {
+  const { production } = build
   const publicPaths = publicPathFromProject(project)
 
   const app = express()
 
-  app.use(logger(build.production ? 'tiny' : 'dev'))
+  app.use(logger(production ? 'tiny' : 'dev'))
   app.use(compress())
   app.use(injectState(build, project, publicPaths))
 

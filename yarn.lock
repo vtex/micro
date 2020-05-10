@@ -1795,7 +1795,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vtex/micro-builder@^1.1.1-alpha.0, @vtex/micro-builder@workspace:packages/micro-builder":
+"@vtex/micro-builder@^1.1.1-alpha.1, @vtex/micro-builder@workspace:packages/micro-builder":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-builder@workspace:packages/micro-builder"
   dependencies:
@@ -1838,7 +1838,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-cli@^1.1.1-alpha.0, @vtex/micro-cli@workspace:packages/micro-cli":
+"@vtex/micro-cli@^1.1.1-alpha.1, @vtex/micro-cli@workspace:packages/micro-cli":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-cli@workspace:packages/micro-cli"
   dependencies:
@@ -1846,8 +1846,8 @@ __metadata:
     "@types/glob": ^7.1.1
     "@types/ramda": ^0.27.4
     "@vtex/micro": ^1.1.1-alpha.0
-    "@vtex/micro-builder": ^1.1.1-alpha.0
-    "@vtex/micro-server": ^1.1.1-alpha.0
+    "@vtex/micro-builder": ^1.1.1-alpha.1
+    "@vtex/micro-server": ^1.1.1-alpha.1
     fs-extra: ^9.0.0
     glob: ^7.1.6
     nodemon: ^2.0.3
@@ -1902,7 +1902,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-server@^1.1.1-alpha.0, @vtex/micro-server@workspace:packages/micro-server":
+"@vtex/micro-server@^1.1.1-alpha.1, @vtex/micro-server@workspace:packages/micro-server":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-server@workspace:packages/micro-server"
   dependencies:
@@ -1919,7 +1919,7 @@ __metadata:
     "@types/react-router-dom": ^5.1.5
     "@types/webpack": ^4.41.12
     "@vtex/micro": ^1.1.1-alpha.0
-    "@vtex/micro-builder": ^1.1.1-alpha.0
+    "@vtex/micro-builder": ^1.1.1-alpha.1
     "@vtex/micro-react": ^1.1.1-alpha.0
     compression: ^1.7.4
     cookie-parser: ^1.4.5
@@ -9461,7 +9461,7 @@ fsevents@~2.1.2:
     "@types/react-dom": ^16.9.7
     "@types/uikit": ^3.3.0
     "@vtex/micro": ^1.1.1-alpha.0
-    "@vtex/micro-cli": ^1.1.1-alpha.0
+    "@vtex/micro-cli": ^1.1.1-alpha.1
     "@vtex/micro-react": ^1.1.1-alpha.0
     "@vtex/micro-router": ^1.1.1-alpha.0
     node-fetch: ^2.6.0

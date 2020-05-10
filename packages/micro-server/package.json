@@ -1,6 +1,6 @@
 {
   "name": "@vtex/micro-server",
-  "version": "1.1.0",
+  "version": "1.1.1-alpha.0",
   "license": "MIT",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -13,9 +13,9 @@
   "dependencies": {
     "@loadable/component": "^5.12.0",
     "@loadable/server": "^5.12.0",
-    "@vtex/micro": "^1.1.0",
-    "@vtex/micro-builder": "^1.1.0",
-    "@vtex/micro-react": "^1.1.0",
+    "@vtex/micro": "^1.1.1-alpha.0",
+    "@vtex/micro-builder": "^1.1.1-alpha.0",
+    "@vtex/micro-react": "^1.1.1-alpha.0",
     "koa": "^2.11.0",
     "koa-compress": "^4.0.0",
     "koa-logger": "^3.2.1",

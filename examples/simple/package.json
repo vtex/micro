@@ -27,5 +27,6 @@
     "@types/uikit": "^3.3.0",
     "typescript": "^3.8.3"
   },
-  "micro": {}
+  "micro": {},
+  "gitHead": "bc5c47250d07f57d1655ec6e6c98c7c58b6f789a"
 }

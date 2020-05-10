@@ -1,19 +1,19 @@
 import { Project } from '@vtex/micro'
 import { Build } from '@vtex/micro-builder'
 import { PublicPaths } from '@vtex/micro-react'
-import Koa, { Context, Next } from 'koa'
-import compress from 'koa-compress'
-import logger from 'koa-logger'
-import Router from 'koa-router'
+import compress from 'compression'
+import express from 'express'
+import logger from 'morgan'
 
 import { Extractor } from '../extractor'
 import { publicPathFromProject } from '../publicPath'
-import { featuresFromCtx } from './features'
+import { featuresFromReq } from './features'
 import { middleware as load } from './middlewares/assets'
 import { middleware as headers } from './middlewares/headers'
-import { middleware as ssr } from './middlewares/ssr'
-import { middleware as router } from './middlewares/router'
 import { middleware as context } from './middlewares/navigate'
+import { middleware as router } from './middlewares/router'
+import { middleware as ssr } from './middlewares/ssr'
+import { Req, Res, Next } from './typings'
 
 const render = [
   headers,
@@ -32,18 +32,18 @@ const navigation = [
   context
 ]
 
-const injectState = (build: Build, project: Project, publicPath: PublicPaths) => async (ctx: Context, next: Next) => {
-  const features = featuresFromCtx(ctx)
-  ctx.state = {
+const injectState = (build: Build, project: Project, publicPath: PublicPaths) => (req: Req, res: Res, next: Next) => {
+  const features = featuresFromReq(req)
+  res.locals = {
     features,
     server: new Extractor(build, project, publicPath)
   }
-  await next()
+  next()
 }
 
-const injectParams = (params: Record<string, string>) => async (ctx: Context, next: Next) => {
-  ctx.params = params
-  await next()
+const injectParams = (params: Record<string, string>) => async (req: Req, res: Res, next: Next) => {
+  req.params = params
+  next()
 }
 
 export const startServer = (
@@ -54,20 +54,16 @@ export const startServer = (
 ) => {
   const publicPaths = publicPathFromProject(project)
 
-  const app = new Koa()
+  const app = express()
 
-  const router = new Router()
-
-  app.use(logger())
+  app.use(logger(build.production ? 'tiny' : 'dev'))
   app.use(compress())
   app.use(injectState(build, project, publicPaths))
 
-  router.get('/favicon.ico', injectParams({ asset: 'favicon.ico' }), ...assets)
-  router.get(`${publicPaths.context}:path*`, ...navigation)
-  router.get(`${publicPaths.assets}:asset`, ...assets)
-  router.get('/:path*', ...render)
+  app.get('/favicon.ico', injectParams({ asset: 'favicon.ico' }), ...assets)
+  app.get(`${publicPaths.context}*`, ...navigation)
+  app.get(`${publicPaths.assets}:asset`, ...assets)
+  app.get('/*', ...render)
 
-  app.use(router.routes())
-  app.use(router.allowedMethods())
   app.listen(port, () => console.log(`🦄 Server is UP on ${host}`))
 }

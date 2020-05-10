@@ -1,19 +1,23 @@
 import { webNewTarget } from '@vtex/micro-builder'
-import { Next } from 'koa'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import express from 'express'
 
-import { Context } from '../typings'
-import { pathFromContext } from './../utils/path'
+import { Next, Req, Res } from '../typings'
+import { pathFromRequest } from './../utils/path'
 
-export const middleware = async (ctx: Context, next: Next) => {
+export const middleware = async (req: Req, res: Res, next: Next) => {
   const {
-    state: { server }
-  } = ctx
+    locals: { server }
+  } = res
   const userConfig = server.project.userConfig
   const webNewStats = server.getStatsForTarget(webNewTarget)
   const entries = webNewStats?.entrypoints
 
   // Should work in / and in /navigate middlewares
-  const path = pathFromContext(ctx)
+  const rootPath = req.path.startsWith(server.publicPaths.context)
+    ? server.publicPaths.context
+    : '/'
+  const path = pathFromRequest(req, rootPath)
 
   if (userConfig?.router && entries) {
     const { router } = userConfig
@@ -23,8 +27,8 @@ export const middleware = async (ctx: Context, next: Next) => {
       throw new Error(`💣 Entry not resovled for path ${path}`)
     }
 
-    ctx.state.server.resolvedEntry = resolvedEntry
+    res.locals.server.resolvedEntry = resolvedEntry
   }
 
-  await next()
+  next()
 }

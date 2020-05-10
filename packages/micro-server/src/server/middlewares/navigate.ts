@@ -1,9 +1,9 @@
-import { Context } from '../typings'
+import { Req, Res } from '../typings'
 
-export const middleware = async (ctx: Context) => {
+export const middleware = async (req: Req, res: Res) => {
   const {
-    state: { server: { resolvedEntry } }
-  } = ctx
+    locals: { server: { resolvedEntry } }
+  } = res
 
   if (!resolvedEntry) {
     throw new Error('💣 Something went wrong while navigating')
@@ -11,5 +11,6 @@ export const middleware = async (ctx: Context) => {
 
   const { context } = resolvedEntry
 
-  ctx.body = context
+  res.status(200)
+  res.send(context)
 }

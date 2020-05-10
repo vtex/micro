@@ -1,11 +1,15 @@
-import { ParameterizedContext } from 'koa'
-
-import { Features } from './features'
+import express from 'express'
 import { Extractor } from '../extractor'
+import { Features } from './features'
 
-interface RequestState {
+interface Locals {
   features: Features
   server: Extractor
 }
 
-export interface Context extends ParameterizedContext<RequestState> {}
+export type Res = Omit<express.Response, 'locals'> & {
+  locals: Locals
+}
+
+export type Req = express.Request
+export type Next = express.NextFunction

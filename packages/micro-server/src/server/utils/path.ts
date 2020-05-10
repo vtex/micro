@@ -1,3 +1,3 @@
-import { Context } from '../typings'
+import { Req } from '../typings'
 
-export const pathFromContext = (ctx: Context) => `/${ctx.params.path || ''}`
+export const pathFromRequest = (req: Req, rootPath: string = '') => req.path.replace(rootPath, '/')

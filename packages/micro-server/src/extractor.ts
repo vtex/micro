@@ -15,7 +15,7 @@ interface RequiredComponent {
 
 export class Extractor {
   private _extractors: Record<string, ChunkExtractor> | null = null
-  private publicPaths: PublicPaths
+  public publicPaths: PublicPaths
   public assetsPath: Record<string, string>
   public resolvedEntry: ResolvedEntry<any> = {
     entry: 'main',

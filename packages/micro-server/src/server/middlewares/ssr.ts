@@ -1,11 +1,12 @@
-import { Next } from 'koa'
 import React, { createElement } from 'react'
 import { renderToString } from 'react-dom/server'
 import ReactRouterDom, { StaticRouter } from 'react-router-dom'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import express from 'express'
 
 import { Extractor } from '../../extractor'
-import { Context } from '../typings'
-import { pathFromContext } from './../utils/path'
+import { Next, Req, Res } from '../typings'
+import { pathFromRequest } from './../utils/path'
 
 const ok = (
   server: Extractor,
@@ -30,13 +31,13 @@ ${server.getScriptTags()}
 ;(global as any).React = React
 ;(global as any).ReactRouterDom = ReactRouterDom
 
-export const middleware = async (ctx: Context, next: Next) => {
+export const middleware = (req: Req, res: Res, next: Next) => {
   const {
-    state: {
+    locals: {
       server,
       features: { disableSSR }
     }
-  } = ctx
+  } = res
   const {
     status,
     context
@@ -49,13 +50,13 @@ export const middleware = async (ctx: Context, next: Next) => {
     } = server.requirePage()
 
     const AppElement = createElement(App, { context } as any)
-    const WithRouter = createElement(StaticRouter, { children: AppElement, location: pathFromContext(ctx) } as any)
+    const WithRouter = createElement(StaticRouter, { children: AppElement, location: pathFromRequest(req) } as any)
 
     body = renderToString(server.collectChunks(WithRouter))
   }
 
-  ctx.body = ok(server, body)
-  ctx.status = status
+  res.status(status)
+  res.send(ok(server, body))
 
-  await next()
+  next()
 }

@@ -74,14 +74,12 @@ export const prod = ({
     /** Options affecting the resolving of modules. */
     resolve: {
       extensions: ['.tsx', '.ts', '.js', '.jsx', '.mjs', '.json'],
-      // modules: ['node_modules'],
       plugins: [
         PnpPlugin
       ]
     },
     /** Like resolve but for loaders. */
     resolveLoader: {
-      // modules: ['node_modules'],
       plugins: [
         PnpPlugin
       ]
@@ -161,6 +159,7 @@ export const dev = (config: WebpackBuildConfig): Configuration => {
   return {
     ...prodConf,
     mode: 'development',
+    devtool: 'inline-source-map',
     optimization: {}
   }
 }

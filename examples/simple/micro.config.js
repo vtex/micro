@@ -34,7 +34,7 @@ const loadDepOrBrandContext = ({ params: { search }}) => {
 }
  
 const logContext = msg => () => {
-  console.log(msg)
+  // console.log(msg)
   return null
 }
 

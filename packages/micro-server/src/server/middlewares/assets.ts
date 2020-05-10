@@ -1,17 +1,13 @@
 import { webNewTarget } from '@vtex/micro-builder'
 import { createReadStream } from 'fs'
-import { join } from 'path'
 import mime from 'mime-types'
+import { join } from 'path'
 
-import { Context } from '../typings'
+import { Req, Res } from '../typings'
 
-export const middleware = async (ctx: Context) => {
-  const {
-    state: {
-      server
-    },
-    params
-  } = ctx
+export const middleware = async (req: Req, res: Res) => {
+  const { locals: { server } } = res
+  const { params } = req
   const webNewStats = server.build.webpack.stats?.children?.find(({ name }) => name === 'web-new')
 
   if (!webNewStats) {
@@ -27,12 +23,12 @@ export const middleware = async (ctx: Context) => {
   // Set correctly the MIME type of the object
   const contentType = mime.contentType(assetPath)
   if (contentType) {
-    ctx.set('content-type', contentType)
+    res.set('content-type', contentType)
   }
 
   const asset = join(server.assetsPath[webNewTarget], assetPath)
   const stream = createReadStream(asset, {
     encoding: 'utf-8'
   })
-  ctx.body = stream
+  stream.pipe(res)
 }

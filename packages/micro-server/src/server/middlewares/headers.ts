@@ -1,13 +1,13 @@
-import { Next } from 'koa'
+import { Next, Req, Res } from '../typings'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import express from 'express'
 
-import { Context } from '../typings'
-
-export const middleware = async (ctx: Context, next: Next) => {
+export const middleware = (req: Req, res: Res, next: Next) => {
   try {
-    ctx.set('cache-control', 'max-age=1200, public')
-    await next()
+    res.set('cache-control', 'max-age=1200, public')
+    next()
   } catch (err) {
-    ctx.set('cache-control', 'max-age=10, public')
+    res.set('cache-control', 'max-age=10, public')
     throw err
   }
 }

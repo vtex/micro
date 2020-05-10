@@ -1,6 +1,6 @@
 {
   "name": "simple",
-  "version": "1.1.1-alpha.0",
+  "version": "1.1.1-alpha.1",
   "license": "MIT",
   "scripts": {
     "build": "yarn run micro-cli --project . --build",
@@ -10,7 +10,7 @@
   "dependencies": {
     "@loadable/component": "^5.12.0",
     "@vtex/micro": "^1.1.1-alpha.0",
-    "@vtex/micro-cli": "^1.1.1-alpha.0",
+    "@vtex/micro-cli": "^1.1.1-alpha.1",
     "@vtex/micro-react": "^1.1.1-alpha.0",
     "@vtex/micro-router": "^1.1.1-alpha.0",
     "node-fetch": "^2.6.0",

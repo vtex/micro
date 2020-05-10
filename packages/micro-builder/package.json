@@ -1,6 +1,6 @@
 {
   "name": "@vtex/micro-builder",
-  "version": "1.1.1-alpha.0",
+  "version": "1.1.1-alpha.1",
   "license": "MIT",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

@@ -8,7 +8,8 @@
   "scripts": {
     "build": "rm -rf dist && yarn run tsc",
     "watch": "rm -rf dist && yarn run tsc --watch",
-    "start": "nodemon --watch ./dist ./dist/micro.js"
+    "start": "nodemon --watch ./dist ./dist/micro.js",
+    "prepublish": "yarn build"
   },
   "dependencies": {
     "@loadable/component": "^5.12.0",

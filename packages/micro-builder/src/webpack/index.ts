@@ -4,7 +4,7 @@ import { dev as commonDevConfig, prod as commonProdConfig } from './common'
 import {
   dev as nodeJSDevConfig,
   prod as nodeJSProdConfig,
-  target as nodeJSTarget,
+  target as nodeJSTarget
 } from './nodejs'
 import { mergeConfigs, WebpackBuildConfig } from './utils'
 import { prod as webNewProdConfig, target as webNewtarget } from './web-new'
@@ -14,19 +14,19 @@ export class MicroWebpack {
 
   constructor (
     private buildConfig: WebpackBuildConfig,
-    private production: boolean,
+    private production: boolean
   ) {}
 
   public getConfig = async (): Promise<Configuration[]> => {
     const targetConfigs = this.production ? {
       [webNewtarget]: webNewProdConfig(this.buildConfig),
-      [nodeJSTarget]: nodeJSProdConfig(this.buildConfig),
+      [nodeJSTarget]: nodeJSProdConfig(this.buildConfig)
     } : {
       [webNewtarget]: webNewProdConfig(this.buildConfig),
-      [nodeJSTarget]: nodeJSDevConfig(this.buildConfig),
+      [nodeJSTarget]: nodeJSDevConfig(this.buildConfig)
     }
-    const commonConfig = this.production 
-      ? commonProdConfig(this.buildConfig) 
+    const commonConfig = this.production
+      ? commonProdConfig(this.buildConfig)
       : commonDevConfig(this.buildConfig)
 
     const microConfigs = Object.values(targetConfigs).map(
@@ -38,7 +38,7 @@ export class MicroWebpack {
     const configs = typeof userConfig?.webpack === 'function'
       ? microConfigs.map(userConfig.webpack)
       : microConfigs
-    
+
     return configs
   }
 
@@ -68,8 +68,10 @@ export class MicroWebpack {
     modules: false,
     source: false,
     errorDetails: false,
-    timings: false,
+    timings: false
   })
 
-  public hydrate = (stats: Stats.ToJsonOutput | null | undefined) => this.stats = stats
+  public hydrate = (stats: Stats.ToJsonOutput | null | undefined) => {
+    this.stats = stats
+  }
 }

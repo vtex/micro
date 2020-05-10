@@ -24,6 +24,6 @@ export const staticRouter = (routes: StaticRouterConfig[]): UserConfig['router']
     entry: route.entry,
     context,
     status: route.status,
-    path,
+    path
   })
 }

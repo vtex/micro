@@ -5,7 +5,7 @@ export const DEFAULT_BUILD_CONFIG = {
   },
   runtime: {
     name: 'micro-runtime',
-    test: /react$|react-dom|react-router|\@loadable/
+    test: /react$|react-dom|react-router|@loadable/
   },
   framework: {
     name: 'micro-framework',

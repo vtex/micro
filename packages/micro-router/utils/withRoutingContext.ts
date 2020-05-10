@@ -12,13 +12,13 @@ export const withRoutingContext = <T>({
   context,
   entry,
   status,
-  path,
+  path
 }: ResolvedEntry<T>): RouterResolvedEntry<T> => {
   return {
     context: {
       entrypoint: entry,
       path,
-      context,
+      context
     },
     entry,
     status,

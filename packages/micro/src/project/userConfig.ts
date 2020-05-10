@@ -27,16 +27,16 @@ export interface UserConfig {
 export const loadUserConfig = (projectPath: string) => {
   const scriptPath = join(projectPath, USER_CONFIG)
   const exists = pathExistsSync(scriptPath)
-  
+
   if (!exists) {
-    return null  
+    return null
   }
-  
+
   console.log(`🦄 Loading custom config from ${scriptPath}`)
   const userConfig = require(scriptPath)()
 
   if (typeof userConfig?.webpack === 'function') {
-    console.log(`💃 Custom webpack config found`)
+    console.log('💃 Custom webpack config found')
   }
 
   return userConfig as UserConfig

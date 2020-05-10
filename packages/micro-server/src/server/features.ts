@@ -5,7 +5,7 @@ export interface Features {
 }
 
 const DEFAULT_FEATURES: Features = {
-  disableSSR: false,
+  disableSSR: false
 }
 
 export const featuresFromCtx = (ctx: Context) => {

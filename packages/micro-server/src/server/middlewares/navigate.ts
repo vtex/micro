@@ -1,10 +1,6 @@
-import { Next } from 'koa'
-
 import { Context } from '../typings'
 
-const delay = (ms: number) => new Promise(r => setTimeout(r, ms))
-
-export const middleware = async (ctx: Context, next: Next) => {
+export const middleware = async (ctx: Context) => {
   const {
     state: { server: { resolvedEntry } }
   } = ctx

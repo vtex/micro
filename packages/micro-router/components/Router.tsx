@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import { FetchCurrentPage } from './Page'
 import { Page, PagesManager } from './Pages'
-import { Pages as PagesWeb, Pages } from './Pages/browser'
+import { Pages as PagesWeb } from './Pages/browser'
 import { Pages as PagesSSR } from './Pages/ssr'
 
 export interface PageProps {
@@ -15,7 +15,6 @@ export interface PageProps {
 export interface AsyncPageProps extends PageProps {
   entrypoint: string
 }
-
 
 interface RouterProps {
   context: Page
@@ -30,14 +29,14 @@ const pagesSSR = new PagesSSR()
 
 export const withRouter = (
   InitialPage: React.ElementType<PageProps>,
-  AsyncPage: LoadableComponent<AsyncPageProps>,
+  AsyncPage: LoadableComponent<AsyncPageProps>
 ): React.SFC<RouterProps> => {
-  return ({ context, error }) => {
+  return ({ context }) => {
     const runtime = useContext(Runtime)
     const [pages, setPages] = useState([] as Page[])
-    
+
     pagesWeb.initialize(runtime, setPages, context)
-    
+
     if (canUseDOM) {
       return (
         <PagesContext.Provider value={pagesWeb}>
@@ -48,11 +47,11 @@ export const withRouter = (
               </Route>
 
               {pages.map(({ path, context, entrypoint }) => (
-                <Route exact path={path}>
+                <Route exact path={path} key={path}>
                   <AsyncPage entrypoint={entrypoint} context={context} fallback={<div>loading...</div>}/>
                 </Route>
               ))}
-              
+
               {/* No Route Match, let's fetch this page */}
               <Route path="*">
                 <FetchCurrentPage>

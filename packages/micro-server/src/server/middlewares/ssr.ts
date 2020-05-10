@@ -9,7 +9,7 @@ import { pathFromContext } from './../utils/path'
 
 const ok = (
   server: Extractor,
-  body: string,
+  body: string
 ) => `
 <!DOCTYPE html>
 <html>
@@ -31,24 +31,23 @@ ${server.getScriptTags()}
 ;(global as any).ReactRouterDom = ReactRouterDom
 
 export const middleware = async (ctx: Context, next: Next) => {
-  const { 
-    state: { 
+  const {
+    state: {
       server,
-      features: { disableSSR },
-    } 
+      features: { disableSSR }
+    }
   } = ctx
   const {
     status,
     context
   } = server.resolvedEntry
   let body = ''
-  
+
   if (!disableSSR) {
-    const { 
+    const {
       default: App
     } = server.requirePage()
 
-    
     const AppElement = createElement(App, { context } as any)
     const WithRouter = createElement(StaticRouter, { children: AppElement, location: pathFromContext(ctx) } as any)
 

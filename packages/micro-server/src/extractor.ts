@@ -1,10 +1,17 @@
 import { ChunkExtractor } from '@loadable/server'
 import { Project, ResolvedEntry } from '@vtex/micro'
 import { Build, nodeJSTarget, webNewTarget } from '@vtex/micro-builder'
+import { PageData, PublicPaths, Runtime } from '@vtex/micro-react'
 import { join } from 'path'
-import { PublicPaths, Runtime, PageData } from '@vtex/micro-react'
+import React from 'react'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Stats } from 'webpack'
 
 import { publicPathFromProject } from './publicPath'
+
+interface RequiredComponent {
+  default: React.ComponentType
+}
 
 export class Extractor {
   private _extractors: Record<string, ChunkExtractor> | null = null
@@ -14,10 +21,10 @@ export class Extractor {
     entry: 'main',
     context: null,
     status: 200,
-    path: '/',
+    path: '/'
   }
 
-  constructor(
+  constructor (
     public build: Build,
     public project: Project,
     publicPath?: PublicPaths,
@@ -25,15 +32,15 @@ export class Extractor {
   ) {
     this.assetsPath = {
       [webNewTarget]: join(this.project.root, this.build.buildDir, webNewTarget),
-      [nodeJSTarget]: join(this.project.root, this.build.buildDir, nodeJSTarget),
+      [nodeJSTarget]: join(this.project.root, this.build.buildDir, nodeJSTarget)
     }
     this.publicPaths = publicPath || publicPathFromProject(this.project)
-    
+
     this.runtime.setRuntime({
       paths: this.publicPaths
     })
   }
-  
+
   get extractors () {
     if (!this._extractors) {
       if (!this.resolvedEntry) {
@@ -62,7 +69,7 @@ export class Extractor {
     return this._extractors
   }
 
-  public requirePage = () => this.extractors[nodeJSTarget].requireEntrypoint()
+  public requirePage = () => this.extractors[nodeJSTarget].requireEntrypoint() as RequiredComponent
 
   public collectChunks = (element: JSX.Element) => this.extractors[webNewTarget].collectChunks(element)
 
@@ -80,10 +87,10 @@ export class Extractor {
 
   public getLinkTags = () => {
     let linkTags = this.extractors[webNewTarget].getLinkTags()
-    
+
     const { path, entry } = this.resolvedEntry
     if (path && entry) {
-      linkTags = linkTags + `\n` + new PageData().getLinkTags({entry, path, publicPaths: this.publicPaths})
+      linkTags = linkTags + '\n' + new PageData().getLinkTags({ entry, path, publicPaths: this.publicPaths })
     }
 
     return linkTags

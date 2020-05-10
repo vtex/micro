@@ -46,7 +46,7 @@ export const resolveMicroPackages = (projectPath: string, manifest: Manifest) =>
   }
 
   if (manifest.dependencies) {
-    for(const dep in manifest.dependencies) {
+    for (const dep in manifest.dependencies) {
       try {
         const packagePath = resolvePackage(projectPath, dep)
         const manifest = loadManifest(packagePath)

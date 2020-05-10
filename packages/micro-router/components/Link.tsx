@@ -9,9 +9,9 @@ type ReactRouterLinkType = typeof ReactRouterLink
 export const Link: ReactRouterLinkType = ({ children, to, ...rest }) => {
   const pages = useContext(PagesContext)
   const currentLocation = useLocation()
-  
+
   useEffect(
-    () => { pages.prefetch(locationFromProps(to, currentLocation)) }, 
+    () => { pages.prefetch(locationFromProps(to, currentLocation)) },
     [currentLocation]
   )
 

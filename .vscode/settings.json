@@ -1,0 +1,5 @@
+{
+  "typescript.tsdk": ".vscode/pnpify/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "eslint.nodePath": ".vscode/pnpify"
+}

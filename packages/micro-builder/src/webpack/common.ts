@@ -4,6 +4,7 @@ import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'
 import { basename } from 'path'
 import TerserJSPlugin from 'terser-webpack-plugin'
 import { Configuration } from 'webpack'
+import PnpPlugin from 'pnp-webpack-plugin'
 
 import { WebpackBuildConfig } from './utils'
 
@@ -17,13 +18,12 @@ const entriesFromPages = (pages: string[]) => pages.reduce(
 )
 
 export const prod = ({
-  project: { root: projectPath, pages }, 
+  project: { root: projectPath, pages },
   publicPath: { path }
 }: WebpackBuildConfig): Configuration => {
-
   return {
     /** Enable production optimizations or development hints. */
-    mode: "production",
+    mode: 'production',
     /**
      * The base directory (absolute path!) for resolving the `entry` option.
      * If `output.pathinfo` is set, the included pathinfo is shortened to this directory.
@@ -43,40 +43,48 @@ export const prod = ({
           test: /\.css$/,
           use: [
             {
-              loader: MiniCssExtractPlugin.loader,
+              loader: require.resolve(MiniCssExtractPlugin.loader),
               options: {
-                esModule: true,
-              },
+                esModule: true
+              }
             },
-            'css-loader'
-          ],
+            {
+              loader: require.resolve('css-loader')
+            }
+          ]
         },
         {
           test: /\.(png|svg|jpg|gif)$/,
           use: [
             {
-              loader: 'file-loader',
+              loader: require.resolve('file-loader'),
               options: {
-                publicPath: path,
+                publicPath: path
               }
             }
-          ],
+          ]
         },
         {
           test: /\.mjs$/,
           include: /node_modules/,
-          type: "javascript/auto",
+          type: 'javascript/auto'
         }
       ]
     },
     /** Options affecting the resolving of modules. */
     resolve: {
-      extensions: ['.tsx', '.ts', '.js', '.jsx', ".mjs", ".json"],
-      modules: ['node_modules']
+      extensions: ['.tsx', '.ts', '.js', '.jsx', '.mjs', '.json'],
+      // modules: ['node_modules'],
+      plugins: [
+        PnpPlugin
+      ]
     },
     /** Like resolve but for loaders. */
     resolveLoader: {
-      modules: ['node_modules']
+      // modules: ['node_modules'],
+      plugins: [
+        PnpPlugin
+      ]
     },
     /**
      * Specify dependencies that shouldn’t be resolved by webpack, but should become dependencies of the resulting bundle.
@@ -123,7 +131,7 @@ export const prod = ({
       new LoadablePlugin({
         outputAsset: false,
         writeToDisk: false
-      }) 
+      })
     ],
     /** Stats options for logging  */
     // stats?: Options.Stats;
@@ -139,14 +147,13 @@ export const prod = ({
         }),
         new OptimizeCSSAssetsPlugin({
           cssProcessorPluginOptions: {
-            preset: ['default', { discardComments: { removeAll: true } }],
-          },
+            preset: ['default', { discardComments: { removeAll: true } }]
+          }
         })
-      ],
-    },
+      ]
+    }
   }
 }
-
 
 export const dev = (config: WebpackBuildConfig): Configuration => {
   const prodConf = prod(config)
@@ -154,6 +161,6 @@ export const dev = (config: WebpackBuildConfig): Configuration => {
   return {
     ...prodConf,
     mode: 'development',
-    optimization: {},
+    optimization: {}
   }
 }

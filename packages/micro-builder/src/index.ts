@@ -1,11 +1,12 @@
 import { Project } from '@vtex/micro'
 import { emptyDir, outputJSON, readJSON } from 'fs-extra'
 import { join } from 'path'
+import { Stats } from 'webpack'
 
 import {
   BUILD_STATE_FILE,
   DEFAULT_BUILD_CONFIG,
-  MICRO_BUILD_DIR,
+  MICRO_BUILD_DIR
 } from './constants'
 import { MicroWebpack } from './webpack'
 import { WebpackBuildConfig } from './webpack/utils'
@@ -20,11 +21,11 @@ export class Build {
   public buildConfig: WebpackBuildConfig
   public webpack: MicroWebpack
 
-  constructor(
+  constructor (
     public production: boolean,
     project: Project,
     buildConfig?: WebpackBuildConfig,
-    public buildDir: string = MICRO_BUILD_DIR,
+    public buildDir: string = MICRO_BUILD_DIR
   ) {
     this.root = join(project.root, buildDir)
 
@@ -45,8 +46,9 @@ export class Build {
   }
 
   public serialize = () => {
-    const statsJSON = this.webpack.serialize()
+    const statsJSON: Stats.ToJsonOutput | undefined | null = this.webpack.serialize()
     const {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       project,
       ...partialBuildConfig
     } = this.buildConfig
@@ -54,7 +56,7 @@ export class Build {
     return {
       statsJSON,
       partialBuildConfig,
-      production,
+      production
     }
   }
 }
@@ -71,12 +73,12 @@ export const saveBuildState = async (build: Build) => {
 
 export const loadBuild = async (project: Project, buildDir: string = MICRO_BUILD_DIR) => {
   const dir = join(buildDirFromProject(project, buildDir), BUILD_STATE_FILE)
-  const { 
-    statsJSON, 
-    partialBuildConfig, 
-    production 
+  const {
+    statsJSON,
+    partialBuildConfig,
+    production
   }: ReturnType<Build['serialize']> = await readJSON(dir)
-  
+
   const buildConfig = {
     project,
     ...partialBuildConfig

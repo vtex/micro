@@ -9,9 +9,9 @@ const ensureProject = async (path: string) => {
 }
 
 const pickFromArgv = (argv: string[], target: string) => {
-  const index = argv.findIndex(x => x === target) 
-  if (-1 < index && index < argv.length - 1) {
-    return argv[index+1]
+  const index = argv.findIndex(x => x === target)
+  if (index > -1 && index < argv.length - 1) {
+    return argv[index + 1]
   } else if (index === argv.length - 1) {
     return true
   }
@@ -23,7 +23,7 @@ export const parseOptions = async () => {
   const production = !pickFromArgv(process.argv, '--dev')
   const serve = pickFromArgv(process.argv, '--serve')
   const build = pickFromArgv(process.argv, '--build')
-  
+
   const fullPath = typeof projectPath === 'string' && join(process.cwd(), projectPath)
   if (fullPath) {
     await ensureProject(fullPath)

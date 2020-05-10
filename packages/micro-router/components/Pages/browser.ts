@@ -1,8 +1,8 @@
 import { join, RuntimeData } from '@vtex/micro-react'
 import { LocationDescriptorObject } from 'history'
-import inflight from 'promise-inflight'
 
-import { isPage, OnPageFetched, Page, PagesManager } from './index'
+import { isPage, OnPageFetched, Page, PagesManager } from '.'
+import { inflight } from '../../utils/inflight'
 
 export class Pages extends PagesManager {
   public pages: Page[] = []
@@ -26,7 +26,7 @@ export class Pages extends PagesManager {
   }
 
   public fetch = async (location: LocationDescriptorObject) => {
-    const loaded = this.pageLoaded(location.pathname) 
+    const loaded = this.pageLoaded(location.pathname)
     if (!loaded) {
       await this.fetchAndUpdate(location)
     }
@@ -36,7 +36,7 @@ export class Pages extends PagesManager {
     const found = this.pages.find(x => x.path === path)
     return !!found
   }
-  
+
   protected async fetchAndUpdate (location: LocationDescriptorObject): Promise<any> {
     const path = this.locationToPath(location)
     return inflight(path, async () => {

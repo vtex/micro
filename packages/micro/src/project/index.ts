@@ -16,7 +16,7 @@ export class Project {
   public _microPackages: Record<string, string[]> = {}
   public _pages: string[] = []
 
-  constructor({ projectPath }: Options) {
+  constructor ({ projectPath }: Options) {
     this.root = projectPath
   }
 
@@ -42,14 +42,14 @@ export class Project {
   }
 
   get files () {
-    if (this._files.length == 0) {
+    if (this._files.length === 0) {
       this._files = Object.values(this.microPackages).flat()
     }
     return this._files
   }
 
   get pages () {
-    if (this._pages.length == 0) { 
+    if (this._pages.length === 0) {
       this._pages = resolvePages(this.root)
       this._pages.forEach(page => console.log(
         `📄 Page Found: ${page}`

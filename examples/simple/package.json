@@ -8,12 +8,15 @@
     "dev": "yarn run micro-cli --project . --dev"
   },
   "dependencies": {
+    "@loadable/component": "^5.12.0",
     "@vtex/micro": "^1.1.0",
     "@vtex/micro-cli": "^1.1.0",
     "@vtex/micro-react": "^1.1.0",
     "@vtex/micro-router": "^1.1.0",
     "node-fetch": "^2.6.0",
     "purgecss-webpack-plugin": "^2.1.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "uikit": "^3.4.2"
   },
   "devDependencies": {

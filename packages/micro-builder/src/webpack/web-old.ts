@@ -11,7 +11,7 @@
 // export const toBuildPath = (baseRoot: string) => join(baseRoot, target)
 
 // export const prod = ({
-//   root: buildDir, 
+//   root: buildDir,
 //   project: { files },
 // }: WebpackBuildConfig): Configuration => {
 

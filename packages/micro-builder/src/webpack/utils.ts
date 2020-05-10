@@ -36,7 +36,7 @@ export const mergeConfigs = (a: Configuration, b: Configuration) => mergeDeepWit
     } else {
       return b
     }
-  }, 
-  a, 
+  },
+  a,
   b
 ) as Configuration

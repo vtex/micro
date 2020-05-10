@@ -11,10 +11,10 @@ export const middleware = async (ctx: Context, next: Next) => {
   const userConfig = server.project.userConfig
   const webNewStats = server.getStatsForTarget(webNewTarget)
   const entries = webNewStats?.entrypoints
-  
+
   // Should work in / and in /navigate middlewares
   const path = pathFromContext(ctx)
-  
+
   if (userConfig?.router && entries) {
     const { router } = userConfig
     const resolvedEntry = await router(path, entries)
@@ -25,6 +25,6 @@ export const middleware = async (ctx: Context, next: Next) => {
 
     ctx.state.server.resolvedEntry = resolvedEntry
   }
-    
+
   await next()
 }

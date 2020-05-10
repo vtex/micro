@@ -11,10 +11,9 @@ export const target = 'nodejs'
 export const toBuildPath = (baseRoot: string) => join(baseRoot, target)
 
 export const prod = ({
-  root: buildDir, 
+  root: buildDir,
   project: { files }
 }: WebpackBuildConfig): Configuration => {
-
   return {
     /** Enable production optimizations or development hints. */
     mode: 'production',
@@ -31,7 +30,7 @@ export const prod = ({
     /** Options affecting the output. */
     output: {
       path: toBuildPath(buildDir),
-      libraryTarget: 'commonjs2',
+      libraryTarget: 'commonjs2'
     },
     /** Options affecting the normal modules (NormalModuleFactory) */
     module: {
@@ -40,7 +39,7 @@ export const prod = ({
           test: /\.tsx?$/,
           exclude: excludeFromModules(files),
           use: {
-            loader: 'babel-loader',
+            loader: require.resolve('babel-loader'),
             options: {
               comments: true,
               minified: false,
@@ -49,15 +48,15 @@ export const prod = ({
               caller: { target },
               presets: [
                 [
-                  '@babel/preset-env', {
+                  require.resolve('@babel/preset-env'), {
                     targets: {
-                      node: process.versions.node,
+                      node: process.versions.node
                     },
-                    /** 
+                    /**
                      * Here are unicorns ! 🦄
-                     * If we change this line to `modules: 'commonjs'`, babel will replace `import` to 
+                     * If we change this line to `modules: 'commonjs'`, babel will replace `import` to
                      * `require` statments. Doing this webpack won't dynamic import modules and we will
-                     *  end up rendering the whole page in SSR. The bad news is that this will thus, 
+                     *  end up rendering the whole page in SSR. The bad news is that this will thus,
                      * generate a HUGE monolitical entrypoint for being required during the SSR
                     */
                     modules: false,
@@ -71,16 +70,16 @@ export const prod = ({
                       '@babel/plugin-transform-for-of',
                       '@babel/plugin-transform-spread',
                       '@babel/plugin-transform-typeof-symbol'
-                    ],
-                  },
+                    ]
+                  }
                 ],
                 [
-                  '@babel/preset-react', {
+                  require.resolve('@babel/preset-react'), {
                     useBuiltIns: true
                   }
                 ],
                 [
-                  '@babel/preset-typescript', {
+                  require.resolve('@babel/preset-typescript'), {
                     isTSX: true,
                     allExtensions: true
                   }
@@ -90,11 +89,11 @@ export const prod = ({
                 '@babel/plugin-proposal-class-properties',
                 '@babel/plugin-proposal-optional-chaining',
                 '@babel/plugin-syntax-dynamic-import',
-                '@loadable/babel-plugin',
-              ]
-            },
+                '@loadable/babel-plugin'
+              ].map(require.resolve as any)
+            }
           }
-        },
+        }
       ]
     },
     /** Options affecting the resolving of modules. */
@@ -113,10 +112,10 @@ export const prod = ({
      */
     externals: [
       {
-        'react': 'root React',
+        react: 'root React',
         'react-router-dom': 'root ReactRouterDom',
         'react-dom': 'commonjs2 react-dom',
-        '@loadable/component': 'commonjs2 @loadable/component',
+        '@loadable/component': 'commonjs2 @loadable/component'
       }
     ],
     /**
@@ -161,11 +160,11 @@ export const prod = ({
         logger: (str: any) => console.log(`>> ${str}`)
       }),
       new MiniCssExtractPlugin({
-        filename: "[name].css",
+        filename: '[name].css'
       }),
       new PurgeCSSPlugin({
         paths: files
-      }),
+      })
     ],
     /** Stats options for logging  */
     // stats?: Options.Stats;
@@ -184,6 +183,6 @@ export const dev = (config: WebpackBuildConfig): Configuration => {
   return {
     ...prodConf,
     mode: 'development',
-    optimization: {},
+    optimization: {}
   }
 }

@@ -1,4 +1,4 @@
-import { RuntimeData } from '@vtex/micro-react'
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { LocationDescriptorObject } from 'history'
 
 import { PagesManager } from './index'
@@ -8,7 +8,7 @@ export class Pages extends PagesManager {
     throw new Error('💣 Prefetch Page Not Allowed in SSR')
   }
 
-  public async fetch(location: LocationDescriptorObject) {
+  public async fetch (location: LocationDescriptorObject) {
     throw new Error('💣 Prefetch Page Not Allowed in SSR')
   }
 }

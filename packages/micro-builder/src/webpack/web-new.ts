@@ -13,7 +13,7 @@ export const target = 'web-new'
 export const toBuildPath = (baseRoot: string) => join(baseRoot, target)
 
 export const prod = ({
-  root: buildDir, 
+  root: buildDir,
   project: { files, root },
   publicPath: {
     variable
@@ -27,7 +27,6 @@ export const prod = ({
     test: frameworkTest
   }
 }: WebpackBuildConfig): Configuration => {
-
   return {
     /** Enable production optimizations or development hints. */
     // mode: "production",
@@ -44,7 +43,7 @@ export const prod = ({
     /** Options affecting the output. */
     output: {
       path: toBuildPath(buildDir),
-      publicPath: '/assets',
+      publicPath: '/assets'
     },
     /** Options affecting the normal modules (NormalModuleFactory) */
     module: {
@@ -53,12 +52,12 @@ export const prod = ({
           test: /\.tsx?$/,
           exclude: excludeFromModules(files),
           use: {
-            loader: 'babel-loader',
+            loader: require.resolve('babel-loader'),
             options: {
               caller: { target },
               presets: [
                 [
-                  '@babel/preset-env', {
+                  require.resolve('@babel/preset-env'), {
                     targets: {
                       esmodules: true
                     },
@@ -77,12 +76,12 @@ export const prod = ({
                   }
                 ],
                 [
-                  '@babel/preset-react', {
+                  require.resolve('@babel/preset-react'), {
                     useBuiltIns: true
                   }
                 ],
                 [
-                  '@babel/preset-typescript', {
+                  require.resolve('@babel/preset-typescript'), {
                     isTSX: true,
                     allExtensions: true
                   }
@@ -91,11 +90,11 @@ export const prod = ({
               plugins: [
                 '@babel/plugin-proposal-class-properties',
                 '@babel/plugin-syntax-dynamic-import',
-                '@loadable/babel-plugin',
-              ]
-            },
+                '@loadable/babel-plugin'
+              ].map(require.resolve as any)
+            }
           }
-        },
+        }
       ]
     },
     /** Options affecting the resolving of modules. */
@@ -155,7 +154,7 @@ export const prod = ({
         logger: (str: any) => console.log(`>> ${str}`)
       }),
       new MiniCssExtractPlugin({
-        filename: '[name].css',
+        filename: '[name].css'
       }),
       new PurgeCSSPlugin({
         paths: files
@@ -166,7 +165,7 @@ export const prod = ({
       // Plugin to Copy Favicon.ico
       new CopyPlugin([
         { from: join(root, 'assets/favicon.ico'), to: toBuildPath(buildDir) }
-      ]),
+      ])
     ],
     /** Stats options for logging  */
     // stats?: Options.Stats;
@@ -197,7 +196,7 @@ export const prod = ({
             chunks: 'all',
             enforce: true
           }
-        } 
+        }
       },
       noEmitOnErrors: true,
       namedModules: false,

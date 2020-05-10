@@ -1,4 +1,5 @@
-import { join, RuntimeData } from '@vtex/micro-react'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { RuntimeData } from '@vtex/micro-react'
 import { LocationDescriptorObject } from 'history'
 
 export interface Page {
@@ -7,7 +8,7 @@ export interface Page {
   context: any
 }
 
-export const isPage = (obj: any): obj is Page => 
+export const isPage = (obj: any): obj is Page =>
   typeof obj.entrypoint === 'string' &&
   typeof obj.path === 'string'
 
@@ -20,18 +21,17 @@ export abstract class PagesManager {
   public initialize (
     runtime: RuntimeData,
     onPageFetched: OnPageFetched,
-    initalPage?: Page
+    _initalPage?: Page
   ) {
     this.runtime = runtime
     this.onPageFetched = onPageFetched
   }
 
-  public async prefetch (location: LocationDescriptorObject) {
+  public async prefetch (_: LocationDescriptorObject) {
     throw new Error('💣 Prefetch Page Not Implemented')
   }
 
-  public async fetch(location: LocationDescriptorObject) {
+  public async fetch (_: LocationDescriptorObject) {
     throw new Error('💣 Fetch Page Not Implemented')
   }
 }
-

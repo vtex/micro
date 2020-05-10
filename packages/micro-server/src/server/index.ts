@@ -18,18 +18,18 @@ import { middleware as context } from './middlewares/navigate'
 const render = [
   headers,
   router,
-  ssr,
+  ssr
 ]
 
 const assets = [
   headers,
-  load,
+  load
 ]
 
 const navigation = [
   headers,
   router,
-  context,
+  context
 ]
 
 const injectState = (build: Build, project: Project, publicPath: PublicPaths) => async (ctx: Context, next: Next) => {
@@ -47,22 +47,22 @@ const injectParams = (params: Record<string, string>) => async (ctx: Context, ne
 }
 
 export const startServer = (
-  project: Project, 
-  build: Build, 
+  project: Project,
+  build: Build,
   port: number,
   host: string
 ) => {
   const publicPaths = publicPathFromProject(project)
 
   const app = new Koa()
-  
-  const router = new Router
-  
+
+  const router = new Router()
+
   app.use(logger())
   app.use(compress())
   app.use(injectState(build, project, publicPaths))
 
-  router.get('/favicon.ico', injectParams({asset: 'favicon.ico'}), ...assets)
+  router.get('/favicon.ico', injectParams({ asset: 'favicon.ico' }), ...assets)
   router.get(`${publicPaths.context}:path*`, ...navigation)
   router.get(`${publicPaths.assets}:asset`, ...assets)
   router.get('/:path*', ...render)

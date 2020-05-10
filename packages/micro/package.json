@@ -10,7 +10,14 @@
     "start": "nodemon --watch ./dist ./dist/micro.js"
   },
   "devDependencies": {
+    "@types/fs-extra": "^8.1.0",
+    "@types/glob": "^7.1.1",
+    "@types/webpack": "^4.41.12",
     "nodemon": "^2.0.3",
     "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "fs-extra": "^9.0.0",
+    "glob": "^7.1.6"
   }
 }

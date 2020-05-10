@@ -1987,7 +1987,7 @@ __metadata:
     "@types/webpack": ^4.41.12
     "@vtex/micro": ^1.1.0
     "@vtex/micro-builder": ^1.1.0
-    "@vtex/micro-react": "workspace:packages/micro-react"
+    "@vtex/micro-react": ^1.1.0
     koa: ^2.11.0
     koa-compress: ^4.0.0
     koa-logger: ^3.2.1

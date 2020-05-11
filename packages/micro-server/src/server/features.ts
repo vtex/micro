@@ -1,4 +1,4 @@
-import { JSONCookie } from 'cookie-parser'
+import cookie from 'cookie'
 
 import { Req } from './typings'
 
@@ -11,9 +11,10 @@ const DEFAULT_FEATURES: Features = {
 }
 
 export const featuresFromReq = (req: Req) => {
-  const cookie = req.headers.cookie
-  if (cookie) {
-    const maybeFeatures = JSONCookie(cookie)
+  const cookies = req.headers.cookie
+  const maybeFeaturesStr = cookies && cookie.parse(cookies)?.['micro-features']
+  if (maybeFeaturesStr) {
+    const maybeFeatures = JSON.parse(maybeFeaturesStr)
     return {
       ...DEFAULT_FEATURES,
       ...maybeFeatures

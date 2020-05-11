@@ -1,7 +1,7 @@
 import 'uikit/dist/css/uikit.css'
 
 import loadable from '@loadable/component'
-import React, { Fragment } from 'react'
+import React from 'react'
 
 import Layout from '../Layout'
 
@@ -16,6 +16,7 @@ interface Props {
 }
 
 const Page: React.SFC<Props> = ({ context }) => {
+  console.log(context)
   return (
     <Layout>
       <BellowTheFold fallback={<div className="uk-position-center" uk-spinner="ratio: 2"> loading ... </div>}/>

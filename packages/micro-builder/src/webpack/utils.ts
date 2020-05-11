@@ -40,3 +40,14 @@ export const mergeConfigs = (a: Configuration, b: Configuration) => mergeDeepWit
   a,
   b
 ) as Configuration
+
+export const publicPathFromProject = (project: Project) => {
+  const {
+    manifest: { name, version }
+  } = project
+
+  return {
+    assets: `/assets/${name}/${version}/`,
+    context: `/context/${name}/${version}/`
+  }
+}

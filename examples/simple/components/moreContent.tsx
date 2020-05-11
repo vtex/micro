@@ -11,7 +11,7 @@ export const MoreContent: React.SFC = () => {
         </a>
       </h1>
       <p className="uk-article-meta">
-        Written by <a href="#">Super User</a> on 12 April 2012. Posted in{" "}
+        Written by <a href="#">Super User</a> on 12 April 2012. Posted in
         <a href="#">Blog</a>
       </p>
       <p className="uk-text-lead" onClick={sayHi}>

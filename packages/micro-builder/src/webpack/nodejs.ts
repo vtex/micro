@@ -179,10 +179,21 @@ export const prod = ({
 
 export const dev = (config: WebpackBuildConfig): Configuration => {
   const prodConf = prod(config)
+  const {
+    project: { files }
+  } = config
 
   return {
     ...prodConf,
     mode: 'development',
+    plugins: [
+      new MiniCssExtractPlugin({
+        filename: '[name].css'
+      }),
+      new PurgeCSSPlugin({
+        paths: files
+      })
+    ],
     optimization: {}
   }
 }

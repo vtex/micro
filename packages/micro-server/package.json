@@ -17,7 +17,7 @@
     "@vtex/micro-builder": "^1.1.1-alpha.1",
     "@vtex/micro-react": "^1.1.1-alpha.0",
     "compression": "^1.7.4",
-    "cookie-parser": "^1.4.5",
+    "cookie": "^0.4.1",
     "express": "^4.17.1",
     "mime-types": "^2.1.27",
     "morgan": "^1.10.0",
@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@types/compression": "^1.7.0",
-    "@types/cookie-parser": "^1.4.2",
+    "@types/cookie": "^0.3.3",
     "@types/express": "^4.17.6",
     "@types/loadable__server": "^5.12.1",
     "@types/mime-types": "^2.1.0",
@@ -37,8 +37,10 @@
     "@types/react-dom": "^16.9.7",
     "@types/react-router-dom": "^5.1.5",
     "@types/webpack": "^4.41.12",
+    "@types/webpack-dev-middleware": "^3.7.0",
     "nodemon": "^2.0.3",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "webpack-dev-middleware": "^3.7.2"
   },
   "gitHead": "bc5c47250d07f57d1655ec6e6c98c7c58b6f789a"
 }

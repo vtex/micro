@@ -12,10 +12,13 @@
     "prepublish": "yarn build"
   },
   "dependencies": {
+    "@hot-loader/react-dom": "^16.13.0",
     "@loadable/component": "^5.12.0",
+    "@types/react-hot-loader": "^4.1.1",
     "exenv": "^1.2.2",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-hot-loader": "^4.12.21"
   },
   "devDependencies": {
     "@types/exenv": "^1.2.0",

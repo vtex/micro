@@ -3,7 +3,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'
 import { basename } from 'path'
 import TerserJSPlugin from 'terser-webpack-plugin'
-import { Configuration } from 'webpack'
+import { Configuration, DefinePlugin } from 'webpack'
 import PnpPlugin from 'pnp-webpack-plugin'
 
 import { WebpackBuildConfig } from './utils'
@@ -129,10 +129,22 @@ export const prod = ({
       new LoadablePlugin({
         outputAsset: false,
         writeToDisk: false
+      }),
+      new DefinePlugin({
+        'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`
       })
     ],
     /** Stats options for logging  */
-    // stats?: Options.Stats;
+    stats: {
+      hash: true,
+      publicPath: true,
+      assets: true,
+      chunks: false,
+      modules: false,
+      source: false,
+      errorDetails: false,
+      timings: false
+    },
     /** Performance options */
     // performance?: Options.Performance | false;
     /** Limit the number of parallel processed modules. Can be used to fine tune performance or to get more reliable profiling results */
@@ -154,12 +166,26 @@ export const prod = ({
 }
 
 export const dev = (config: WebpackBuildConfig): Configuration => {
+  const { root: buildDir } = config
   const prodConf = prod(config)
 
   return {
     ...prodConf,
     mode: 'development',
     devtool: 'inline-source-map',
+    watchOptions: {
+      ignored: `${buildDir}/**`,
+      aggregateTimeout: 300
+    },
+    plugins: [
+      new LoadablePlugin({
+        outputAsset: false,
+        writeToDisk: false
+      }),
+      new DefinePlugin({
+        'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`
+      })
+    ],
     optimization: {}
   }
 }

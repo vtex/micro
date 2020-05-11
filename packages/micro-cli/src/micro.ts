@@ -13,18 +13,21 @@ const main = async () => {
 
   const project = new Project({ projectPath })
 
+  process.env.NODE_ENV = production ? 'production' : 'development'
+
   if (serve) {
     console.log(`🦄 Loading build for ${project.manifest.name}@${project.manifest.version}`)
 
     const build = await loadBuild(project)
-    startServer(project, build, SERVER_PORT, HOST)
+    startServer(project, build, null, SERVER_PORT, HOST)
   } else if (build) {
     console.log(`🦄 Starting Production build for ${project.manifest.name}@${project.manifest.version}`)
 
     const build = new Build(production, project)
     await build.clear()
     const configs = await build.webpack.getConfig()
-    await build.webpack.run(configs)
+    const compiler = build.webpack.compiler(configs)
+    await build.webpack.run(compiler)
     await saveBuildState(build)
   } else if (!production) {
     console.log(`🦄 Starting Development build for ${project.manifest.name}@${project.manifest.version}`)
@@ -32,9 +35,11 @@ const main = async () => {
     const build = new Build(production, project)
     await build.clear()
     const configs = await build.webpack.getConfig()
-    await build.webpack.run(configs)
-    await saveBuildState(build)
-    startServer(project, build, SERVER_PORT, HOST)
+
+    const compiler = build.webpack.compiler(configs)
+    // build.webpack.watch(compiler)
+
+    startServer(project, build, compiler, SERVER_PORT, HOST)
   } else {
     console.log('🙉Could not understand what you mean')
   }

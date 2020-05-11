@@ -1,4 +1,4 @@
-import webpack, { Configuration, Stats } from 'webpack'
+import webpack, { Configuration, MultiCompiler, Stats } from 'webpack'
 
 import { dev as commonDevConfig, prod as commonProdConfig } from './common'
 import {
@@ -46,25 +46,38 @@ export class MicroWebpack {
     return configs
   }
 
-  public run = async (configs: Configuration[]) => {
-    const compiler = webpack(configs)
+  public compiler = (configs: Configuration[]) => webpack(configs)
 
-    return new Promise<Stats>(
-      (resolve, reject) => compiler.run(
-        (err, stats) => {
-          if (err) {
-            return reject(err)
-          }
-          this.stats = this.toJson(stats)
-          return resolve(stats)
+  public run = (compiler: MultiCompiler) => new Promise<MultiCompiler>(
+    (resolve, reject) => compiler.run(
+      (err, stats) => {
+        if (err) {
+          return reject(err)
         }
-      )
+        this.stats = this.toJson(stats)
+        return resolve(compiler)
+      }
     )
-  }
+  )
+
+  public watch = (compiler: MultiCompiler) =>
+    compiler.watch({}, (err, stats) => {
+      if (err) {
+        console.error(err)
+      }
+      const statsJSON = this.toJson(stats)
+      this.stats = this.stats || statsJSON
+      if (statsJSON?.children && this.stats && this.stats.children) {
+        for (const child of statsJSON?.children) {
+          const index = this.stats?.children?.findIndex(c => c.name === child.name)
+          this.stats.children[index] = child
+        }
+      }
+    })
 
   public serialize = () => this.stats
 
-  private toJson = (stats: Stats | null) => stats?.toJson({
+  public toJson = (stats: Stats | null) => stats?.toJson({
     hash: true,
     publicPath: true,
     assets: true,

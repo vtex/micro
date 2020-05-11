@@ -8,9 +8,7 @@ export interface RuntimeData {
 
 const isRuntimeData = (obj: any): obj is RuntimeData => {
   const paths = obj?.paths
-  return paths 
-    && typeof paths?.assets === 'string'
-    && typeof paths?.context === 'string'
+  return typeof paths?.assets === 'string' && typeof paths?.context === 'string'
 }
 
 const ensureRuntime = (obj: any): RuntimeData => {
@@ -25,7 +23,7 @@ export class Runtime {
   private containerId = 'micro-root'
   private runtime: RuntimeData | null = null
 
-  constructor() {}
+  constructor () {}
 
   public hydrate () {
     if (!canUseDOM) {
@@ -39,7 +37,7 @@ export class Runtime {
     }
 
     this.runtime = ensureRuntime(maybeRuntime)
-    
+
     return this.runtime
   }
 

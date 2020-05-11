@@ -1,4 +1,4 @@
-import { PublicPaths } from '@vtex/micro-react'
+import { PublicPaths } from './paths'
 import { canUseDOM } from 'exenv'
 import { join } from './path'
 
@@ -11,7 +11,7 @@ interface LinkTagsOptions {
 export class PageData {
   public id = '__MICRO_PAGE_DATA__'
 
-  constructor() {}
+  constructor () {}
 
   public fetch () {
     if (!canUseDOM) {
@@ -25,14 +25,14 @@ export class PageData {
       return fetch(maybeDataPath)
         .then(res => res.json())
     }
-    
+
     return null
   }
 
   public getLinkTags ({
     entry,
     path,
-    publicPaths,
+    publicPaths
   }: LinkTagsOptions) {
     return `<link id="${this.id}" data-chunk="${entry}" rel="preload" as="fetch" href="${join(publicPaths.context, path)}" crossorigin="anonymous">`
   }

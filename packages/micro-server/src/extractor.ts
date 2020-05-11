@@ -4,7 +4,6 @@ import { Build, nodeJSTarget, webNewTarget } from '@vtex/micro-builder'
 import { PageData, PublicPaths, Runtime } from '@vtex/micro-react'
 import { join } from 'path'
 import React from 'react'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Stats } from 'webpack'
 
 import { publicPathFromProject } from './publicPath'
@@ -24,6 +23,8 @@ export class Extractor {
     path: '/'
   }
 
+  public stats: Stats.ToJsonOutput | null | undefined = null
+
   constructor (
     public build: Build,
     public project: Project,
@@ -39,6 +40,8 @@ export class Extractor {
     this.runtime.setRuntime({
       paths: this.publicPaths
     })
+
+    this.stats = this.build.webpack.stats
   }
 
   get extractors () {
@@ -100,8 +103,8 @@ export class Extractor {
 
   public getBodyTags = (body: string) => this.runtime.wrapContainer(body)
 
-  public getStatsForTarget = (target: string) => this.build.webpack.stats?.children?.find(
-    ({ name }) => name === target
+  public getStatsForTarget = (target: string) => this.stats?.children?.find(
+    ({ outputPath }) => outputPath?.endsWith(target)
   )
 
   public getPublicPathScriptTag = () => `<script type="application/javascript">${this.build.buildConfig.publicPath.variable}="${this.publicPaths.assets}"</script>`

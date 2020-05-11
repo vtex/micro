@@ -4,7 +4,7 @@ import express from 'express'
 
 export const middleware = (req: Req, res: Res, next: Next) => {
   try {
-    res.set('cache-control', 'max-age=1200, public')
+    res.set('cache-control', 'max-age=1200, public, immutable')
     next()
   } catch (err) {
     res.set('cache-control', 'max-age=10, public')

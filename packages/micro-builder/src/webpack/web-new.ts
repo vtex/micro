@@ -1,20 +1,37 @@
+import CopyPlugin from 'copy-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
-import { join } from 'path'
+import { basename, join } from 'path'
 import PurgeCSSPlugin from 'purgecss-webpack-plugin'
-import { Configuration } from 'webpack'
+import { Configuration, HotModuleReplacementPlugin } from 'webpack'
 import DynamicPublicPathPlugin from 'webpack-dynamic-public-path'
 import MessagesPlugin from 'webpack-messages'
-import CopyPlugin from 'copy-webpack-plugin'
+import TimeFixPlugin from 'time-fix-plugin'
 
-import { excludeFromModules, WebpackBuildConfig } from './utils'
+import {
+  excludeFromModules,
+  publicPathFromProject,
+  WebpackBuildConfig
+} from './utils'
 
 export const target = 'web-new'
 
 export const toBuildPath = (baseRoot: string) => join(baseRoot, target)
 
+const entriesFromPages = (pages: string[], production: boolean) => pages.reduce(
+  (acc, path) => {
+    const name = basename(path, '.tsx')
+    acc[name] = !production
+      ? [require.resolve('react-hot-loader/patch'), path, require.resolve('webpack-hot-middleware/client') + '?path=/__webpack_hmr&timeout=20000&reload=true']
+      : [path]
+    return acc
+  },
+  {} as Record<string, string[]>
+)
+
 export const prod = ({
   root: buildDir,
-  project: { files, root },
+  project,
+  project: { files, root, pages },
   publicPath: {
     variable
   },
@@ -37,13 +54,13 @@ export const prod = ({
      * If `output.pathinfo` is set, the included pathinfo is shortened to this directory.
      */
     // context: projectPath,
-    // entry: './react/index.tsx',
+    entry: entriesFromPages(pages, true),
     /** Choose a style of source mapping to enhance the debugging process. These values can affect build and rebuild speed dramatically. */
     // devtool?: Options.Devtool;
     /** Options affecting the output. */
     output: {
       path: toBuildPath(buildDir),
-      publicPath: '/assets'
+      publicPath: publicPathFromProject(project).assets
     },
     /** Options affecting the normal modules (NormalModuleFactory) */
     module: {
@@ -90,6 +107,7 @@ export const prod = ({
               plugins: [
                 '@babel/plugin-proposal-class-properties',
                 '@babel/plugin-syntax-dynamic-import',
+                'react-hot-loader/babel',
                 '@loadable/babel-plugin'
               ].map(require.resolve as any)
             }
@@ -149,6 +167,8 @@ export const prod = ({
     // recordsOutputPath?: string;
     /** Add additional plugins to the compiler. */
     plugins: [
+      new TimeFixPlugin(),
+      // new HotModuleReplacementPlugin(),
       new MessagesPlugin({
         name: target,
         logger: (str: any) => console.log(`>> ${str}`)
@@ -220,10 +240,42 @@ export const prod = ({
 
 export const dev = (config: WebpackBuildConfig): Configuration => {
   const prodConf = prod(config)
+  const {
+    root: buildDir,
+    project: { files, root, pages },
+    publicPath: {
+      variable
+    }
+  } = config
 
   return {
     ...prodConf,
     mode: 'development',
+    entry: entriesFromPages(pages, false),
+    plugins: [
+      new TimeFixPlugin(),
+      new HotModuleReplacementPlugin(),
+      new MiniCssExtractPlugin({
+        filename: '[name].css'
+      }),
+      new PurgeCSSPlugin({
+        paths: files
+      }),
+      new DynamicPublicPathPlugin({
+        externalPublicPath: variable
+      }),
+      // Plugin to Copy Favicon.ico
+      new CopyPlugin([
+        { from: join(root, 'assets/favicon.ico'), to: toBuildPath(buildDir) }
+      ])
+    ],
+    resolve: {
+      alias: {
+        'react-dom': require.resolve('@hot-loader/react-dom'),
+        'react-hot-loader/root': require.resolve('react-hot-loader/root'),
+        'react-hot-loader': require.resolve('react-hot-loader')
+      }
+    },
     optimization: {}
   }
 }

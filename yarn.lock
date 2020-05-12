@@ -1584,6 +1584,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/pnpapi@npm:^0.0.0":
+  version: 0.0.0
+  resolution: "@types/pnpapi@npm:0.0.0"
+  checksum: f77fd87310ad43be7c6e059fc35791566829bb695481c4232575bec8e5b8134abcb704c1730a6c7fe72c755c5583854c17425202dcb8ebdc5127e5016b6f6c1f
+  languageName: node
+  linkType: hard
+
 "@types/prop-types@npm:*":
   version: 15.7.3
   resolution: "@types/prop-types@npm:15.7.3"
@@ -1920,17 +1927,25 @@ __metadata:
   dependencies:
     "@hot-loader/react-dom": ^16.13.0
     "@loadable/component": ^5.12.0
+    "@loadable/webpack-plugin": ^5.12.0
     "@types/exenv": ^1.2.0
     "@types/loadable__component": ^5.10.0
+    "@types/loadable__webpack-plugin": ^5.7.0
+    "@types/optimize-css-assets-webpack-plugin": ^5.0.1
     "@types/react": ^16.9.34
     "@types/react-dom": ^16.9.7
     "@types/react-hot-loader": ^4.1.1
+    "@types/terser-webpack-plugin": ^2.2.0
+    "@types/webpack": ^4.41.12
+    "@vtex/micro": "workspace:packages/micro"
     exenv: ^1.2.2
-    nodemon: ^2.0.3
+    optimize-css-assets-webpack-plugin: ^5.0.3
     react: ^16.13.1
     react-dom: ^16.13.1
     react-hot-loader: ^4.12.21
+    terser-webpack-plugin: ^3.0.1
     typescript: ^3.8.3
+    webpack: ^4.43.0
   languageName: unknown
   linkType: soft
 
@@ -1994,11 +2009,18 @@ __metadata:
   dependencies:
     "@types/fs-extra": ^8.1.0
     "@types/glob": ^7.1.1
+    "@types/pnpapi": ^0.0.0
+    "@types/ramda": ^0.27.4
     "@types/webpack": ^4.41.12
+    "@yarnpkg/fslib": ^2.0.0-rc.20
+    "@yarnpkg/libzip": ^2.0.0-rc.11
     fs-extra: ^9.0.0
     glob: ^7.1.6
-    nodemon: ^2.0.3
+    pnp-webpack-plugin: ^1.6.4
+    pnpapi: ^0.0.0
+    ramda: ^0.27.0
     typescript: ^3.8.3
+    webpack: ^4.43.0
   languageName: unknown
   linkType: soft
 
@@ -8072,6 +8094,13 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"pnpapi@npm:^0.0.0":
+  version: 0.0.0
+  resolution: "pnpapi@npm:0.0.0"
+  checksum: addfd6e3d1f00d01eedd9697c8ee6d621881febf96c0f449bc6553800ed3db652d1536fc92489cdb4c4928ed25a8c99228ba6010a4ead825d538ad65a6bc0411
+  languageName: node
+  linkType: hard
+
 "posix-character-classes@npm:^0.1.0":
   version: 0.1.1
   resolution: "posix-character-classes@npm:0.1.1"
@@ -9608,7 +9637,7 @@ fsevents@~2.1.2:
     "@types/uikit": ^3.3.0
     "@vtex/micro": ^1.1.1-alpha.0
     "@vtex/micro-cli": ^1.1.1-alpha.1
-    "@vtex/micro-react": ^1.1.1-alpha.0
+    "@vtex/micro-react": "workspace:packages/micro-react"
     "@vtex/micro-router": ^1.1.1-alpha.0
     node-fetch: ^2.6.0
     purgecss-webpack-plugin: ^2.1.2
@@ -10225,7 +10254,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"terser-webpack-plugin@npm:^3.0.0":
+"terser-webpack-plugin@npm:^3.0.0, terser-webpack-plugin@npm:^3.0.1":
   version: 3.0.1
   resolution: "terser-webpack-plugin@npm:3.0.1"
   dependencies:

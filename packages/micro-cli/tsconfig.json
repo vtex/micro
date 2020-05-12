@@ -1,1 +1,15 @@
-../tsconfig.shared.json
+{
+  "compilerOptions": {
+    "typeRoots": ["src/typings"],
+    "target": "es2019",
+    "module": "commonjs",
+    "outDir": "dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": false,
+    "skipLibCheck": true,
+    "declaration": true
+  },
+  "include": ["src"],
+  "exclude": ["dist"]
+}

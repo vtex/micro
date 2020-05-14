@@ -2,6 +2,7 @@
   "name": "simple",
   "version": "1.1.1-alpha.1",
   "license": "MIT",
+  "browser": "./components/index.ts",
   "scripts": {
     "build": "yarn run tsc",
     "micro": "yarn run micro-cli --project ."

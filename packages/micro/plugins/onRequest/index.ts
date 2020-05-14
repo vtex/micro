@@ -2,7 +2,7 @@ import {
   externalPublicPathVariable
 } from '../../framework/lifecycle/onAssemble'
 import { OnRequestPlugin } from '../../framework/lifecycle/onRequest'
-import { withPageDataTags } from '../../utils/data'
+import { withPageDataTags } from '../../components/data'
 
 export class OnRequest extends OnRequestPlugin<unknown> {
   public getScriptTags = () =>

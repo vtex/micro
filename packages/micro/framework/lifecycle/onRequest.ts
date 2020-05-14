@@ -1,7 +1,7 @@
 import { join } from 'path'
 import { Stats } from 'webpack'
 
-import { PublicPaths } from '../../utils/publicPaths'
+import { PublicPaths } from '../../components/publicPaths'
 import { Compiler, CompilerOptions } from '../compiler'
 import { Plugin } from '../plugin'
 import { ResolvedPage } from '../router'

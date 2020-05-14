@@ -7,8 +7,8 @@ import {
 import { createElement } from 'react'
 import { renderToString } from 'react-dom/server'
 
-import { withAppContainerTags } from '../../utils/container'
-import { withRuntimeTags } from '../../utils/runtime'
+import { withAppContainerTags } from '../../components/container'
+import { withRuntimeTags } from '../../components/runtime'
 
 export class OnRequest extends OnRequestFrameworkPlugin<JSX.Element> {
   public extractors: Record<'nodejs' | 'webnew', ChunkExtractor>

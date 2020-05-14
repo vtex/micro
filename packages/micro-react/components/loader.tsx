@@ -1,10 +1,10 @@
 import { loadableReady } from '@loadable/component'
-import { getPageData, canUseDOM } from '@vtex/micro/utils'
+import { getPageData, canUseDOM } from '@vtex/micro'
 import React from 'react'
 import { hydrate, render } from 'react-dom'
 
-import { getAppContainer } from '../utils/container'
-import { getRuntimeData } from '../utils/runtime'
+import { getAppContainer } from './container'
+import { getRuntimeData } from './runtime'
 import { Runtime } from './context/Runtime'
 
 // import { hot } from 'react-hot-loader/root'

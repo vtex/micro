@@ -1,6 +1,6 @@
 import { join } from 'path'
 
-import { parse } from '../utils/semver'
+import { parse } from '../components/semver'
 import { OnAssemblePlugin } from './lifecycle/onAssemble'
 import { OnBuildPlugin } from './lifecycle/onBuild'
 import {

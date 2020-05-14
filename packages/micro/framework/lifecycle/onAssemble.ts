@@ -48,8 +48,6 @@ export class OnAssembleCompiler extends Compiler<OnAssemblePlugin> {
         console.log(`📄 [${target}]: Page found: ${page}`)
       }
 
-      console.log(configs.find(x => x.name === 'webnew')!.optimization?.splitChunks)
-
       this._compiler = webpack(filteredConfigs)
     }
     return this._compiler

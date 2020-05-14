@@ -1,4 +1,4 @@
-import { startDevServer, startProdServer } from '@vtex/micro-server/utils'
+import { startDevServer, startProdServer } from '@vtex/micro-server/framework'
 import { OnAssembleCompiler, Project } from '@vtex/micro/framework'
 import { emptyDir, outputJSON, readJSON } from 'fs-extra'
 import { join } from 'path'

@@ -3,18 +3,18 @@
     "typeRoots": [
       "./framework/typings",
       "./plugins/typings",
-      "./router/typings",
-      "./utils/typings",
+      "./router/typings"
     ],
     "target": "es2019",
     "module": "commonjs",
     "outDir": "dist",
+    "jsx": "preserve",
     "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": false,
     "skipLibCheck": true,
     "declaration": true
   },
-  "include": ["utils", "framework", "plugins", "router"],
-  "exclude": ["dist", "components", "pages"]
+  "include": ["index.ts", "framework", "plugins", "router"],
+  "exclude": ["dist", "pages"]
 }

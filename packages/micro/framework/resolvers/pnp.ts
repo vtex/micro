@@ -27,7 +27,7 @@ const requirePlugin = (pkg: PackageInformation) => {
   try {
     return require(join(pkg.packageLocation, 'dist/plugins/index.js')).default
   } catch (err) {
-    if (process.env.VERBOSE || pkg.packageLocation.startsWith('@vtex/micro')) {
+    if (process.env.VERBOSE) {
       console.error(err)
     }
     return {}
@@ -38,7 +38,7 @@ const requireRouter = (pkg: PackageInformation) => {
   try {
     return require(join(pkg.packageLocation, 'dist/router/index.js')).default
   } catch (err) {
-    if (process.env.VERBOSE || pkg.packageLocation.startsWith('@vtex/micro')) {
+    if (process.env.VERBOSE) {
       console.error(err)
     }
     return {}

@@ -1,16 +1,22 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "es2020",
+    "typeRoots": [
+      "utils/typings",
+      "plugins/typings",
+      "router/typings"
+    ],
+    "target": "es2019",
+    "module": "commonjs",
+    "outDir": "dist",
     "lib": ["dom"],
     "skipLibCheck": true,
     "jsx": "preserve",
     "strict": true,
-    "typeRoots": [
-      "./node_modules/@types"
-    ],
     "moduleResolution": "Node",
     "esModuleInterop": true,
+    "declaration": true,
     "forceConsistentCasingInFileNames": true
-  }
+  },
+  "include": ["index.ts", "utils", "plugins", "router"],
+  "exclude": ["dist", "components", "pages"]
 }

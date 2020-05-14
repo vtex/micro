@@ -1032,7 +1032,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-env@npm:^7.9.5":
+"@babel/preset-env@npm:^7.9.5, @babel/preset-env@npm:^7.9.6":
   version: 7.9.6
   resolution: "@babel/preset-env@npm:7.9.6"
   dependencies:
@@ -1677,6 +1677,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react@npm:^16.9.35":
+  version: 16.9.35
+  resolution: "@types/react@npm:16.9.35"
+  dependencies:
+    "@types/prop-types": "*"
+    csstype: ^2.2.0
+  checksum: 8d1570b18317113a7e0d879bd374c06f6d52cba6cd802405dae22166865befca08480fe20c39fa6ca8738b2bb35032ea66cfbb239604f2aea6ecb8b93bdfcff4
+  languageName: node
+  linkType: hard
+
 "@types/responselike@npm:*, @types/responselike@npm:^1.0.0":
   version: 1.0.0
   resolution: "@types/responselike@npm:1.0.0"
@@ -1900,6 +1910,7 @@ __metadata:
     "@types/fs-extra": ^8.1.0
     "@types/glob": ^7.1.1
     "@types/ramda": ^0.27.4
+    "@types/webpack": ^4.41.12
     "@vtex/micro": ^1.1.1-alpha.0
     "@vtex/micro-builder": ^1.1.1-alpha.1
     "@vtex/micro-server": ^1.1.1-alpha.1
@@ -1925,27 +1936,42 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vtex/micro-react@workspace:packages/micro-react"
   dependencies:
+    "@babel/core": ^7.9.6
+    "@babel/plugin-proposal-class-properties": ^7.8.3
+    "@babel/plugin-proposal-optional-chaining": ^7.9.0
+    "@babel/plugin-syntax-dynamic-import": ^7.8.3
+    "@babel/preset-env": ^7.9.6
+    "@babel/preset-react": ^7.9.4
+    "@babel/preset-typescript": ^7.9.0
     "@hot-loader/react-dom": ^16.13.0
+    "@loadable/babel-plugin": ^5.12.0
     "@loadable/component": ^5.12.0
+    "@loadable/server": ^5.12.0
     "@loadable/webpack-plugin": ^5.12.0
-    "@types/exenv": ^1.2.0
     "@types/loadable__component": ^5.10.0
+    "@types/loadable__server": ^5.12.1
     "@types/loadable__webpack-plugin": ^5.7.0
+    "@types/mini-css-extract-plugin": ^0.9.1
     "@types/optimize-css-assets-webpack-plugin": ^5.0.1
-    "@types/react": ^16.9.34
+    "@types/react": ^16.9.35
     "@types/react-dom": ^16.9.7
     "@types/react-hot-loader": ^4.1.1
     "@types/terser-webpack-plugin": ^2.2.0
     "@types/webpack": ^4.41.12
     "@vtex/micro": "workspace:packages/micro"
-    exenv: ^1.2.2
+    babel-loader: ^8.1.0
+    css-loader: ^3.5.3
+    file-loader: ^6.0.0
+    mini-css-extract-plugin: ^0.9.0
     optimize-css-assets-webpack-plugin: ^5.0.3
+    purgecss-webpack-plugin: ^2.2.0
     react: ^16.13.1
     react-dom: ^16.13.1
     react-hot-loader: ^4.12.21
     terser-webpack-plugin: ^3.0.1
     typescript: ^3.8.3
     webpack: ^4.43.0
+    webpack-messages: ^2.0.4
   languageName: unknown
   linkType: soft
 
@@ -2007,6 +2033,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vtex/micro@workspace:packages/micro"
   dependencies:
+    "@types/exenv": ^1.2.0
     "@types/fs-extra": ^8.1.0
     "@types/glob": ^7.1.1
     "@types/pnpapi": ^0.0.0
@@ -2014,13 +2041,16 @@ __metadata:
     "@types/webpack": ^4.41.12
     "@yarnpkg/fslib": ^2.0.0-rc.20
     "@yarnpkg/libzip": ^2.0.0-rc.11
+    exenv: ^1.2.2
     fs-extra: ^9.0.0
     glob: ^7.1.6
     pnp-webpack-plugin: ^1.6.4
     pnpapi: ^0.0.0
     ramda: ^0.27.0
+    time-fix-plugin: ^2.0.6
     typescript: ^3.8.3
     webpack: ^4.43.0
+    webpack-dynamic-public-path: ^1.0.5
   languageName: unknown
   linkType: soft
 
@@ -8716,7 +8746,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"purgecss-webpack-plugin@npm:^2.1.2":
+"purgecss-webpack-plugin@npm:^2.1.2, purgecss-webpack-plugin@npm:^2.2.0":
   version: 2.2.0
   resolution: "purgecss-webpack-plugin@npm:2.2.0"
   dependencies:

@@ -1,11 +1,11 @@
-import { Plugins } from '@vtex/micro'
+import { Plugins } from '@vtex/micro/framework'
 
-import { PagesBuilder } from './pages'
+import { OnAssemble } from './onAssemble'
+import { OnRequest } from './onRequest'
 
 const plugins: Plugins = {
-  assemble: {
-    pages: new PagesBuilder()
-  }
+  onAssemble: OnAssemble,
+  onRequest: OnRequest
 }
 
 export default plugins

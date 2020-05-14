@@ -1,64 +1,29 @@
-import { canUseDOM } from 'exenv'
-
-import { PublicPaths } from './paths'
+import { canUseDOM, PublicPaths } from '@vtex/micro'
 
 export interface RuntimeData {
-  paths: PublicPaths
+  publicPaths: PublicPaths
 }
 
+const runtimeContainerId = '__MICRO_REACT_RUNTIME__'
+
+export const getRuntimeData = () => {
+  console.assert(canUseDOM, '💣 Runtime hydration can only be run on the browser')
+  const dataElement = document.getElementById(runtimeContainerId)
+  const maybeRuntime = JSON.parse(dataElement?.textContent || '{}')
+  return ensureRuntime({ publicPaths: maybeRuntime })
+}
+
+export const withRuntimeTags = (runtime: RuntimeData) =>
+  `<script id="${runtimeContainerId}" type="application/json">${JSON.stringify(runtime.publicPaths)}</script>`
+
 const isRuntimeData = (obj: any): obj is RuntimeData => {
-  const paths = obj?.paths
-  return typeof paths?.assets === 'string' && typeof paths?.context === 'string'
+  const paths = obj?.publicPaths
+  return typeof paths?.assets === 'string' && typeof paths?.data === 'string'
 }
 
 const ensureRuntime = (obj: any): RuntimeData => {
   if (!isRuntimeData(obj)) {
-    throw new Error(`💣 Error while validating runtime data ${obj}`)
+    throw new Error(`💣 Error while validating runtime data ${JSON.stringify(obj)}`)
   }
   return obj
-}
-
-export class Runtime {
-  private id = '__MICRO_RUNTIME__'
-  private containerId = 'micro-root'
-  private runtime: RuntimeData | null = null
-
-  constructor () {}
-
-  public hydrate () {
-    if (!canUseDOM) {
-      throw new Error('💣 Runtime hydration can only be run on the browser')
-    }
-
-    let maybeRuntime
-    const dataElement = document.getElementById(this.id)
-    if (dataElement?.textContent) {
-      maybeRuntime = JSON.parse(dataElement.textContent)
-    }
-
-    this.runtime = ensureRuntime(maybeRuntime)
-
-    return this.runtime
-  }
-
-  public setRuntime (r: RuntimeData) {
-    this.runtime = ensureRuntime(r)
-  }
-
-  public getContainer () {
-    const container = document.getElementById(this.containerId)
-    if (!container) {
-      throw new Error('Something went wrong while loading the container')
-    }
-    return container
-  }
-
-  public wrapContainer (body: string) {
-    return `<div id="${this.containerId}">${body}</div>`
-  }
-
-  public getScriptTags () {
-    const runtime = JSON.stringify(ensureRuntime(this.runtime))
-    return `<script id="${this.id}" type="application/json">${runtime}</script>`
-  }
 }

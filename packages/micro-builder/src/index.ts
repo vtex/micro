@@ -1,6 +1,5 @@
-import { Project } from '@vtex/micro'
+import { join, Project } from '@vtex/micro'
 import { emptyDir, outputJSON, readJSON } from 'fs-extra'
-import { join } from 'path'
 import { Stats } from 'webpack'
 
 import {
@@ -27,7 +26,7 @@ export class Build {
     buildConfig?: WebpackBuildConfig,
     public buildDir: string = MICRO_BUILD_DIR
   ) {
-    this.root = join(project.root, buildDir)
+    this.root = join(project.root.path, buildDir)
 
     this.buildConfig = {
       ...DEFAULT_BUILD_CONFIG,
@@ -61,7 +60,7 @@ export class Build {
   }
 }
 
-const buildDirFromProject = (project: Project, buildDir = MICRO_BUILD_DIR) => join(project.root, buildDir)
+const buildDirFromProject = (project: Project, buildDir = MICRO_BUILD_DIR) => join(project.root.path, buildDir)
 
 const pathStateFromBuild = (build: Build): string => join(build.root, BUILD_STATE_FILE)
 

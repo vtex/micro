@@ -167,7 +167,7 @@ export const prod = ({
     // recordsOutputPath?: string;
     /** Add additional plugins to the compiler. */
     plugins: [
-      new TimeFixPlugin(),
+      // new TimeFixPlugin(),
       // new HotModuleReplacementPlugin(),
       new MessagesPlugin({
         name: target,
@@ -179,9 +179,9 @@ export const prod = ({
       new PurgeCSSPlugin({
         paths: files
       }),
-      new DynamicPublicPathPlugin({
-        externalPublicPath: variable
-      }),
+      // new DynamicPublicPathPlugin({
+      //   externalPublicPath: variable
+      // }),
       // Plugin to Copy Favicon.ico
       new CopyPlugin([
         { from: join(root, 'assets/favicon.ico'), to: toBuildPath(buildDir) }
@@ -194,47 +194,47 @@ export const prod = ({
     /** Limit the number of parallel processed modules. Can be used to fine tune performance or to get more reliable profiling results */
     // parallelism?: number;
     /** Optimization options */
-    optimization: {
-      runtimeChunk: {
-        name: runtimeName
-      },
-      splitChunks: {
-        maxInitialRequests: 30,
-        maxAsyncRequests: 10,
-        cacheGroups: {
-          [runtimeName]: {
-            test: runtimeTest,
-            reuseExistingChunk: true,
-            name: runtimeName,
-            chunks: 'all',
-            enforce: true
-          },
-          [frameworkName]: {
-            test: frameworkTest,
-            reuseExistingChunk: true,
-            name: frameworkName,
-            chunks: 'all',
-            enforce: true
-          }
-        }
-      },
-      noEmitOnErrors: true,
-      namedModules: false,
-      namedChunks: false,
-      moduleIds: 'size',
-      chunkIds: 'total-size',
-      nodeEnv: 'production',
-      removeAvailableModules: true,
-      removeEmptyChunks: true,
-      mergeDuplicateChunks: true,
-      flagIncludedChunks: true,
-      occurrenceOrder: true,
-      providedExports: true,
-      usedExports: true,
-      concatenateModules: true,
-      sideEffects: true,
-      portableRecords: false
-    }
+    // optimization: {
+    //   runtimeChunk: {
+    //     name: runtimeName
+    //   },
+    //   splitChunks: {
+    //     maxInitialRequests: 30,
+    //     maxAsyncRequests: 10,
+    //     cacheGroups: {
+    //       [runtimeName]: {
+    //         test: runtimeTest,
+    //         reuseExistingChunk: true,
+    //         name: runtimeName,
+    //         chunks: 'all',
+    //         enforce: true
+    //       },
+    //       [frameworkName]: {
+    //         test: frameworkTest,
+    //         reuseExistingChunk: true,
+    //         name: frameworkName,
+    //         chunks: 'all',
+    //         enforce: true
+    //       }
+    //     }
+    //   },
+    //   noEmitOnErrors: true,
+    //   namedModules: false,
+    //   namedChunks: false,
+    //   moduleIds: 'size',
+    //   chunkIds: 'total-size',
+    //   nodeEnv: 'production',
+    //   removeAvailableModules: true,
+    //   removeEmptyChunks: true,
+    //   mergeDuplicateChunks: true,
+    //   flagIncludedChunks: true,
+    //   occurrenceOrder: true,
+    //   providedExports: true,
+    //   usedExports: true,
+    //   concatenateModules: true,
+    //   sideEffects: true,
+    //   portableRecords: false
+    // }
   }
 }
 

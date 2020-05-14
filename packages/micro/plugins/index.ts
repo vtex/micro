@@ -1,10 +1,10 @@
-import { Plugins } from '../utils/package'
-import { PagesBuilder } from './assemble/pages'
+import { Plugins } from '../framework/package'
+import { OnAssemble } from './onAssemble'
+import { OnRequest } from './onRequest'
 
 const plugins: Plugins = {
-  assemble: {
-    pages: new PagesBuilder()
-  }
+  onRequest: OnRequest,
+  onAssemble: OnAssemble
 }
 
 export default plugins

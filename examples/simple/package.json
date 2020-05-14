@@ -3,9 +3,8 @@
   "version": "1.1.1-alpha.1",
   "license": "MIT",
   "scripts": {
-    "build": "yarn run micro-cli --project . --build",
-    "start": "yarn run micro-cli --project . --serve",
-    "dev": "yarn run micro-cli --project . --dev"
+    "build": "yarn run tsc",
+    "micro": "yarn run micro-cli --project ."
   },
   "dependencies": {
     "@hot-loader/react-dom": "^16.13.0",

@@ -1,41 +1,45 @@
 import { loadableReady } from '@loadable/component'
-import { canUseDOM } from 'exenv'
+import { getPageData, canUseDOM } from '@vtex/micro'
 import React from 'react'
 import { hydrate, render } from 'react-dom'
-import { hot } from 'react-hot-loader/root'
 
-import { PageData } from '../utils/pageData'
-import { Runtime } from '../utils/runtime'
-import { Runtime as MicroRuntime } from './context/Runtime'
+import { getAppContainer } from '../utils/container'
+import { getRuntimeData } from '../utils/runtime'
+import { Runtime } from './context/Runtime'
+
+// import { hot } from 'react-hot-loader/root'
 
 const renderOrHydrate = (App: React.ReactType) => async () => {
-  const runtime = new Runtime()
-  const container = runtime.getContainer()
-  const runtimeData = runtime.hydrate()
+  const container = getAppContainer()
+  const runtimeData = getRuntimeData()
 
   // This should be preloaded by now
   let error = null
-  const context = await new PageData().fetch().catch(err => { error = err })
+  const data = await getPageData().catch(err => { error = err })
 
   const AppWithContext = (
-    <MicroRuntime.Provider value={runtimeData}>
-      <App context={context} error={error} />
-    </MicroRuntime.Provider>
+    <Runtime.Provider value={runtimeData}>
+      <App data={data} error={error} />
+    </Runtime.Provider>
   )
 
   if (container.children.length > 0) {
-    console.log('✨✨ Hydrating Micro ...')
+    const msg = '[micro-react]: ⚡⚡ Hydration took'
+    console.time(msg)
     hydrate(AppWithContext, container)
+    console.timeEnd(msg)
   } else {
-    console.log('✨ Rendering Micro ...')
+    const msg = '[micro-react]: ⚡ Rendering took'
+    console.time(msg)
     render(AppWithContext, container)
+    console.timeEnd(msg)
   }
 }
 
 export const LoadMicroComponent = (App: React.ReactType) => {
   if (canUseDOM) {
     loadableReady(() => {
-      window.onload = renderOrHydrate(hot(App))
+      window.onload = renderOrHydrate(App)
     })
   }
   return App

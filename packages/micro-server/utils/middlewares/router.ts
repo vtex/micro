@@ -1,4 +1,4 @@
-import { PublicPaths } from '@vtex/micro'
+import { PublicPaths } from '@vtex/micro/utils'
 import {
   isResolvedPage,
   isResolvedRedirect,

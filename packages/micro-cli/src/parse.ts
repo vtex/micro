@@ -1,5 +1,5 @@
-import { join } from '@vtex/micro'
 import { pathExists } from 'fs-extra'
+import { join } from 'path'
 
 const ensureProject = async (path: string) => {
   const exists = await pathExists(join(path, 'package.json'))

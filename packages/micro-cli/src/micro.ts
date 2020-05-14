@@ -1,25 +1,30 @@
-import { startDevServer } from '@vtex/micro-server'
+import { startDevServer, startProdServer } from '@vtex/micro-server/utils'
 import { OnAssembleCompiler, Project } from '@vtex/micro/framework'
-import { emptyDir, outputJSON } from 'fs-extra'
-import { Stats, MultiCompiler } from 'webpack'
+import { emptyDir, outputJSON, readJSON } from 'fs-extra'
+import { join } from 'path'
+import { MultiCompiler, Stats } from 'webpack'
 
 import { HOST, SERVER_PORT } from './constants'
 import { parseOptions } from './parse'
-import { join } from 'path'
 
 const runWebpack = (compiler: MultiCompiler) => new Promise<Stats>((resolve, reject) => {
   compiler.run((err, stats) => {
     if (err) {
       reject(err)
     }
-    return stats
+    return resolve(stats)
   })
 })
+
+const publicPaths = {
+  assets: '/assets/',
+  data: '/api/'
+}
 
 const main = async () => {
   console.log('🦄 Welcome to Micro')
 
-  const { projectPath, production, build } = await parseOptions()
+  const { projectPath, production, build, serve } = await parseOptions()
 
   const mode = production ? 'production' : 'development'
   process.env.NODE_ENV = mode
@@ -39,6 +44,16 @@ const main = async () => {
     const stats = await runWebpack(webpack)
 
     await outputJSON(join(project.dist, 'build.json'), stats.toJson())
+  } else if (serve) {
+    const statsJson = await readJSON(join(project.dist, 'build.json'))
+
+    await startProdServer({
+      publicPaths,
+      statsJson,
+      project,
+      host: HOST,
+      port: SERVER_PORT
+    })
   } else {
     console.log(`🦄 Starting Dev Environment for ${project.root.toString()}`)
 
@@ -51,10 +66,7 @@ const main = async () => {
 
     await startDevServer({
       project,
-      publicPaths: {
-        assets: '/assets/',
-        data: '/api/'
-      },
+      publicPaths,
       webpack,
       host: HOST,
       port: SERVER_PORT

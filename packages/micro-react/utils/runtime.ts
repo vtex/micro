@@ -1,4 +1,4 @@
-import { canUseDOM, PublicPaths } from '@vtex/micro'
+import { canUseDOM, PublicPaths } from '@vtex/micro/utils'
 
 export interface RuntimeData {
   publicPaths: PublicPaths

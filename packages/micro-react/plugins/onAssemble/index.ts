@@ -343,14 +343,14 @@ const webOptimization = ({ optimization }: Configuration): Configuration['optimi
   splitChunks: {
     cacheGroups: {
       [pagesRuntimeName]: {
-        test: mergeRegex(/react$|react-dom$|@loadable/, getRegexFromCacheGroup(pagesRuntimeName, optimization)),
+        test: mergeRegex(/\/react\/|\/react-dom\/|\/@loadable\//, getRegexFromCacheGroup(pagesRuntimeName, optimization)),
         reuseExistingChunk: true,
         name: pagesRuntimeName,
         chunks: 'all',
         enforce: true
       },
       [pagesFrameworkName]: {
-        test: mergeRegex(/@micro-react$/, getRegexFromCacheGroup(pagesFrameworkName, optimization)),
+        test: mergeRegex(/\/micro-react\/components\/|\/micro-react\/utils\//, getRegexFromCacheGroup(pagesFrameworkName, optimization)),
         reuseExistingChunk: true,
         name: pagesFrameworkName,
         chunks: 'all',

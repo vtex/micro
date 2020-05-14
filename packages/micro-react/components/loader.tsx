@@ -1,5 +1,5 @@
 import { loadableReady } from '@loadable/component'
-import { getPageData, canUseDOM } from '@vtex/micro'
+import { getPageData, canUseDOM } from '@vtex/micro/utils'
 import React from 'react'
 import { hydrate, render } from 'react-dom'
 

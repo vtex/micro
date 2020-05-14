@@ -1,4 +1,5 @@
-import { join } from '../utils/path'
+import { join } from 'path'
+
 import { Plugins } from './package'
 import { Plugin } from './plugin'
 import { Project } from './project'

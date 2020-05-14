@@ -6,8 +6,8 @@ import DynamicPublicPathPlugin from 'webpack-dynamic-public-path'
 
 import {
   externalPublicPathVariable,
-  OnAssemblePlugin,
   OnAssembleConfigOptions,
+  OnAssemblePlugin,
   pagesFrameworkName,
   pagesRuntimeName,
   Platform,
@@ -72,7 +72,7 @@ export class OnAssemble extends OnAssemblePlugin {
         ...baseConfig,
         name: Platforms.webnew,
         target: 'web',
-        optimization: mode === 'production' ? webOptimizations() : undefined,
+        optimization: mode === 'production' ? webOptimizations() : webOptimizationsCommon(),
         plugins: [
           ...configs.nodejs.plugins || [],
           ...baseConfig.plugins || [],
@@ -84,7 +84,7 @@ export class OnAssemble extends OnAssemblePlugin {
         ...baseConfig,
         name: Platforms.webold,
         target: 'web',
-        optimization: mode === 'production' ? webOptimizations() : undefined,
+        optimization: mode === 'production' ? webOptimizations() : webOptimizationsCommon(),
         plugins: [
           ...configs.nodejs.plugins || [],
           ...baseConfig.plugins || [],
@@ -103,7 +103,7 @@ const webPlugins = () => {
   ]
 }
 
-const webOptimizations = () => ({
+const webOptimizationsCommon = () => ({
   runtimeChunk: {
     name: pagesRuntimeName
   },
@@ -112,14 +112,18 @@ const webOptimizations = () => ({
     maxAsyncRequests: 10,
     cacheGroups: {
       [pagesFrameworkName]: {
-        test: /@micro$/,
+        test: /\/micro\/components\/|\/micro\/utils\//,
         reuseExistingChunk: true,
         name: pagesFrameworkName,
         chunks: 'all',
         enforce: true
       }
     }
-  },
+  }
+})
+
+const webOptimizations = () => ({
+  ...webOptimizationsCommon(),
   noEmitOnErrors: true,
   namedModules: false,
   namedChunks: false,

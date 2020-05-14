@@ -1,4 +1,4 @@
-import { PublicPaths } from '@vtex/micro'
+import { PublicPaths } from '@vtex/micro/utils'
 import { OnRequestCompiler, Project } from '@vtex/micro/framework'
 import compress from 'compression'
 import express from 'express'

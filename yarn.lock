@@ -1783,6 +1783,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/webpack@npm:^4.41.13":
+  version: 4.41.13
+  resolution: "@types/webpack@npm:4.41.13"
+  dependencies:
+    "@types/anymatch": "*"
+    "@types/node": "*"
+    "@types/tapable": "*"
+    "@types/uglify-js": "*"
+    "@types/webpack-sources": "*"
+    source-map: ^0.6.0
+  checksum: f98286feca074ae0e9af82cd567f834d172b7b4675e5fb159443c2bdaeeb0b93eadb9828907617512d61ea3da5e77269657a7bf2ed7d0c44ba69de6f47f2813c
+  languageName: node
+  linkType: hard
+
 "@typescript-eslint/eslint-plugin@npm:^2.31.0":
   version: 2.31.0
   resolution: "@typescript-eslint/eslint-plugin@npm:2.31.0"
@@ -1932,6 +1946,25 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@vtex/micro-react-router@workspace:packages/micro-react-router":
+  version: 0.0.0-use.local
+  resolution: "@vtex/micro-react-router@workspace:packages/micro-react-router"
+  dependencies:
+    "@types/history": ^4.7.5
+    "@types/loadable__component": ^5.10.0
+    "@types/react": ^16.9.34
+    "@types/react-dom": ^16.9.7
+    "@types/react-router-dom": ^5.1.5
+    "@types/webpack": ^4.41.13
+    "@vtex/micro": "workspace:packages/micro"
+    "@vtex/micro-react": "workspace:packages/micro-react"
+    history: ^4.10.1
+    react: ^16.13.1
+    react-router-dom: ^5.1.2
+    typescript: ^3.8.3
+  languageName: unknown
+  linkType: soft
+
 "@vtex/micro-react@^1.1.1-alpha.0, @vtex/micro-react@workspace:packages/micro-react":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-react@workspace:packages/micro-react"
@@ -1975,24 +2008,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-router@^1.1.1-alpha.0, @vtex/micro-router@workspace:packages/micro-router":
-  version: 0.0.0-use.local
-  resolution: "@vtex/micro-router@workspace:packages/micro-router"
+"@vtex/micro-router@npm:^1.1.1-alpha.0":
+  version: 1.1.1-alpha.0
+  resolution: "@vtex/micro-router@npm:1.1.1-alpha.0"
   dependencies:
-    "@types/history": ^4.7.5
-    "@types/loadable__component": ^5.10.0
-    "@types/react": ^16.9.34
-    "@types/react-dom": ^16.9.7
-    "@types/react-router-dom": ^5.1.5
     "@vtex/micro": ^1.1.1-alpha.0
     "@vtex/micro-react": ^1.1.1-alpha.0
     history: ^4.10.1
-    nodemon: ^2.0.3
     react: ^16.13.1
     react-router-dom: ^5.1.2
-    typescript: ^3.8.3
-  languageName: unknown
-  linkType: soft
+  checksum: 020f3b16123f31afdc871a14712cf66c0d562d24c9a8e4f41ba2898dbbcbe9b2308b0231914ef3ca15c907bad00b7218731b1483b3fe3a52733b3f9c8601f4eb
+  languageName: node
+  linkType: hard
 
 "@vtex/micro-server@^1.1.1-alpha.1, @vtex/micro-server@workspace:packages/micro-server":
   version: 0.0.0-use.local

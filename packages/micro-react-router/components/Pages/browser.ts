@@ -1,8 +1,9 @@
-import { join, RuntimeData } from '@vtex/micro-react'
-import { LocationDescriptorObject } from 'history'
+import { join } from '@vtex/micro'
+import { RuntimeData } from '@vtex/micro-react'
+import H, { LocationDescriptorObject } from 'history'
 
 import { isPage, OnPageFetched, Page, PagesManager } from '.'
-import { inflight } from '../../utils/inflight'
+import { inflight } from '../utils/inflight'
 
 export class Pages extends PagesManager {
   public pages: Page[] = []
@@ -15,9 +16,11 @@ export class Pages extends PagesManager {
     this.runtime = runtime
     this.onPageFetched = onPageFetched
 
-    const loaded = this.pageLoaded(initalPage.path)
-    if (!loaded) {
-      this.pages = [initalPage]
+    if (initalPage) {
+      const loaded = this.pageLoaded(initalPage.path)
+      if (!loaded) {
+        this.pages = [initalPage]
+      }
     }
   }
 
@@ -26,9 +29,11 @@ export class Pages extends PagesManager {
   }
 
   public fetch = async (location: LocationDescriptorObject) => {
-    const loaded = this.pageLoaded(location.pathname)
-    if (!loaded) {
-      await this.fetchAndUpdate(location)
+    if (location.pathname) {
+      const loaded = this.pageLoaded(location.pathname)
+      if (!loaded) {
+        await this.fetchAndUpdate(location)
+      }
     }
   }
 
@@ -38,13 +43,14 @@ export class Pages extends PagesManager {
   }
 
   protected async fetchAndUpdate (location: LocationDescriptorObject): Promise<any> {
-    const path = this.locationToPath(location)
+    const path = this.locationToPath(location) || ''
     return inflight(path, async () => {
       const response = await fetch(path)
       const page = await response.json()
       if (isPage(page)) {
         this.pages = this.pages.concat(page)
-        this.onPageFetched(this.pages)
+        // eslint-disable-next-line no-unused-expressions
+        this.onPageFetched?.(this.pages)
       } else {
         throw new Error(`💣 Fetched location was not a valid page: ${location.pathname}`)
       }
@@ -55,6 +61,8 @@ export class Pages extends PagesManager {
     if (typeof location.pathname !== 'string') {
       throw new Error('💣 You need a pathname for fecthing a page')
     }
-    return join(this.runtime.paths.context, location.pathname)
+    if (this.runtime) {
+      return join(this.runtime.publicPaths.data, location.pathname)
+    }
   }
 }

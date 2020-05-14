@@ -17,8 +17,6 @@ import MessagesPlugin from 'webpack-messages'
 
 export class OnAssemble extends OnAssemblePlugin {
   public getConfig = ({ mode, configs, project }: OnAssembleConfigOptions) => {
-    const moduleFiles = project.resolveFiles('pages|components|utils')
-    const exclude = (path: string) => moduleFiles.every(m => !path.startsWith(m))
     const baseConfig: Configuration = {
       plugins: [
         new LoadablePlugin({
@@ -111,7 +109,6 @@ export class OnAssemble extends OnAssemblePlugin {
             ...baseConfig.module?.rules || [],
             {
               test: /\.tsx?$/,
-              exclude,
               use: [
                 nodejsBabelRules()
               ]
@@ -138,7 +135,6 @@ export class OnAssemble extends OnAssemblePlugin {
             ...baseConfig.module?.rules || [],
             {
               test: /\.tsx?$/,
-              exclude,
               use: [
                 webNewBabelRules()
               ]
@@ -165,7 +161,6 @@ export class OnAssemble extends OnAssemblePlugin {
             ...baseConfig.module?.rules || [],
             {
               test: /\.tsx?$/,
-              exclude,
               use: [
                 webOldBabelRules()
               ]

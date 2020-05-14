@@ -15,8 +15,8 @@ export const isPage = (obj: any): obj is Page =>
 export type OnPageFetched = (pages: Page[]) => void
 
 export abstract class PagesManager {
-  protected runtime: RuntimeData
-  protected onPageFetched: OnPageFetched
+  protected runtime: RuntimeData | undefined
+  protected onPageFetched: OnPageFetched | undefined
 
   public initialize (
     runtime: RuntimeData,

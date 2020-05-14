@@ -1,10 +1,11 @@
 {
-  "name": "@vtex/micro-router",
+  "name": "@vtex/micro-react-router",
   "version": "1.1.1-alpha.0",
   "license": "MIT",
   "micro": {},
-  "main": "./dist/utils/index.js",
-  "types": "./dist/utils/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "browser": "./components/index.ts",
   "scripts": {
     "build": "rm -rf dist && yarn run tsc",
     "watch": "rm -rf dist && yarn run tsc --watch",
@@ -17,12 +18,12 @@
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.7",
     "@types/react-router-dom": "^5.1.5",
-    "nodemon": "^2.0.3",
+    "@types/webpack": "^4.41.13",
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@vtex/micro": "^1.1.1-alpha.0",
-    "@vtex/micro-react": "^1.1.1-alpha.0",
+    "@vtex/micro": "workspace:packages/micro",
+    "@vtex/micro-react": "workspace:packages/micro-react",
     "history": "^4.10.1",
     "react": "^16.13.1",
     "react-router-dom": "^5.1.2"

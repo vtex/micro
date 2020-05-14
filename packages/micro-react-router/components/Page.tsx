@@ -7,7 +7,9 @@ export const FetchCurrentPage: React.SFC = ({ children }) => {
   const pagesManager = useContext(PagesContext)
   const location = useLocation()
 
-  pagesManager.fetch(location)
+  if (pagesManager) {
+    pagesManager.fetch(location)
+  }
 
   return (
     <Fragment>

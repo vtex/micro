@@ -1,5 +1,6 @@
 import { LoadableComponent } from '@loadable/component'
-import { canUseDOM, Runtime } from '@vtex/micro-react/components'
+import { canUseDOM } from '@vtex/micro'
+import { Runtime } from '@vtex/micro-react'
 import React, { useContext, useState } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 

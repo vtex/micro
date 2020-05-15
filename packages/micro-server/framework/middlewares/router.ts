@@ -18,7 +18,7 @@ const ensureRouter = (router: Router | undefined) => {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const middleware = (project: Project, publicPaths: PublicPaths) => {
-  const router = ensureRouter(project.root.router)
+  const router = ensureRouter(project.getRouter())
 
   return async (req: Req, res: Res, next: Next) => {
     const rootPath = req.path.startsWith(publicPaths!.data)

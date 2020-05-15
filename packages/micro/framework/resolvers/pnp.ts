@@ -10,7 +10,7 @@ import pnp, {
 } from 'pnpapi'
 
 import { isManifest } from '../manifest'
-import { Package, PackageStructure } from '../package'
+import { Package, PackageStructure, Plugins } from '../package'
 
 const libzip = yarnLibZip.getLibzipSync()
 
@@ -23,30 +23,18 @@ const crossFs = new PosixFS(zipOpenFs)
 const getKey = <T>(locator: T) => JSON.stringify(locator)
 
 // TODO: Does it work for packages inside .pnp.js file ?
-const requirePlugin = (pkg: PackageInformation) => {
-  try {
-    return require(join(pkg.packageLocation, 'dist/plugins/index.js')).default
-  } catch (err) {
-    if (process.env.VERBOSE) {
-      console.error(err)
-    }
-    return {}
-  }
+export const requirePlugin = (pkg: string, issuer: string) => {
+  const locator = (pnp as any).resolveRequest(`${pkg}/plugins`, issuer)
+  return require(locator).default as Plugins
 }
 
-const requireRouter = (pkg: PackageInformation) => {
-  try {
-    return require(join(pkg.packageLocation, 'dist/router/index.js')).default
-  } catch (err) {
-    if (process.env.VERBOSE) {
-      console.error(err)
-    }
-    return {}
-  }
+export const requireRouter = (pkg: string, issuer: string) => {
+  const locator = (pnp as any).resolveRequest(`${pkg}/router`, issuer)
+  return require(locator).default
 }
 
 const globFiles = (path: string) =>
-  syncGlob('@(pages|components|utils|plugins)/**/*.ts?(x)', { cwd: path, nodir: true })
+  syncGlob('@(pages|components|plugins)/**/*.ts?(x)', { cwd: path, nodir: true })
     .map(p => join(path, p))
 
 const packageFromInfo = (pkg: PackageInformation) => {
@@ -60,8 +48,6 @@ const packageFromInfo = (pkg: PackageInformation) => {
     path: pkg.packageLocation,
     manifest,
     files: globFiles(pkg.packageLocation),
-    plugins: requirePlugin(pkg),
-    router: requireRouter(pkg),
     dependencies: []
   })
 }

@@ -6,7 +6,7 @@ const router: Router = async (request, pages) => {
   const { path } = request
   return {
     name: path === '/' ? 'index' : removeSlash(path),
-    data: { hello: 'world' },
+    data: { productName: 'asddfgdffg' },
     status: 200
   }
 }

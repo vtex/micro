@@ -1,7 +1,21 @@
 import { basename } from 'path'
 import PnpPlugin from 'pnp-webpack-plugin'
 import TimeFixPlugin from 'time-fix-plugin'
-import { Configuration, DefinePlugin } from 'webpack'
+import {
+  addPlugins,
+  Block,
+  Context,
+  customConfig,
+  defineConstants,
+  entryPoint,
+  env,
+  group,
+  optimization,
+  resolve,
+  setContext,
+  setMode,
+  sourceMaps
+} from 'webpack-blocks'
 import DynamicPublicPathPlugin from 'webpack-dynamic-public-path'
 
 import {
@@ -10,10 +24,10 @@ import {
   OnAssemblePlugin,
   pagesFrameworkName,
   pagesRuntimeName,
-  Platform,
-  Platforms
+  Platform
 } from '../../framework/lifecycle/onAssemble'
 import { Project } from '../../framework/project'
+import { cacheGroup } from './modules/cacheGroups'
 
 const entriesFromPages = (project: Project) => project.root.getFiles('pages').reduce(
   (acc, path) => {
@@ -25,119 +39,100 @@ const entriesFromPages = (project: Project) => project.root.getFiles('pages').re
 )
 
 export class OnAssemble extends OnAssemblePlugin {
-  public getConfig = ({ project, mode, configs }: OnAssembleConfigOptions) => {
-    const baseConfig: Configuration = {
-      mode,
-      bail: true,
-      node: false,
-      profile: true,
-      context: project.root.path,
-      entry: entriesFromPages(project),
-      devtool: mode === 'development' ? 'inline-source-map' : undefined,
-      watchOptions: mode === 'development' ? {
-        ignored: `${project.dist}`,
-        aggregateTimeout: 300
-      } : undefined,
-      resolve: {
+  public getConfig = ({ project, mode, configs }: OnAssembleConfigOptions): Record<Platform, Block<Context>> => {
+    const common: Block<Context>[] = [
+      setMode(mode),
+      setContext(project.root.path),
+      entryPoint(entriesFromPages(project)),
+      defineConstants({
+        'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`
+      }),
+      resolve({
         extensions: ['.tsx', '.ts', '.js', '.jsx'],
         plugins: [
           PnpPlugin
         ]
-      },
-      resolveLoader: {
-        plugins: [
-          PnpPlugin.moduleLoader(module)
-        ]
-      },
-      plugins: [
-        new DefinePlugin({
-          'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`
-        })
-      ]
-    }
+      }),
+      env('development', [
+        addPlugins([
+          new TimeFixPlugin()
+        ]),
+        sourceMaps('inline-source-map'),
+        customConfig({
+          watchOptions: {
+            ignored: `${project.dist}`,
+            aggregateTimeout: 300
+          }
+        }) as Block<Context>
+      ]),
+      customConfig({
+        bail: true,
+        node: false,
+        profile: true,
+        resolveLoader: {
+          plugins: [
+            PnpPlugin.moduleLoader(module)
+          ]
+        }
+      }) as Block<Context>
+    ]
 
-    if (mode === 'development') {
-      baseConfig.plugins!.push(new TimeFixPlugin())
-    }
+    const web = [
+      addPlugins([
+        new DynamicPublicPathPlugin({
+          externalPublicPath: externalPublicPathVariable
+        })
+      ]),
+      optimization({
+        runtimeChunk: {
+          name: pagesRuntimeName
+        },
+        splitChunks: {
+          maxInitialRequests: 30,
+          maxAsyncRequests: 10
+        }
+      } as any),
+      cacheGroup(pagesFrameworkName, /\/micro\/components\//),
+      env('production', [
+        optimization({
+          noEmitOnErrors: true,
+          namedModules: false,
+          namedChunks: false,
+          moduleIds: 'size',
+          chunkIds: 'total-size',
+          nodeEnv: 'production',
+          removeAvailableModules: true,
+          removeEmptyChunks: true,
+          mergeDuplicateChunks: true,
+          flagIncludedChunks: true,
+          occurrenceOrder: true,
+          providedExports: true,
+          usedExports: true,
+          concatenateModules: true,
+          sideEffects: true,
+          portableRecords: false
+        } as any)
+      ])
+    ]
 
     return {
-      [Platforms.nodejs]: {
-        ...configs.nodejs,
-        ...baseConfig,
-        name: Platforms.nodejs,
-        target: 'node'
-      },
-      [Platforms.webnew]: {
-        ...configs.webnew,
-        ...baseConfig,
-        name: Platforms.webnew,
-        target: 'web',
-        optimization: mode === 'production' ? webOptimizations() : webOptimizationsCommon(),
-        plugins: [
-          ...configs.nodejs.plugins || [],
-          ...baseConfig.plugins || [],
-          ...webPlugins()
-        ]
-      },
-      [Platforms.webold]: {
-        ...configs.webold,
-        ...baseConfig,
-        name: Platforms.webold,
-        target: 'web',
-        optimization: mode === 'production' ? webOptimizations() : webOptimizationsCommon(),
-        plugins: [
-          ...configs.nodejs.plugins || [],
-          ...baseConfig.plugins || [],
-          ...webPlugins()
-        ]
-      }
-    } as Record<Platform, Configuration>
-  }
-}
-
-const webPlugins = () => {
-  return [
-    new DynamicPublicPathPlugin({
-      externalPublicPath: externalPublicPathVariable
-    })
-  ]
-}
-
-const webOptimizationsCommon = () => ({
-  runtimeChunk: {
-    name: pagesRuntimeName
-  },
-  splitChunks: {
-    maxInitialRequests: 30,
-    maxAsyncRequests: 10,
-    cacheGroups: {
-      [pagesFrameworkName]: {
-        test: /\/micro\/components\/|\/micro\/utils\//,
-        reuseExistingChunk: true,
-        name: pagesFrameworkName,
-        chunks: 'all',
-        enforce: true
-      }
+      nodejs: group([
+        configs.nodejs,
+        ...common,
+        customConfig({ name: 'nodejs', target: 'node' }) as Block<Context>
+      ]),
+      webnew: group([
+        configs.webnew,
+        ...common,
+        ...web,
+        customConfig({ name: 'webnew', target: 'web' }) as Block<Context>
+      ]),
+      webold: group([
+        configs.webold,
+        ...common,
+        ...web,
+        customConfig({ name: 'webold', target: 'web' }) as Block<Context>
+      ])
     }
   }
-})
-
-const webOptimizations = () => ({
-  ...webOptimizationsCommon(),
-  noEmitOnErrors: true,
-  namedModules: false,
-  namedChunks: false,
-  moduleIds: 'size',
-  chunkIds: 'total-size',
-  nodeEnv: 'production',
-  removeAvailableModules: true,
-  removeEmptyChunks: true,
-  mergeDuplicateChunks: true,
-  flagIncludedChunks: true,
-  occurrenceOrder: true,
-  providedExports: true,
-  usedExports: true,
-  concatenateModules: true,
-  sideEffects: true,
-  portableRecords: false
-})
+}

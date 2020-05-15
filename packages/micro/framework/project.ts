@@ -2,7 +2,7 @@ import { join } from 'path'
 
 import { MICRO_BUILD_DIR } from './constants'
 import { Package, Plugins } from './package'
-import { resolvePackages } from './resolvers/pnp'
+import { requirePlugin, requireRouter, resolvePackages } from './resolvers/pnp'
 
 export interface ProjectOptions {
   rootPath: string
@@ -32,16 +32,20 @@ export class Project {
 
   public resolvePlugins = <T extends keyof Plugins>(target: T): NonNullable<Plugins[T]>[] => {
     console.log(`🦄 [${target}]: Resolving plugins`)
+    const issuer = this.root.manifest.name
     const plugins: NonNullable<Plugins[T]>[] = []
-    walk(this.root, curr => {
-      const plugin = curr.getPlugins(target)
-      if (plugin) {
-        console.log(`🔌 [${target}]: Plugin found ${curr.toString()}`)
-        plugins.push(plugin as NonNullable<Plugins[T]>)
+
+    const pluginNames = this.root.manifest.micro.plugins?.[target]
+    if (pluginNames) {
+      for (const pkg of pluginNames) {
+        plugins.push(requirePlugin(pkg, issuer)[target] as NonNullable<Plugins[T]>)
+        console.log(`🔌 [${target}]: Plugin found ${pkg}`)
       }
-    })
+    }
     return plugins
   }
+
+  public getRouter = () => requireRouter(this.root.manifest.name, this.root.manifest.name)
 
   protected resolvePackages = (rootPath: string): Package => {
     console.log('🦄 Resolving dependencies')

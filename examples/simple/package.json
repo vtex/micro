@@ -13,7 +13,7 @@
     "@vtex/micro": "^1.1.1-alpha.0",
     "@vtex/micro-cli": "^1.1.1-alpha.1",
     "@vtex/micro-react": "workspace:packages/micro-react",
-    "@vtex/micro-router": "^1.1.1-alpha.0",
+    "@vtex/micro-react-router": "workspace:packages/micro-react-router",
     "node-fetch": "^2.6.0",
     "purgecss-webpack-plugin": "^2.1.2",
     "react": "^16.13.1",
@@ -30,10 +30,16 @@
     "typescript": "^3.8.3"
   },
   "micro": {
-    "plugins": [
-      "@vtex/micro",
-      "@vtex/micro-react"
-    ]
+    "plugins": {
+      "onRequest": [
+        "@vtex/micro",
+        "@vtex/micro-react"
+      ],
+      "onAssemble": [
+        "@vtex/micro",
+        "@vtex/micro-react"
+      ]
+    }
   },
   "gitHead": "bc5c47250d07f57d1655ec6e6c98c7c58b6f789a"
 }

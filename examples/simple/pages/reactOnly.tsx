@@ -1,5 +1,5 @@
 import React from 'react'
-import { LoadMicroComponent } from '@vtex/micro-react/components'
+import { LoadMicroComponent } from '@vtex/micro-react'
 
 interface Props {
   data: any

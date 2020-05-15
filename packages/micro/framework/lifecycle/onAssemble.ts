@@ -1,6 +1,8 @@
 import { join } from 'path'
 import { difference } from 'ramda'
 import webpack, { Configuration, MultiCompiler } from 'webpack'
+import { createConfig, Block, Context, setOutput } from 'webpack-blocks'
+import { print } from 'q-i'
 
 import { Compiler, CompilerOptions } from '../compiler'
 import { Plugin } from '../plugin'
@@ -37,14 +39,19 @@ export class OnAssembleCompiler extends Compiler<OnAssemblePlugin> {
 
   public getCompiler = (mode: Mode) => {
     if (!this._compiler) {
-      const configs = this.mergePluginsConfigs(mode)
+      const pluginsConfigs = this.mergePluginsConfigs(mode)
+      const configs = pluginsConfigs.map(createConfig)
+
+      // print(configs)
+
       this.ensureEntrypoints(configs)
+
       const filteredConfigs = mode === 'development'
         ? configs.filter(c => c.name !== Platforms.webold)
         // TODO: change to `configs` before shipping 🚢
         : configs.filter(c => c.name !== Platforms.webold)
 
-      for (const page of Object.keys(configs[0].entry || {})) {
+      for (const page of Object.keys(filteredConfigs[0].entry || {})) {
         console.log(`📄 [${target}]: Page found: ${page}`)
       }
 
@@ -53,7 +60,7 @@ export class OnAssembleCompiler extends Compiler<OnAssemblePlugin> {
     return this._compiler
   }
 
-  protected mergePluginsConfigs = (mode: Mode): Configuration[] => Object.values(
+  protected mergePluginsConfigs = (mode: Mode): Block<Context>[] => Object.values(
     this.plugins.reduce(
       (acc, plugin) => plugin.getConfig({
         mode,
@@ -64,26 +71,20 @@ export class OnAssembleCompiler extends Compiler<OnAssemblePlugin> {
     )
   )
 
-  protected getInitialConfig = () => ({
-    nodejs: {
-      output: {
-        path: join(this.dist, 'nodejs'),
-        libraryTarget: 'commonjs2'
-      }
-    },
-    webnew: {
-      output: {
-        path: join(this.dist, 'webnew'),
-        publicPath: '/assets'
-      }
-    },
-    webold: {
-      output: {
-        path: join(this.dist, 'webold'),
-        publicPath: '/assets'
-      }
-    }
-  }) as Record<Platform, Configuration>
+  protected getInitialConfig = (): Record<Platform, Block<Context>> => ({
+    nodejs: setOutput({
+      path: join(this.dist, 'nodejs'),
+      libraryTarget: 'commonjs2'
+    }),
+    webnew: setOutput({
+      path: join(this.dist, 'webnew'),
+      publicPath: '/assets'
+    }),
+    webold: setOutput({
+      path: join(this.dist, 'webold'),
+      publicPath: '/assets'
+    })
+  })
 
   protected ensureEntrypoints = (configs: Configuration[]) => {
     if (configs.length > 0) {
@@ -99,9 +100,9 @@ export class OnAssembleCompiler extends Compiler<OnAssemblePlugin> {
   }
 }
 export interface OnAssembleConfigOptions {
-  mode: Mode
+  configs: Record<Platform, Block<Context>>
   project: Project
-  configs: Record<Platform, Configuration>
+  mode: Mode
 }
 
 export abstract class OnAssemblePlugin extends Plugin {
@@ -110,7 +111,7 @@ export abstract class OnAssemblePlugin extends Plugin {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public abstract getConfig = (options: OnAssembleConfigOptions): Record<Platform, Configuration> => {
+  public abstract getConfig = (options: OnAssembleConfigOptions): Record<Platform, Block<Context>> => {
     throw new Error('Not Implemented')
   }
 }

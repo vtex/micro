@@ -9,21 +9,16 @@ import {
   OnRequestPlugin
 } from './lifecycle/onRequest'
 import { Manifest } from './manifest'
-import { Router } from './router'
 
 interface PackageOptions {
   path: string
   files: string[]
-  router: Router
-  plugins: Plugins
   manifest: Manifest
   dependencies: Package[]
 }
 
 export const PackageStructure = {
   pages: 'pages',
-  utils: 'utils',
-  router: 'router',
   plugins: 'plugins',
   components: 'components',
   manifest: 'package.json'
@@ -40,29 +35,21 @@ export interface Plugins {
  */
 export class Package {
   public path: string
-  public router: Router
   public files: string[]
-  public plugins: Plugins
   public manifest: Manifest
   public dependencies: Package[]
 
   constructor ({
     path,
     files,
-    router,
-    plugins,
     manifest,
     dependencies
   }: PackageOptions) {
     this.path = path
     this.files = files
-    this.router = router
-    this.plugins = plugins
     this.manifest = manifest
     this.dependencies = dependencies
   }
-
-  public getPlugins = <T extends keyof Plugins>(target: T) => this.plugins[target]
 
   public getFiles = (target: string) => {
     const regExp = this.targetToRegExp(join(this.path, target))

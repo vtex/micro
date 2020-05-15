@@ -1,6 +1,12 @@
 type Semver = string
 
-type MicroOptions = {}
+type MicroOptions = {
+  plugins?: {
+    onAssemble: string[]
+    onRequest: string[]
+    onBuild: string[]
+  }
+}
 
 export interface Manifest {
   name: string

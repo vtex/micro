@@ -3,17 +3,17 @@
   "version": "1.1.1-alpha.1",
   "license": "MIT",
   "browser": "./components/index.ts",
+  "type": "module",
   "scripts": {
     "build": "yarn run tsc",
-    "micro": "yarn run micro-cli --project ."
+    "micro": "yarn run micro"
   },
   "dependencies": {
     "@hot-loader/react-dom": "^16.13.0",
     "@loadable/component": "^5.12.0",
     "@vtex/micro": "^1.1.1-alpha.0",
-    "@vtex/micro-cli": "^1.1.1-alpha.1",
-    "@vtex/micro-react": "workspace:packages/micro-react",
-    "@vtex/micro-react-router": "workspace:packages/micro-react-router",
+    "@vtex/micro-cli": "workspace:packages/micro-cli",
+    "@vtex/micro-react": "^1.1.1-alpha.0",
     "node-fetch": "^2.6.0",
     "purgecss-webpack-plugin": "^2.1.2",
     "react": "^16.13.1",
@@ -22,6 +22,7 @@
     "uikit": "^3.4.2"
   },
   "devDependencies": {
+    "@import-maps/generate": "^0.2.6",
     "@types/loadable__component": "^5.10.0",
     "@types/node": "^13.13.4",
     "@types/react": "^16.9.34",
@@ -36,6 +37,10 @@
         "@vtex/micro-react"
       ],
       "onAssemble": [
+        "@vtex/micro",
+        "@vtex/micro-react"
+      ],
+      "onBuild": [
         "@vtex/micro",
         "@vtex/micro-react"
       ]

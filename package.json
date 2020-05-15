@@ -4,7 +4,7 @@
   "description": "A Micro FrontEnd Framework",
   "license": "MIT",
   "private": true,
-  "module": "commonjs",
+  "type": "module",
   "workspaces": [
     "packages/*",
     "examples/*"

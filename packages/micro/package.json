@@ -3,7 +3,9 @@
   "version": "1.1.1-alpha.0",
   "license": "MIT",
   "micro": {},
+  "type": "module",
   "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "browser": "./components/index.ts",
   "scripts": {
@@ -12,6 +14,7 @@
     "prepublish": "yarn build"
   },
   "devDependencies": {
+    "@types/babel__core": "^7.1.7",
     "@types/exenv": "^1.2.0",
     "@types/fs-extra": "^8.1.0",
     "@types/glob": "^7.1.1",
@@ -22,6 +25,7 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
+    "@babel/core": "^7.9.6",
     "@yarnpkg/fslib": "^2.0.0-rc.20",
     "@yarnpkg/libzip": "^2.0.0-rc.11",
     "exenv": "^1.2.2",
@@ -29,7 +33,6 @@
     "glob": "^7.1.6",
     "pnp-webpack-plugin": "^1.6.4",
     "pnpapi": "^0.0.0",
-    "q-i": "^2.0.1",
     "ramda": "^0.27.0",
     "time-fix-plugin": "^2.0.6",
     "webpack": "^4.43.0",

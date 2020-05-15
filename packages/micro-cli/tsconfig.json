@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
-    "typeRoots": ["src/typings"],
+    "typeRoots": ["typings"],
     "target": "es2019",
-    "module": "commonjs",
+    "module": "es6",
+    "moduleResolution": "node",
     "outDir": "dist",
     "strict": true,
     "esModuleInterop": true,
@@ -10,6 +11,6 @@
     "skipLibCheck": true,
     "declaration": true
   },
-  "include": ["src"],
+  "include": ["src", "typings"],
   "exclude": ["dist"]
 }

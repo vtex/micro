@@ -57,7 +57,7 @@ export const startProdServer = async ({
   app.use(logger('tiny'))
   app.use(compress())
 
-  app.get(`${publicPaths.assets}:asset`, headers, streamAssets(project))
+  app.get(`${publicPaths.assets}*`, headers, streamAssets(project, publicPaths))
   app.get(`${publicPaths.data}*`, headers, routerMiddleware, contextMiddleware, respondData)
   app.get('/*', headers, routerMiddleware, contextMiddleware, ssr)
 

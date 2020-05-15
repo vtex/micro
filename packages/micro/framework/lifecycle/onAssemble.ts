@@ -1,8 +1,7 @@
 import { join } from 'path'
 import { difference } from 'ramda'
-import webpack, { Configuration, MultiCompiler } from 'webpack'
-import { createConfig, Block, Context, setOutput } from 'webpack-blocks'
-import { print } from 'q-i'
+import { Configuration } from 'webpack'
+import { Block, Context, createConfig, setOutput } from 'webpack-blocks'
 
 import { Compiler, CompilerOptions } from '../compiler'
 import { Plugin } from '../plugin'
@@ -30,34 +29,23 @@ export type OnAssembleCompilerOptions = Omit<CompilerOptions<OnAssemblePlugin>, 
 }
 
 export class OnAssembleCompiler extends Compiler<OnAssemblePlugin> {
-  private _compiler: MultiCompiler | null = null
-
   constructor ({ project, plugins }: OnAssembleCompilerOptions) {
     super({ project, plugins: [], target })
     this.plugins = plugins.map(P => new P())
   }
 
-  public getCompiler = (mode: Mode) => {
-    if (!this._compiler) {
-      const pluginsConfigs = this.mergePluginsConfigs(mode)
-      const configs = pluginsConfigs.map(createConfig)
+  public getConfig = (mode: Mode) => {
+    const pluginsConfigs = this.mergePluginsConfigs(mode)
+    const configs = pluginsConfigs.map(createConfig)
 
-      // print(configs)
+    this.ensureEntrypoints(configs)
 
-      this.ensureEntrypoints(configs)
+    const filteredConfigs = mode === 'development'
+      ? configs.filter(c => c.name !== Platforms.webold)
+      // TODO: change to `configs` before shipping 🚢
+      : configs.filter(c => c.name !== Platforms.webold)
 
-      const filteredConfigs = mode === 'development'
-        ? configs.filter(c => c.name !== Platforms.webold)
-        // TODO: change to `configs` before shipping 🚢
-        : configs.filter(c => c.name !== Platforms.webold)
-
-      for (const page of Object.keys(filteredConfigs[0].entry || {})) {
-        console.log(`📄 [${target}]: Page found: ${page}`)
-      }
-
-      this._compiler = webpack(filteredConfigs)
-    }
-    return this._compiler
+    return filteredConfigs
   }
 
   protected mergePluginsConfigs = (mode: Mode): Block<Context>[] => Object.values(

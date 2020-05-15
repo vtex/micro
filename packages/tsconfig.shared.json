@@ -6,7 +6,8 @@
       "./router/typings"
     ],
     "target": "es2019",
-    "module": "commonjs",
+    "module": "es6",
+    "moduleResolution": "node",
     "outDir": "dist",
     "jsx": "preserve",
     "strict": true,

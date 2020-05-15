@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { LoadMicroComponent } from '@vtex/micro-react'
 
 interface Props {

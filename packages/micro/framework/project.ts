@@ -13,17 +13,19 @@ export interface ProjectOptions {
  * For responding, this class usually perform a DFS in the dependency graph of the project
  */
 export class Project {
-  public root: Package
+  public root: Package = null as any
+  public rootPath: string
   public dist: string
-
+  
   constructor ({ rootPath }: ProjectOptions) {
     this.dist = join(rootPath, MICRO_BUILD_DIR)
-    this.root = this.resolvePackages(rootPath)
+    this.rootPath = rootPath
   }
 
   public resolveFiles = (target: string): string[] => {
+    this.ensurePackage()
     let files: string[] = []
-    walk(this.root, curr => {
+    walk(this.root!, curr => {
       const filtered = curr.getFiles(target)
       files = files.concat(filtered)
     })
@@ -31,11 +33,11 @@ export class Project {
   }
 
   public resolvePlugins = <T extends keyof Plugins>(target: T): NonNullable<Plugins[T]>[] => {
-    console.log(`🦄 [${target}]: Resolving plugins`)
-    const issuer = this.root.manifest.name
+    this.ensurePackage()
+    const issuer = this.root!.manifest.name
     const plugins: NonNullable<Plugins[T]>[] = []
 
-    const pluginNames = this.root.manifest.micro.plugins?.[target]
+    const pluginNames = this.root!.manifest.micro.plugins?.[target]
     if (pluginNames) {
       for (const pkg of pluginNames) {
         plugins.push(requirePlugin(pkg, issuer)[target] as NonNullable<Plugins[T]>)
@@ -45,21 +47,25 @@ export class Project {
     return plugins
   }
 
-  public getRouter = () => requireRouter(this.root.manifest.name, this.root.manifest.name)
+  public getRouter = () => {
+    this.ensurePackage()
+    return requireRouter(this.root!.manifest.name, this.root!.manifest.name)
+  }
 
-  protected resolvePackages = (rootPath: string): Package => {
-    console.log('🦄 Resolving dependencies')
-    const root = resolvePackages(rootPath)!
-    walk(root, curr => {
-      console.info(`📦 Micro package found: ${curr.toString()}`)
-    })
-    return root
+  public resolvePackages = () => {
+    this.root = resolvePackages(this.rootPath)!
+  }
+
+  protected ensurePackage = () => {
+    if (!this.root) {
+      throw new Error('💣 Could not find a package. Did you forget to resolve/restore packages ?')
+    }
   }
 }
 
-type WalkFn = (r: Package, p: Package | null) => void
+export type WalkFn = (r: Package, p: Package | null) => void
 
-const walk = (root: Package, fn: WalkFn) => {
+export const walk = (root: Package, fn: WalkFn) => {
   const seen = new Set<string>()
   walkRec(root, null, fn, seen)
   return root

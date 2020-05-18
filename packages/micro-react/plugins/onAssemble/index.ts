@@ -5,9 +5,9 @@ import {
   OnAssemblePlugin,
   pagesFrameworkName,
   pagesRuntimeName,
-  Platform
-} from '@vtex/micro/framework'
-import { cacheGroup } from '@vtex/micro/plugins'
+  Platform,
+  cacheGroup
+} from '@vtex/micro'
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'
 import PurgeCSSPlugin from 'purgecss-webpack-plugin'
 import TerserJSPlugin from 'terser-webpack-plugin'

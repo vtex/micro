@@ -1,4 +1,4 @@
-import { Plugins } from '../framework/package'
+import { Plugins } from '../lib/package'
 import { OnAssemble } from './onAssemble'
 import { OnBuild } from './onBuild'
 import { OnRequest } from './onRequest'

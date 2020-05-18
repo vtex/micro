@@ -1,4 +1,0 @@
-{
-  "main": "../dist/framework/index.js",
-  "types": "../dist/framework/index.d.ts"
-}

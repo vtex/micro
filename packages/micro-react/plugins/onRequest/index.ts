@@ -3,7 +3,7 @@ import {
   getStatsForTarget,
   OnRequestConfigOptions,
   OnRequestFrameworkPlugin
-} from '@vtex/micro/framework'
+} from '@vtex/micro'
 import { createElement } from 'react'
 import { renderToString } from 'react-dom/server'
 

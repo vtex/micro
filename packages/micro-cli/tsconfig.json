@@ -1,16 +1,1 @@
-{
-  "compilerOptions": {
-    "typeRoots": ["typings"],
-    "target": "es2019",
-    "module": "es6",
-    "moduleResolution": "node",
-    "outDir": "dist",
-    "strict": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": false,
-    "skipLibCheck": true,
-    "declaration": true
-  },
-  "include": ["src", "typings"],
-  "exclude": ["dist"]
-}
+../tsconfig.shared.json

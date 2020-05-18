@@ -1,14 +1,15 @@
 {
   "compilerOptions": {
     "typeRoots": [
-      "./framework/typings",
-      "./plugins/typings",
-      "./router/typings"
+      "lib/typings",
+      "router/typings",
+      "plugins/typings",
+      "components/typings"
     ],
     "target": "es2019",
-    "module": "es6",
+    "module": "commonjs",
     "moduleResolution": "node",
-    "outDir": "dist",
+    "outDir": ".micro/onBuild/cjs",
     "jsx": "preserve",
     "strict": true,
     "esModuleInterop": true,
@@ -16,6 +17,6 @@
     "skipLibCheck": true,
     "declaration": true
   },
-  "include": ["index.ts", "framework", "plugins", "router"],
-  "exclude": ["dist", "pages"]
+  "include": ["index.ts", "lib", "router", "plugins", "components"],
+  "exclude": [".micro", "pages"]
 }

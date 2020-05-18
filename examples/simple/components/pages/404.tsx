@@ -2,7 +2,7 @@ import 'uikit/dist/css/uikit.css'
 
 import React, { Fragment } from 'react'
 
-import Layout from '../Layout'
+import Layout from '../layout'
 
 interface Props {
   context: any

@@ -2,30 +2,28 @@
   "name": "@vtex/micro",
   "version": "1.1.1-alpha.0",
   "license": "MIT",
-  "micro": {},
-  "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./.micro/onBuild/cjs/index.js",
+  "types": "./.micro/onBuild/cjs/index.js",
+  "module": "./.micro/onBuild/es6/components/index.js",
   "browser": "./components/index.ts",
+  "micro": {
+    "plugins": {
+      "onBuild": [
+        "@vtex/micro"
+      ]
+    }
+  },
   "scripts": {
     "build": "rm -rf dist && yarn run tsc",
     "watch": "rm -rf dist && yarn run tsc --watch",
     "prepublish": "yarn build"
   },
-  "devDependencies": {
-    "@types/babel__core": "^7.1.7",
-    "@types/exenv": "^1.2.0",
-    "@types/fs-extra": "^8.1.0",
-    "@types/glob": "^7.1.1",
-    "@types/pnpapi": "^0.0.0",
-    "@types/ramda": "^0.27.4",
-    "@types/webpack": "^4.41.12",
-    "@types/webpack-blocks": "^2.0.0",
-    "typescript": "^3.8.3"
-  },
   "dependencies": {
     "@babel/core": "^7.9.6",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-optional-chaining": "^7.9.0",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-typescript": "^7.9.0",
     "@yarnpkg/fslib": "^2.0.0-rc.20",
     "@yarnpkg/libzip": "^2.0.0-rc.11",
     "exenv": "^1.2.2",
@@ -39,5 +37,17 @@
     "webpack-blocks": "^2.1.0",
     "webpack-blocks-utils": "^1.3.1",
     "webpack-dynamic-public-path": "^1.0.5"
+  },
+  "devDependencies": {
+    "@types/babel__core": "^7.1.7",
+    "@types/exenv": "^1.2.0",
+    "@types/fs-extra": "^8.1.0",
+    "@types/glob": "^7.1.1",
+    "@types/pnpapi": "^0.0.0",
+    "@types/ramda": "^0.27.4",
+    "@types/webpack": "^4.41.12",
+    "@types/webpack-blocks": "^2.0.0",
+    "@vtex/micro-cli": "workspace:packages/micro-cli",
+    "typescript": "^3.8.3"
   }
 }

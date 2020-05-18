@@ -2,12 +2,30 @@
   "name": "simple",
   "version": "1.1.1-alpha.1",
   "license": "MIT",
-  "browser": "./components/index.ts",
-  "type": "module",
+  "micro": {
+    "plugins": {
+      "onRequest": [
+        "@vtex/micro",
+        "@vtex/micro-react"
+      ],
+      "onAssemble": [
+        "@vtex/micro",
+        "@vtex/micro-react"
+      ],
+      "onBuild": [
+        "@vtex/micro",
+        "@vtex/micro-react"
+      ]
+    }
+  },
   "scripts": {
     "build": "yarn run tsc",
     "micro": "yarn run micro"
   },
+  "main": "./.micro/onBuild/cjs/index.js",
+  "types": "./.micro/onBuild/cjs/index.js",
+  "module": "./.micro/onBuild/es6/components/index.js",
+  "browser": "./components/index.ts",
   "dependencies": {
     "@hot-loader/react-dom": "^16.13.0",
     "@loadable/component": "^5.12.0",
@@ -29,22 +47,6 @@
     "@types/react-dom": "^16.9.7",
     "@types/uikit": "^3.3.0",
     "typescript": "^3.8.3"
-  },
-  "micro": {
-    "plugins": {
-      "onRequest": [
-        "@vtex/micro",
-        "@vtex/micro-react"
-      ],
-      "onAssemble": [
-        "@vtex/micro",
-        "@vtex/micro-react"
-      ],
-      "onBuild": [
-        "@vtex/micro",
-        "@vtex/micro-react"
-      ]
-    }
   },
   "gitHead": "bc5c47250d07f57d1655ec6e6c98c7c58b6f789a"
 }

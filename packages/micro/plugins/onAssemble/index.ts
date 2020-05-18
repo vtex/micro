@@ -25,8 +25,8 @@ import {
   pagesFrameworkName,
   pagesRuntimeName,
   Platform
-} from '../../framework/lifecycle/onAssemble'
-import { Project } from '../../framework/project'
+} from '../../lib/lifecycle/onAssemble'
+import { Project } from '../../lib/project'
 import { cacheGroup } from './modules/cacheGroups'
 
 const entriesFromPages = (project: Project) => project.root.getFiles('pages').reduce(

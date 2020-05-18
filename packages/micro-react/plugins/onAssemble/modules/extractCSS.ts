@@ -14,7 +14,6 @@ export const extractCss = (options?: Options) => (context: Context, { merge }: U
   module: {
     rules: [
       {
-        test: /\.css$/,
         ...context.match,
         use: [
           {

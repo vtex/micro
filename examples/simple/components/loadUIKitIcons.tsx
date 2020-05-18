@@ -4,17 +4,17 @@ import React, { useEffect } from 'react'
 export const loadUIkitIcons = async () => {
   const [UIkit, Icons] = await Promise.all([
     import(
-      /* webpackChunkName: "uikit" */ 
+      /* webpackChunkName: "uikit" */
       /* webpackPreload: true */
       'uikit'
     ),
     import(
-      /* webpackChunkName: "uikit-icons" */ 
+      /* webpackChunkName: "uikit-icons" */
       /* webpackPreload: true */
       'uikit/dist/js/uikit-icons' as any
     )
   ])
-  UIkit.default.use(Icons.default)
+  ;(UIkit.default as any).use(Icons.default)
 }
 
 export const withUIKit = (App: React.ReactType): React.SFC => props => {

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Grid } from './grid'
-import Layout from './Layout'
+import Layout from './layout'
 
 const AboveTheFold: React.SFC = () => (
   <Layout>

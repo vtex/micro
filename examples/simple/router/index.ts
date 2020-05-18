@@ -1,4 +1,4 @@
-import { Router } from '@vtex/micro/framework'
+import { Router } from '@vtex/micro'
 
 const removeSlash = (x: string) => x.startsWith('/') ? x.slice(1) : x
 

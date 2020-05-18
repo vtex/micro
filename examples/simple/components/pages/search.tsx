@@ -3,7 +3,7 @@ import 'uikit/dist/css/uikit.css'
 import loadable from '@loadable/component'
 import React, { Fragment } from 'react'
 
-import Layout from '../Layout'
+import Layout from '../layout'
 
 const BellowTheFold = loadable(() => import(
   /* webpackChunkName: "BellowTheFold" */

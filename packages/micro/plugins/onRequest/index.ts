@@ -1,7 +1,7 @@
 import {
   externalPublicPathVariable
-} from '../../framework/lifecycle/onAssemble'
-import { OnRequestPlugin } from '../../framework/lifecycle/onRequest'
+} from '../../lib/lifecycle/onAssemble'
+import { OnRequestPlugin } from '../../lib/lifecycle/onRequest'
 import { withPageDataTags } from '../../components/data'
 
 export class OnRequest extends OnRequestPlugin<unknown> {

@@ -2,16 +2,21 @@
   "name": "@vtex/micro-react",
   "version": "1.1.1-alpha.0",
   "license": "MIT",
-  "micro": {},
-  "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./.micro/onBuild/cjs/index.js",
+  "types": "./.micro/onBuild/cjs/index.js",
+  "module": "./.micro/onBuild/es6/components/index.js",
   "browser": "./components/index.ts",
+  "micro": {
+    "plugins": {
+      "onBuild": [
+        "@vtex/micro",
+        "@vtex/micro-react"
+      ]
+    }
+  },
   "scripts": {
     "build": "rm -rf dist && yarn run tsc",
     "watch": "rm -rf dist && yarn run tsc --watch",
-    "start": "nodemon --watch ./dist ./dist/micro.js",
     "prepublish": "yarn build"
   },
   "dependencies": {
@@ -27,11 +32,6 @@
     "@loadable/component": "^5.12.0",
     "@loadable/server": "^5.12.0",
     "@loadable/webpack-plugin": "^5.12.0",
-    "@types/babel__core": "^7.1.7",
-    "@types/loadable__server": "^5.12.1",
-    "@types/loadable__webpack-plugin": "^5.7.0",
-    "@types/optimize-css-assets-webpack-plugin": "^5.0.1",
-    "@types/react-hot-loader": "^4.1.1",
     "@vtex/micro": "^1.1.1-alpha.0",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.5.3",
@@ -48,13 +48,19 @@
     "webpack-messages": "^2.0.4"
   },
   "devDependencies": {
+    "@types/babel__core": "^7.1.7",
     "@types/loadable__component": "^5.10.0",
+    "@types/loadable__server": "^5.12.1",
+    "@types/loadable__webpack-plugin": "^5.7.0",
     "@types/mini-css-extract-plugin": "^0.9.1",
+    "@types/optimize-css-assets-webpack-plugin": "^5.0.1",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.7",
+    "@types/react-hot-loader": "^4.1.1",
     "@types/terser-webpack-plugin": "^2.2.0",
     "@types/webpack": "^4.41.12",
     "@types/webpack-blocks": "^2.0.0",
+    "@vtex/micro-cli": "workspace:packages/micro-cli",
     "typescript": "^3.8.3"
   }
 }

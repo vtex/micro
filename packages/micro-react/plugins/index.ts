@@ -1,4 +1,4 @@
-import { Plugins } from '@vtex/micro/framework'
+import { Plugins } from '@vtex/micro'
 
 import { OnBuild } from './onBuild'
 import { OnAssemble } from './onAssemble'

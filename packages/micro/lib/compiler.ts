@@ -1,6 +1,6 @@
 import { join } from 'path'
 
-import { Plugins } from './package'
+import { Plugins } from './package/base'
 import { Plugin } from './plugin'
 import { Project } from './project'
 

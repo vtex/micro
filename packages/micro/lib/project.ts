@@ -1,8 +1,12 @@
+import assert from 'assert'
 import { join } from 'path'
 
+import { parse } from '../components/semver'
 import { MICRO_BUILD_DIR } from './constants'
-import { Package, Plugins } from './package'
-import { requirePlugin, requireRouter, resolvePackages } from './resolvers/pnp'
+import { Package, PackageRootEntries, Plugins } from './package/base'
+import { PnpPackage } from './package/pnp'
+
+export type LifeCycle = 'onRequest' | 'onAssemble' | 'onBuild'
 
 export interface ProjectOptions {
   rootPath: string
@@ -16,50 +20,66 @@ export class Project {
   public root: Package = null as any
   public rootPath: string
   public dist: string
-  
+
   constructor ({ rootPath }: ProjectOptions) {
     this.dist = join(rootPath, MICRO_BUILD_DIR)
     this.rootPath = rootPath
   }
 
-  public resolveFiles = (target: string): string[] => {
-    this.ensurePackage()
-    let files: string[] = []
-    walk(this.root!, curr => {
-      const filtered = curr.getFiles(target)
-      files = files.concat(filtered)
+  public resolveFiles = async (...targets: PackageRootEntries[]): Promise<string[]> => {
+    assert(this.root, '💣 Could not find a package. Did you forget to resolve/restore packages ?')
+    let promises: Array<Promise<string[]>> = []
+    walk(this.root, curr => {
+      const filtered = curr.getFiles(...targets)
+      promises = promises.concat(filtered)
     })
-    return files
+    const files = await Promise.all(promises)
+    return files.flat()
   }
 
-  public resolvePlugins = <T extends keyof Plugins>(target: T): NonNullable<Plugins[T]>[] => {
-    this.ensurePackage()
-    const issuer = this.root!.manifest.name
-    const plugins: NonNullable<Plugins[T]>[] = []
+  public resolvePlugins = async <T extends LifeCycle>(target: T): Promise<NonNullable<Plugins[T]>[]> => {
+    assert(this.root, '💣 Could not find a package. Did you forget to resolve/restore packages ?')
+    const dependencies = this.root.manifest.dependencies || {}
+    const locators: string[] | undefined = this.root!.manifest.micro.plugins[target]
+    if (!locators) {
+      return []
+    }
+    const packages: Package[] = []
+    walk(this.root, async curr => {
+      const maybeVersion = dependencies[curr.manifest.name]
+      if (maybeVersion && parse(maybeVersion).major === parse(curr.manifest.version).major) {
+        const index = locators.findIndex(x => curr.manifest.name === x)
+        packages.splice(index, 0, curr)
+      }
+    })
+    const plugins = await Promise.all(packages.map(p => p.getPlugins()))
+    return plugins
+      .map(p => p[target])
+      .filter((p): p is NonNullable<Plugins[T]> => !!p)
+  }
 
-    const pluginNames = this.root!.manifest.micro.plugins?.[target]
-    if (pluginNames) {
-      for (const pkg of pluginNames) {
-        plugins.push(requirePlugin(pkg, issuer)[target] as NonNullable<Plugins[T]>)
-        console.log(`🔌 [${target}]: Plugin found ${pkg}`)
+  public getSelfPlugin = async <T extends LifeCycle>(target: T): Promise<NonNullable<Plugins[T]> | null> => {
+    const plugins = this.root!.manifest.micro.plugins[target]
+    const index = plugins?.findIndex(p => p === this.root.manifest.name)
+    if (index && index > -1) {
+      const p = await this.root.getPlugins()
+      const targetPlugin = p[target]
+      if (targetPlugin) {
+        return targetPlugin as NonNullable<Plugins[T]>
       }
     }
-    return plugins
+    return null
   }
 
   public getRouter = () => {
-    this.ensurePackage()
-    return requireRouter(this.root!.manifest.name, this.root!.manifest.name)
+    assert(this.root, '💣 Could not find a package. Did you forget to resolve/restore packages ?')
+    return this.root.getRouter()
   }
 
-  public resolvePackages = () => {
-    this.root = resolvePackages(this.rootPath)!
-  }
-
-  protected ensurePackage = () => {
-    if (!this.root) {
-      throw new Error('💣 Could not find a package. Did you forget to resolve/restore packages ?')
-    }
+  public resolvePackages = async (linker: 'pnp' | 'node-modules' = 'pnp') => {
+    assert(linker === 'pnp', '💣 Only PnP linker is implemented yet') // TODO: implement other linkers
+    this.root = new PnpPackage()
+    await this.root.resolve(this.rootPath)
   }
 }
 

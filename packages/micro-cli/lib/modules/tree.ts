@@ -1,12 +1,18 @@
 export const tree = {
   build: {
     description: 'Access for onBuild Micro lifecycle',
-    dev: {
-      description: 'Watch files for changes and start DevServer if project contains pages'
-    },
-    prod: {
-      description: 'Build production ready ES modules'
-    }
+    options: [
+      {
+        description: 'Watch for file changes',
+        long: 'watch',
+        type: 'boolean'
+      },
+      {
+        description: 'Build with dev environment',
+        long: 'dev',
+        type: 'boolean'
+      }
+    ]
   },
   assemble: {
     description: 'Access for onAssemble Micro lifecycle',

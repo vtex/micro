@@ -1,12 +1,11 @@
 import LoadablePlugin from '@loadable/webpack-plugin'
 import {
+  AssembleTarget,
+  cacheGroup,
   externalPublicPathVariable,
-  OnAssembleConfigOptions,
   OnAssemblePlugin,
   pagesFrameworkName,
-  pagesRuntimeName,
-  Platform,
-  cacheGroup
+  pagesRuntimeName
 } from '@vtex/micro'
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'
 import PurgeCSSPlugin from 'purgecss-webpack-plugin'
@@ -26,20 +25,19 @@ import {
 import MessagesPlugin from 'webpack-messages'
 
 import { extractCss } from './modules/extractCSS'
-import { nodejsBabel } from './nodejs'
 import { webnewBabel } from './webnew'
 import { weboldBabel } from './webold'
 
 export class OnAssemble extends OnAssemblePlugin {
-  public getConfig = ({ configs, project }: OnAssembleConfigOptions): Record<Platform, Block<Context>> => {
-    const common: Block<Context>[] = [
+  public getConfig = async (config: Block<Context>, target: AssembleTarget): Promise<Block<Context>> => {
+    const block: Block<Context>[] = [
       addPlugins([
         new LoadablePlugin({
           outputAsset: false,
           writeToDisk: false
         }),
         new PurgeCSSPlugin({
-          paths: project.resolveFiles('pages|components')
+          paths: await this.project.resolveFiles('pages', 'components')
         })
       ]),
       customConfig({
@@ -54,6 +52,18 @@ export class OnAssemble extends OnAssemblePlugin {
           timings: false
         }
       }) as Block<Context>,
+      match('*.css', [
+        extractCss({
+          plugin: { filename: '[name].css' },
+          loader: { esModule: true }
+        }),
+        css({ styleLoader: false } as any)
+      ]),
+      match(['*.png', '*.svg', '*.jpg', '*.gif'], [
+        file({ publicPath: externalPublicPathVariable })
+      ]),
+      cacheGroup(pagesRuntimeName, /\/react\/|\/react-dom\/|\/@loadable\//),
+      cacheGroup(pagesFrameworkName, /\/micro-react\/components\//),
       env('production', [
         optimization({
           minimizer: [
@@ -67,61 +77,19 @@ export class OnAssemble extends OnAssemblePlugin {
             })
           ]
         })
-      ]),
-      match('*.css', [
-        extractCss({
-          plugin: { filename: '[name].css' },
-          loader: { esModule: true }
-        }),
-        css({ styleLoader: false } as any)
-      ]),
-      match(['*.png', '*.svg', '*.jpg', '*.gif'], [
-        file({ publicPath: externalPublicPathVariable })
-      ]),
-      cacheGroup(pagesRuntimeName, /\/react\/|\/react-dom\/|\/@loadable\//),
-      cacheGroup(pagesFrameworkName, /\/micro-react\/components\//)
+      ])
     ]
 
-    return {
-      nodejs: group([
-        configs.nodejs,
-        ...common,
-        addPlugins([
-          new MessagesPlugin({
-            name: 'nodejs',
-            logger: (str: any) => console.log(`>> ${str}`)
-          })
-        ]),
-        match(['*.tsx', '*.ts'], [
-          nodejsBabel
-        ])
+    return group([
+      config,
+      ...block,
+      addPlugins([
+        new MessagesPlugin({
+          name: target,
+          logger: (str: any) => console.log(`>> ${str}`)
+        })
       ]),
-      webnew: group([
-        configs.webnew,
-        ...common,
-        addPlugins([
-          new MessagesPlugin({
-            name: 'webnew',
-            logger: (str: any) => console.log(`>> ${str}`)
-          })
-        ]),
-        match(['*.tsx', '*.ts'], [
-          webnewBabel
-        ])
-      ]),
-      webold: group([
-        configs.webold,
-        ...common,
-        addPlugins([
-          new MessagesPlugin({
-            name: 'webold',
-            logger: (str: any) => console.log(`>> ${str}`)
-          })
-        ]),
-        match(['*.tsx', '*.ts'], [
-          weboldBabel
-        ])
-      ])
-    }
+      match(['*.tsx', '*.ts'], [target === 'webnew' ? webnewBabel : weboldBabel])
+    ])
   }
 }

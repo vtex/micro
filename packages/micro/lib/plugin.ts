@@ -1,11 +1,11 @@
-import { Plugins } from './package'
+import { LifeCycle } from './project'
 
 export interface PluginOptions {
-  target: keyof Plugins
+  target: LifeCycle
 }
 
 export abstract class Plugin {
-  public target: keyof Plugins
+  public target: LifeCycle
 
   constructor ({ target }: PluginOptions) {
     this.target = target

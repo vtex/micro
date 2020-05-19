@@ -18,32 +18,35 @@ import {
 } from 'webpack-blocks'
 import DynamicPublicPathPlugin from 'webpack-dynamic-public-path'
 
+import { externalPublicPathVariable } from '../../components/publicPaths'
 import {
-  externalPublicPathVariable,
-  OnAssembleConfigOptions,
   OnAssemblePlugin,
   pagesFrameworkName,
   pagesRuntimeName,
-  Platform
-} from '../../lib/lifecycle/onAssemble'
+  AssembleTarget
+} from '../../lib/lifecycles/onAssemble'
 import { Project } from '../../lib/project'
 import { cacheGroup } from './modules/cacheGroups'
 
-const entriesFromPages = (project: Project) => project.root.getFiles('pages').reduce(
-  (acc, path) => {
-    const name = basename(path, '.tsx')
-    acc[name] = path.replace(project.root.path, './')
-    return acc
-  },
+const entriesFromPages = async (project: Project) => {
+  const files = await project.root.getFiles('pages')
+  return files.reduce(
+    (acc, path) => {
+      const name = basename(path, '.tsx')
+      acc[name] = path.replace(project.rootPath, './')
+      return acc
+    },
   {} as Record<string, string>
-)
+  )
+}
 
 export class OnAssemble extends OnAssemblePlugin {
-  public getConfig = ({ project, mode, configs }: OnAssembleConfigOptions): Record<Platform, Block<Context>> => {
-    const common: Block<Context>[] = [
-      setMode(mode),
-      setContext(project.root.path),
-      entryPoint(entriesFromPages(project)),
+  public getConfig = async (config: Block<Context>, target: AssembleTarget): Promise<Block<Context>> => {
+    const entrypoints = await entriesFromPages(this.project)
+    const block: Block<Context>[] = [
+      setMode(this.mode),
+      setContext(this.project.rootPath),
+      entryPoint(entrypoints),
       defineConstants({
         'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`
       }),
@@ -53,36 +56,6 @@ export class OnAssemble extends OnAssemblePlugin {
           PnpPlugin
         ]
       }),
-      env('development', [
-        addPlugins([
-          new TimeFixPlugin()
-        ]),
-        sourceMaps('inline-source-map'),
-        customConfig({
-          watchOptions: {
-            ignored: `${project.dist}`,
-            aggregateTimeout: 300
-          }
-        }) as Block<Context>
-      ]),
-      customConfig({
-        bail: true,
-        node: false,
-        profile: true,
-        resolveLoader: {
-          plugins: [
-            PnpPlugin.moduleLoader(module)
-          ]
-        }
-      }) as Block<Context>
-    ]
-
-    const web = [
-      addPlugins([
-        new DynamicPublicPathPlugin({
-          externalPublicPath: externalPublicPathVariable
-        })
-      ]),
       optimization({
         runtimeChunk: {
           name: pagesRuntimeName
@@ -92,7 +65,34 @@ export class OnAssemble extends OnAssemblePlugin {
           maxAsyncRequests: 10
         }
       } as any),
+      customConfig({
+        name: target,
+        target: 'web',
+        bail: true,
+        node: false,
+        profile: true,
+        resolveLoader: {
+          plugins: [
+            PnpPlugin.moduleLoader(module)
+          ]
+        }
+      }) as Block<Context>,
       cacheGroup(pagesFrameworkName, /\/micro\/components\//),
+      env('development', [
+        addPlugins([
+          new TimeFixPlugin(),
+          new DynamicPublicPathPlugin({
+            externalPublicPath: externalPublicPathVariable
+          })
+        ]),
+        sourceMaps('inline-source-map'),
+        customConfig({
+          watchOptions: {
+            ignored: `${this.project.dist}`,
+            aggregateTimeout: 300
+          }
+        }) as Block<Context>
+      ]),
       env('production', [
         optimization({
           noEmitOnErrors: true,
@@ -115,24 +115,9 @@ export class OnAssemble extends OnAssemblePlugin {
       ])
     ]
 
-    return {
-      nodejs: group([
-        configs.nodejs,
-        ...common,
-        customConfig({ name: 'nodejs', target: 'node' }) as Block<Context>
-      ]),
-      webnew: group([
-        configs.webnew,
-        ...common,
-        ...web,
-        customConfig({ name: 'webnew', target: 'web' }) as Block<Context>
-      ]),
-      webold: group([
-        configs.webold,
-        ...common,
-        ...web,
-        customConfig({ name: 'webold', target: 'web' }) as Block<Context>
-      ])
-    }
+    return group([
+      config,
+      ...block
+    ])
   }
 }

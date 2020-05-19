@@ -6,7 +6,8 @@ interface Semver {
 }
 
 export const parse = (version: string): Semver => {
-  const [major, minor, ...patchAndPre] = version.split('.')
+  const v = version.replace(/\^|~/g, '')
+  const [major, minor, ...patchAndPre] = v.split('.')
   const [patch, pre] = patchAndPre.join('.').split('-')
   return {
     major: Number(major),
@@ -18,3 +19,6 @@ export const parse = (version: string): Semver => {
 
 export const format = ({ major, minor, patch, pre }: Semver) =>
   `${major.toString()}.${minor.toString()}.${patch.toString}${pre ? `-${pre}` : ''}`
+
+// TODO: improve this to a real regex
+export const isSemver = (x: any): x is Semver => typeof x === 'string'

@@ -1,8 +1,8 @@
 import { ChunkExtractor } from '@loadable/server'
 import {
   getStatsForTarget,
-  OnRequestConfigOptions,
-  OnRequestFrameworkPlugin
+  OnRequestFrameworkPlugin,
+  OnRequestPluginOptions
 } from '@vtex/micro'
 import { createElement } from 'react'
 import { renderToString } from 'react-dom/server'
@@ -13,12 +13,12 @@ import { withRuntimeTags } from '../../components/runtime'
 export class OnRequest extends OnRequestFrameworkPlugin<JSX.Element> {
   public extractors: Record<'nodejs' | 'webnew', ChunkExtractor>
 
-  constructor (options: OnRequestConfigOptions) {
+  constructor (options: OnRequestPluginOptions) {
     super(options)
     this.extractors = {
       nodejs: new ChunkExtractor({
         entrypoints: [options.page.name],
-        outputPath: options.assetsDist.nodejs,
+        outputPath: options.assetsDist.webold, // TODO: fix this one
         stats: getStatsForTarget('nodejs', options.stats)!
       }),
       webnew: new ChunkExtractor({

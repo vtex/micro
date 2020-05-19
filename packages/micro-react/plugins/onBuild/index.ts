@@ -2,7 +2,7 @@ import { TransformOptions } from '@babel/core'
 import { OnBuildPlugin } from '@vtex/micro'
 
 export class OnBuild extends OnBuildPlugin {
-  public getConfig = (previous: TransformOptions): TransformOptions => ({
+  public getConfig = async (previous: TransformOptions): Promise<TransformOptions> => ({
     ...previous,
     presets: [
       ...previous.presets || [],

@@ -6,11 +6,11 @@ import { Compiler, CompilerOptions } from '../compiler'
 import { Plugin } from '../plugin'
 import { ResolvedPage } from '../router'
 
-const target = 'onRequest'
+const lifecycle = 'onRequest'
 
 export type OnRequestCompilerOptions<T> = Omit<CompilerOptions<OnRequestPlugin<T>>, 'target' | 'plugins'> & {
-  plugins: Array<new (options: OnRequestConfigOptions) => (OnRequestPlugin<T> | OnRequestFrameworkPlugin<T>)>
-  options: Omit<OnRequestConfigOptions, 'assetsDist'>
+  plugins: Array<new (options: OnRequestPluginOptions) => (OnRequestPlugin<T> | OnRequestFrameworkPlugin<T>)>
+  options: Omit<OnRequestPluginOptions, 'assetsDist'>
 }
 
 const prettyMerge = (a: string, b: string) => b === '' || a.endsWith('\n') ? `${a}${b}` : `${a}${b}\n`
@@ -19,11 +19,10 @@ export class OnRequestCompiler<T> extends Compiler<OnRequestPlugin<T>> {
   protected frameworkPlugin: OnRequestFrameworkPlugin<T>
 
   constructor ({ project, plugins, options }: OnRequestCompilerOptions<T>) {
-    super({ project, plugins: [], target })
+    super({ project, plugins: [], target: lifecycle })
     const fullOptions = {
       ...options,
       assetsDist: {
-        nodejs: join(this.dist, '../onAssemble', 'nodejs'),
         webnew: join(this.dist, '../onAssemble', 'webnew'),
         webold: join(this.dist, '../onAssemble', 'webold')
       }
@@ -81,12 +80,11 @@ export class OnRequestCompiler<T> extends Compiler<OnRequestPlugin<T>> {
 }
 
 interface AssetsDist {
-  nodejs: string
   webnew: string
   webold: string
 }
 
-export interface OnRequestConfigOptions {
+export interface OnRequestPluginOptions {
   mode: 'production' | 'development'
   stats: Stats.ToJsonOutput
   publicPaths: PublicPaths
@@ -97,9 +95,9 @@ export interface OnRequestConfigOptions {
 
 export abstract class OnRequestPlugin<T> extends Plugin {
   constructor (
-    protected options: OnRequestConfigOptions
+    protected options: OnRequestPluginOptions
   ) {
-    super({ target })
+    super({ target: lifecycle })
   }
 
   public render = (element: T): T => element

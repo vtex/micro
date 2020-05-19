@@ -1,8 +1,6 @@
-import {
-  externalPublicPathVariable
-} from '../../lib/lifecycle/onAssemble'
-import { OnRequestPlugin } from '../../lib/lifecycle/onRequest'
 import { withPageDataTags } from '../../components/data'
+import { externalPublicPathVariable } from '../../components/publicPaths'
+import { OnRequestPlugin } from '../../lib/lifecycles/onRequest'
 
 export class OnRequest extends OnRequestPlugin<unknown> {
   public getScriptTags = () =>
@@ -20,7 +18,7 @@ export class OnRequest extends OnRequestPlugin<unknown> {
   public getMetaTags = () => metaTags
 }
 
-const metaTags = `
-<meta name="viewport" content="width=device-width, initial-scale=1">
+const metaTags =
+`<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="micro@1.x">
-<meta charset='utf-8'>`.slice(1)
+<meta charset='utf-8'>`

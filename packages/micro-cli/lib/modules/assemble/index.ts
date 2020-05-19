@@ -1,16 +1,16 @@
 import { Mode, OnAssembleCompiler } from '@vtex/micro'
 import { outputJSON } from 'fs-extra'
 import { join } from 'path'
-import webpack, { MultiCompiler, Stats } from 'webpack'
+import webpack, { Compiler, Stats } from 'webpack'
 
-import { cleanDist, newProject, resolveProject } from '../../common/project'
+import { cleanDist, newProject, resolvePlugins } from '../../common/project'
 import { BUILD } from '../../constants'
 
-process.env.NODE_ENV = 'production'
+process.env.NODE_ENV = process.env.NODE_ENV || 'production'
 
 const target = 'onAssemble'
 
-const runWebpack = (compiler: MultiCompiler) => new Promise<Stats>((resolve, reject) => {
+const runWebpack = (compiler: Compiler) => new Promise<Stats>((resolve, reject) => {
   compiler.run((err, stats) => {
     if (err) {
       reject(err)
@@ -23,16 +23,16 @@ const main = async () => {
   console.log('🦄 Starting Assembly Build')
 
   const mode: Mode = process.env.NODE_ENV as any
-  const project = newProject()
-  const plugins = await resolveProject(project, target)
+  const project = await newProject()
+  const plugins = await resolvePlugins(project, target)
 
   console.log(`🦄 [${target}]: Creating Compiler`)
-  const compiler = new OnAssembleCompiler({ project, plugins } as any) // TODO: fix this as any
-  const configs = compiler.getConfig(mode)
+  const compiler = new OnAssembleCompiler({ project, plugins, mode })
+  const configs = await compiler.getConfig('webnew')
 
   await cleanDist(compiler.dist)
 
-  for (const page of Object.keys(configs[0].entry || {})) {
+  for (const page of Object.keys(configs.entry || {})) {
     console.log(`📄 [${target}]: Page found: ${page}`)
   }
 

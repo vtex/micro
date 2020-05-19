@@ -1415,6 +1415,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/chokidar@npm:^2.1.3":
+  version: 2.1.3
+  resolution: "@types/chokidar@npm:2.1.3"
+  dependencies:
+    chokidar: "*"
+  checksum: 2eebdcf3642af2af85b51c720d1560f23829bb7e9323fe364662d0237f1c192e9f3b1c0a5bf1592d41d4a58cb37d74146189dea2a1edd7ad35deabf19f34d592
+  languageName: node
+  linkType: hard
+
 "@types/color-name@npm:^1.1.1":
   version: 1.1.1
   resolution: "@types/color-name@npm:1.1.1"
@@ -1515,6 +1524,15 @@ __metadata:
     "@types/minimatch": "*"
     "@types/node": "*"
   checksum: 6b33e589a6d9ca47da1571ba153b41b055697af1a5849f6d13b527fbf4a05f82b3c5ddaae435bf6cb57b8e6db31ee45c05004f4f50c561a1f50bd87daf546e60
+  languageName: node
+  linkType: hard
+
+"@types/globby@npm:^9.1.0":
+  version: 9.1.0
+  resolution: "@types/globby@npm:9.1.0"
+  dependencies:
+    globby: "*"
+  checksum: 46bd43174f0e7cc604a95b1f13ebd4dbf65a83eb2589859f8b2fede01e2bdece5bbf56e4579436550b92e1c330da70c0221dcbfe57ae897af8930779884a9e1b
   languageName: node
   linkType: hard
 
@@ -2015,6 +2033,7 @@ __metadata:
     "@babel/core": ^7.9.6
     "@types/babel__core": ^7.1.7
     "@types/chalk": ^2.2.0
+    "@types/chokidar": ^2.1.3
     "@types/fs-extra": ^8.1.0
     "@types/glob": ^7.1.1
     "@types/ramda": ^0.27.4
@@ -2022,6 +2041,7 @@ __metadata:
     "@vtex/micro": ^1.1.1-alpha.0
     "@vtex/micro-server": ^1.1.1-alpha.1
     chalk: ^4.0.0
+    chokidar: ^3.4.0
     findhelp: ^1.1.0
     fs-extra: ^9.0.0
     glob: ^7.1.6
@@ -2148,7 +2168,7 @@ __metadata:
     "@types/babel__core": ^7.1.7
     "@types/exenv": ^1.2.0
     "@types/fs-extra": ^8.1.0
-    "@types/glob": ^7.1.1
+    "@types/globby": ^9.1.0
     "@types/pnpapi": ^0.0.0
     "@types/ramda": ^0.27.4
     "@types/webpack": ^4.41.12
@@ -2158,7 +2178,7 @@ __metadata:
     "@yarnpkg/libzip": ^2.0.0-rc.11
     exenv: ^1.2.2
     fs-extra: ^9.0.0
-    glob: ^7.1.6
+    globby: ^11.0.0
     pnp-webpack-plugin: ^1.6.4
     pnpapi: ^0.0.0
     ramda: ^0.27.0
@@ -3731,6 +3751,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"chokidar@npm:*, chokidar@npm:^3.2.2, chokidar@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "chokidar@npm:3.4.0"
+  dependencies:
+    anymatch: ~3.1.1
+    braces: ~3.0.2
+    fsevents: ~2.1.2
+    glob-parent: ~5.1.0
+    is-binary-path: ~2.1.0
+    is-glob: ~4.0.1
+    normalize-path: ~3.0.0
+    readdirp: ~3.4.0
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  checksum: 2c7d302cd2e7f3ce16efcdf3d4bfc6e588a0491bb1382a1202a85af3a5070b8df98208480bdd9e89aaaebbe0fb5cefe6895ddd794fa53a0aa7b7ff8c2208ce46
+  languageName: node
+  linkType: hard
+
 "chokidar@npm:^2.1.8":
   version: 2.1.8
   resolution: "chokidar@npm:2.1.8"
@@ -3751,25 +3790,6 @@ __metadata:
     fsevents:
       optional: true
   checksum: c053f4e438f7701ba04da7807430f0b23e1ce718e975ce2f9fa9901f04a58e7c4d76579eb67d75bb2f8bb4af7873258f696d92f36edb3b51571a3af16b7b54ff
-  languageName: node
-  linkType: hard
-
-"chokidar@npm:^3.2.2":
-  version: 3.4.0
-  resolution: "chokidar@npm:3.4.0"
-  dependencies:
-    anymatch: ~3.1.1
-    braces: ~3.0.2
-    fsevents: ~2.1.2
-    glob-parent: ~5.1.0
-    is-binary-path: ~2.1.0
-    is-glob: ~4.0.1
-    normalize-path: ~3.0.0
-    readdirp: ~3.4.0
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  checksum: 2c7d302cd2e7f3ce16efcdf3d4bfc6e588a0491bb1382a1202a85af3a5070b8df98208480bdd9e89aaaebbe0fb5cefe6895ddd794fa53a0aa7b7ff8c2208ce46
   languageName: node
   linkType: hard
 
@@ -5634,7 +5654,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-glob@npm:^3.0.3, fast-glob@npm:^3.2.2":
+"fast-glob@npm:^3.0.3, fast-glob@npm:^3.1.1, fast-glob@npm:^3.2.2":
   version: 3.2.2
   resolution: "fast-glob@npm:3.2.2"
   dependencies:
@@ -6231,6 +6251,20 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"globby@npm:*, globby@npm:^11.0.0":
+  version: 11.0.0
+  resolution: "globby@npm:11.0.0"
+  dependencies:
+    array-union: ^2.1.0
+    dir-glob: ^3.0.1
+    fast-glob: ^3.1.1
+    ignore: ^5.1.4
+    merge2: ^1.3.0
+    slash: ^3.0.0
+  checksum: 9000e7b0004557ed8918a85278528336f2c4ad1e337e400208bc9d4aeba8d3c42f72bf3031e7ecc7467c770499430fffab5a2ab29d763e23ef776c0f2191e07b
+  languageName: node
+  linkType: hard
+
 "globby@npm:^10.0.1":
   version: 10.0.2
   resolution: "globby@npm:10.0.2"
@@ -6698,7 +6732,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"ignore@npm:^5.1.1":
+"ignore@npm:^5.1.1, ignore@npm:^5.1.4":
   version: 5.1.4
   resolution: "ignore@npm:5.1.4"
   checksum: fede475966a10c234369ac949144d7256b38ad197c54b13e8bc1ba6235f6522999af65bc271896e141c6321089389262cdf518f9cdfe3dfc3b2f2c800879660c

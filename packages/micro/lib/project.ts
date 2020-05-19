@@ -46,24 +46,25 @@ export class Project {
     }
     const packages: Package[] = []
     walk(this.root, async curr => {
+      const index = locators.findIndex(x => curr.manifest.name === x)
+      if (index < 0) {
+        return
+      }
       const maybeVersion = dependencies[curr.manifest.name]
       if (maybeVersion && parse(maybeVersion).major === parse(curr.manifest.version).major) {
         const index = locators.findIndex(x => curr.manifest.name === x)
         packages.splice(index, 0, curr)
       }
     })
-    const plugins = await Promise.all(packages.map(p => p.getPlugins()))
-    return plugins
-      .map(p => p[target])
-      .filter((p): p is NonNullable<Plugins[T]> => !!p)
+    const plugins = await Promise.all(packages.map(p => p.getPlugin(target)))
+    return plugins.filter((p): p is NonNullable<Plugins[T]> => !!p)
   }
 
   public getSelfPlugin = async <T extends LifeCycle>(target: T): Promise<NonNullable<Plugins[T]> | null> => {
     const plugins = this.root!.manifest.micro.plugins[target]
     const index = plugins?.findIndex(p => p === this.root.manifest.name)
-    if (index && index > -1) {
-      const p = await this.root.getPlugins()
-      const targetPlugin = p[target]
+    if (index !== undefined && index > -1) {
+      const targetPlugin = await this.root.getPlugin(target)
       if (targetPlugin) {
         return targetPlugin as NonNullable<Plugins[T]>
       }

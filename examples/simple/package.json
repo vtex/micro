@@ -13,7 +13,6 @@
         "@vtex/micro-react"
       ],
       "onBuild": [
-        "@vtex/micro",
         "@vtex/micro-react"
       ]
     }

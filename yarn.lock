@@ -2140,6 +2140,7 @@ __metadata:
     "@types/webpack": ^4.41.12
     "@types/webpack-dev-middleware": ^3.7.0
     "@vtex/micro": ^1.1.1-alpha.0
+    "@vtex/micro-cli": "workspace:packages/micro-cli"
     "@vtex/micro-react": ^1.1.1-alpha.0
     compression: ^1.7.4
     cookie: ^0.4.1

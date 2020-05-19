@@ -3,6 +3,7 @@ import { readJSON } from 'fs-extra'
 import { join } from 'path'
 import pnp from 'pnpapi'
 
+import { LifeCycle } from '../../project'
 import { Router } from '../../router'
 import { Package, PackageRootEntries, Plugins } from '../base'
 import { isManifest } from '../manifest'
@@ -35,8 +36,8 @@ export class PnpPackage extends Package {
     throw new Error(`💣 not implemented: ${projectRoot}`)
   }
 
-  public getPlugins = async () => {
-    const { default: plugins } = requirePnp<{ default: Plugins }>('plugins', this.manifest.name, this.issuer)
+  public getPlugin = async (target: LifeCycle) => {
+    const { default: plugins } = requirePnp<{ default: Plugins }>(`plugins/${target}`, this.manifest.name, this.issuer)
     return plugins
   }
 
@@ -45,6 +46,6 @@ export class PnpPackage extends Package {
     return router
   }
 
-  public getFiles = (...targets: PackageRootEntries[]) =>
-    globPnp(this.manifest.name, this.issuer, `@(${targets.join('|')})/**/*.ts?(x)`)
+  public getFiles = async (...targets: PackageRootEntries[]) =>
+    globPnp(this.manifest.name, this.issuer, this.getGlobby(...targets))
 }

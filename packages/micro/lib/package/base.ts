@@ -5,10 +5,11 @@ import {
 } from '../lifecycles/onAssemble'
 import { OnBuildPlugin, OnBuildPluginOptions } from '../lifecycles/onBuild'
 import {
-  OnRequestPluginOptions,
   OnRequestFrameworkPlugin,
-  OnRequestPlugin
+  OnRequestPlugin,
+  OnRequestPluginOptions
 } from '../lifecycles/onRequest'
+import { LifeCycle } from '../project'
 import { Router } from '../router'
 import { Manifest } from './manifest'
 import { TSConfig } from './tsconfig'
@@ -61,7 +62,8 @@ export abstract class Package {
     throw new Error(`💣 not implemented: ${targets}`)
   }
 
-  public abstract getPlugins = async (): Promise<Plugins> => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public abstract getPlugin = async <T extends LifeCycle>(target: T): Promise<Plugins[T]> => {
     throw new Error('💣 not implemented')
   }
 
@@ -69,7 +71,8 @@ export abstract class Package {
     throw new Error('💣 not implemented')
   }
 
-  public getGlobby = (...targets: PackageRootEntries[]) => `@(${targets.map(t => PackageStructure[t]).join('|')})/**/*.ts?(x)`
+  public getGlobby = (...targets: PackageRootEntries[]) =>
+    `@(${targets.map(t => PackageStructure[t]).join('|')})?(/**/*.ts?(x))`
 
   public toString = () => `${this.manifest.name}@${parse(this.manifest.version).major}.x`
 }

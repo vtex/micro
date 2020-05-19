@@ -48,7 +48,7 @@ export const startProdServer = async ({
   port
 }: ProdServerOptions) => {
   const onRequestPlugins = project.resolvePlugins('onRequest')
-  const routerMiddleware = router(project, publicPaths)
+  const routerMiddleware = await router(project, publicPaths)
   const contextMiddleware = context(project, onRequestPlugins, statsJson, publicPaths)
 
   const app = express()

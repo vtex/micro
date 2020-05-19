@@ -2,23 +2,18 @@ import {
   isResolvedPage,
   isResolvedRedirect,
   Project,
-  PublicPaths,
-  Router
+  PublicPaths
 } from '@vtex/micro'
+import assert from 'assert'
 
 import express, { Next, Req, Res } from '../typings'
 
-const ensureRouter = (router: Router | undefined) => {
-  if (typeof router !== 'function') {
-    throw new Error('💣 No router found for package')
-  }
-  console.log('🐙 [router]: Found router config')
-  return router
-}
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const middleware = (project: Project, publicPaths: PublicPaths) => {
-  const router = ensureRouter(project.getRouter())
+export const middleware = async (project: Project, publicPaths: PublicPaths) => {
+  const router = await project.getRouter()
+
+  assert(typeof router === 'function', '💣 No router found for package')
+  console.log('🐙 [router]: Found router config')
 
   return async (req: Req, res: Res, next: Next) => {
     const rootPath = req.path.startsWith(publicPaths!.data)

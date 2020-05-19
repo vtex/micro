@@ -5,7 +5,6 @@ import {
   OnBuildCompiler,
   OnBuildPlugin,
   OnBuildPluginOptions,
-  PackageRootEntries,
   Project
 } from '@vtex/micro'
 import assert from 'assert'
@@ -20,7 +19,7 @@ export type BuildPlugin = new (options: OnBuildPluginOptions) => OnBuildPlugin
 
 export const createGetFolderFromFile = (project: Project) => (file: string) => {
   const [folder] = file.replace(project.rootPath + '/', '').split('/')
-  return folder as PackageRootEntries
+  return folder
 }
 
 export const builder = (
@@ -28,33 +27,35 @@ export const builder = (
   plugins: BuildPlugin[],
   mode: Mode
 ) => {
-  const folderFromFile = createGetFolderFromFile(project)
+  const entryFromFile = createGetFolderFromFile(project)
   const frameworkCompiler = new OnBuildCompiler({ project, plugins, mode })
-  let userlandCompiler: OnBuildCompiler | null = null
+  let userlandCompiler: Promise<OnBuildCompiler> | null = null
 
   return async (f: string, printFile: boolean = true) => {
     try {
       const file = f.startsWith(project.rootPath) ? f : join(project.rootPath, f) // this is necessary because of the file watcher
-      const folder = folderFromFile(file)
-      const isFrameworkLand = folder === 'lib' || folder === 'plugins'
+      const entry = entryFromFile(file)
+      const isFrameworkLand = entry === 'lib' || entry === 'plugins' || entry === 'index.ts'
       const targets: BuildTarget[] = isFrameworkLand
         ? ['cjs']
         : ['cjs', 'es6']
       const withSelfPlugin = !isFrameworkLand
 
       if (withSelfPlugin && !userlandCompiler) {
-        const selfPlugin = await project.getSelfPlugin(lifecycle)
-        const allPlugins = selfPlugin ? [...plugins, selfPlugin] : plugins
-        userlandCompiler = new OnBuildCompiler({ project, plugins: allPlugins, mode })
+        const once = async () => {
+          const selfPlugin = await project.getSelfPlugin(lifecycle)
+          const allPlugins = selfPlugin ? [...plugins, selfPlugin] : plugins
+          return new OnBuildCompiler({ project, plugins: allPlugins, mode })
+        }
+        userlandCompiler = once()
       }
 
-      const compiler = isFrameworkLand ? frameworkCompiler : userlandCompiler
+      const compiler = isFrameworkLand ? frameworkCompiler : await userlandCompiler
       assert(compiler, '💣 Compiler needs to be available')
 
       for (const target of targets) {
         const config = await compiler.getConfig(target) // TODO: It may take a while to get all configs every time
         const dist = compiler.getDist(target)
-
         const transformed = await transformFileAsync(file, config)
         const targetFile = file.replace(project.rootPath, dist).replace(/.tsx?$/, '.js')
         if (printFile) {

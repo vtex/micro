@@ -43,7 +43,7 @@ export const startDevServer = async ({
   port
 }: DevServerOptions) => {
   const onRequestPlugins = project.resolvePlugins('onRequest')
-  const routerMiddleware = router(project, publicPaths)
+  const routerMiddleware = await router(project, publicPaths)
   const contextMiddleware = context(project, onRequestPlugins, publicPaths)
 
   const app = express()

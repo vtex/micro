@@ -1,4 +1,4 @@
-import { Mode, PackageRootEntries } from '@vtex/micro'
+import { Mode } from '@vtex/micro'
 import { startDevServer } from '@vtex/micro-server'
 import chalk from 'chalk'
 import chokidar from 'chokidar'
@@ -31,11 +31,9 @@ const main = async (options: Options) => {
 
     await clean(project, 'onBuild')
 
-    const entries: PackageRootEntries[] = ['lib', 'plugins', 'components', 'pages', 'router', 'index']
-
     if (watch) {
       const watcher = chokidar.watch(
-        project.root.getGlobby(...entries),
+        project.root.getGlobby('lib', 'plugins', 'components', 'pages', 'router', 'index'),
         { cwd: project.rootPath, ignoreInitial: true }
       )
 
@@ -50,16 +48,18 @@ const main = async (options: Options) => {
     }
 
     console.log(`🦄 [${lifecycle}]: Starting the build`)
-    const files = await project.root.getFiles(...entries)
+    const framework = await project.root.getFiles('lib', 'plugins', 'index')
+    const userland = await project.root.getFiles('components', 'pages', 'router')
 
-    const msg = `🦄 [${lifecycle}]: Build finished in`
+    const msg = `🦄 [${lifecycle}]: The build of ${framework.length + userland.length} files finished in`
     console.time(msg)
-    await Promise.all(files.map(f => build(f, false)))
+    await Promise.all(framework.map(f => build(f, false)))
+    await Promise.all(userland.map(f => build(f, false)))
     console.timeEnd(msg)
 
     const hasRouter = (await project.root.getFiles('router')).length > 0
 
-    if (hasRouter && !dev) {
+    if (hasRouter && dev) {
       console.log(`🦄 [${lifecycle}]: Starting DevServer`)
       await startDevServer({
         publicPaths: PUBLIC_PATHS,
@@ -67,8 +67,6 @@ const main = async (options: Options) => {
         host: HOST,
         port: SERVER_PORT
       })
-    } else {
-      console.log(`🦄 [${lifecycle}]: No Router found, can't start Dev Server`)
     }
   } catch (error) {
     console.log(chalk.red('💣 Something went wrong'), error)

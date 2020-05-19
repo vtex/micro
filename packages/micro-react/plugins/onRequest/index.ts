@@ -10,7 +10,7 @@ import { renderToString } from 'react-dom/server'
 import { withAppContainerTags } from '../../components/container'
 import { withRuntimeTags } from '../../components/runtime'
 
-export class OnRequest extends OnRequestFrameworkPlugin<JSX.Element> {
+export default class OnRequest extends OnRequestFrameworkPlugin<JSX.Element> {
   public extractors: Record<'nodejs' | 'webnew', ChunkExtractor>
 
   constructor (options: OnRequestPluginOptions) {

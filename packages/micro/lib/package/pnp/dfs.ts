@@ -27,7 +27,7 @@ export const requirePnp = <T>(target: string, pkg: string, issuer: string) => {
     const path = locator.replace('/index.js', `/${target}/index.js`)
     return require(path)
   } catch (err) {
-    console.error(err)
+    console.error(target, pkg, issuer, err)
     throw err
   }
 }

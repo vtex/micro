@@ -28,7 +28,7 @@ import { extractCss } from './modules/extractCSS'
 import { webnewBabel } from './webnew'
 import { weboldBabel } from './webold'
 
-export class OnAssemble extends OnAssemblePlugin {
+export default class OnAssemble extends OnAssemblePlugin {
   public getConfig = async (config: Block<Context>, target: AssembleTarget): Promise<Block<Context>> => {
     const block: Block<Context>[] = [
       addPlugins([

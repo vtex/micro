@@ -109,10 +109,6 @@ export const middleware = (project: Project, publicPaths: PublicPaths) => {
         ? resolveBundleAssets(assetsRootPath, path)
         : await resolveES6Assets(assetsRootPath, path, publicPaths)
 
-      if (path.includes('sw/index.js')) {
-        res.setHeader('service-worker-allowed', '/')
-      }
-
       res.status(200)
       stream.pipe(res)
     } catch (err) {

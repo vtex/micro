@@ -1,7 +1,12 @@
-import { getSWScriptTags } from '../../components/sw/register'
 import { withPageDataTags } from '../../components/data'
 import { externalPublicPathVariable } from '../../components/publicPaths'
 import { OnRequestPlugin } from '../../lib/lifecycles/onRequest'
+
+export const getModuleImportTag = (options: OnRequestPlugin<unknown>['options']) =>
+`<script type="module-shim">
+import "${options.publicPaths.assets}pages/${options.page.name}.js";
+</script>
+`
 
 export default class OnRequest extends OnRequestPlugin<unknown> {
   public getScriptTags = () => {
@@ -10,7 +15,7 @@ export default class OnRequest extends OnRequestPlugin<unknown> {
     }
     if (this.options.lifecycleTarget === 'onBuild') {
       return '' +
-        getSWScriptTags(this.options) +
+        getModuleImportTag(this.options) +
         '<script src="https://unpkg.com/es-module-shims"></script>' // TODO: Remove this once chrome supports import maps
     }
     return ''

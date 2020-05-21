@@ -1,14 +1,12 @@
-import 'uikit/dist/css/uikit.css'
-
 import loadable from '@loadable/component'
-import React, { Fragment } from 'react'
+import React from 'react'
 
 import Layout from '../layout'
 
 const BellowTheFold = loadable(() => import(
   /* webpackChunkName: "AboveTheFold" */
   /* webpackPreload: true */
-  '../bellowTheFold'
+  '../belowTheFold'
 ), { ssr: false })
 
 const Page: React.SFC = () => {

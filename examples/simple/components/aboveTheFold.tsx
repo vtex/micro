@@ -3,8 +3,12 @@ import React from 'react'
 import { Grid } from './grid'
 import Layout from './layout'
 
-const AboveTheFold: React.SFC = () => (
-  <Layout>
+interface Props {
+  menu: Record<string, string>
+}
+
+const AboveTheFold: React.SFC<Props> = ({ menu }) => (
+  <Layout menu={menu}>
     <Grid />
   </Layout>
 )

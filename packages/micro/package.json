@@ -4,7 +4,7 @@
   "license": "MIT",
   "main": "./.micro/onBuild/cjs/index.js",
   "types": "./.micro/onBuild/cjs/index.js",
-  "module": "./.micro/onBuild/es6/components/index.js",
+  "module": "./.micro/onBuild/es6/index.js",
   "browser": "./components/index.ts",
   "micro": {
     "plugins": {
@@ -29,6 +29,8 @@
     "@babel/preset-typescript": "^7.9.0",
     "@yarnpkg/fslib": "^2.0.0-rc.20",
     "@yarnpkg/libzip": "^2.0.0-rc.11",
+    "babel-plugin-ignore-html-and-css-imports": "^0.0.2",
+    "css-loader": "^3.5.3",
     "exenv": "^1.2.2",
     "fs-extra": "^9.0.0",
     "pnp-webpack-plugin": "^1.6.4",

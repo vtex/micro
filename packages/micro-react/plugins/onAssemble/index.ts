@@ -8,7 +8,6 @@ import {
   pagesRuntimeName
 } from '@vtex/micro'
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'
-import PurgeCSSPlugin from 'purgecss-webpack-plugin'
 import TerserJSPlugin from 'terser-webpack-plugin'
 import {
   addPlugins,
@@ -22,9 +21,9 @@ import {
   match,
   optimization
 } from 'webpack-blocks'
-import MessagesPlugin from 'webpack-messages'
 
 import { extractCss } from './modules/extractCSS'
+import { purgeCSS } from './modules/purgeCSS'
 import { webnewBabel } from './webnew'
 import { weboldBabel } from './webold'
 
@@ -35,21 +34,21 @@ export default class OnAssemble extends OnAssemblePlugin {
         new LoadablePlugin({
           outputAsset: false,
           writeToDisk: false
-        }),
-        new PurgeCSSPlugin({
-          paths: await this.project.resolveFiles('pages', 'components')
         })
       ]),
+      purgeCSS({
+        paths: await this.project.resolveFiles('pages', 'components')
+      }),
       customConfig({
         stats: {
           hash: true,
           publicPath: true,
           assets: true,
-          chunks: false,
-          modules: false,
+          chunks: true,
+          modules: true,
           source: false,
-          errorDetails: false,
-          timings: false
+          errorDetails: true,
+          timings: true
         }
       }) as Block<Context>,
       match('*.css', [
@@ -83,12 +82,6 @@ export default class OnAssemble extends OnAssemblePlugin {
     return group([
       config,
       ...block,
-      addPlugins([
-        new MessagesPlugin({
-          name: target,
-          logger: (str: any) => console.log(`>> ${str}`)
-        })
-      ]),
       match(['*.tsx', '*.ts'], [target === 'webnew' ? webnewBabel : weboldBabel])
     ])
   }

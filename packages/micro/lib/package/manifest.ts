@@ -12,7 +12,7 @@ type MicroOptions = {
 export const BaseManifest = {
   main: './.micro/onBuild/cjs/index.js',
   types: './.micro/onBuild/cjs/index.js',
-  module: './.micro/onBuild/es6/components/index.js',
+  module: './.micro/onBuild/es6/index.js',
   browser: './components/index.ts',
   micro: {
     plugins: {}

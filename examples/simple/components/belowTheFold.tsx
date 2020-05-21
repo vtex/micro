@@ -1,6 +1,3 @@
-import 'uikit/dist/css/uikit.css'
-import './a.css'
-
 import React, { Fragment } from 'react'
 
 const App: React.SFC = () => {

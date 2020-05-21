@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 
 export const Grid: React.SFC = () => {
   return (
@@ -28,5 +28,5 @@ export const Grid: React.SFC = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

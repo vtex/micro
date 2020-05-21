@@ -13,6 +13,7 @@ import {
   optimization,
   resolve,
   setContext,
+  performance,
   setMode,
   sourceMaps
 } from 'webpack-blocks'
@@ -20,10 +21,10 @@ import DynamicPublicPathPlugin from 'webpack-dynamic-public-path'
 
 import { externalPublicPathVariable } from '../../components/publicPaths'
 import {
+  AssembleTarget,
   OnAssemblePlugin,
   pagesFrameworkName,
-  pagesRuntimeName,
-  AssembleTarget
+  pagesRuntimeName
 } from '../../lib/lifecycles/onAssemble'
 import { Project } from '../../lib/project'
 import { cacheGroup } from './modules/cacheGroups'
@@ -32,15 +33,17 @@ const entriesFromPages = async (project: Project) => {
   const files = await project.root.getFiles('pages')
   return files.reduce(
     (acc, path) => {
-      const name = basename(path, '.tsx')
-      acc[name] = path.replace(project.rootPath, './')
+      if (path.endsWith('.tsx')) {
+        const name = basename(path, '.tsx')
+        acc[name] = path.replace(project.rootPath, '.')
+      }
       return acc
     },
   {} as Record<string, string>
   )
 }
 
-export class OnAssemble extends OnAssemblePlugin {
+export default class OnAssemble extends OnAssemblePlugin {
   public getConfig = async (config: Block<Context>, target: AssembleTarget): Promise<Block<Context>> => {
     const entrypoints = await entriesFromPages(this.project)
     const block: Block<Context>[] = [
@@ -48,7 +51,7 @@ export class OnAssemble extends OnAssemblePlugin {
       setContext(this.project.rootPath),
       entryPoint(entrypoints),
       defineConstants({
-        'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`
+        'process.env.NODE_ENV': this.mode
       }),
       resolve({
         extensions: ['.tsx', '.ts', '.js', '.jsx'],
@@ -78,12 +81,14 @@ export class OnAssemble extends OnAssemblePlugin {
         }
       }) as Block<Context>,
       cacheGroup(pagesFrameworkName, /\/micro\/components\//),
+      addPlugins([
+        new DynamicPublicPathPlugin({
+          externalPublicPath: externalPublicPathVariable
+        })
+      ]),
       env('development', [
         addPlugins([
-          new TimeFixPlugin(),
-          new DynamicPublicPathPlugin({
-            externalPublicPath: externalPublicPathVariable
-          })
+          new TimeFixPlugin()
         ]),
         sourceMaps('inline-source-map'),
         customConfig({
@@ -111,7 +116,10 @@ export class OnAssemble extends OnAssemblePlugin {
           concatenateModules: true,
           sideEffects: true,
           portableRecords: false
-        } as any)
+        } as any),
+        performance({
+          hints: 'warning'
+        })
       ])
     ]
 

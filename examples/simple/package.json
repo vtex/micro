@@ -13,38 +13,37 @@
         "@vtex/micro-react"
       ],
       "onBuild": [
+        "@vtex/micro",
         "@vtex/micro-react"
       ]
     }
   },
   "scripts": {
-    "build": "yarn run tsc",
-    "micro": "yarn run micro"
+    "build": "rm -rf .micro/onBuild/cjs && yarn run tsc",
+    "watch": "rm -rf .micro/onBuild/cjs && yarn run tsc --watch",
+    "prepublish": "yarn build"
   },
   "main": "./.micro/onBuild/cjs/index.js",
   "types": "./.micro/onBuild/cjs/index.js",
-  "module": "./.micro/onBuild/es6/components/index.js",
+  "module": "./.micro/onBuild/es6/index.js",
   "browser": "./components/index.ts",
   "dependencies": {
-    "@hot-loader/react-dom": "^16.13.0",
     "@loadable/component": "^5.12.0",
     "@vtex/micro": "^1.1.1-alpha.0",
     "@vtex/micro-cli": "workspace:packages/micro-cli",
     "@vtex/micro-react": "^1.1.1-alpha.0",
-    "node-fetch": "^2.6.0",
-    "purgecss-webpack-plugin": "^2.1.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-hot-loader": "^4.12.21",
-    "uikit": "^3.4.2"
+    "vtex-tachyons": "^3.2.0",
+    "webpack-blocks": "^2.1.0"
   },
   "devDependencies": {
-    "@import-maps/generate": "^0.2.6",
     "@types/loadable__component": "^5.10.0",
     "@types/node": "^13.13.4",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.7",
     "@types/uikit": "^3.3.0",
+    "@types/webpack-blocks": "^2.0.0",
     "typescript": "^3.8.3"
   },
   "gitHead": "bc5c47250d07f57d1655ec6e6c98c7c58b6f789a"

@@ -11,7 +11,7 @@ import assert from 'assert'
 import { outputFile } from 'fs-extra'
 import { join } from 'path'
 
-import { cleanDist } from '../../common/project'
+import { cleanDist, resolvePlugins } from '../../common/project'
 
 export const lifecycle = 'onBuild'
 
@@ -22,12 +22,12 @@ export const createGetFolderFromFile = (project: Project) => (file: string) => {
   return folder
 }
 
-export const builder = (
+export const builder = async (
   project: Project,
-  plugins: BuildPlugin[],
   mode: Mode
 ) => {
   const entryFromFile = createGetFolderFromFile(project)
+  const plugins = await resolvePlugins(project, 'onBuild')
   const frameworkCompiler = new OnBuildCompiler({ project, plugins, mode })
   let userlandCompiler: Promise<OnBuildCompiler> | null = null
 
@@ -70,4 +70,4 @@ export const builder = (
   }
 }
 
-export const clean = (project: Project, path: string) => cleanDist(join(project.dist, path))
+export const clean = (project: Project, path: string) => cleanDist(lifecycle, join(project.dist, path))

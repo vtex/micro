@@ -1,23 +1,25 @@
 import { TransformOptions } from '@babel/core'
-import { OnBuildPlugin } from '@vtex/micro'
+import { BuildTarget, OnBuildPlugin } from '@vtex/micro'
 
 export default class OnBuild extends OnBuildPlugin {
-  public getConfig = async (previous: TransformOptions): Promise<TransformOptions> => ({
-    ...previous,
-    presets: [
-      ...previous.presets || [],
-      [
-        require.resolve('@babel/preset-react'), {
-          useBuiltIns: true
-        }
+  public getConfig = async (previous: TransformOptions, target: BuildTarget): Promise<TransformOptions> => {
+    // TODO: Be able to include this plugin for es6
+    const loadablePlugin = target === 'es6' ? [] : [require.resolve('@loadable/babel-plugin')]
+    return ({
+      ...previous,
+      presets: [
+        ...previous.presets || [],
+        [
+          require.resolve('@babel/preset-react'), {
+            useBuiltIns: true
+          }
+        ]
+      ],
+      plugins: [
+        ...previous.plugins || [],
+        require.resolve('@babel/plugin-syntax-dynamic-import'),
+        ...loadablePlugin
       ]
-    ],
-    plugins: [
-      ...previous.plugins || [],
-      ...[
-        '@babel/plugin-syntax-dynamic-import',
-        '@loadable/babel-plugin'
-      ].map(require.resolve as (x: string) => string)
-    ]
-  })
+    })
+  }
 }

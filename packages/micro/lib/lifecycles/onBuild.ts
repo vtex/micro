@@ -39,6 +39,7 @@ export class OnBuildCompiler extends Compiler<OnBuildPlugin> {
 const getInitialConfig = (target: BuildTarget, mode: Mode, project: Project): TransformOptions => ({
   root: project.rootPath,
   cwd: project.rootPath,
+  sourceMaps: mode === 'production' ? false : 'inline',
   rootMode: 'root',
   minified: mode === 'production',
   retainLines: mode === 'production',
@@ -53,6 +54,7 @@ const getInitialConfig = (target: BuildTarget, mode: Mode, project: Project): Tr
         targets: target === 'es6'
           ? { esmodules: true }
           : { node: 'current' },
+        bugfixes: true,
         modules: target === 'es6' ? false : 'commonjs',
         exclude: [
           '@babel/plugin-proposal-object-rest-spread',

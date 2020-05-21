@@ -32,6 +32,7 @@ const context = (
     options: {
       stats: statsJson,
       mode: 'development',
+      lifecycleTarget: 'onAssemble',
       publicPaths,
       page,
       path
@@ -47,7 +48,7 @@ export const startProdServer = async ({
   host,
   port
 }: ProdServerOptions) => {
-  const onRequestPlugins = project.resolvePlugins('onRequest')
+  const onRequestPlugins = await project.resolvePlugins('onRequest')
   const routerMiddleware = await router(project, publicPaths)
   const contextMiddleware = context(project, onRequestPlugins, statsJson, publicPaths)
 
@@ -56,6 +57,7 @@ export const startProdServer = async ({
   app.use(logger('tiny'))
   app.use(compress())
 
+  app.get('/favicon.ico', (req: Req, res: Res) => res.status(500))
   app.get(`${publicPaths.assets}*`, headers, streamAssets(project, publicPaths))
   app.get(`${publicPaths.data}*`, headers, routerMiddleware, contextMiddleware, respondData)
   app.get('/*', headers, routerMiddleware, contextMiddleware, ssr)

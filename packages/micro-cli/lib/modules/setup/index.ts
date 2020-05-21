@@ -4,6 +4,7 @@ import { outputFile } from 'fs-extra'
 import { join } from 'path'
 import { print } from 'q-i'
 
+import { error } from '../../common/error'
 import { newProject } from '../../common/project'
 
 interface Options {
@@ -40,4 +41,4 @@ const main = async ({ dry, d }: Options) => {
   )
 }
 
-export default main
+export default error(main)

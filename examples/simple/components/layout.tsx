@@ -1,7 +1,14 @@
 import React, { Fragment } from 'react'
 
-const Layout: React.SFC = ({ children }) => (
+import { Header } from './Header'
+
+interface Props {
+  menu: Record<string, string>
+}
+
+const Layout: React.SFC<Props> = ({ menu, children }) => (
   <Fragment>
+    <Header menu={menu}/>
     { children }
   </Fragment>
 )

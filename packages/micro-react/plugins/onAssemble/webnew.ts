@@ -15,6 +15,7 @@ export const webnewBabel: Block<Context> = babel({
           esmodules: true
         },
         modules: false,
+        bugfixes: true,
         exclude: [
           '@babel/plugin-proposal-object-rest-spread',
           '@babel/plugin-proposal-async-generator-functions',
@@ -43,7 +44,6 @@ export const webnewBabel: Block<Context> = babel({
   plugins: [
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-syntax-dynamic-import',
-    'react-hot-loader/babel',
     '@loadable/babel-plugin'
   ].map(require.resolve as any)
 } as any)

@@ -1,10 +1,20 @@
+import { getSWScriptTags } from '../../components/sw/register'
 import { withPageDataTags } from '../../components/data'
 import { externalPublicPathVariable } from '../../components/publicPaths'
 import { OnRequestPlugin } from '../../lib/lifecycles/onRequest'
 
-export class OnRequest extends OnRequestPlugin<unknown> {
-  public getScriptTags = () =>
-    `<script type="application/javascript">${externalPublicPathVariable}="${this.options.publicPaths.assets}"</script>`
+export default class OnRequest extends OnRequestPlugin<unknown> {
+  public getScriptTags = () => {
+    if (this.options.lifecycleTarget === 'onAssemble') {
+      return `<script type="application/javascript">${externalPublicPathVariable}="${this.options.publicPaths.assets}"</script>`
+    }
+    if (this.options.lifecycleTarget === 'onBuild') {
+      return '' +
+        getSWScriptTags(this.options) +
+        '<script src="https://unpkg.com/es-module-shims"></script>' // TODO: Remove this once chrome supports import maps
+    }
+    return ''
+  }
 
   public getStyleTags = () => ''
 

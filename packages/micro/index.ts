@@ -1,3 +1,5 @@
 export * from './lib'
-export * from './plugins'
+export * from './plugins/onAssemble/modules/cacheGroups'
+export * from './plugins/onAssemble'
+export * from './plugins/onRequest'
 export * from './components'

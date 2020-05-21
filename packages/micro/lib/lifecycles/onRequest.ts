@@ -4,6 +4,7 @@ import { Stats } from 'webpack'
 import { PublicPaths } from '../../components/publicPaths'
 import { Compiler, CompilerOptions } from '../compiler'
 import { Plugin } from '../plugin'
+import { LifeCycle } from '../project'
 import { ResolvedPage } from '../router'
 
 const lifecycle = 'onRequest'
@@ -13,7 +14,22 @@ export type OnRequestCompilerOptions<T> = Omit<CompilerOptions<OnRequestPlugin<T
   options: Omit<OnRequestPluginOptions, 'assetsDist'>
 }
 
-const prettyMerge = (a: string, b: string) => b === '' || a.endsWith('\n') ? `${a}${b}` : `${a}${b}\n`
+const assetsDistForLifecycle = (root: string, lifecycle: LifeCycle) => {
+  if (lifecycle === 'onBuild') {
+    return {
+      webnew: join(root, 'onBuild/es6'),
+      nodejs: join(root, 'onBuild/cjs')
+    }
+  }
+  if (lifecycle === 'onAssemble') {
+    return {
+      webnew: join(root, 'onAssemble/webnew'),
+      webold: join(root, 'onAssemble/webold'),
+      nodejs: join(root, 'onBuild/cjs')
+    }
+  }
+  throw new Error('💣 Targeting this lifecycle makes no sense')
+}
 
 export class OnRequestCompiler<T> extends Compiler<OnRequestPlugin<T>> {
   protected frameworkPlugin: OnRequestFrameworkPlugin<T>
@@ -22,10 +38,7 @@ export class OnRequestCompiler<T> extends Compiler<OnRequestPlugin<T>> {
     super({ project, plugins: [], target: lifecycle })
     const fullOptions = {
       ...options,
-      assetsDist: {
-        webnew: join(this.dist, '../onAssemble', 'webnew'),
-        webold: join(this.dist, '../onAssemble', 'webold')
-      }
+      assetsDist: assetsDistForLifecycle(project.dist, options.lifecycleTarget)
     }
     this.plugins = plugins.map(P => new P(fullOptions))
     const frameworkIndex = this.plugins.findIndex(p => p instanceof OnRequestFrameworkPlugin)
@@ -59,33 +72,35 @@ export class OnRequestCompiler<T> extends Compiler<OnRequestPlugin<T>> {
   }
 
   public getScriptTags = () => this.plugins.reduce(
-    (acc, plugin) => prettyMerge(acc, plugin.getScriptTags()),
+    (acc, plugin) => acc + plugin.getScriptTags(),
     ''
   )
 
   public getLinkTags = () => this.plugins.reduce(
-    (acc, plugin) => prettyMerge(acc, plugin.getLinkTags()),
+    (acc, plugin) => acc + plugin.getLinkTags(),
     ''
   )
 
   public getStyleTags = () => this.plugins.reduce(
-    (acc, plugin) => prettyMerge(acc, plugin.getStyleTags()),
+    (acc, plugin) => acc + plugin.getStyleTags(),
     ''
   )
 
   public getMetaTags = () => this.plugins.reduce(
-    (acc, plugin) => prettyMerge(acc, plugin.getMetaTags()),
+    (acc, plugin) => acc + plugin.getMetaTags(),
     ''
   )
 }
 
 interface AssetsDist {
   webnew: string
-  webold: string
+  nodejs: string
+  webold?: string
 }
 
 export interface OnRequestPluginOptions {
   mode: 'production' | 'development'
+  lifecycleTarget: 'onAssemble' | 'onBuild'
   stats: Stats.ToJsonOutput
   publicPaths: PublicPaths
   assetsDist: AssetsDist

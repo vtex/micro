@@ -1,30 +1,29 @@
-import { Project, walk } from '@vtex/micro'
+import { Mode } from '@vtex/micro'
 import { startProdServer } from '@vtex/micro-server'
 import { readJSON } from 'fs-extra'
 import { join } from 'path'
+import chalk from 'chalk'
 
-import { BUILD, HOST, SERVER_PORT } from '../../constants'
-import { PUBLIC_PATHS } from './../../constants'
+import { error } from '../../common/error'
+import { newProject } from '../../common/project'
+import { BUILD, HOST, PUBLIC_PATHS, SERVER_PORT } from '../../constants'
 
 process.env.NODE_ENV = 'production'
 
+const lifecycle = 'onRequest'
+
 const main = async () => {
-  const projectPath = process.cwd()
+  const mode: Mode = 'production'
+  process.env.NODE_ENV = mode
 
-  const project = new Project({ rootPath: projectPath })
+  console.log(`🦄 Starting Micro ${chalk.blue(lifecycle)}:${chalk.blue(mode)}`)
 
-  // TODO: Figure out a way to not resolve dependencies, but persist then instead
-  console.log('🦄 Resolving dependencies')
-  project.resolvePackages()
-  walk(project.root, curr => {
-    console.info(`📦 Micro package found: ${curr.toString()}`)
-  })
+  const project = await newProject()
 
   console.log(`🦄 Starting server for ${project.root.toString()}`)
 
-  const dist = project.dist.replace(projectPath, './')
-  console.log(`🦄 Reading build state on ${dist}`)
-  const statsJson = await readJSON(join(project.dist, BUILD))
+  console.log(`🦄 Reading build state on ${project.dist.replace(project.rootPath, './')}`)
+  const statsJson = await readJSON(join(project.dist, 'onAssemble', BUILD))
 
   console.log('🦄 Starting production server')
   await startProdServer({
@@ -36,4 +35,4 @@ const main = async () => {
   })
 }
 
-export default main
+export default error(main)

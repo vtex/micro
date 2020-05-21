@@ -3,11 +3,6 @@ export const tree = {
     description: 'Access for onBuild Micro lifecycle',
     options: [
       {
-        description: 'Watch for file changes',
-        long: 'watch',
-        type: 'boolean'
-      },
-      {
         description: 'Build with dev environment',
         long: 'dev',
         type: 'boolean'
@@ -16,9 +11,22 @@ export const tree = {
   },
   assemble: {
     description: 'Access for onAssemble Micro lifecycle',
+    options: [
+      {
+        description: 'Build with dev environment',
+        long: 'dev',
+        type: 'boolean'
+      }
+    ],
     report: {
       description: 'Assemble and generate report'
+    },
+    config: {
+      description: 'Print webpack config'
     }
+  },
+  link: {
+    description: 'Develop a Micro project'
   },
   serve: {
     description: 'Serve an assembled Micro project'

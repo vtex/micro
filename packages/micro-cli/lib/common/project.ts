@@ -18,8 +18,8 @@ export const newProject = async () => {
   return project
 }
 
-export const cleanDist = async (path: string) => {
-  console.log(`☂ Creating dist folder in ${chalk.cyanBright(join(MICRO_BUILD_DIR, path.split(MICRO_BUILD_DIR)[1]))}`)
+export const cleanDist = async (target: string, path: string) => {
+  console.log(`🎯 [${target}]: Creating dist folder in ${chalk.cyanBright(join(MICRO_BUILD_DIR, path.split(MICRO_BUILD_DIR)[1]))}`)
   await emptyDir(path)
 }
 

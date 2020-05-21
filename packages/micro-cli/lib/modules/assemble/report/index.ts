@@ -1,10 +1,13 @@
-import assemble from '../index'
+import open from 'open'
+
+import { error } from '../../../common/error'
+
+const target = 'onAssemble'
 
 const main = async () => {
-  await assemble()
+  console.log(`🦄 Starting ${target} report`)
 
-  // TODO: Report webpack build somehow
-  // This is where performance budgets comes in
+  open('http://webpack.github.io/analyse/')
 }
 
-export default main
+export default error(main)

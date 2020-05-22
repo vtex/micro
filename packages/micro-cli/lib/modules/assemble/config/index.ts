@@ -1,8 +1,8 @@
 import { Mode, OnAssembleCompiler } from '@vtex/micro'
-import { inspect } from 'util'
 
 import { error } from '../../../common/error'
 import { newProject, resolvePlugins } from '../../../common/project'
+import { prettyPrint } from './../../../common/print'
 
 const target = 'onAssemble'
 
@@ -24,7 +24,7 @@ const main = async (options: Options) => {
   const compiler = new OnAssembleCompiler({ project, plugins, mode })
   const configs = await compiler.getConfig('webnew')
 
-  console.log(inspect(configs, false, 100, true))
+  prettyPrint(configs)
 }
 
 export default error(main)

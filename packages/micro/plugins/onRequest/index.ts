@@ -2,11 +2,22 @@ import { withPageDataTags } from '../../components/data'
 import { externalPublicPathVariable } from '../../components/publicPaths'
 import { OnRequestPlugin } from '../../lib/lifecycles/onRequest'
 
+// Some dependencies think they have access to this variable. Webpack
+// has a plugin for adding this to the bundles, however we need to
+// add this while using es6 only
+export const setupEnvVar = (options: OnRequestPlugin<unknown>['options']) =>
+`<script>
+window.process = {
+  env: {
+    NODE_ENV: "${options.mode}"
+  }
+}
+</script>`
+
 export const getModuleImportTag = (options: OnRequestPlugin<unknown>['options']) =>
 `<script type="module-shim">
 import "${options.publicPaths.assets}pages/${options.page.name}.js";
-</script>
-`
+</script>`
 
 export default class OnRequest extends OnRequestPlugin<unknown> {
   public getScriptTags = () => {
@@ -15,8 +26,9 @@ export default class OnRequest extends OnRequestPlugin<unknown> {
     }
     if (this.options.lifecycleTarget === 'onBuild') {
       return '' +
-        getModuleImportTag(this.options) +
-        '<script src="https://unpkg.com/es-module-shims"></script>' // TODO: Remove this once chrome supports import maps
+      setupEnvVar(this.options) +
+      getModuleImportTag(this.options) +
+      '<script src="https://unpkg.com/es-module-shims"></script>' // TODO: Remove this once chrome supports import maps
     }
     return ''
   }

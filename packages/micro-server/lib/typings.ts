@@ -5,7 +5,7 @@ import { Stats } from 'webpack'
 interface Locals {
   compiler: OnRequestCompiler<unknown>,
   route: {
-    page: ResolvedPage
+    page: ResolvedPage<any>
     path: string
   },
   webpackStats?: {

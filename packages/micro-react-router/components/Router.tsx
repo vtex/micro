@@ -5,20 +5,20 @@ import React, { useContext, useState } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import { FetchCurrentPage } from './Page'
-import { Page, PagesManager } from './Pages'
+import { Page, PagesManager } from './Pages/index'
 import { Pages as PagesWeb } from './Pages/browser'
 import { Pages as PagesSSR } from './Pages/ssr'
 
 export interface PageProps {
-  context: any
+  data: any
 }
 
 export interface AsyncPageProps extends PageProps {
-  entrypoint: string
+  name: string
 }
 
 interface RouterProps {
-  context: Page
+  data: Page
   error: any
 }
 
@@ -32,24 +32,24 @@ export const withRouter = (
   InitialPage: React.ElementType<PageProps>,
   AsyncPage: LoadableComponent<AsyncPageProps>
 ): React.SFC<RouterProps> => {
-  return ({ context }) => {
+  return ({ data }) => {
     const runtime = useContext(Runtime)
     const [pages, setPages] = useState([] as Page[])
 
-    pagesWeb.initialize(runtime, setPages, context)
+    pagesWeb.initialize(runtime, setPages, data)
 
     if (canUseDOM) {
       return (
         <PagesContext.Provider value={pagesWeb}>
           <BrowserRouter>
             <Switch>
-              <Route exact path={context.path}>
-                <InitialPage context={context.context} />
+              <Route exact path={data.path}>
+                <InitialPage data={data.data} />
               </Route>
 
-              {pages.map(({ path, context, entrypoint }) => (
+              {pages.map(({ path, data, name }) => (
                 <Route exact path={path} key={path}>
-                  <AsyncPage entrypoint={entrypoint} context={context} fallback={<div>loading...</div>}/>
+                  <AsyncPage name={name} data={data} fallback={<div>loading...</div>}/>
                 </Route>
               ))}
 
@@ -67,7 +67,7 @@ export const withRouter = (
       // On SSR, we already know what we should render by this point
       return (
         <PagesContext.Provider value={pagesSSR}>
-          <InitialPage context={context.context} />
+          <InitialPage data={data.data} />
         </PagesContext.Provider>
       )
     }

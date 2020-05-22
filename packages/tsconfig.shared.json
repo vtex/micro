@@ -17,6 +17,15 @@
     "skipLibCheck": true,
     "declaration": true
   },
-  "include": ["index.ts", "lib", "router", "plugins", "components"],
-  "exclude": [".micro", "pages"]
+  "include": [
+    "index.ts",
+    "lib",
+    "router",
+    "plugins",
+    "components"
+  ],
+  "exclude": [
+    ".micro",
+    "pages"
+  ]
 }

@@ -2049,7 +2049,6 @@ __metadata:
     minimist: ^1.2.5
     nodemon: ^2.0.3
     open: ^7.0.4
-    q-i: ^2.0.1
     ramda: ^0.27.0
     typescript: ^3.8.3
     webpack: ^4.43.0
@@ -2058,7 +2057,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-react-router@workspace:packages/micro-react-router":
+"@vtex/micro-react-router@^1.1.1-alpha.0, @vtex/micro-react-router@workspace:packages/micro-react-router":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-react-router@workspace:packages/micro-react-router"
   dependencies:
@@ -2068,12 +2067,15 @@ __metadata:
     "@types/react-dom": ^16.9.7
     "@types/react-router-dom": ^5.1.5
     "@types/webpack": ^4.41.13
+    "@types/webpack-blocks": ^2.0.0
     "@vtex/micro": ^1.1.1-alpha.0
+    "@vtex/micro-cli": "workspace:packages/micro-cli"
     "@vtex/micro-react": ^1.1.1-alpha.0
     history: ^4.10.1
     react: ^16.13.1
     react-router-dom: ^5.1.2
     typescript: ^3.8.3
+    webpack-blocks: ^2.1.0
   languageName: unknown
   linkType: soft
 
@@ -6139,13 +6141,6 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"get-own-enumerable-property-symbols@npm:^3.0.0":
-  version: 3.0.2
-  resolution: "get-own-enumerable-property-symbols@npm:3.0.2"
-  checksum: d20852864608d8bd3023428fe66091ec90081fe49bd34b3db2d0ce7f0968147da7f7c424d2b8ad8c6a599f6e9de4e60663d906a4324b0705c14d01c98c8aeb28
-  languageName: node
-  linkType: hard
-
 "get-stdin@npm:^4.0.1":
   version: 4.0.1
   resolution: "get-stdin@npm:4.0.1"
@@ -7231,13 +7226,6 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"is-obj@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "is-obj@npm:1.0.1"
-  checksum: 5afa862481308704f9864921ab61ab17f9b91d8381bb3c99ccc276f058322ac51927b4f8a513b0a3620e7e608e882ce4ed095692e71af73eb6ab1e71429766b8
-  languageName: node
-  linkType: hard
-
 "is-obj@npm:^2.0.0":
   version: 2.0.0
   resolution: "is-obj@npm:2.0.0"
@@ -7299,13 +7287,6 @@ fsevents@~2.1.2:
   dependencies:
     has: ^1.0.3
   checksum: 35a87c521c846fde740ec7c1910b75ad1f1e13db4381cc18373c556f909efba44e23a3cb70b760002eeecc7fc060e37fbf659598852807f82531fdc28a065cd9
-  languageName: node
-  linkType: hard
-
-"is-regexp@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "is-regexp@npm:1.0.0"
-  checksum: bdc3d3ddfac855f67e6216a1b40800ab8355c9426d443167b2372a666e903e4c36adbb4e5cf151bbeed3aa0a25445840df14ab8c52a46a4afabfd4c271a37e81
   languageName: node
   linkType: hard
 
@@ -10217,17 +10198,6 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"q-i@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "q-i@npm:2.0.1"
-  dependencies:
-    ansi-styles: ^3.2.0
-    is-plain-object: ^2.0.4
-    stringify-object: ^3.2.0
-  checksum: 9cf711c7a14cdc64497bea47b63228a095654974a236b91c3f43b5caa92655c14bbfe1aef3fd5bdca24fcd1c7afc429732b7421e8ef4595ad90cb8f2531f5df7
-  languageName: node
-  linkType: hard
-
 "q@npm:^1.1.2":
   version: 1.5.1
   resolution: "q@npm:1.5.1"
@@ -11306,6 +11276,7 @@ fsevents@~2.1.2:
     "@vtex/micro": ^1.1.1-alpha.0
     "@vtex/micro-cli": "workspace:packages/micro-cli"
     "@vtex/micro-react": ^1.1.1-alpha.0
+    "@vtex/micro-react-router": ^1.1.1-alpha.0
     react: ^16.13.1
     react-dom: ^16.13.1
     typescript: ^3.8.3
@@ -11798,17 +11769,6 @@ fsevents@~2.1.2:
   dependencies:
     safe-buffer: ~5.1.0
   checksum: 99ca1c4880b1098df6d25f59771f2ef2f1ca13ab6a239b050809d78501f5b8e1d00dcf85dc6153678784b13e990f5b1c634eead820114e32b342e40c1fe91713
-  languageName: node
-  linkType: hard
-
-"stringify-object@npm:^3.2.0":
-  version: 3.3.0
-  resolution: "stringify-object@npm:3.3.0"
-  dependencies:
-    get-own-enumerable-property-symbols: ^3.0.0
-    is-obj: ^1.0.1
-    is-regexp: ^1.0.0
-  checksum: 9a8e9659a180ac349565889bda3464c0542c100729a0a6066b9e25e148c1a3beceeba22e2620fb88ec04fd499919506837094756e928fb6237224802bc1c9a31
   languageName: node
   linkType: hard
 

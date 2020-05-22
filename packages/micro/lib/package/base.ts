@@ -10,7 +10,7 @@ import {
   OnRequestPluginOptions
 } from '../lifecycles/onRequest'
 import { LifeCycle } from '../project'
-import { Router } from '../router'
+import { Router, Serializable } from '../router'
 import { Manifest } from './manifest'
 import { TSConfig } from './tsconfig'
 
@@ -67,7 +67,7 @@ export abstract class Package {
     throw new Error('💣 not implemented')
   }
 
-  public abstract getRouter = async (): Promise<Router> => {
+  public abstract getRouter = async <T extends Serializable>(): Promise<Router<T>> => {
     throw new Error('💣 not implemented')
   }
 

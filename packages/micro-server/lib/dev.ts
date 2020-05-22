@@ -1,4 +1,4 @@
-import { OnRequestCompiler, Project, PublicPaths } from '@vtex/micro'
+import { OnRequestCompiler, Plugins, Project, PublicPaths } from '@vtex/micro'
 import compress from 'compression'
 import express from 'express'
 import logger from 'morgan'
@@ -14,6 +14,7 @@ import { Next, Req, Res } from './typings'
 interface DevServerOptions {
   statsJson: Stats.ToJsonOutput
   project: Project,
+  plugins: Plugins['onRequest'][]
   publicPaths: PublicPaths
   host: string
   port: number
@@ -45,19 +46,19 @@ export const startDevServer = async ({
   publicPaths,
   statsJson,
   project,
+  plugins,
   host,
   port
 }: DevServerOptions) => {
-  const onRequestPlugins = await project.resolvePlugins('onRequest')
   const routerMiddleware = await router(project, publicPaths)
-  const contextMiddleware = context(project, onRequestPlugins, statsJson, publicPaths)
+  const contextMiddleware = context(project, plugins, statsJson, publicPaths)
 
   const app = express()
 
   app.use(logger('dev'))
   app.use(compress())
 
-  app.get('/favicon.ico', (req: Req, res: Res) => res.status(500))
+  app.get('/favicon.ico', (req: Req, res: Res) => { res.status(404); res.send(null) })
   app.get(`${publicPaths.assets}*`, headers, streamAssets(project, publicPaths))
   app.get(`${publicPaths.data}*`, headers, routerMiddleware, contextMiddleware, respondData)
   app.get('/*', headers, routerMiddleware, contextMiddleware, devSSR)

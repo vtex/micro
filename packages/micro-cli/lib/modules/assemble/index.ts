@@ -48,7 +48,10 @@ const main = async (options: Options) => {
   const stats = await runWebpack(webpack(configs))
   console.timeEnd(`🦄 [${lifecycle}]: Build took`)
 
+  console.time(`🦄 [${lifecycle}]: Webpack Stats file generation took`)
   const statsJSON = stats.toJson()
+  console.timeEnd(`🦄 [${lifecycle}]: Webpack Stats file generation took`)
+
   if (stats.hasErrors()) {
     console.error('⛔⛔ Webpack build finshed with the following errors\n')
     for (const err of statsJSON.errors) {
@@ -66,7 +69,7 @@ const main = async (options: Options) => {
 
   const dist = join(compiler.dist, BUILD)
   console.log(`🦄 [${lifecycle}]: Persisting Build on ${dist.replace(project.rootPath, '')}`)
-  await outputJSON(dist, stats.toJson())
+  await outputJSON(dist, statsJSON)
 }
 
 export default error(main)

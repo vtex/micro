@@ -2,7 +2,7 @@ import { Project, PublicPaths } from '@vtex/micro'
 import { PosixFS, ZipOpenFS } from '@yarnpkg/fslib'
 import { getLibzipSync } from '@yarnpkg/libzip'
 import assert from 'assert'
-import { createReadStream } from 'fs-extra'
+import { createReadStream, pathExists } from 'fs-extra'
 import mime from 'mime-types'
 import { basename, dirname, extname, join } from 'path'
 import pnp from 'pnpapi'
@@ -23,22 +23,32 @@ interface ImportMap {
 
 export const importMap: ImportMap = {
   imports: {
-    react: 'https://unpkg.com/es-react@16.12.0/react.js',
-    'react-dom': 'https://unpkg.com/es-react@16.12.0/react-dom.js',
+    react: 'https://cdn.pika.dev/react@^16.13.1',
+    'react-dom': 'https://cdn.pika.dev/react-dom@^16.13.1',
+    '@loadable/component': 'https://cdn.pika.dev/@loadable/component@^5.12.0',
+    'react-router-dom': 'https://cdn.pika.dev/react-router-dom@^5.2.0',
+    'react-router': 'https://cdn.pika.dev/react-router@^5.2.0',
+    history: 'https://cdn.pika.dev/history@^4.10.1',
+    'tiny-warning': 'https://cdn.pika.dev/tiny-warning@^1.0.3',
+    'tiny-invariant': 'https://cdn.pika.dev/tiny-invariant@^1.1.0',
+    'mini-create-react-context': 'https://cdn.pika.dev/mini-create-react-context@^0.4.0',
+    'resolve-pathname': 'https://cdn.pika.dev/resolve-pathname@^3.0.0',
+    'value-equal': 'https://cdn.pika.dev/value-equal@^1.0.1',
+
     'react-is': 'https://unpkg.com/es-react@16.12.0/react-is.js',
+    'prop-types': 'https://unpkg.com/es-react@16.12.0/prop-types.js',
     exenv: 'https://unpkg.com/exenv-es6@1.0.0/dist/index.js',
-    '@loadable/component': 'https://unpkg.com/@loadable/component@5.12.0/dist/loadable.esm.js',
     'hoist-non-react-statics': 'https://unpkg.com/hoist-non-react-statics-x@3.3.2/dist/hoist-non-react-statics-x.esm.js',
-    '@babel/runtime/helpers/esm/objectWithoutPropertiesLoose': 'https://unpkg.com/@babel/runtime@7.9.6/helpers/esm/objectWithoutPropertiesLoose.js',
-    '@babel/runtime/helpers/esm/extends': 'https://unpkg.com/@babel/runtime@7.9.6/helpers/esm/extends.js',
-    '@babel/runtime/helpers/esm/assertThisInitialized': 'https://unpkg.com/@babel/runtime@7.9.6/helpers/esm/assertThisInitialized.js',
-    '@babel/runtime/helpers/esm/inheritsLoose': 'https://unpkg.com/@babel/runtime@7.9.6/helpers/esm/inheritsLoose.js',
+
+    '@babel/runtime/helpers/': 'https://unpkg.com/browse/@babel/runtime@7.9.6/helpers',
 
     'vtex-tachyons/tachyons.css': '/assets/simple/vtex-tachyons/tachyons.css',
     '@vtex/micro': '/assets/simple/@vtex/micro/components/index.js',
     '@vtex/micro/': '/assets/simple/@vtex/micro/components',
     '@vtex/micro-react': '/assets/simple/@vtex/micro-react/components/index.js',
-    '@vtex/micro-react/': '/assets/simple/@vtex/micro-react/components'
+    '@vtex/micro-react/': '/assets/simple/@vtex/micro-react/components',
+    '@vtex/micro-react-router': '/assets/simple/@vtex/micro-react-router/components/index.js',
+    '@vtex/micro-react-router/': '/assets/simple/@vtex/micro-react-router/components'
   }
 }
 
@@ -57,7 +67,14 @@ const resolveES6Assets = async (assetsRootPath: string, path: string, publicPath
   // this is a relative import
   if (!maybeModule) {
     const asset = join(assetsRootPath, path)
-    return createReadStream(asset, { encoding: 'utf-8' })
+
+    if (await pathExists(asset)) {
+      return createReadStream(asset, { encoding: 'utf-8' })
+    }
+
+    // It was a default import, let's add a `/index.js` in the end so we find the file
+    const defaultImport = join(asset.replace('.js', ''), 'index.js')
+    return createReadStream(defaultImport, { encoding: 'utf-8' })
   }
 
   // this is a yarn related import, lets try to resolve it
@@ -79,6 +96,12 @@ const resolveES6Assets = async (assetsRootPath: string, path: string, publicPath
   const rootPathES6 = dirname(join(dirname(packageJsonPath), packageJson.module))
   const joined = join(rootPathES6, ...rest)
   if (await crossFs.existsPromise(joined)) {
+    return crossFs.createReadStream(joined, { encoding: 'utf-8' })
+  }
+
+  // maybe it's a default import ?
+  const defaultImport = join(joined.replace('.js', ''), 'index.js')
+  if (await crossFs.existsPromise(defaultImport)) {
     return crossFs.createReadStream(joined, { encoding: 'utf-8' })
   }
 

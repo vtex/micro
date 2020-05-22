@@ -6,11 +6,13 @@
     "plugins": {
       "onRequest": [
         "@vtex/micro",
-        "@vtex/micro-react"
+        "@vtex/micro-react",
+        "@vtex/micro-react-router"
       ],
       "onAssemble": [
         "@vtex/micro",
-        "@vtex/micro-react"
+        "@vtex/micro-react",
+        "@vtex/micro-react-router"
       ],
       "onBuild": [
         "@vtex/micro",
@@ -32,6 +34,7 @@
     "@vtex/micro": "^1.1.1-alpha.0",
     "@vtex/micro-cli": "workspace:packages/micro-cli",
     "@vtex/micro-react": "^1.1.1-alpha.0",
+    "@vtex/micro-react-router": "^1.1.1-alpha.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "vtex-tachyons": "^3.2.0",

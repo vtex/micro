@@ -4,7 +4,7 @@ import { join } from 'path'
 import pnp from 'pnpapi'
 
 import { LifeCycle } from '../../project'
-import { Router } from '../../router'
+import { Router, Serializable } from '../../router'
 import { Package, PackageRootEntries, Plugins } from '../base'
 import { isManifest } from '../manifest'
 import { globPnp, requirePnp, traverseDependencyTree } from './dfs'
@@ -41,8 +41,8 @@ export class PnpPackage extends Package {
     return plugins
   }
 
-  public getRouter = async () => {
-    const { default: router } = requirePnp<{ default: Router }>('router', this.manifest.name, this.issuer)
+  public getRouter = async <T extends Serializable>() => {
+    const { default: router } = requirePnp<{ default: Router<T> }>('router', this.manifest.name, this.issuer)
     return router
   }
 

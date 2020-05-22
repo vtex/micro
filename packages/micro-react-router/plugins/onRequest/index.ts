@@ -1,11 +1,12 @@
-import { OnRequestPlugin } from '@vtex/micro/framework'
+import { OnRequestPlugin } from '@vtex/micro'
 import { createElement } from 'react'
 import { StaticRouter } from 'react-router-dom'
 
-export class OnRequest extends OnRequestPlugin<JSX.Element> {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default class OnRequest extends OnRequestPlugin<JSX.Element> {
   public render = (children: JSX.Element | null): JSX.Element => {
     const location = this.options.path
+
+    console.log(location)
 
     return createElement(StaticRouter, { location, children } as any)
   }

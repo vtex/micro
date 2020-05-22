@@ -1,6 +1,6 @@
+import React, { Fragment } from 'react'
 import loadable from '@loadable/component'
 import { NavLink } from '@vtex/micro-react-router'
-import React, { Fragment } from 'react'
 
 import AboveTheFold from '../aboveTheFold'
 import { Loading } from '../loading'

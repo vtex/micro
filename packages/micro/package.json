@@ -7,14 +7,7 @@
   "module": "./.micro/onBuild/es6/index.js",
   "browser": "./components/index.ts",
   "micro": {
-    "plugins": {
-      "onAssemble": [
-        "@vtex/micro"
-      ],
-      "onRequest": [
-        "@vtex/micro"
-      ]
-    }
+    "plugins": {}
   },
   "scripts": {
     "build": "rm -rf .micro/onBuild/cjs && yarn run tsc",

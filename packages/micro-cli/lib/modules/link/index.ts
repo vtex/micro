@@ -1,10 +1,10 @@
 import { Mode } from '@vtex/micro'
 import { startDevServer } from '@vtex/micro-server'
-import chokidar from 'chokidar'
 import chalk from 'chalk'
+import chokidar from 'chokidar'
 
 import { error } from '../../common/error'
-import { newProject } from '../../common/project'
+import { newProject, resolvePlugins } from '../../common/project'
 import { HOST, PUBLIC_PATHS, SERVER_PORT } from '../../constants'
 import { builder, clean, lifecycle } from '../build/builder'
 
@@ -26,6 +26,8 @@ const main = async () => {
     project.root.getGlobby('lib', 'plugins', 'components', 'pages', 'router', 'index'),
     { cwd: project.rootPath, ignoreInitial: true }
   )
+
+  // TODO: I think we can safetely implement these
   watcher.on('addDir', () => { console.error('💣 not implemented: addDir') })
   watcher.on('unlink', () => { console.error('💣 not implemented: unlink') })
   watcher.on('unlinkDir', () => { console.error('💣 not implemented: unlinkDir') })
@@ -52,9 +54,11 @@ const main = async () => {
   const hasPages = (await project.root.getFiles('pages')).length > 0
   if (hasRouter && hasPages) {
     console.log(`🦄 [${lifecycle}]: Starting DevServer`)
+
     await startDevServer({
       publicPaths: PUBLIC_PATHS,
       project,
+      plugins: await resolvePlugins(project, 'onRequest'),
       host: HOST,
       port: SERVER_PORT
     } as any)

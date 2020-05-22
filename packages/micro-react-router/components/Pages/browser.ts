@@ -1,8 +1,8 @@
 import { join } from '@vtex/micro'
 import { RuntimeData } from '@vtex/micro-react'
-import H, { LocationDescriptorObject } from 'history'
+import { LocationDescriptorObject } from 'history'
 
-import { isPage, OnPageFetched, Page, PagesManager } from '.'
+import { isPage, OnPageFetched, Page, PagesManager } from './index'
 import { inflight } from '../utils/inflight'
 
 export class Pages extends PagesManager {

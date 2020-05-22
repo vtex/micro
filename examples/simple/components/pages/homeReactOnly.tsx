@@ -1,9 +1,9 @@
 import loadable from '@loadable/component'
-import { NavLink } from '@vtex/micro-react-router'
 import React, { Fragment } from 'react'
 
 import AboveTheFold from '../aboveTheFold'
 import { Loading } from '../loading'
+import { LinkServer } from '../header'
 
 const BelowTheFold = loadable(() => import(
   /* webpackChunkName: "BellowTheFold" */
@@ -22,7 +22,7 @@ const Page: React.SFC<Props> = ({ data }) => {
   const { menu } = data
   return (
     <Fragment>
-      <AboveTheFold menu={menu} Link={NavLink}/>
+      <AboveTheFold menu={menu} Link={LinkServer}/>
       <BelowTheFold fallback={<Loading/>}/>
     </Fragment>
   )

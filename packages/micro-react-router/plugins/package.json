@@ -1,4 +1,0 @@
-{
-  "main": "../dist/plugins/index.js",
-  "types": "../dist/plugins/index.d.ts"
-}

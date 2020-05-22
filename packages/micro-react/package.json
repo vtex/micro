@@ -10,14 +10,6 @@
     "plugins": {
       "onBuild": [
         "@vtex/micro-react"
-      ],
-      "onAssemble": [
-        "@vtex/micro",
-        "@vtex/micro-react"
-      ],
-      "onRequest": [
-        "@vtex/micro",
-        "@vtex/micro-react"
       ]
     }
   },

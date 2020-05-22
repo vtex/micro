@@ -104,7 +104,7 @@ export interface OnRequestPluginOptions {
   stats: Stats.ToJsonOutput
   publicPaths: PublicPaths
   assetsDist: AssetsDist
-  page: ResolvedPage
+  page: ResolvedPage<any>
   path: string
 }
 

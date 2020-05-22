@@ -3,9 +3,9 @@ import { RuntimeData } from '@vtex/micro-react'
 import { LocationDescriptorObject } from 'history'
 
 export interface Page {
-  entrypoint: string
+  name: string
   path: string
-  context: any
+  data: any
 }
 
 export const isPage = (obj: any): obj is Page =>

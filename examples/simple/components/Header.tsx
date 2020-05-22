@@ -1,16 +1,17 @@
 import React from 'react'
 
-interface LinkServerProps {
+interface LinkProps {
   to: string
-  className?: string
+  className: string
+  activeClassName?: string
 }
 
-const LinkServer: React.SFC<LinkServerProps> = ({ to, className, children }) => (
+export const LinkServer: React.SFC<LinkProps> = ({ to, className, children }) => (
   <a href={to} className={className}>{children}</a>
 )
 
-interface HeaderProps {
-  Link?: React.SFC<{to: string, activeClassName?: string, className: String}>
+export interface HeaderProps {
+  Link?: React.SFC<LinkProps>
   menu: Record<string, string>
 }
 

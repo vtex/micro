@@ -172,21 +172,6 @@ Other Micro projects can import your lib's folder code if you export it in your 
 
 One cool fact about libs is that the framework of Micro is actually defined in a lib. Check out `@vtex/micro/lib` to see how Micro implements itself 
 
-## Micro Internals
-TODO: 🦄
-
-### Plugin structure
-TODO: 🦄
-
-### OnBuild
-TODO: 🦄
-
-### OnAssemble
-TODO: 🦄
-
-### OnRequest
-TODO: 🦄
-
 ## Developing a plugin
 Plugin development is based on lifecycles. Each lifecycle has plugins hooks. To implement a plugin hook, you just need to extend the lifecycle's base class, implement their methods and `export default` this class. The structure of the `/plugins` folder should be:
 ```

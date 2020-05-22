@@ -9,7 +9,7 @@ export interface Page {
 }
 
 export const isPage = (obj: any): obj is Page =>
-  typeof obj.entrypoint === 'string' &&
+  typeof obj.name === 'string' &&
   typeof obj.path === 'string'
 
 export type OnPageFetched = (pages: Page[]) => void

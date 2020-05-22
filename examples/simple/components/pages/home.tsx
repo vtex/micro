@@ -6,7 +6,7 @@ import AboveTheFold from '../aboveTheFold'
 import { Loading } from '../loading'
 
 const BelowTheFold = loadable(() => import(
-  /* webpackChunkName: "BellowTheFold" */
+  /* webpackChunkName: "BelowTheFold" */
   /* webpackPreload: true */
   '../belowTheFold'
 ), { ssr: false })

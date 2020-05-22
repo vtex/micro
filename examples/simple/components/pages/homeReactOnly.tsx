@@ -6,7 +6,7 @@ import { Loading } from '../loading'
 import { LinkServer } from '../header'
 
 const BelowTheFold = loadable(() => import(
-  /* webpackChunkName: "BellowTheFold" */
+  /* webpackChunkName: "BelowTheFold" */
   /* webpackPreload: true */
   '../belowTheFold'
 ), { ssr: false })

@@ -1,6 +1,6 @@
 import { loadableReady } from '@loadable/component'
 import { canUseDOM, getPageData } from '@vtex/micro'
-import React from 'react'
+import React, { StrictMode } from 'react'
 import { hydrate, render } from 'react-dom'
 
 import { getAppContainer } from './container'
@@ -17,9 +17,11 @@ const renderOrHydrate = (App: React.ReactType) => async () => {
   const data = await getPageData().catch(err => { error = err })
 
   const AppWithContext = (
-    <Runtime.Provider value={runtimeData}>
-      <App data={data} error={error} />
-    </Runtime.Provider>
+    <StrictMode>
+      <Runtime.Provider value={runtimeData}>
+        <App data={data} error={error} />
+      </Runtime.Provider>
+    </StrictMode>
   )
 
   if (container.children.length > 0) {

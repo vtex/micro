@@ -26,21 +26,10 @@ export const importMap: ImportMap = {
     react: 'https://cdn.pika.dev/react@^16.13.1',
     'react-dom': 'https://cdn.pika.dev/react-dom@^16.13.1',
     '@loadable/component': 'https://cdn.pika.dev/@loadable/component@^5.12.0',
-    'react-router-dom': 'https://cdn.pika.dev/react-router-dom@^5.2.0',
     'react-router': 'https://cdn.pika.dev/react-router@^5.2.0',
+    'react-router-dom': 'https://cdn.pika.dev/react-router-dom@^5.2.0',
     history: 'https://cdn.pika.dev/history@^4.10.1',
-    'tiny-warning': 'https://cdn.pika.dev/tiny-warning@^1.0.3',
-    'tiny-invariant': 'https://cdn.pika.dev/tiny-invariant@^1.1.0',
-    'mini-create-react-context': 'https://cdn.pika.dev/mini-create-react-context@^0.4.0',
-    'resolve-pathname': 'https://cdn.pika.dev/resolve-pathname@^3.0.0',
-    'value-equal': 'https://cdn.pika.dev/value-equal@^1.0.1',
-
-    'react-is': 'https://unpkg.com/es-react@16.12.0/react-is.js',
-    'prop-types': 'https://unpkg.com/es-react@16.12.0/prop-types.js',
-    exenv: 'https://unpkg.com/exenv-es6@1.0.0/dist/index.js',
-    'hoist-non-react-statics': 'https://unpkg.com/hoist-non-react-statics-x@3.3.2/dist/hoist-non-react-statics-x.esm.js',
-
-    '@babel/runtime/helpers/': 'https://unpkg.com/browse/@babel/runtime@7.9.6/helpers',
+    exenv: 'https://cdn.pika.dev/exenv@^1.2.2',
 
     'vtex-tachyons/tachyons.css': '/assets/simple/vtex-tachyons/tachyons.css',
     '@vtex/micro': '/assets/simple/@vtex/micro/components/index.js',

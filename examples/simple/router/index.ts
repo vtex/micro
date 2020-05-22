@@ -26,6 +26,9 @@ const router: Router<any> = async request => {
     return resolved
   }
 
+  // Now we could add a path template in here as well. like so
+  // return pack(resolved, '/:someting')
+
   return pack(resolved, path)
 }
 

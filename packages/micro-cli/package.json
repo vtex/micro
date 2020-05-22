@@ -10,8 +10,9 @@
     "micro": "./.micro/onBuild/cjs/lib/index.js"
   },
   "scripts": {
-    "build": "rm -rf .micro/onBuild/cjs && yarn run tsc",
-    "watch": "rm -rf .micro/onBuild/cjs && yarn run tsc --watch",
+    "build": "yarn run tsc",
+    "watch": "yarn run tsc --watch",
+    "clean": "rm -r .micro",
     "prepublish": "yarn build"
   },
   "dependencies": {

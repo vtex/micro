@@ -14,8 +14,9 @@
     }
   },
   "scripts": {
-    "build": "rm -rf dist && yarn run tsc",
-    "watch": "rm -rf dist && yarn run tsc --watch",
+    "build": "yarn run micro build",
+    "watch": "yarn run micro link",
+    "clean": "rm -r .micro",
     "prepublish": "yarn build"
   },
   "dependencies": {
@@ -57,7 +58,7 @@
     "@types/terser-webpack-plugin": "^2.2.0",
     "@types/webpack": "^4.41.12",
     "@types/webpack-blocks": "^2.0.0",
-    "@vtex/micro-cli": "workspace:packages/micro-cli",
+    "@vtex/micro-cli": "1.1.1-alpha.1",
     "typescript": "^3.8.3"
   }
 }

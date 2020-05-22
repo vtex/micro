@@ -21,8 +21,9 @@
     }
   },
   "scripts": {
-    "build": "rm -rf .micro/onBuild/cjs && yarn run tsc",
-    "watch": "rm -rf .micro/onBuild/cjs && yarn run tsc --watch",
+    "build": "yarn run micro build",
+    "watch": "yarn run micro link",
+    "clean": "rm -r .micro",
     "prepublish": "yarn build"
   },
   "main": "./.micro/onBuild/cjs/index.js",
@@ -32,7 +33,7 @@
   "dependencies": {
     "@loadable/component": "^5.12.0",
     "@vtex/micro": "^1.1.1-alpha.0",
-    "@vtex/micro-cli": "workspace:packages/micro-cli",
+    "@vtex/micro-cli": "1.1.1-alpha.1",
     "@vtex/micro-react": "^1.1.1-alpha.0",
     "@vtex/micro-react-router": "^1.1.1-alpha.0",
     "react": "^16.13.1",

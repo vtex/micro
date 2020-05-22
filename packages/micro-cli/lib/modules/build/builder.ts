@@ -11,7 +11,7 @@ import assert from 'assert'
 import { outputFile } from 'fs-extra'
 import { join } from 'path'
 
-import { cleanDist, resolvePlugins } from '../../common/project'
+import { ensureDist, resolvePlugins } from '../../common/project'
 
 export const lifecycle = 'onBuild'
 
@@ -70,4 +70,4 @@ export const builder = async (
   }
 }
 
-export const clean = (project: Project, path: string) => cleanDist(lifecycle, join(project.dist, path))
+export const clean = (project: Project, path: string) => ensureDist(lifecycle, join(project.dist, path))

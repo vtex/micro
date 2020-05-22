@@ -10,8 +10,9 @@
     "plugins": {}
   },
   "scripts": {
-    "build": "rm -rf .micro/onBuild/cjs && yarn run tsc",
-    "watch": "rm -rf .micro/onBuild/cjs && yarn run tsc --watch",
+    "build": "yarn run tsc && yarn run micro build",
+    "watch": "yarn run tsc --watch",
+    "clean": "rm -r .micro",
     "prepublish": "yarn build"
   },
   "dependencies": {
@@ -20,6 +21,7 @@
     "@babel/plugin-proposal-optional-chaining": "^7.9.0",
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-typescript": "^7.9.0",
+    "@vtex/micro-cli": "1.1.1-alpha.1",
     "@yarnpkg/fslib": "^2.0.0-rc.20",
     "@yarnpkg/libzip": "^2.0.0-rc.11",
     "babel-plugin-ignore-html-and-css-imports": "^0.0.2",
@@ -44,7 +46,6 @@
     "@types/ramda": "^0.27.4",
     "@types/webpack": "^4.41.12",
     "@types/webpack-blocks": "^2.0.0",
-    "@vtex/micro-cli": "workspace:packages/micro-cli",
     "globby": "^11.0.0",
     "typescript": "^3.8.3"
   }

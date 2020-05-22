@@ -1,11 +1,11 @@
 import { Mode, OnAssembleCompiler } from '@vtex/micro'
+import chalk from 'chalk'
 import { outputJSON } from 'fs-extra'
 import { join } from 'path'
-import chalk from 'chalk'
 import webpack, { Compiler, Stats } from 'webpack'
 
 import { error } from '../../common/error'
-import { cleanDist, newProject, resolvePlugins } from '../../common/project'
+import { ensureDist, newProject, resolvePlugins } from '../../common/project'
 import { BUILD } from '../../constants'
 
 const lifecycle = 'onAssemble'
@@ -28,16 +28,17 @@ const main = async (options: Options) => {
   const mode: Mode = dev ? 'development' : 'production'
   process.env.NODE_ENV = mode
 
-  console.log(`🦄 Starting Micro ${chalk.blue(lifecycle)}:${chalk.blue(mode)}`)
-
   const project = await newProject()
+
+  console.log(`🦄 Starting Micro for ${chalk.magenta(project)} at ${chalk.blue(lifecycle)}:${chalk.blue(mode)}`)
+
   const plugins = await resolvePlugins(project, lifecycle)
 
   console.log(`🦄 [${lifecycle}]: Creating Compiler`)
   const compiler = new OnAssembleCompiler({ project, plugins, mode })
   const configs = await compiler.getConfig('webnew')
 
-  await cleanDist(lifecycle, compiler.dist)
+  await ensureDist(lifecycle, compiler.dist)
 
   for (const page of Object.keys(configs.entry || {})) {
     console.log(`📄 [${lifecycle}]: Page found: ${page}`)

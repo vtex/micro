@@ -18,14 +18,15 @@ export const BaseManifest = {
     plugins: {}
   } as MicroOptions,
   scripts: {
-    build: 'rm -rf .micro/onBuild/cjs && yarn run tsc',
-    watch: 'rm -rf .micro/onBuild/cjs && yarn run tsc --watch',
+    build: 'yarn run micro build',
+    watch: 'yarn run micro link',
+    clean: 'rm -r .micro',
     prepublish: 'yarn build'
   }
 }
 
 const necessary = pick(BaseManifest, ['main', 'types', 'module', 'browser'])
-const required = pick(BaseManifest, ['micro', 'scripts'])
+const required = pick(BaseManifest, ['micro'])
 
 type Base = typeof BaseManifest
 
@@ -78,7 +79,10 @@ export const genManifest = (partial: Pick<Manifest, 'name' | 'version'>): Manife
     version,
     license,
     micro,
-    scripts,
+    scripts: {
+      ...BaseManifest.scripts,
+      ...scripts
+    },
     main,
     types,
     module,

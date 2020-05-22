@@ -1,5 +1,6 @@
 import { TransformOptions } from '@babel/core'
-import { BuildTarget, OnBuildPlugin } from '@vtex/micro'
+
+import { BuildTarget, OnBuildPlugin } from '../../lib/lifecycles/onBuild'
 
 export default class OnBuild extends OnBuildPlugin {
   public getConfig = async (previous: TransformOptions, target: BuildTarget): Promise<TransformOptions> => {

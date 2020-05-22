@@ -2026,7 +2026,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vtex/micro-cli@workspace:packages/micro-cli":
+"@vtex/micro-cli@1.1.1-alpha.1, @vtex/micro-cli@workspace:packages/micro-cli":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-cli@workspace:packages/micro-cli"
   dependencies:
@@ -2069,7 +2069,7 @@ __metadata:
     "@types/webpack": ^4.41.13
     "@types/webpack-blocks": ^2.0.0
     "@vtex/micro": ^1.1.1-alpha.0
-    "@vtex/micro-cli": "workspace:packages/micro-cli"
+    "@vtex/micro-cli": 1.1.1-alpha.1
     "@vtex/micro-react": ^1.1.1-alpha.0
     history: ^4.10.1
     react: ^16.13.1
@@ -2107,7 +2107,7 @@ __metadata:
     "@types/webpack": ^4.41.12
     "@types/webpack-blocks": ^2.0.0
     "@vtex/micro": ^1.1.1-alpha.0
-    "@vtex/micro-cli": "workspace:packages/micro-cli"
+    "@vtex/micro-cli": 1.1.1-alpha.1
     babel-loader: ^8.1.0
     css-loader: ^3.5.3
     file-loader: ^6.0.0
@@ -2145,8 +2145,6 @@ __metadata:
     "@types/webpack": ^4.41.12
     "@types/webpack-dev-middleware": ^3.7.0
     "@vtex/micro": ^1.1.1-alpha.0
-    "@vtex/micro-cli": "workspace:packages/micro-cli"
-    "@vtex/micro-react": ^1.1.1-alpha.0
     "@yarnpkg/fslib": ^2.0.0-rc.20
     "@yarnpkg/libzip": ^2.0.0-rc.11
     compression: ^1.7.4
@@ -2184,7 +2182,7 @@ __metadata:
     "@types/ramda": ^0.27.4
     "@types/webpack": ^4.41.12
     "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro-cli": "workspace:packages/micro-cli"
+    "@vtex/micro-cli": 1.1.1-alpha.1
     "@yarnpkg/fslib": ^2.0.0-rc.20
     "@yarnpkg/libzip": ^2.0.0-rc.11
     babel-plugin-ignore-html-and-css-imports: ^0.0.2
@@ -11274,7 +11272,7 @@ fsevents@~2.1.2:
     "@types/uikit": ^3.3.0
     "@types/webpack-blocks": ^2.0.0
     "@vtex/micro": ^1.1.1-alpha.0
-    "@vtex/micro-cli": "workspace:packages/micro-cli"
+    "@vtex/micro-cli": 1.1.1-alpha.1
     "@vtex/micro-react": ^1.1.1-alpha.0
     "@vtex/micro-react-router": ^1.1.1-alpha.0
     react: ^16.13.1

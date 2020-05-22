@@ -1,7 +1,7 @@
 import { LifeCycle, MICRO_BUILD_DIR, Plugins, Project, walk } from '@vtex/micro'
 import assert from 'assert'
 import chalk from 'chalk'
-import { emptyDir } from 'fs-extra'
+import { ensureDir } from 'fs-extra'
 import { join } from 'path'
 
 export const newProject = async () => {
@@ -18,9 +18,9 @@ export const newProject = async () => {
   return project
 }
 
-export const cleanDist = async (target: string, path: string) => {
-  console.log(`🎯 [${target}]: Creating dist folder in ${chalk.cyanBright(join(MICRO_BUILD_DIR, path.split(MICRO_BUILD_DIR)[1]))}`)
-  await emptyDir(path)
+export const ensureDist = async (target: string, path: string) => {
+  console.log(`🎯 [${target}]: Ensuring dist folder in ${chalk.cyanBright(join(MICRO_BUILD_DIR, path.split(MICRO_BUILD_DIR)[1]))}`)
+  await ensureDir(path)
 }
 
 export const resolvePlugins = async <T extends LifeCycle>(project: Project, lifecycle: T): Promise<NonNullable<Plugins[T]>[]> => {

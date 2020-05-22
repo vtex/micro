@@ -16,9 +16,10 @@ const main = async () => {
   const mode: Mode = 'production'
   process.env.NODE_ENV = mode
 
-  console.log(`🦄 Starting Micro ${chalk.blue(lifecycle)}:${chalk.blue(mode)}`)
-
   const project = await newProject()
+
+  console.log(`🦄 Starting Micro for ${chalk.magenta(project)} at ${chalk.blue(lifecycle)}:${chalk.blue(mode)}`)
+
   const plugins = await resolvePlugins(project, lifecycle)
 
   console.log(`🦄 Starting server for ${project.root.toString()}`)

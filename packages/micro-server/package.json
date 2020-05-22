@@ -10,8 +10,9 @@
     "plugins": {}
   },
   "scripts": {
-    "build": "rm -rf dist && yarn run tsc",
-    "watch": "rm -rf dist && yarn run tsc --watch",
+    "build": "yarn run tsc",
+    "watch": "yarn run tsc --watch",
+    "clean": "rm -r .micro",
     "prepublish": "yarn build"
   },
   "dependencies": {
@@ -19,7 +20,6 @@
     "@loadable/server": "^5.12.0",
     "@types/fs-extra": "^9.0.1",
     "@vtex/micro": "^1.1.1-alpha.0",
-    "@vtex/micro-react": "^1.1.1-alpha.0",
     "@yarnpkg/fslib": "^2.0.0-rc.20",
     "@yarnpkg/libzip": "^2.0.0-rc.11",
     "compression": "^1.7.4",
@@ -49,7 +49,6 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/webpack": "^4.41.12",
     "@types/webpack-dev-middleware": "^3.7.0",
-    "@vtex/micro-cli": "workspace:packages/micro-cli",
     "nodemon": "^2.0.3",
     "typescript": "^3.8.3",
     "webpack-dev-middleware": "^3.7.2"

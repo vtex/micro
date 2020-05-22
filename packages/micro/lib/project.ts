@@ -82,6 +82,11 @@ export class Project {
     this.root = new PnpPackage()
     await this.root.resolve(this.rootPath)
   }
+
+  public toString = () => {
+    assert(this.root, '💣 Could not find a package. Did you forget to resolve/restore packages ?')
+    return `${this.root.manifest.name}@${parse(this.root.manifest.version).major}.x`
+  }
 }
 
 export type WalkFn = (r: Package, p: Package | null) => void

@@ -1,21 +1,31 @@
-import 'uikit/dist/css/uikit.css'
-
 import loadable from '@loadable/component'
+import { NavLink } from '@vtex/micro-react-router'
 import React, { Fragment } from 'react'
 
-import Layout from '../Layout'
+import AboveTheFold from '../aboveTheFold'
+import { Loading } from '../loading'
 
-const BellowTheFold = loadable(() => import(
-  /* webpackChunkName: "AboveTheFold" */
+const BelowTheFold = loadable(() => import(
+  /* webpackChunkName: "BellowTheFold" */
   /* webpackPreload: true */
-  '../bellowTheFold'
+  '../belowTheFold'
 ), { ssr: false })
 
-const Page: React.SFC = () => {
+interface Props {
+  data: {
+    menu: Record<string, string>
+  }
+  error: any
+}
+
+const Page: React.SFC<Props> = ({ data }) => {
+  const { menu } = data
   return (
-    <Layout>
-      <BellowTheFold />
-    </Layout>
+    <Fragment>
+      <AboveTheFold menu={menu} Link={NavLink}/>
+      <BelowTheFold fallback={<Loading/>}/>
+    </Fragment>
   )
 }
+
 export default Page

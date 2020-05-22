@@ -1,10 +1,13 @@
 import React from 'react'
 
 import { Grid } from './grid'
-import Layout from './Layout'
+import { HeaderProps } from './header'
+import { Layout } from './layout'
 
-const AboveTheFold: React.SFC = () => (
-  <Layout>
+type Props = HeaderProps
+
+const AboveTheFold: React.SFC<Props> = ({ menu, Link }) => (
+  <Layout menu={menu} Link={Link}>
     <Grid />
   </Layout>
 )

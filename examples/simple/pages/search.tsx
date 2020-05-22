@@ -1,9 +1,9 @@
-import { LoadMicroComponent } from '@vtex/micro-react/components'
-import { withRouter } from '@vtex/micro-router/components'
+import 'vtex-tachyons/tachyons.css'
 
+import { LoadMicroComponent } from '@vtex/micro-react'
+import { withRouter } from '@vtex/micro-react-router'
+
+import Page from '../components/pages/search'
 import { AsyncPages } from '../components/asyncPages'
-import { withUIKit } from '../components/loadUIKitIcons'
-import Page from '../components/pages/about'
 
-export default LoadMicroComponent(withUIKit(withRouter(Page, AsyncPages)))
-
+export default LoadMicroComponent(withRouter(Page, AsyncPages))

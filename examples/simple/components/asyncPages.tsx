@@ -1,7 +1,7 @@
-import loadable from '@loadable/component'
-import { AsyncPageProps } from '@vtex/micro-router/components'
+import loadable, { LoadableComponent } from '@loadable/component'
+import { AsyncPageProps } from '@vtex/micro-react-router'
 
-export const AsyncPages = loadable<AsyncPageProps>(
-  ({ entrypoint }) => import(`./pages/${entrypoint}`), 
+export const AsyncPages: LoadableComponent<any> = loadable<AsyncPageProps>(
+  ({ name }) => import(`./pages/${name}`),
   { ssr: false }
 )

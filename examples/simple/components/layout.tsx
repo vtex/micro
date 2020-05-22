@@ -1,14 +1,12 @@
 import React, { Fragment } from 'react'
 
-import Footer from './Footer'
-import Header from './Header'
+import { Header, HeaderProps } from './header'
 
-const Layout: React.SFC = ({ children }) => (
+type Props = HeaderProps
+
+export const Layout: React.SFC<Props> = ({ menu, children, Link }) => (
   <Fragment>
-    <Header />
+    <Header menu={menu} Link={Link}/>
     { children }
-    <Footer />
   </Fragment>
 )
-
-export default Layout

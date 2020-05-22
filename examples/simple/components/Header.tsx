@@ -1,33 +1,28 @@
-import { NavLink } from '@vtex/micro-router/components'
 import React from 'react'
 
-const Header: React.SFC = () => {
-  return (
-    <nav className="uk-navbar-container" uk-navbar="">
-      <div className="uk-navbar-left">
-        <ul className="uk-navbar-nav">
-          <li>
-            <NavLink activeClassName="uk-active" to='/'>Home</NavLink>
-          </li>
-          <li>
-            <NavLink activeClassName="uk-active" to='/about' >About</NavLink>
-          </li>
-          <li>
-            <NavLink activeClassName="uk-active" to='/product/p' >Product</NavLink>
-          </li>
-          <li>
-            <NavLink activeClassName="uk-active" to='/department' >Department</NavLink>
-          </li>
-          <li>
-            <NavLink activeClassName="uk-active" to='/deparment/category' >Category</NavLink>
-          </li>
-          <li>
-            <NavLink activeClassName="uk-active" to='/brand' >Brand</NavLink>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  )
+interface LinkProps {
+  to: string
+  className: string
+  activeClassName?: string
 }
 
-export default Header
+export const LinkServer: React.SFC<LinkProps> = ({ to, className, children }) => (
+  <a href={to} className={className}>{children}</a>
+)
+
+export interface HeaderProps {
+  Link?: React.SFC<LinkProps>
+  menu: Record<string, string>
+}
+
+export const Header: React.SFC<HeaderProps> = ({ menu, Link = LinkServer }) => {
+  return (
+    <header className="bg-rebel-pink fixed w-100 ph3 pv3 pv4-ns ph4-m ph5-l">
+      <nav className="f6 fw6 ttu tracked">
+        {Object.entries(menu).map(([key, value]) => (
+          <Link key={key} className="link dim white dib mr3" activeClassName="link:hover" to={key}>{value}</Link>
+        ))}
+      </nav>
+    </header>
+  )
+}

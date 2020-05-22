@@ -1,16 +1,31 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "es2020",
-    "lib": ["dom"],
-    "skipLibCheck": true,
+    "typeRoots": [
+      "lib/typings",
+      "router/typings",
+      "plugins/typings",
+      "components/typings"
+    ],
+    "target": "es2019",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": ".micro/onBuild/cjs",
     "jsx": "preserve",
     "strict": true,
-    "typeRoots": [
-      "./node_modules/@types"
-    ],
-    "moduleResolution": "Node",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
-  }
+    "forceConsistentCasingInFileNames": false,
+    "skipLibCheck": true,
+    "declaration": true
+  },
+  "include": [
+    "index.ts",
+    "lib",
+    "router",
+    "plugins",
+    "components"
+  ],
+  "exclude": [
+    ".micro",
+    "pages"
+  ]
 }

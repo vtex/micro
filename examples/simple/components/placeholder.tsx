@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const Grid: React.SFC = () => {
+export const PlaceHolder: React.SFC = () => {
   return (
     <ul>
       {

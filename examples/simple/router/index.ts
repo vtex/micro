@@ -16,7 +16,7 @@ const menu = {
 const router: Router<any> = async request => {
   const { path } = request
   const resolved = {
-    name: path === '/' ? 'index' : removeSlash(path),
+    name: path === '/' ? 'home' : removeSlash(path),
     data: { menu },
     status: 200
   }

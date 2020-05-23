@@ -1,4 +1,0 @@
-{
-  "main": "../dist/router/index.js",
-  "types": "../dist/router/index.d.ts"
-}

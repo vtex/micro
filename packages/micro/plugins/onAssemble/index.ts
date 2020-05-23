@@ -61,7 +61,7 @@ export default class OnAssemble extends OnAssemblePlugin {
       }),
       optimization({
         runtimeChunk: {
-          name: pagesRuntimeName
+          name: 'webpack-runtime'
         },
         splitChunks: {
           maxInitialRequests: 30,

@@ -36,7 +36,7 @@ export const FetchCurrentPage: React.SFC = ({ children }) => {
   const location = useLocation()
 
   if (router) {
-    router.fetchPage(location)
+    router.preloadPage(location)
   }
 
   return (

@@ -16,8 +16,8 @@ import {
 } from './Router'
 
 interface RouterState extends RouterStateModifier {
+  preloads: Set<string>
   pages: Page[]
-  assetsByPage: Record<string, LoadableComponent<AsyncPageProps>>
 }
 
 interface RouterDOMProps extends RouterProps {
@@ -31,54 +31,67 @@ class PrivateRouterDOM extends React.Component<RouterDOMProps, RouterState> {
   constructor (props: RouterDOMProps) {
     super(props)
     this.state = {
-      prefetchAsset: this.prefetchAsset,
+      prefetchAsset: this.preloadAsset,
       prefetchPage: this.prefetchPage,
-      fetchPage: this.fetchPage,
+      preloadPage: this.preloadPage,
       pages: [],
-      assetsByPage: {}
+      preloads: new Set()
     }
   }
 
   public prefetchPage = async (location: LocationDescriptorObject) => {
-    this.fetchPage(location)
+    if (location.pathname && location.pathname !== this.props.data.path) {
+      this.preloadPage(location)
+    }
   }
 
-  public fetchPage = async (location: LocationDescriptorObject) => {
-    if (location.pathname) {
+  public preloadPage = async (location: LocationDescriptorObject) => {
+    if (location.pathname && location.pathname !== this.props.data.path) {
       const found = this.findPage(location.pathname)
       if (!found) {
-        await this.fetchAndUpdate(location)
+        await this.doFetch(location)
       }
     }
   }
 
-  public prefetchAsset = async (name: string) => {
-    console.log('📕 not implemented', name)
+  public preloadAsset = async (page: Page) => {
+    if (this.state.preloads.has(page.name) || page.name === this.props.data.name) {
+      return
+    }
+    await inflight(page.name, async () => new Promise(resolve => {
+      this.setState(state => {
+        this.props.AsyncPage.preload(page)
+        state.preloads.add(page.name)
+        resolve()
+        return state
+      })
+    }))
   }
 
   protected findPage = (path: string) => this.state.pages.find(
     p => p.path === path
   )
 
-  protected async fetchAndUpdate (location: LocationDescriptorObject): Promise<any> {
+  protected async doFetch (location: LocationDescriptorObject): Promise<any> {
     const path = this.locationToPath(location) || ''
     return inflight(path, async () => {
-      const response = await fetch(path)
-      const page = await response.json()
+      const page = await fetch(path).then(r => r.json())
       if (isPage(page)) {
-        this.prefetchAsset(page.name)
-        this.setState(state => {
-          const found = state.pages.find(p => p.path === path)
-          if (!found) { // Avoid reinserting the same page multiple times
-            state.pages.push(page)
-          }
-          return state
-        })
+        this.updatePages(page)
+        this.preloadAsset(page)
       } else {
         throw new Error(`💣 Fetched location was not a valid page: ${location.pathname}`)
       }
     })
   }
+
+  protected updatePages = (page: Page) => this.setState(state => {
+    const found = state.pages.find(p => p.path === page.path)
+    if (!found) { // Avoid reinserting the same page multiple times
+      state.pages.push(page)
+    }
+    return state
+  })
 
   protected locationToPath = (location: LocationDescriptorObject) => {
     if (typeof location.pathname !== 'string') {
@@ -96,7 +109,7 @@ class PrivateRouterDOM extends React.Component<RouterDOMProps, RouterState> {
     if (isInitialPage) {
       return (
         <MicroRouterContext.Provider value={this.state}>
-          <Route path={data.path}>
+          <Route path={location.pathname}>
             <InitialPage data={data.data} />
           </Route>
         </MicroRouterContext.Provider>
@@ -129,14 +142,17 @@ class PrivateRouterDOM extends React.Component<RouterDOMProps, RouterState> {
 
 type InjectionProps = Omit<RouterDOMProps, 'runtime' | 'location'>
 
+// PrivateRouterDOM required location and runtime. Since this is the
+// only I know how to inject runtime and location to it, I've created
+// this simple component
 export const RouterDOM: React.SFC<InjectionProps> = ({
   data,
   error,
   InitialPage,
   AsyncPage
 }) => {
-  const runtime = React.useContext(Runtime)
   const location = useLocation()
+  const runtime = React.useContext(Runtime)
 
   return (
     <PrivateRouterDOM

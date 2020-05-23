@@ -11,10 +11,10 @@ import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'
 import TerserJSPlugin from 'terser-webpack-plugin'
 import {
   addPlugins,
+  resolve,
   Block,
   Context,
   css,
-  customConfig,
   env,
   file,
   group,
@@ -39,18 +39,13 @@ export default class OnAssemble extends OnAssemblePlugin {
       purgeCSS({
         paths: await this.project.resolveFiles('pages', 'components')
       }),
-      customConfig({
-        stats: {
-          hash: true,
-          publicPath: true,
-          assets: true,
-          chunks: true,
-          modules: true,
-          source: false,
-          errorDetails: true,
-          timings: true
+      resolve({
+        alias: { // make react imports always to fallback to this one
+          react: require.resolve('react'),
+          'react-dom': require.resolve('react-dom'),
+          '@loadable/component': require.resolve('@loadable/component')
         }
-      }) as Block<Context>,
+      }),
       match('*.css', [
         extractCss({
           plugin: { filename: '[name].css' },

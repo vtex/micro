@@ -50,7 +50,7 @@ const main = async (options: Options) => {
   console.timeEnd(`🦄 [${lifecycle}]: Build took`)
 
   console.time(`🦄 [${lifecycle}]: Webpack Stats file generation took`)
-  const statsJSON = stats.toJson()
+  const statsJSON = stats.toJson({ all: true })
   console.timeEnd(`🦄 [${lifecycle}]: Webpack Stats file generation took`)
 
   if (stats.hasErrors()) {

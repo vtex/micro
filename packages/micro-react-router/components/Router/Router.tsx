@@ -22,9 +22,9 @@ export interface RouterProps {
 }
 
 export interface RouterStateModifier {
-  prefetchAsset: (name: string) => Promise<void>
+  prefetchAsset: (page: Page) => Promise<void>
   prefetchPage: (location: LocationDescriptorObject) => Promise<void>
-  fetchPage: (location: LocationDescriptorObject) => Promise<void>
+  preloadPage: (location: LocationDescriptorObject) => Promise<void>
 }
 
 export const MicroRouterContext = React.createContext<RouterStateModifier>({} as any)

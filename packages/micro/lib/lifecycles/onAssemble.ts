@@ -10,6 +10,7 @@ import { Project } from '../project'
 const lifecycle = 'onAssemble'
 
 export const pagesRuntimeName = 'micro-runtime'
+export const webpackRuntimeName = 'webpack-runtime'
 export const pagesFrameworkName = 'micro-framework'
 
 export type AssembleTarget = 'webnew' | 'webold'

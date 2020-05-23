@@ -1,14 +1,15 @@
 import loadable from '@loadable/component'
 import { NavLink } from '@vtex/micro-react-router'
-import React, { Fragment } from 'react'
+import React from 'react'
 
-import AboveTheFold from '../aboveTheFold'
+import { Layout } from '../layout'
 import { Loading } from '../loading'
+import { PlaceHolder } from '../placeholder'
 
 const BelowTheFold = loadable(() => import(
   /* webpackChunkName: "BelowTheFold" */
   /* webpackPreload: true */
-  '../belowTheFold'
+  '../hugeComponent1'
 ), { ssr: false })
 
 interface Props {
@@ -21,10 +22,10 @@ interface Props {
 const Page: React.SFC<Props> = ({ data }) => {
   const { menu } = data
   return (
-    <Fragment>
-      <AboveTheFold menu={menu} Link={NavLink}/>
+    <Layout menu={menu} Link={NavLink}>
+      <PlaceHolder />
       <BelowTheFold fallback={<Loading/>}/>
-    </Fragment>
+    </Layout>
   )
 }
 

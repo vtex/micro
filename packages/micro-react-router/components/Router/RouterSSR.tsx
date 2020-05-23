@@ -18,7 +18,7 @@ export class RouterSSR extends React.Component<RouterSSRProps, RouterStateModifi
     this.state = {
       prefetchAsset: () => { throw new Error('💣 Cannot prefetch assets in SSR') },
       prefetchPage: () => { throw new Error('💣 Cannot prefetch page in SSR') },
-      fetchPage: () => { throw new Error('💣 Cannot fetch page in SSR') }
+      preloadPage: () => { throw new Error('💣 Cannot fetch page in SSR') }
     }
   }
 

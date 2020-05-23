@@ -15,8 +15,9 @@ import {
 } from './Router'
 
 interface RouterState extends RouterStateModifier {
-  preloads: Set<string>
-  pages: Page[]
+  assets: Set<string>
+  // null if page was loaded with error, Page sucessfully, undefined if not prefetched
+  pages: Record<string, Page | null | undefined>
 }
 
 interface RouterDOMProps extends RouterProps {
@@ -32,29 +33,50 @@ class PrivateRouterDOM extends React.Component<RouterDOMProps, RouterState> {
     this.state = {
       prefetchPage: this.prefetchPage,
       preloadPage: this.preloadPage,
-      pages: [],
-      preloads: new Set()
+      pages: {},
+      assets: new Set()
     }
   }
 
   public prefetchPage = async (location: LocationDescriptorObject) => {
-    if (location.pathname && location.pathname !== this.props.data.path) {
-      this.preloadPage(location)
+    try {
+      const isInitialPage = location.pathname === this.props.data.path
+      if (location.pathname && !isInitialPage) {
+        const hasPage = this.state.pages[location.pathname]
+        if (hasPage === undefined) {
+          return this.loadPage(location)
+        }
+      }
+    } catch (err) {
+      // Someting went wrong while prefetching the page.
+      // Let's hope we get a better luck next time
+      console.log(err)
     }
   }
 
   public preloadPage = async (location: LocationDescriptorObject) => {
     const isInitialPage = location.pathname === this.props.data.path
     if (location.pathname && !isInitialPage) {
-      const found = this.findPage(location.pathname)
-      if (!found) {
-        await this.loadPage(location)
+      try {
+        const hasPage = this.state.pages[location.pathname]
+        if (hasPage === undefined) {
+          return this.loadPage(location)
+        }
+        if (hasPage === null) {
+          // We've already tried prefetching this page before and it finished unsucesfuly
+          // Let's navigate via server
+          window.location.href = location.pathname
+        }
+      } catch (err) {
+        // Someting went wrong while preloading the page.
+        // Let's navigate via server
+        window.location.href = location.pathname
       }
     }
   }
 
   public loadAsset = async (page: Page) => {
-    const alreadyLoaded = this.state.preloads.has(page.name)
+    const alreadyLoaded = this.state.assets.has(page.name)
     const isInitialPage = page.name === this.props.data.name
     if (alreadyLoaded || isInitialPage) {
       return
@@ -62,35 +84,29 @@ class PrivateRouterDOM extends React.Component<RouterDOMProps, RouterState> {
     await inflight(page.name, async () => new Promise(resolve => {
       this.setState(state => {
         this.props.AsyncPage.preload(page)
-        state.preloads.add(page.name)
+        state.assets.add(page.name)
         resolve()
         return state
       })
     }))
   }
 
-  protected findPage = (path: string) => this.state.pages.find(
-    p => p.path === path
-  )
-
   protected async loadPage (location: LocationDescriptorObject): Promise<any> {
     const path = this.locationToPath(location) || ''
     return inflight(path, async () => {
       const page = await fetch(path).then(r => r.json())
       if (isPage(page)) {
-        this.updatePages(page)
+        this.updatePages(page.path, page)
         this.loadAsset(page)
       } else {
+        this.updatePages(location.pathname!, null)
         throw new Error(`💣 Fetched location was not a valid page: ${location.pathname}`)
       }
     })
   }
 
-  protected updatePages = (page: Page) => this.setState(state => {
-    const found = state.pages.find(p => p.path === page.path)
-    if (!found) { // Avoid reinserting the same page multiple times
-      state.pages.push(page)
-    }
+  protected updatePages = (path: string, page: Page | null) => this.setState(state => {
+    state.pages[path] = page
     return state
   })
 
@@ -117,7 +133,7 @@ class PrivateRouterDOM extends React.Component<RouterDOMProps, RouterState> {
       )
     }
 
-    const matched = pages.find(
+    const matched = Object.values(pages).find(
       page => matchPath(location.pathname || '', { ...page, exact: true, strict: false })
     )
 

@@ -15,6 +15,6 @@ export const Layout: React.SFC<Props> = ({ menu, children, Link }) => (
   <Fragment>
     <Header menu={menu} Link={Link}/>
     { children }
-    <Footer fallback={<Loading/>} />
+    <Footer Link={Link} fallback={<Loading/>} />
   </Fragment>
 )

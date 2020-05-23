@@ -35,9 +35,10 @@ export const FetchCurrentPage: React.SFC = ({ children }) => {
   const router = useContext(MicroRouterContext)
   const location = useLocation()
 
-  if (router) {
-    router.preloadPage(location)
-  }
+  React.useEffect(
+    () => { router.preloadPage(location) },
+    [location]
+  )
 
   return (
     <Fragment>

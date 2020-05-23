@@ -1,9 +1,10 @@
 import loadable from '@loadable/component'
 import React from 'react'
 
-import { PlaceHolder } from '../placeholder'
+import { LinkServer } from '../header'
 import { Layout } from '../layout'
 import { Loading } from '../loading'
+import { PlaceHolder } from '../placeholder'
 
 const BelowTheFold = loadable(() => import(
   /* webpackChunkName: "BelowTheFold" */
@@ -21,7 +22,7 @@ interface Props {
 const Page: React.SFC<Props> = ({ data }) => {
   const { menu } = data
   return (
-    <Layout menu={menu}>
+    <Layout menu={menu} Link={LinkServer}>
       <PlaceHolder />
       <BelowTheFold fallback={<Loading/>}/>
     </Layout>

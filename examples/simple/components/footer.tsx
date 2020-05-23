@@ -1,14 +1,17 @@
-import { Link } from '@vtex/micro-react-router'
 import React from 'react'
 
-const Footer: React.SFC = () => (
+import { HeaderProps, LinkServer } from './header'
+
+type Props = Pick<HeaderProps, 'Link'>
+
+const Footer: React.SFC<Props> = ({ Link = LinkServer }) => (
   <footer>
     <div>This is the footer</div>
     <ul>
-      <li><Link to='/'>Home</Link></li>
-      <li><Link to='/about'>About</Link></li>
-      <li><Link to='/product'>product</Link></li>
-      <li><Link to='/reactOnly'>react only</Link></li>
+      <li><Link className="link dim white dib mr3" to='/'>Home</Link></li>
+      <li><Link className="link dim white dib mr3" to='/about'>About</Link></li>
+      <li><Link className="link dim white dib mr3" to='/product'>product</Link></li>
+      <li><Link className="link dim white dib mr3" to='/reactOnly'>react only</Link></li>
     </ul>
   </footer>
 )

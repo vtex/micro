@@ -1,12 +1,11 @@
 import { LoadableComponent } from '@loadable/component'
-import { join } from '@vtex/micro'
+import { join, inflight } from '@vtex/micro'
 import { RuntimeData, Runtime } from '@vtex/micro-react'
 import { LocationDescriptorObject } from 'history'
 import React from 'react'
 import { matchPath, Route, useLocation } from 'react-router-dom'
 
 import { FetchCurrentPage, isPage, Page } from '../Page'
-import { inflight } from '../utils/inflight'
 import {
   AsyncPageProps,
   MicroRouterContext,
@@ -21,17 +20,16 @@ interface RouterState extends RouterStateModifier {
 }
 
 interface RouterDOMProps extends RouterProps {
-  runtime: RuntimeData
-  location: LocationDescriptorObject
-  InitialPage: React.ElementType<PageProps>
-  AsyncPage: LoadableComponent<AsyncPageProps>
+  runtime: RuntimeData // root paths to prefetch
+  location: LocationDescriptorObject // window location
+  InitialPage: React.ElementType<PageProps> // Page that was SSR
+  AsyncPage: LoadableComponent<AsyncPageProps> // Async Page loader
 }
 
 class PrivateRouterDOM extends React.Component<RouterDOMProps, RouterState> {
   constructor (props: RouterDOMProps) {
     super(props)
     this.state = {
-      prefetchAsset: this.preloadAsset,
       prefetchPage: this.prefetchPage,
       preloadPage: this.preloadPage,
       pages: [],
@@ -46,16 +44,19 @@ class PrivateRouterDOM extends React.Component<RouterDOMProps, RouterState> {
   }
 
   public preloadPage = async (location: LocationDescriptorObject) => {
-    if (location.pathname && location.pathname !== this.props.data.path) {
+    const isInitialPage = location.pathname === this.props.data.path
+    if (location.pathname && !isInitialPage) {
       const found = this.findPage(location.pathname)
       if (!found) {
-        await this.doFetch(location)
+        await this.loadPage(location)
       }
     }
   }
 
-  public preloadAsset = async (page: Page) => {
-    if (this.state.preloads.has(page.name) || page.name === this.props.data.name) {
+  public loadAsset = async (page: Page) => {
+    const alreadyLoaded = this.state.preloads.has(page.name)
+    const isInitialPage = page.name === this.props.data.name
+    if (alreadyLoaded || isInitialPage) {
       return
     }
     await inflight(page.name, async () => new Promise(resolve => {
@@ -72,13 +73,13 @@ class PrivateRouterDOM extends React.Component<RouterDOMProps, RouterState> {
     p => p.path === path
   )
 
-  protected async doFetch (location: LocationDescriptorObject): Promise<any> {
+  protected async loadPage (location: LocationDescriptorObject): Promise<any> {
     const path = this.locationToPath(location) || ''
     return inflight(path, async () => {
       const page = await fetch(path).then(r => r.json())
       if (isPage(page)) {
         this.updatePages(page)
-        this.preloadAsset(page)
+        this.loadAsset(page)
       } else {
         throw new Error(`💣 Fetched location was not a valid page: ${location.pathname}`)
       }

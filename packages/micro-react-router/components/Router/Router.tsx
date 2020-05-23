@@ -22,7 +22,6 @@ export interface RouterProps {
 }
 
 export interface RouterStateModifier {
-  prefetchAsset: (page: Page) => Promise<void>
   prefetchPage: (location: LocationDescriptorObject) => Promise<void>
   preloadPage: (location: LocationDescriptorObject) => Promise<void>
 }

@@ -287,16 +287,27 @@ This is a hack and I don't really know how to solve this problem now. We'll surv
 
 3. `@vtex/micro-react-router`
   - [x] Dynamic Routing
-  - [x] Link Prefetching
-  - [ ] Asset Prefetching
-  - [ ] Prefetch Budget
-  - [ ] Fetch over Prefetch Priority
+  - [x] Link Prefetching via Props
+  - [x] Asset Prefetching
+  - [x] Preload `onMouseEnter`
+  - [x] Prefetch when entering the viewport on Mobile
   - [ ] Transitions
   - [ ] Transitions with Cuncurrent mode
+  - [ ] Fetch over Prefetch Priority
+  - [ ] Prefetch Budget
 
 4. `@vtex/micro-react-i18n` [comming...]
 5. `@vtex/micro-react-images` [comming...]
 6. `@vtex/micro-react-graphql` [comming...]
 7. `@vtex/micro-react-storybook` [comming...]
+
+## Specifics
+Below are some specific docs of each plugin
+
+### Micro React Router
+The current implementation of Micro React Router is the following:
+- Link and NavLink accept a `prefetch` option. If you pass this option, the component will prefetch the route route in any device type
+- Link and NavLink will `preload` a page if `onMouseEnter` is triggered by your browser
+- On Mobile devices, is the element enters on the viewport, it will trigger a prefetch on Link and NavLink components
 
 Happy Coding ✨

@@ -4,6 +4,6 @@ import { LoadMicroComponent } from '@vtex/micro-react'
 import { withRouter } from '@vtex/micro-react-router'
 
 import Page from '../components/pages/search'
-import { AsyncPages } from '../components/asyncPages'
+import { AsyncImport } from '../components/asyncPages'
 
-export default LoadMicroComponent(withRouter(Page, AsyncPages))
+export default LoadMicroComponent(withRouter(Page, AsyncImport))

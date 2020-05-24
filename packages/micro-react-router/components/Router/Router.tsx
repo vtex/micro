@@ -1,4 +1,4 @@
-import { LoadableComponent } from '@loadable/component'
+import loadable from '@loadable/component'
 import { canUseDOM } from '@vtex/micro'
 import { LocationDescriptorObject } from 'history'
 import React from 'react'
@@ -21,6 +21,8 @@ export interface RouterProps {
   error: any
 }
 
+type AsyncImport = (x: { name: string}) => Promise<any>
+
 export interface RouterStateModifier {
   // Prefetching should have lower priority than a preload. Also, you should be
   // carefull about preloading too mutch
@@ -35,21 +37,28 @@ MicroRouterContext.displayName = 'MicroRouterContext'
 
 export const withRouter = (
   InitialPage: React.ElementType<PageProps>,
-  AsyncPage: LoadableComponent<AsyncPageProps>
-): React.SFC<RouterProps> => ({ data, error }) => {
-  if (!canUseDOM) {
-    return <RouterSSR data={data} error={error} InitialPage={InitialPage} />
-  }
+  AsyncImport: AsyncImport
+): React.SFC<RouterProps> => {
+  const AsyncPage = loadable<AsyncPageProps>(AsyncImport, {
+    cacheKey: ({ name }) => name,
+    ssr: false
+  })
 
-  // We could implement an static router in here as well
-  return (
-    <BrowserRouter>
-      <RouterDOM
-        data={data}
-        error={error}
-        InitialPage={InitialPage}
-        AsyncPage={AsyncPage}
-      />
-    </BrowserRouter>
-  )
+  return function MicroReactRouter ({ data, error }) {
+    if (!canUseDOM) {
+      return <RouterSSR data={data} error={error} InitialPage={InitialPage} />
+    }
+
+    // We could implement an static router in here as well
+    return (
+      <BrowserRouter>
+        <RouterDOM
+          data={data}
+          error={error}
+          InitialPage={InitialPage}
+          AsyncPage={AsyncPage}
+        />
+      </BrowserRouter>
+    )
+  }
 }

@@ -40,15 +40,7 @@ const renderOrHydrate = (App: React.ReactType) => async () => {
 export const LoadMicroComponent = (App: React.ReactType) => {
   if (canUseDOM) {
     const renderOnce = once(renderOrHydrate(App))
-    loadableReady(() => {
-      // If the document is loading, let's wait untill it's loaded to start rendering
-      if (document.readyState === 'loading') {
-        window.onload = renderOnce
-      } else {
-        // The document is already loaded, let's render
-        renderOnce()
-      }
-    })
+    loadableReady(renderOnce)
   }
   return App
 }

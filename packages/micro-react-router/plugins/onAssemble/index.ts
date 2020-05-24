@@ -16,7 +16,7 @@ export default class OnAssemble extends OnAssemblePlugin {
           'react-router-dom': require.resolve('react-router-dom')
         }
       }),
-      cacheGroup(pagesRuntimeName, /\/react-router-dom\//),
+      cacheGroup(pagesRuntimeName, /\/react-in-viewport\/|\/react-router\/|\/react-router-dom\//),
       cacheGroup(pagesFrameworkName, /\/micro-react-router\//)
     ])
   }

@@ -1,4 +1,4 @@
-import { ChunkExtractor } from '@loadable/server'
+import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server'
 import { OnRequestFrameworkPlugin, OnRequestPluginOptions } from '@vtex/micro'
 import { join } from 'path'
 import { createElement } from 'react'
@@ -6,9 +6,10 @@ import { renderToString } from 'react-dom/server'
 
 import { withAppContainerTags } from '../../components/container'
 import { withRuntimeTags } from '../../components/runtime'
+import { CJSChunkExtractor, Extractor } from './cjsChunkExtractor'
 
 export default class OnRequest extends OnRequestFrameworkPlugin<JSX.Element> {
-  public extractor: ChunkExtractor | null = null
+  public extractor: Extractor
 
   constructor (options: OnRequestPluginOptions) {
     super(options)
@@ -17,24 +18,23 @@ export default class OnRequest extends OnRequestFrameworkPlugin<JSX.Element> {
         entrypoints: [options.page.name],
         publicPath: options.publicPaths.assets,
         stats: options.stats
-      })
+      }) as any // TODO: fix this as any
+    } else {
+      this.extractor = new CJSChunkExtractor()
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public renderToString = (element: JSX.Element | null) => {
     let ssr = ''
-    let App = element
-    if (this.options.lifecycleTarget === 'onAssemble' && element) {
-      App = this.extractor!.collectChunks(element)
-    }
-    if (App) {
-      ssr = renderToString(App)
+    if (element) {
+      ssr = renderToString(createElement(ChunkExtractorManager, {
+        extractor: this.extractor,
+        children: element
+      } as any)) // TODO: fix this as any
     }
     return withAppContainerTags(ssr)
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public requireEntrypoint = (): JSX.Element => {
     const { page: { data, name } } = this.options
     const locator = join(this.options.assetsDist.nodejs, 'pages', name)
@@ -44,29 +44,18 @@ export default class OnRequest extends OnRequestFrameworkPlugin<JSX.Element> {
   }
 
   public getScriptTags = () => {
-    let tags = withRuntimeTags({ publicPaths: this.options.publicPaths })
-    if (this.options.lifecycleTarget === 'onAssemble') {
-      tags += this.extractor!.getScriptTags()
-    }
-    if (this.options.lifecycleTarget === 'onBuild') {
-      // Inject a false script to trick @loadable/components in SSR with es6 modules
-      tags += '<script id="__LOADABLE_REQUIRED_CHUNKS__">[]</script>'
-    }
+    let tags = ''
+    tags += withRuntimeTags({ publicPaths: this.options.publicPaths })
+    tags += this.extractor.getScriptTags()
     return tags
   }
 
   public getStyleTags = () => {
-    if (this.options.lifecycleTarget === 'onAssemble') {
-      return this.extractor!.getStyleTags()
-    }
-    return ''
+    return this.extractor!.getStyleTags()
   }
 
   public getLinkTags = () => {
-    if (this.options.lifecycleTarget === 'onAssemble') {
-      return this.extractor!.getLinkTags()
-    }
-    return ''
+    return this.extractor!.getLinkTags()
   }
 
   public getMetaTags = () => ''

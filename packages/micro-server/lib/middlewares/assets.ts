@@ -30,6 +30,7 @@ export const importMap: ImportMap = {
     'react-router-dom': 'https://cdn.pika.dev/react-router-dom@^5.2.0',
     history: 'https://cdn.pika.dev/history@^4.10.1',
     exenv: 'https://cdn.pika.dev/exenv@^1.2.2',
+    'react-in-viewport': 'https://cdn.pika.dev/react-in-viewport@^1.0.0-alpha.11',
 
     'vtex-tachyons/tachyons.css': '/assets/simple/vtex-tachyons/tachyons.css',
     '@vtex/micro': '/assets/simple/@vtex/micro/components/index.js',

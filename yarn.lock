@@ -2073,6 +2073,7 @@ __metadata:
     "@vtex/micro-react": ^1.1.1-alpha.0
     history: ^4.10.1
     react: ^16.13.1
+    react-in-viewport: ^1.0.0-alpha.11
     react-router-dom: ^5.1.2
     typescript: ^3.8.3
     webpack-blocks: ^2.1.0
@@ -6521,7 +6522,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"hoist-non-react-statics@npm:^3.1.0, hoist-non-react-statics@npm:^3.3.1":
+"hoist-non-react-statics@npm:^3.0.0, hoist-non-react-statics@npm:^3.1.0, hoist-non-react-statics@npm:^3.3.1":
   version: 3.3.2
   resolution: "hoist-non-react-statics@npm:3.3.2"
   dependencies:
@@ -10321,7 +10322,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^16.13.1":
+"react-dom@npm:*, react-dom@npm:^16.13.1":
   version: 16.13.1
   resolution: "react-dom@npm:16.13.1"
   dependencies:
@@ -10332,6 +10333,18 @@ fsevents@~2.1.2:
   peerDependencies:
     react: ^16.13.1
   checksum: 2c51e67bd908d052a01ba701fa6b3d92796a91aa2c637bf3e5d98ba9e7ff5bfd7627af43a30fc8c44f1a9601204738c991149f35210303abc56e1846d2fb2a06
+  languageName: node
+  linkType: hard
+
+"react-in-viewport@npm:^1.0.0-alpha.11":
+  version: 1.0.0-alpha.11
+  resolution: "react-in-viewport@npm:1.0.0-alpha.11"
+  dependencies:
+    hoist-non-react-statics: ^3.0.0
+  peerDependencies:
+    react: ^16.8.3
+    react-dom: ^16.8.3
+  checksum: d10cc2f9203bfbd6b1f87e45142e11e5eaef78570757d7e0ca1933ab94acbf018bee4966939da6b4ee394ee3dcd8b51e7c4156d9f4ca0e18afcf374766806a06
   languageName: node
   linkType: hard
 

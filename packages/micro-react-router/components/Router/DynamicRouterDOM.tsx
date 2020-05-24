@@ -17,7 +17,7 @@ import {
 interface RouterState extends RouterStateModifier {
   assets: Set<string>
   // null if page was loaded with error, Page sucessfully, undefined if not prefetched
-  pages: Record<string, Page | null | undefined>
+  pages: Map<string, Page>
 }
 
 interface RouterDOMProps extends RouterProps {
@@ -33,44 +33,25 @@ class PrivateRouterDOM extends React.Component<RouterDOMProps, RouterState> {
     this.state = {
       prefetchPage: this.prefetchPage,
       preloadPage: this.preloadPage,
-      pages: {},
+      pages: new Map(),
       assets: new Set()
     }
   }
 
   public prefetchPage = async (location: LocationDescriptorObject) => {
-    try {
-      const isInitialPage = location.pathname === this.props.data.path
-      if (location.pathname && !isInitialPage) {
-        const hasPage = this.state.pages[location.pathname]
-        if (hasPage === undefined) {
-          return this.loadPage(location)
-        }
+    const isInitialPage = location.pathname === this.props.data.path
+    if (location.pathname && !isInitialPage) {
+      if (!this.state.pages.has(location.pathname)) {
+        return this.loadPage(location)
       }
-    } catch (err) {
-      // Someting went wrong while prefetching the page.
-      // Let's hope we get a better luck next time
-      console.log(err)
     }
   }
 
   public preloadPage = async (location: LocationDescriptorObject) => {
     const isInitialPage = location.pathname === this.props.data.path
     if (location.pathname && !isInitialPage) {
-      try {
-        const hasPage = this.state.pages[location.pathname]
-        if (hasPage === undefined) {
-          return this.loadPage(location)
-        }
-        if (hasPage === null) {
-          // We've already tried prefetching this page before and it finished unsucesfuly
-          // Let's navigate via server
-          window.location.href = location.pathname
-        }
-      } catch (err) {
-        // Someting went wrong while preloading the page.
-        // Let's navigate via server
-        window.location.href = location.pathname
+      if (!this.state.pages.has(location.pathname)) {
+        return this.loadPage(location)
       }
     }
   }
@@ -99,14 +80,13 @@ class PrivateRouterDOM extends React.Component<RouterDOMProps, RouterState> {
         this.updatePages(page.path, page)
         this.loadAsset(page)
       } else {
-        this.updatePages(location.pathname!, null)
         throw new Error(`💣 Fetched location was not a valid page: ${location.pathname}`)
       }
     })
   }
 
-  protected updatePages = (path: string, page: Page | null) => this.setState(state => {
-    state.pages[path] = page
+  protected updatePages = (path: string, page: Page) => this.setState(state => {
+    state.pages.set(path, page)
     return state
   })
 
@@ -133,9 +113,16 @@ class PrivateRouterDOM extends React.Component<RouterDOMProps, RouterState> {
       )
     }
 
-    const matched = Object.values(pages).find(
-      page => matchPath(location.pathname || '', { ...page, exact: true, strict: false })
-    )
+    // Iterate over the pages map and find a match
+    // I think we could improve this algorithm, but YoLo
+    let matched: Page<any> | null = null
+    for (const [, page] of pages) {
+      const m = matchPath(location.pathname || '', { ...page, exact: true, strict: false })
+      if (m) {
+        matched = page
+        break
+      }
+    }
 
     if (!matched) {
       return (

@@ -24,6 +24,7 @@
     "@vtex/micro-react": "^1.1.1-alpha.0",
     "history": "^4.10.1",
     "react": "^16.13.1",
+    "react-in-viewport": "^1.0.0-alpha.11",
     "react-router-dom": "^5.1.2",
     "webpack-blocks": "^2.1.0"
   },

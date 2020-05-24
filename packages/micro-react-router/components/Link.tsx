@@ -1,23 +1,55 @@
-import React, { useContext, useEffect } from 'react'
-import { Link as ReactRouterLink, useLocation } from 'react-router-dom'
+import React, { useContext, useEffect, useRef } from 'react'
+import { useInViewport } from 'react-in-viewport'
+import {
+  Link as ReactRouterLink,
+  LinkProps,
+  useLocation
+} from 'react-router-dom'
 
-import { locationFromProps } from './utils/location'
 import { MicroRouterContext } from './Router/Router'
+import { onMobileDevice } from './utils/env'
+import { locationFromProps } from './utils/location'
 
-type ReactRouterLinkType = typeof ReactRouterLink
+type Props = LinkProps & {
+  prefetch: boolean
+}
 
-export const Link: ReactRouterLinkType = ({ children, to, ...rest }) => {
+const noop = () => {}
+
+export const Link: React.SFC<Props> = ({ children, to, prefetch, ...rest }) => {
   const router = useContext(MicroRouterContext)
   const currentLocation = useLocation()
 
-  useEffect(
-    // eslint-disable-next-line no-unused-expressions
-    () => { router.prefetchPage(locationFromProps(to as any, currentLocation)) },
-    [currentLocation]
-  )
+  let fetched = false
+  const prefetchPage = (condition: boolean) => () => {
+    if (!fetched && condition) {
+      fetched = true
+      router.prefetchPage(locationFromProps(to as any, currentLocation))
+    }
+  }
+  const preloadPage = () => {
+    if (!fetched) {
+      fetched = true
+      router.preloadPage(locationFromProps(to as any, currentLocation))
+    }
+  }
+
+  const node = useRef(null)
+  useInViewport(node, null, { disconnectOnLeave: true }, {
+    onEnterViewport: prefetchPage(onMobileDevice),
+    onLeaveViewport: noop
+  })
+
+  useEffect(prefetchPage(prefetch), [currentLocation, prefetch])
 
   return (
-    <ReactRouterLink to={to} {...rest}>
+    <ReactRouterLink
+      ref={node}
+      to={to}
+      // We preload the page in here becase it seems like the user is about to navigate
+      onMouseEnter={preloadPage}
+      {...rest}
+    >
       { children }
     </ReactRouterLink>
   )

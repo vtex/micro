@@ -5,7 +5,7 @@ import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 
 import { Page } from '../Page'
-import { RouterDOM } from './RouterDOM'
+import { RouterDOM } from './DynamicRouterDOM'
 import { RouterSSR } from './RouterSSR'
 
 export interface PageProps {
@@ -22,7 +22,11 @@ export interface RouterProps {
 }
 
 export interface RouterStateModifier {
+  // Prefetching should have lower priority than a preload. Also, you should be
+  // carefull about preloading too mutch
   prefetchPage: (location: LocationDescriptorObject) => Promise<void>
+  // Preload means the user needs this page right now. Use it only when you are
+  // almost sure the user will navigate to this page
   preloadPage: (location: LocationDescriptorObject) => Promise<void>
 }
 
@@ -37,6 +41,7 @@ export const withRouter = (
     return <RouterSSR data={data} error={error} InitialPage={InitialPage} />
   }
 
+  // We could implement an static router in here as well
   return (
     <BrowserRouter>
       <RouterDOM

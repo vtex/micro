@@ -1,6 +1,6 @@
 import loadable from '@loadable/component'
 import React from 'react'
-import { NavLink } from '@vtex/micro-react-router'
+import { NavLink, Link } from '@vtex/micro-react-router'
 
 import { PlaceHolder } from '../placeholder'
 import { Layout } from '../layout'
@@ -22,7 +22,7 @@ interface Props {
 const Page: React.SFC<Props> = ({ data }) => {
   const { menu } = data
   return (
-    <Layout menu={menu} Link={NavLink}>
+    <Layout menu={menu} NavLink={NavLink} Link={Link}>
       <PlaceHolder />
       <BelowTheFold fallback={<Loading/>}/>
     </Layout>

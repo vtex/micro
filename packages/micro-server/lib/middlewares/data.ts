@@ -9,7 +9,6 @@ export const middleware = async (req: Req, res: Res) => {
     }
   } = res
 
-  res.set('content-type', 'application/json')
-  res.status(status)
-  res.send(data)
+  res.type('json')
+  res.status(status).send(data)
 }

@@ -1,6 +1,8 @@
 import { TransformOptions } from '@babel/core'
+import { readJSON } from 'fs-extra'
 import { join } from 'path'
 
+import { parse } from '../../components/semver'
 import { Mode } from '../common/mode'
 import { Compiler, CompilerOptions } from '../compiler'
 import { Plugin } from '../plugin'
@@ -9,6 +11,12 @@ import { Project } from '../project'
 const lifecycle = 'onBuild'
 
 export type BuildTarget = 'es6' | 'cjs'
+
+export interface Alias {
+  name: string
+  version: string
+  resolve?: string
+}
 
 export type OnBuildCompilerOptions = Omit<CompilerOptions<OnBuildPlugin>, 'target' | 'plugins'> & {
   plugins: Array<new (opts: OnBuildPluginOptions) => OnBuildPlugin>
@@ -33,6 +41,44 @@ export class OnBuildCompiler extends Compiler<OnBuildPlugin> {
       Promise.resolve(initialConfig)
     )
     return merged
+  }
+
+  public getAliases = async (onConflict: 'throw' | 'warn' | 'skip' = 'warn'): Promise<Alias[]> => {
+    const aliases = await this.plugins.reduce(
+      async (acc, plugin) => plugin.getAliases(await acc),
+      Promise.resolve([] as Alias[])
+    )
+
+    // If we don't need to resolve conflicts, let's just return the merged aliases
+    if (onConflict === 'skip') {
+      return aliases
+    }
+
+    // Let's resolve the dependencies based on chosen conflict resolution rule
+    const resolvedAliases: Record<string, Alias> = {}
+    for (const current of aliases) {
+      const { name, version } = current
+      const previous = resolvedAliases[name]
+
+      if (!previous) {
+        resolvedAliases[name] = current
+        continue
+      }
+
+      const { major: previousMajor } = parse(previous.version)
+      const { major: currentMajor } = parse(version)
+      if (previousMajor !== currentMajor) {
+        switch (onConflict) {
+          case 'throw':
+            throw new Error(`💣 Dependency ${name} found duplicated. Need to resolve to ${previousMajor}.x or ${currentMajor}.x`)
+          case 'warn':
+            console.warn(`💣 Dependency ${name} found duplicated. Resolving to ${Math.max(previousMajor, currentMajor)}.x`)
+            resolvedAliases[name] = previousMajor > currentMajor ? previous : current
+        }
+      }
+    }
+
+    return Object.values(resolvedAliases)
   }
 }
 
@@ -96,4 +142,12 @@ export class OnBuildPlugin extends Plugin {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public getConfig = async (previous: TransformOptions, target: BuildTarget): Promise<TransformOptions> => previous
+
+  public getAliases = async (previous: Alias[]): Promise<Alias[]> => previous
+}
+
+export const packageToAlias = async (name: string, resolve: (x: string) => string): Promise<Alias> => {
+  const packageJSONPath = resolve(`${name}/package.json`)
+  const { version } = await readJSON(packageJSONPath)
+  return { name, version: `^${version}` }
 }

@@ -1,9 +1,8 @@
-import { OnRequestCompiler } from '@vtex/micro'
+import { ImportMap, OnRequestCompiler } from '@vtex/micro'
 import pretty from 'pretty'
 
 import { featuresFromReq } from '../features'
 import express, { Next, Req, Res } from '../typings'
-import { importMap } from './assets'
 
 const ok = (
   compiler: OnRequestCompiler<unknown>,
@@ -35,21 +34,13 @@ export const middleware = (req: Req, res: Res, next: Next) => {
   res.status(status)
   res.send(html)
 
-  // const {
-  //   default: App
-  // } = server.requirePage()
-
-  // const AppElement = createElement(App, { context } as any)
-  // const WithRouter = createElement(StaticRouter, { children: AppElement, location: path } as any)
-
-  // body = renderToString(server.collectChunks(WithRouter))
-
   next()
 }
 
 const okSSR = (
   compiler: OnRequestCompiler<unknown>,
-  body: string
+  body: string,
+  importMap: ImportMap
 ) => `<!DOCTYPE html>
 <html>
 <head>
@@ -65,14 +56,16 @@ ${body}
 </html>
 `
 
-export const devSSR = (req: Req, res: Res) => {
-  const { locals: { route: { page: { status } } } } = res
-  const { disableSSR } = featuresFromReq(req)
-  const compiler = res.locals.compiler
+export const devSSR = (importMap: ImportMap) => {
+  return (req: Req, res: Res) => {
+    const { locals: { route: { page: { status } } } } = res
+    const { disableSSR } = featuresFromReq(req)
+    const compiler = res.locals.compiler
 
-  const body = compiler.renderToString(disableSSR)
-  const html = pretty(okSSR(compiler, body))
+    const body = compiler.renderToString(disableSSR)
+    const html = pretty(okSSR(compiler, body, importMap))
 
-  res.status(status)
-  res.send(html)
+    res.type('html')
+    res.status(status).send(html)
+  }
 }

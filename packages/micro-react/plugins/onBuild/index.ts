@@ -1,5 +1,7 @@
 import { TransformOptions } from '@babel/core'
-import { BuildTarget, OnBuildPlugin } from '@vtex/micro'
+import { Alias, BuildTarget, OnBuildPlugin, packageToAlias } from '@vtex/micro'
+
+import { aliases } from '../aliases'
 
 export default class OnBuild extends OnBuildPlugin {
   public getConfig = async (previous: TransformOptions, target: BuildTarget): Promise<TransformOptions> => {
@@ -21,5 +23,15 @@ export default class OnBuild extends OnBuildPlugin {
         ...loadablePlugin
       ]
     })
+  }
+
+  public getAliases = async (previous: Alias[]): Promise<Alias[]> => {
+    const modules = await Promise.all(aliases.map(
+      a => packageToAlias(a, require.resolve)
+    ))
+    return [
+      ...previous,
+      ...modules
+    ]
   }
 }

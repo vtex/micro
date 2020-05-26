@@ -8,6 +8,17 @@ import { Runtime } from './context/Runtime'
 import { once } from './once'
 import { getRuntimeData } from './runtime'
 
+const printPerformance = () => {
+  const timing = window.performance?.timing
+  if (!timing) {
+    return
+  }
+  const domContentLoaded = timing.domContentLoadedEventEnd - timing.navigationStart
+  const loaded = timing.loadEventEnd - timing.navigationStart
+  console.log(`[micro-react]: ⚡⚡ DomContentLoaded ${domContentLoaded / 1e3}ms`)
+  console.log(`[micro-react]: ⚡⚡ Load ${loaded / 1e3}ms`)
+}
+
 const renderOrHydrate = (App: React.ReactType) => async () => {
   const container = getAppContainer()
   const runtimeData = getRuntimeData()
@@ -34,6 +45,12 @@ const renderOrHydrate = (App: React.ReactType) => async () => {
     console.time(msg)
     render(AppWithContext, container)
     console.timeEnd(msg)
+  }
+
+  if (document.readyState !== 'complete') {
+    window.onload = printPerformance
+  } else {
+    printPerformance()
   }
 }
 

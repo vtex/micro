@@ -1,13 +1,13 @@
 import assert from 'assert'
 import { readJSON } from 'fs-extra'
 import { join } from 'path'
-import pnp from 'pnpapi'
 
 import { LifeCycle } from '../../project'
 import { Router, Serializable } from '../../router'
 import { Package, PackageRootEntries, Plugins } from '../base'
 import { isManifest } from '../manifest'
-import { globPnp, requirePnp, traverseDependencyTree } from './dfs'
+import { getLocatorFromPackageInWorkspace } from './common'
+import { globPnp, requirePnp, createDepTree } from './dfs'
 
 export class PnpPackage extends Package {
   public issuer: string = ''
@@ -17,10 +17,9 @@ export class PnpPackage extends Package {
     const manifestPath = join(projectRoot, this.structure.manifest)
     const manifest = await readJSON(manifestPath)
     assert(isManifest(manifest), '💣 Root manifest needs to be a valid Micro Project')
-    const locators = (pnp as any).getDependencyTreeRoots() // TODO: improve typings
-    const root = locators.find((l: any) => l.name === manifest.name)
+    const root = getLocatorFromPackageInWorkspace(manifest.name)
     assert(root, '💣 Could not find this package in this workspace')
-    const resolved = await traverseDependencyTree(root, manifest, root, new Map())
+    const resolved = await createDepTree(root, manifest, root, new Map())
     assert(resolved, '💣 Dependency tree traversal must return a package')
     this.dependencies = resolved.dependencies
     this.manifest = resolved.manifest

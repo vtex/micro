@@ -1,4 +1,10 @@
-import { OnRequestCompiler, Plugins, Project, PublicPaths } from '@vtex/micro'
+import {
+  ImportMap,
+  OnRequestCompiler,
+  Plugins,
+  Project,
+  PublicPaths
+} from '@vtex/micro'
 import compress from 'compression'
 import express from 'express'
 import logger from 'morgan'
@@ -12,6 +18,7 @@ import { devSSR } from './middlewares/ssr'
 import { Next, Req, Res } from './typings'
 
 interface DevServerOptions {
+  importMap: ImportMap
   statsJson: Stats.ToJsonOutput
   project: Project,
   plugins: Plugins['onRequest'][]
@@ -44,6 +51,7 @@ const context = (
 
 export const startDevServer = async ({
   publicPaths,
+  importMap,
   statsJson,
   project,
   plugins,
@@ -61,7 +69,7 @@ export const startDevServer = async ({
   app.get('/favicon.ico', (req: Req, res: Res) => { res.status(404); res.send(null) })
   app.get(`${publicPaths.assets}*`, headers, streamAssets(project, publicPaths))
   app.get(`${publicPaths.data}*`, headers, routerMiddleware, contextMiddleware, respondData)
-  app.get('/*', headers, routerMiddleware, contextMiddleware, devSSR)
+  app.get('/*', headers, routerMiddleware, contextMiddleware, devSSR(importMap))
 
   app.listen(port, () => console.log(`🦄 DevServer is UP on ${host}`))
 }

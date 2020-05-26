@@ -11,9 +11,9 @@ import {
   env,
   group,
   optimization,
+  performance,
   resolve,
   setContext,
-  performance,
   setMode,
   sourceMaps
 } from 'webpack-blocks'
@@ -23,10 +23,10 @@ import { externalPublicPathVariable } from '../../components/publicPaths'
 import {
   AssembleTarget,
   OnAssemblePlugin,
-  pagesFrameworkName,
-  pagesRuntimeName
+  pagesFrameworkName
 } from '../../lib/lifecycles/onAssemble'
 import { Project } from '../../lib/project'
+import { aliases } from '../aliases'
 import { cacheGroup } from './modules/cacheGroups'
 
 const entriesFromPages = async (project: Project) => {
@@ -57,7 +57,14 @@ export default class OnAssemble extends OnAssemblePlugin {
         extensions: ['.tsx', '.ts', '.js', '.jsx'],
         plugins: [
           PnpPlugin
-        ]
+        ],
+        alias: aliases.reduce(
+          (acc, packageName) => {
+            acc[packageName] = require.resolve(packageName)
+            return acc
+          },
+          {} as Record<string, string>
+        )
       }),
       optimization({
         runtimeChunk: {

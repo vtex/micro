@@ -3,7 +3,7 @@ import chalk from 'chalk'
 
 import { error } from '../../common/error'
 import { newProject } from '../../common/project'
-import { builder, clean } from './builder'
+import { getBuilders, clean } from './builder'
 
 interface Options {
   dev?: boolean
@@ -20,7 +20,7 @@ const main = async (options: Options) => {
 
   console.log(`🦄 Starting Micro for ${chalk.magenta(project)} at ${chalk.blue(lifecycle)}:${chalk.blue(mode)}`)
 
-  const build = await builder(project, mode)
+  const { createBuild, createPreBuild } = await getBuilders(project, mode)
 
   await clean(project, lifecycle)
 
@@ -33,7 +33,10 @@ const main = async (options: Options) => {
 
   const msg = `🦄 [${lifecycle}]: The build of ${framework.length + userland.length} files finished in`
   console.time(msg)
-  await Promise.all(framework.map(f => build(f, false)))
+  const { prebuild } = await createPreBuild()
+  await Promise.all(framework.map(f => prebuild(f, false)))
+
+  const { build } = await createBuild()
   await Promise.all(userland.map(f => build(f, false)))
   console.timeEnd(msg)
 }

@@ -26,6 +26,7 @@ import { extractCss } from './modules/extractCSS'
 import { purgeCSS } from './modules/purgeCSS'
 import { webnewBabel } from './webnew'
 import { weboldBabel } from './webold'
+import { aliases } from '../aliases'
 
 export default class OnAssemble extends OnAssemblePlugin {
   public getConfig = async (config: Block<Context>, target: AssembleTarget): Promise<Block<Context>> => {
@@ -40,11 +41,13 @@ export default class OnAssemble extends OnAssemblePlugin {
         paths: await this.project.resolveFiles('pages', 'components')
       }),
       resolve({
-        alias: { // make react imports always to fallback to this one
-          react: require.resolve('react'),
-          'react-dom': require.resolve('react-dom'),
-          '@loadable/component': require.resolve('@loadable/component')
-        }
+        alias: aliases.reduce(
+          (acc, packageName) => {
+            acc[packageName] = require.resolve(packageName)
+            return acc
+          },
+          {} as Record<string, string>
+        )
       }),
       match('*.css', [
         extractCss({

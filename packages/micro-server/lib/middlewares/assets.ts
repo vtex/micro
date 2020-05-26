@@ -4,7 +4,7 @@ import { getLibzipSync } from '@yarnpkg/libzip'
 import assert from 'assert'
 import { createReadStream, pathExists } from 'fs-extra'
 import mime from 'mime-types'
-import { basename, dirname, extname, join } from 'path'
+import { basename, extname, join } from 'path'
 import pnp from 'pnpapi'
 
 import { Req, Res } from '../typings'
@@ -17,85 +17,57 @@ const zipOpenFs = new ZipOpenFS({ libzip })
 // This will convert all paths into a Posix variant, required for cross-platform compatibility
 const crossFs = new PosixFS(zipOpenFs)
 
-interface ImportMap {
-  imports: Record<string, string>
-}
-
-export const importMap: ImportMap = {
-  imports: {
-    react: 'https://cdn.pika.dev/react@^16.13.1',
-    'react-dom': 'https://cdn.pika.dev/react-dom@^16.13.1',
-    '@loadable/component': 'https://cdn.pika.dev/@loadable/component@^5.12.0',
-    'react-router': 'https://cdn.pika.dev/react-router@^5.2.0',
-    'react-router-dom': 'https://cdn.pika.dev/react-router-dom@^5.2.0',
-    history: 'https://cdn.pika.dev/history@^4.10.1',
-    exenv: 'https://cdn.pika.dev/exenv@^1.2.2',
-    'react-in-viewport': 'https://cdn.pika.dev/react-in-viewport@^1.0.0-alpha.11',
-
-    'vtex-tachyons/tachyons.css': '/assets/simple/vtex-tachyons/tachyons.css',
-    '@vtex/micro': '/assets/simple/@vtex/micro/components/index.js',
-    '@vtex/micro/': '/assets/simple/@vtex/micro/components',
-    '@vtex/micro-react': '/assets/simple/@vtex/micro-react/components/index.js',
-    '@vtex/micro-react/': '/assets/simple/@vtex/micro-react/components',
-    '@vtex/micro-react-router': '/assets/simple/@vtex/micro-react-router/components/index.js',
-    '@vtex/micro-react-router/': '/assets/simple/@vtex/micro-react-router/components'
-  }
-}
-
 const resolveBundleAssets = (assetsRootPath: string, path: string) => {
   const asset = join(assetsRootPath, path)
   return createReadStream(asset, { encoding: 'utf-8' })
 }
 
-const removeEndingSlash = (x: string) => x.endsWith('/') ? x.substring(0, x.length - 1) : x
-
-const resolveES6Assets = async (assetsRootPath: string, path: string, publicPaths: PublicPaths) => {
-  const maybeModule = Object.keys(importMap.imports).find(
-    k => `${publicPaths.assets}${path}`.includes(importMap.imports[k])
-  )
-
-  // this is a relative import
-  if (!maybeModule) {
-    const asset = join(assetsRootPath, path)
-
-    if (await pathExists(asset)) {
-      return createReadStream(asset, { encoding: 'utf-8' })
-    }
-
-    // It was a default import, let's add a `/index.js` in the end so we find the file
-    const defaultImport = join(asset.replace('.js', ''), 'index.js')
-    return createReadStream(defaultImport, { encoding: 'utf-8' })
+const resolveES6Assets = async (assetsRootPath: string, path: string) => {
+  const relativeImport = join(assetsRootPath, path)
+  if (await pathExists(relativeImport)) {
+    return createReadStream(relativeImport, { encoding: 'utf-8' })
   }
 
-  // this is a yarn related import, lets try to resolve it
+  // Maybe this was a default import ?
+  const relativeDefaultImport = join(relativeImport.replace('.js', ''), 'index.js')
+  if (await pathExists(relativeDefaultImport)) {
+    return createReadStream(relativeDefaultImport, { encoding: 'utf-8' })
+  }
 
-  const module = removeEndingSlash(maybeModule)
-  const [issuer, ...rest] = path.split(module)
+  // It's a module. Let's resolve it using PnP API
+  const [issuer, rest] = path.split('__imports__')
+  const splitted = rest.slice(1).split('/')
+  const module = splitted[0].startsWith('@') ? splitted.slice(0, 2).join('/') : splitted[0]
+  const filepath = rest.replace(module, '')
 
-  // let's try to resolve the request as a normal path request
+  // Let's first read the package json so we read the module property
   const unqualified = pnp.resolveToUnqualified(module, issuer) || ''
-  const depPath = join(unqualified, ...rest)
-  if (await crossFs.existsPromise(depPath)) {
-    return crossFs.createReadStream(depPath, { encoding: 'utf-8' })
+  const packageJSONPath = join(unqualified, 'package.json')
+  const packageJSON = await crossFs.readJsonPromise(packageJSONPath)
+
+  // Let's just try a module relative import at first
+  const moduleRelativeImport = join(unqualified, filepath)
+  if (await pathExists(moduleRelativeImport)) {
+    return createReadStream(moduleRelativeImport, { encoding: 'utf-8' })
   }
 
-  // now we should try resolving the request as an es6 module
-  const packageJsonPath = pnp.resolveRequest(`${module}/package.json`, issuer) || ''
-  const packageJson = await crossFs.readJsonPromise(packageJsonPath)
-  assert(packageJson.module, '💣 The package should contain a module locator for es6')
-  const rootPathES6 = dirname(join(dirname(packageJsonPath), packageJson.module))
-  const joined = join(rootPathES6, ...rest)
-  if (await crossFs.existsPromise(joined)) {
-    return crossFs.createReadStream(joined, { encoding: 'utf-8' })
+  assert(packageJSON.module, `💣 The package should contain a module locator for es6 packages. Maybe package ${module} is not compatbile with Micro 😞`)
+
+  // Now let's try to resolve the path
+  const moduleSplitted = packageJSON.module.split('/')
+  const dist = moduleSplitted.slice(0, moduleSplitted.length - 1).join('/')
+  const moduleImport = join(unqualified, dist, filepath)
+  if (await crossFs.existsPromise(moduleImport)) {
+    return crossFs.createReadStream(moduleImport, { encoding: 'utf-8' })
   }
 
-  // maybe it's a default import ?
-  const defaultImport = join(joined.replace('.js', ''), 'index.js')
-  if (await crossFs.existsPromise(defaultImport)) {
-    return crossFs.createReadStream(joined, { encoding: 'utf-8' })
+  // Maybe this was a default import ?
+  const moduleDefaultImport = join(moduleImport.replace('.js', ''), 'index.js')
+  if (await pathExists(moduleDefaultImport)) {
+    return createReadStream(moduleDefaultImport, { encoding: 'utf-8' })
   }
 
-  throw new Error('not found')
+  throw new Error(`💣 Asset Not Found: ${path}`)
 }
 
 export const middleware = (project: Project, publicPaths: PublicPaths) => {
@@ -120,7 +92,7 @@ export const middleware = (project: Project, publicPaths: PublicPaths) => {
 
       const stream = process.env.NODE_ENV === 'production'
         ? resolveBundleAssets(assetsRootPath, path)
-        : await resolveES6Assets(assetsRootPath, path, publicPaths)
+        : await resolveES6Assets(assetsRootPath, path)
 
       res.status(200)
       stream.pipe(res)

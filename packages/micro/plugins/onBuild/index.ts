@@ -1,6 +1,12 @@
 import { TransformOptions } from '@babel/core'
 
-import { BuildTarget, OnBuildPlugin } from '../../lib/lifecycles/onBuild'
+import {
+  Alias,
+  BuildTarget,
+  OnBuildPlugin,
+  packageToAlias
+} from '../../lib/lifecycles/onBuild'
+import { aliases } from '../aliases'
 
 export default class OnBuild extends OnBuildPlugin {
   public getConfig = async (previous: TransformOptions, target: BuildTarget): Promise<TransformOptions> => {
@@ -15,5 +21,15 @@ export default class OnBuild extends OnBuildPlugin {
         ...plugins
       ]
     })
+  }
+
+  public getAliases = async (previous: Alias[]): Promise<Alias[]> => {
+    const modules = await Promise.all(aliases.map(
+      a => packageToAlias(a, require.resolve)
+    ))
+    return [
+      ...previous,
+      ...modules
+    ]
   }
 }

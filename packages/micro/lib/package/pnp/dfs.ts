@@ -53,10 +53,15 @@ export const readJsonPnp = async (
   }
 }
 
+export const readManifest = async (info: PackageInformation) => {
+  const manifest = await readJsonPnp(info, 'manifest')
+  return manifest as Pick<Manifest, 'name' | 'version' | 'dependencies' | 'peerDependencies' | 'devDependencies'>
+}
+
 const getKey = <T>(locator: T) => JSON.stringify(locator)
 
 // DFS
-export const traverseDependencyTree = async (
+export const createDepTree = async (
   pkgLocator: PackageLocator,
   manifest: Manifest,
   parentLocator: PackageLocator,
@@ -86,7 +91,7 @@ export const traverseDependencyTree = async (
       continue
     }
     const childManifest = await readJsonPnp(childInfo, 'manifest')
-    const child = await traverseDependencyTree(locator, childManifest, pkgLocator, seen)
+    const child = await createDepTree(locator, childManifest, pkgLocator, seen)
     if (child) {
       pkg.dependencies.push(child)
     }
@@ -94,3 +99,32 @@ export const traverseDependencyTree = async (
 
   return pkg
 }
+
+export type VisitFn = (node: PackageLocator, parent: PackageLocator | null) => Promise<void>
+
+const walkRec = async (node: PackageLocator, parent: PackageLocator | null, visit: VisitFn, seen: Set<string>) => {
+  const nodeStr = getKey(node)
+
+  if (seen.has(nodeStr)) {
+    return
+  }
+
+  const info = getPackageInformation(node)
+  if (!info) {
+    return
+  }
+
+  seen.add(nodeStr)
+  await visit(node, parent)
+
+  for (const [name, referencish] of info.packageDependencies) {
+    const locator = referencish && (pnp as any).getLocator(name, referencish) as PackageLocator | null
+    if (!locator) {
+      continue
+    }
+    await walkRec(locator, node, visit, seen)
+  }
+}
+
+export const walk = (root: PackageLocator, visit: VisitFn) =>
+  walkRec(root, null, visit, new Set())

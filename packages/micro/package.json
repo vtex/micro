@@ -48,5 +48,6 @@
     "@types/webpack-blocks": "^2.0.0",
     "globby": "^11.0.0",
     "typescript": "^3.8.3"
-  }
+  },
+  "gitHead": "80ebed40e2a06983fcae622b22fdea18799b9076"
 }

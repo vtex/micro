@@ -21,9 +21,6 @@ ${compiler.getScriptTags()}
 </html>
 `
 
-// ;(global as any).React = React
-// ;(global as any).ReactRouterDom = ReactRouterDom
-
 export const middleware = (req: Req, res: Res) => {
   const { locals: { compiler, route: { page: { status } } } } = res
   const { disableSSR } = featuresFromReq(req)

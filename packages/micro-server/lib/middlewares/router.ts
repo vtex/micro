@@ -8,7 +8,6 @@ import assert from 'assert'
 
 import { Next, Req, Res } from '../typings'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const middleware = async (project: Project, publicPaths: PublicPaths) => {
   const router = await project.getRouter()
 

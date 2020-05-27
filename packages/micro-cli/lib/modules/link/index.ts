@@ -81,8 +81,6 @@ const main = async () => {
     console.log('🦄 Building import map')
     const importMap = importMapFromAliases(projectAliases, pluginAliases, PUBLIC_PATHS)
 
-    console.log({ importMap })
-
     console.log(`🦄 [${lifecycle}]: Starting DevServer`)
 
     await startDevServer({

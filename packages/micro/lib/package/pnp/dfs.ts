@@ -43,14 +43,9 @@ export const readJsonPnp = async (
   { packageLocation }: PackageInformation,
   target: keyof typeof PackageStructure
 ) => {
-  try {
-    return await crossFs.readJsonPromise(
-      join(packageLocation, PackageStructure[target])
-    )
-  } catch (err) {
-    console.log(packageLocation, target)
-    throw err
-  }
+  return await crossFs.readJsonPromise(
+    join(packageLocation, PackageStructure[target])
+  )
 }
 
 export const readManifest = async (info: PackageInformation) => {

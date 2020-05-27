@@ -71,7 +71,7 @@ export const resolveProjectAliases = async (project: Project, linker: 'pnp' | 'n
 
 export interface ImportMap {
   imports: Record<string, string>
-  scopes?: Record<string, string>
+  scopes?: Record<string, Record<string, string>>
 }
 
 export const importMapFromAliases = (projectAliases: Alias[], pluginAliases: Alias[], publicPaths: PublicPaths): ImportMap => {

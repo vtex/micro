@@ -6,7 +6,7 @@ import {
 } from '@vtex/micro'
 import assert from 'assert'
 
-import express, { Next, Req, Res } from '../typings'
+import { Next, Req, Res } from '../typings'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const middleware = async (project: Project, publicPaths: PublicPaths) => {

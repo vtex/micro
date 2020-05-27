@@ -94,11 +94,10 @@ export const middleware = (project: Project, publicPaths: PublicPaths) => {
         ? resolveBundleAssets(assetsRootPath, path)
         : await resolveES6Assets(assetsRootPath, path)
 
-      res.status(200)
+      res.statusCode = 200
       stream.pipe(res)
     } catch (err) {
-      res.status(404)
-      res.send(null)
+      res.status(404).send(null)
       console.error(err)
     }
   }

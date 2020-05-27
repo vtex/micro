@@ -2026,7 +2026,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vtex/micro-cli@1.1.1-alpha.1, @vtex/micro-cli@workspace:packages/micro-cli":
+"@vtex/micro-cli@^1.1.1-alpha.2, @vtex/micro-cli@workspace:packages/micro-cli":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-cli@workspace:packages/micro-cli"
   dependencies:
@@ -2039,8 +2039,8 @@ __metadata:
     "@types/open": ^6.2.1
     "@types/ramda": ^0.27.4
     "@types/webpack": ^4.41.12
-    "@vtex/micro": ^1.1.1-alpha.0
-    "@vtex/micro-server": ^1.1.1-alpha.1
+    "@vtex/micro": ^1.1.1-alpha.2
+    "@vtex/micro-server": ^1.1.1-alpha.2
     chalk: ^4.0.0
     chokidar: ^3.4.0
     findhelp: ^1.1.0
@@ -2057,7 +2057,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-react-router@^1.1.1-alpha.0, @vtex/micro-react-router@workspace:packages/micro-react-router":
+"@vtex/micro-react-router@^1.1.1-alpha.2, @vtex/micro-react-router@workspace:packages/micro-react-router":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-react-router@workspace:packages/micro-react-router"
   dependencies:
@@ -2069,9 +2069,9 @@ __metadata:
     "@types/react-router-dom": ^5.1.5
     "@types/webpack": ^4.41.13
     "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro": ^1.1.1-alpha.0
-    "@vtex/micro-cli": 1.1.1-alpha.1
-    "@vtex/micro-react": ^1.1.1-alpha.0
+    "@vtex/micro": ^1.1.1-alpha.2
+    "@vtex/micro-cli": ^1.1.1-alpha.2
+    "@vtex/micro-react": ^1.1.1-alpha.2
     history: ^4.10.1
     react: ^16.13.1
     react-in-viewport: ^1.0.0-alpha.11
@@ -2081,7 +2081,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-react@^1.1.1-alpha.0, @vtex/micro-react@workspace:packages/micro-react":
+"@vtex/micro-react@^1.1.1-alpha.2, @vtex/micro-react@workspace:packages/micro-react":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-react@workspace:packages/micro-react"
   dependencies:
@@ -2108,8 +2108,8 @@ __metadata:
     "@types/terser-webpack-plugin": ^2.2.0
     "@types/webpack": ^4.41.12
     "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro": ^1.1.1-alpha.0
-    "@vtex/micro-cli": 1.1.1-alpha.1
+    "@vtex/micro": ^1.1.1-alpha.2
+    "@vtex/micro-cli": ^1.1.1-alpha.2
     babel-loader: ^8.1.0
     css-loader: ^3.5.3
     file-loader: ^6.0.0
@@ -2126,7 +2126,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-server@^1.1.1-alpha.1, @vtex/micro-server@workspace:packages/micro-server":
+"@vtex/micro-server@^1.1.1-alpha.2, @vtex/micro-server@workspace:packages/micro-server":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-server@workspace:packages/micro-server"
   dependencies:
@@ -2146,7 +2146,7 @@ __metadata:
     "@types/react-router-dom": ^5.1.5
     "@types/webpack": ^4.41.12
     "@types/webpack-dev-middleware": ^3.7.0
-    "@vtex/micro": ^1.1.1-alpha.0
+    "@vtex/micro": ^1.1.1-alpha.2
     "@yarnpkg/fslib": ^2.0.0-rc.20
     "@yarnpkg/libzip": ^2.0.0-rc.11
     compression: ^1.7.4
@@ -2167,7 +2167,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro@^1.1.1-alpha.0, @vtex/micro@workspace:packages/micro":
+"@vtex/micro@^1.1.1-alpha.2, @vtex/micro@workspace:packages/micro":
   version: 0.0.0-use.local
   resolution: "@vtex/micro@workspace:packages/micro"
   dependencies:
@@ -2184,7 +2184,7 @@ __metadata:
     "@types/ramda": ^0.27.4
     "@types/webpack": ^4.41.12
     "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro-cli": 1.1.1-alpha.1
+    "@vtex/micro-cli": ^1.1.1-alpha.2
     "@yarnpkg/fslib": ^2.0.0-rc.20
     "@yarnpkg/libzip": ^2.0.0-rc.11
     babel-plugin-ignore-html-and-css-imports: ^0.0.2
@@ -11355,10 +11355,10 @@ fsevents@~2.1.2:
     "@types/react-dom": ^16.9.7
     "@types/uikit": ^3.3.0
     "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro": ^1.1.1-alpha.0
-    "@vtex/micro-cli": 1.1.1-alpha.1
-    "@vtex/micro-react": ^1.1.1-alpha.0
-    "@vtex/micro-react-router": ^1.1.1-alpha.0
+    "@vtex/micro": ^1.1.1-alpha.2
+    "@vtex/micro-cli": ^1.1.1-alpha.2
+    "@vtex/micro-react": ^1.1.1-alpha.2
+    "@vtex/micro-react-router": ^1.1.1-alpha.2
     react: ^16.13.1
     react-dom: ^16.13.1
     typescript: ^3.8.3

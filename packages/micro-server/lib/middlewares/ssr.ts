@@ -2,7 +2,7 @@ import { ImportMap, OnRequestCompiler } from '@vtex/micro'
 import pretty from 'pretty'
 
 import { featuresFromReq } from '../features'
-import express, { Next, Req, Res } from '../typings'
+import { Req, Res } from '../typings'
 
 const ok = (
   compiler: OnRequestCompiler<unknown>,
@@ -24,17 +24,14 @@ ${compiler.getScriptTags()}
 // ;(global as any).React = React
 // ;(global as any).ReactRouterDom = ReactRouterDom
 
-export const middleware = (req: Req, res: Res, next: Next) => {
+export const middleware = (req: Req, res: Res) => {
   const { locals: { compiler, route: { page: { status } } } } = res
   const { disableSSR } = featuresFromReq(req)
 
   const body = compiler.renderToString(disableSSR)
   const html = ok(compiler, body)
 
-  res.status(status)
-  res.send(html)
-
-  next()
+  res.status(status).send(html)
 }
 
 const okSSR = (

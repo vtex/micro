@@ -1,4 +1,4 @@
-import express, { Next, Req, Res } from '../typings'
+import { Next, Req, Res } from '../typings'
 
 export const middleware = (req: Req, res: Res, next: Next) => {
   try {

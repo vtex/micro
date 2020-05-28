@@ -1,6 +1,6 @@
 {
   "name": "@vtex/micro-react",
-  "version": "1.1.1-alpha.3",
+  "version": "1.1.1-alpha.4",
   "license": "MIT",
   "micro": {
     "plugins": {
@@ -30,7 +30,7 @@
     "@loadable/babel-plugin": "^5.12.0",
     "@loadable/server": "^5.12.0",
     "@loadable/webpack-plugin": "^5.12.0",
-    "@vtex/micro": "^1.1.1-alpha.3",
+    "@vtex/micro": "^1.1.1-alpha.4",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.5.3",
     "file-loader": "^6.0.0",
@@ -56,7 +56,7 @@
     "@types/terser-webpack-plugin": "^2.2.0",
     "@types/webpack": "^4.41.12",
     "@types/webpack-blocks": "^2.0.0",
-    "@vtex/micro-cli": "^1.1.1-alpha.3",
+    "@vtex/micro-cli": "^1.1.1-alpha.4",
     "typescript": "^3.8.3"
   },
   "gitHead": "d3bf4affcd0a5ac51316a399f715933ab8edbc3a",

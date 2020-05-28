@@ -1,6 +1,6 @@
 {
   "name": "@vtex/micro-css",
-  "version": "1.1.1-alpha.4",
+  "version": "1.1.1-alpha.5",
   "license": "MIT",
   "micro": {
     "plugins": {}
@@ -15,7 +15,7 @@
   "module": "./.micro/onBuild/es6/components/index.js",
   "browser": "./components/index.ts",
   "dependencies": {
-    "@vtex/micro": "^1.1.1-alpha.4",
+    "@vtex/micro": "^1.1.1-alpha.5",
     "babel-plugin-ignore-html-and-css-imports": "^0.0.2",
     "css-loader": "^3.5.3",
     "mini-css-extract-plugin": "^0.9.0",
@@ -32,7 +32,7 @@
     "@types/terser-webpack-plugin": "^2.2.0",
     "@types/webpack": "^4.41.12",
     "@types/webpack-blocks": "^2.0.0",
-    "@vtex/micro-cli": "^1.1.1-alpha.4",
+    "@vtex/micro-cli": "^1.1.1-alpha.5",
     "typescript": "^3.8.3"
   },
   "gitHead": "d9dbb29779a19f00512533591f52b24497e08e46"

@@ -1,6 +1,6 @@
 {
   "name": "@vtex/micro-react-router",
-  "version": "1.1.1-alpha.4",
+  "version": "1.1.1-alpha.5",
   "license": "MIT",
   "micro": {
     "plugins": {
@@ -19,8 +19,8 @@
   "module": "./.micro/onBuild/es6/components/index.js",
   "browser": "./components/index.ts",
   "dependencies": {
-    "@vtex/micro": "^1.1.1-alpha.4",
-    "@vtex/micro-react": "^1.1.1-alpha.4",
+    "@vtex/micro": "^1.1.1-alpha.5",
+    "@vtex/micro-react": "^1.1.1-alpha.5",
     "history": "^4.10.1",
     "react-in-viewport": "^1.0.0-alpha.11",
     "react-router-dom": "^5.1.2",
@@ -34,7 +34,7 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/webpack": "^4.41.13",
     "@types/webpack-blocks": "^2.0.0",
-    "@vtex/micro-cli": "^1.1.1-alpha.4",
+    "@vtex/micro-cli": "^1.1.1-alpha.5",
     "typescript": "^3.8.3"
   },
   "gitHead": "d9dbb29779a19f00512533591f52b24497e08e46",

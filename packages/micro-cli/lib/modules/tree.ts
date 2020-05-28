@@ -29,7 +29,19 @@ export const tree = {
     description: 'Develop a Micro project'
   },
   serve: {
-    description: 'Serve an assembled Micro project'
+    description: 'Serve an assembled Micro project',
+    options: [
+      {
+        description: 'Build with dev environment',
+        long: 'dev',
+        type: 'boolean'
+      },
+      {
+        description: 'Port to Serve the micro Project',
+        short: 'p',
+        type: 'number'
+      }
+    ]
   },
   setup: {
     description: 'Setup the current package.json as a Micro project',

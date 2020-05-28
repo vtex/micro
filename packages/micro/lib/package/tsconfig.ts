@@ -29,7 +29,7 @@ export const genTSConfig = (partial: any): TSConfig => {
     ...partial,
     ...BaseTSConfig,
     compilerOptions: {
-      ...partial.compilerOptions,
+      ...partial?.compilerOptions,
       ...BaseTSConfig.compilerOptions
     }
   }

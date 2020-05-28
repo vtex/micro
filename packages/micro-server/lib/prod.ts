@@ -63,5 +63,5 @@ export const startProdServer = async ({
   app.get(`${publicPaths.data}*`, headers, routerMiddleware, contextMiddleware, respondData)
   app.get('/*', headers, routerMiddleware, contextMiddleware, ssr)
 
-  app.listen(port, () => console.log(`🦄 Server is UP on ${host}`))
+  app.listen(port, () => console.log(`🦄 ProdServer is UP on ${host}:${port}`))
 }

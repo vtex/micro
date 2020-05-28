@@ -71,5 +71,5 @@ export const startDevServer = async ({
   app.get(`${publicPaths.data}*`, headers, routerMiddleware, contextMiddleware, respondData)
   app.get('/*', headers, routerMiddleware, contextMiddleware, devSSR(importMap))
 
-  app.listen(port, () => console.log(`🦄 DevServer is UP on ${host}`))
+  app.listen(port, () => console.log(`🦄 DevServer is UP on ${host}:${port}`))
 }

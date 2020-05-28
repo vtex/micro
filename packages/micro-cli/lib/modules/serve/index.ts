@@ -4,7 +4,6 @@ import chalk from 'chalk'
 import { readJSON } from 'fs-extra'
 import { join } from 'path'
 
-import { error } from '../../common/error'
 import { newProject, resolvePlugins } from '../../common/project'
 import { BUILD, HOST, PUBLIC_PATHS, SERVER_PORT } from '../../constants'
 
@@ -12,9 +11,11 @@ const lifecycle = 'onRequest'
 
 interface Options {
   dev: boolean
+  p?: number
 }
 
 const main = async (options: Options) => {
+  const port = options.p || SERVER_PORT
   const mode: Mode = options.dev ? 'development' : 'production'
   process.env.NODE_ENV = mode
 
@@ -22,7 +23,9 @@ const main = async (options: Options) => {
 
   console.log(`🦄 Starting Micro for ${chalk.magenta(project)} at ${chalk.blue(lifecycle)}:${chalk.blue(mode)}`)
 
-  const plugins = await resolvePlugins(project, lifecycle)
+  const partial = await resolvePlugins(project, lifecycle)
+  const self = await project.getSelfPlugin(lifecycle)
+  const plugins = self ? [...partial, self] : partial
 
   console.log(`🦄 Serving ${project.root.toString()}`)
 
@@ -37,7 +40,7 @@ const main = async (options: Options) => {
       project,
       plugins,
       host: HOST,
-      port: SERVER_PORT
+      port
     })
   } else if (mode === 'development') {
     console.log(`🦄 [${lifecycle}]: Starting DevServer`)
@@ -46,10 +49,10 @@ const main = async (options: Options) => {
       publicPaths: PUBLIC_PATHS,
       project,
       plugins,
-      host: HOST,
-      port: SERVER_PORT
+      port,
+      host: HOST
     } as any)
   }
 }
 
-export default error(main)
+export default main

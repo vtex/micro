@@ -1,5 +1,6 @@
 interface MicroRequest {
   path: string
+  query: Record<string, string>
 }
 
 export type Serializable = object | string | number | null | undefined

@@ -2,7 +2,6 @@ import { genManifest, genTSConfig, PackageStructure } from '@vtex/micro'
 import { outputFile, readJSON } from 'fs-extra'
 import { join } from 'path'
 
-import { error } from '../../common/error'
 import { prettyPrint } from './../../common/print'
 
 interface Options {
@@ -10,6 +9,10 @@ interface Options {
   d?: boolean
 }
 
+// TODO: we should also:
+//  - yarn add typescript --dev
+//  - yarn add eslint --dev
+//  - yarn dlx @yarnpkg/pnpify --sdk # to setup vscode
 const main = async ({ dry, d }: Options) => {
   const dryRun = dry || d
 
@@ -18,8 +21,8 @@ const main = async ({ dry, d }: Options) => {
   const manifestPath = join(projectPath, PackageStructure.manifest)
   const tsconfigPath = join(projectPath, PackageStructure.tsconfig)
 
-  const originalManifest = await readJSON(manifestPath)
-  const originalTSConfig = await readJSON(tsconfigPath)
+  const originalManifest = await readJSON(manifestPath).catch(() => {})
+  const originalTSConfig = await readJSON(tsconfigPath).catch(() => {})
 
   const manifest = genManifest(originalManifest)
   const tsconfig = genTSConfig(originalTSConfig)
@@ -40,4 +43,4 @@ const main = async ({ dry, d }: Options) => {
   await outputFile(tsconfigPath, JSON.stringify(tsconfig, null, 2))
 }
 
-export default error(main)
+export default main

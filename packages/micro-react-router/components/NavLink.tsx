@@ -7,12 +7,12 @@ import { MicroRouterContext } from './Router/Router'
 import { onMobileDevice } from './utils/env'
 
 type Props = NavLinkProps & {
-  prefetch: boolean
+  prefetch?: boolean
 }
 
 const noop = () => {}
 
-export const NavLink: React.SFC<Props> = ({ children, to, prefetch, ...rest }) => {
+export const NavLink: React.SFC<Props> = ({ children, to, prefetch = false, ...rest }) => {
   const router = useContext(MicroRouterContext)
   const currentLocation = useLocation()
 

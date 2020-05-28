@@ -10,10 +10,15 @@ const menu = {
   '/404': '404'
 }
 
+const locales = new Set(['en', 'pt'])
+
 const router: Router<any> = async request => {
-  const { path } = request
+  const { path, query } = request
+  const locale = locales.has(query.locale) ? query.locale : undefined
+  const name = path === '/' ? 'home' : removeSlash(path)
+
   const resolved = {
-    name: path === '/' ? 'home' : removeSlash(path),
+    name: locale ? `${name}.${locale}` : name,
     data: { menu },
     status: 200
   }

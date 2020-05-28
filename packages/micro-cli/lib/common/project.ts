@@ -35,7 +35,7 @@ export const resolvePlugins = async <T extends LifeCycle>(project: Project, life
   assert(
     plugins.length === names.length ||
     plugins.length === names.length - 1, // in case this is a self referenced project
-    '💣 Something went wrong when resolving the project\'s plugins'
+    `💣 Something went wrong when resolving the project's plugins. Expecting ${names.length} plugins, but got ${plugins.length}`
   )
 
   for (const pkg of names) {

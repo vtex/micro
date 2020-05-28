@@ -38,26 +38,29 @@ const renderOrHydrate = (App: React.ReactType) => async () => {
   if (container.children.length > 0) {
     const msg = '[micro-react]: ⚡⚡ Hydration took'
     console.time(msg)
+    console.log('hydrationStart', (Date.now() - window.performance.timing.navigationStart) / 1e3)
     hydrate(AppWithContext, container)
     console.timeEnd(msg)
   } else {
     const msg = '[micro-react]: ⚡ Rendering took'
     console.time(msg)
+    console.log('renderStart', (Date.now() - window.performance.timing.navigationStart) / 1e3)
     render(AppWithContext, container)
     console.timeEnd(msg)
   }
 
-  if (document.readyState !== 'complete') {
-    window.onload = printPerformance
-  } else {
-    printPerformance()
-  }
+  printPerformance()
 }
 
 export const LoadMicroComponent = (App: React.ReactType) => {
   if (canUseDOM) {
     const renderOnce = once(renderOrHydrate(App))
-    loadableReady(renderOnce)
+    if (document.readyState !== 'complete') {
+      window.onload = () => loadableReady(renderOnce)
+    } else {
+      loadableReady(renderOnce)
+    }
+    setTimeout(renderOnce, 6e3)
   }
   return App
 }

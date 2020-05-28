@@ -3,7 +3,6 @@ import { startDevServer } from '@vtex/micro-server'
 import chalk from 'chalk'
 import chokidar from 'chokidar'
 
-import { error } from '../../common/error'
 import { newProject, resolvePlugins } from '../../common/project'
 import { HOST, PUBLIC_PATHS, SERVER_PORT } from '../../constants'
 import {
@@ -94,4 +93,4 @@ const main = async () => {
   }
 }
 
-export default error(main)
+export default main

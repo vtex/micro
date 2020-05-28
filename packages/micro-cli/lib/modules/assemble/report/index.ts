@@ -1,7 +1,5 @@
 import open from 'open'
 
-import { error } from '../../../common/error'
-
 const target = 'onAssemble'
 
 const main = async () => {
@@ -10,4 +8,4 @@ const main = async () => {
   open('http://webpack.github.io/analyse/')
 }
 
-export default error(main)
+export default main

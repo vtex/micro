@@ -20,7 +20,7 @@ export const middleware = async (project: Project, publicPaths: PublicPaths) => 
       : '/'
     const path = req.path.replace(rootPath, '/')
 
-    const page = await router({ path }, {})
+    const page = await router({ path, query: req.query as Record<string, string> }, {})
 
     if (isResolvedRedirect(page)) {
       res.redirect(page.status, page.location)

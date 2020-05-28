@@ -4,7 +4,6 @@ import { outputJSON } from 'fs-extra'
 import { join } from 'path'
 import webpack, { Compiler, Stats } from 'webpack'
 
-import { error } from '../../common/error'
 import { ensureDist, newProject, resolvePlugins } from '../../common/project'
 import { BUILD } from '../../constants'
 
@@ -32,7 +31,9 @@ const main = async (options: Options) => {
 
   console.log(`🦄 Starting Micro for ${chalk.magenta(project)} at ${chalk.blue(lifecycle)}:${chalk.blue(mode)}`)
 
-  const plugins = await resolvePlugins(project, lifecycle)
+  const partial = await resolvePlugins(project, lifecycle)
+  const self = await project.getSelfPlugin(lifecycle)
+  const plugins = self ? [self, ...partial] : partial
 
   console.log(`🦄 [${lifecycle}]: Creating Compiler`)
   const compiler = new OnAssembleCompiler({ project, plugins, mode })
@@ -70,7 +71,7 @@ const main = async (options: Options) => {
 
   const dist = join(compiler.dist, BUILD)
   console.log(`🦄 [${lifecycle}]: Persisting Build on ${dist.replace(project.rootPath, '')}`)
-  await outputJSON(dist, statsJSON)
+  await outputJSON(dist, statsJSON, { spaces: 2 })
 }
 
-export default error(main)
+export default main

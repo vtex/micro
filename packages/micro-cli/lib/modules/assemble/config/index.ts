@@ -1,10 +1,10 @@
 import { Mode, OnAssembleCompiler } from '@vtex/micro'
+import chalk from 'chalk'
 
-import { error } from '../../../common/error'
 import { newProject, resolvePlugins } from '../../../common/project'
 import { prettyPrint } from './../../../common/print'
 
-const target = 'onAssemble'
+const lifecycle = 'onAssemble'
 
 interface Options {
   dev?: boolean
@@ -15,16 +15,19 @@ const main = async (options: Options) => {
   const mode: Mode = dev ? 'development' : 'production'
   process.env.NODE_ENV = mode
 
-  console.log(`🦄 Starting ${target} Build`)
-
   const project = await newProject()
-  const plugins = await resolvePlugins(project, target)
 
-  console.log(`🦄 [${target}]: Creating Compiler`)
+  console.log(`🦄 Starting Micro for ${chalk.magenta(project)} at ${chalk.blue(lifecycle)}:${chalk.blue(mode)}`)
+
+  const partial = await resolvePlugins(project, lifecycle)
+  const self = await project.getSelfPlugin(lifecycle)
+  const plugins = self ? [self, ...partial] : partial
+
+  console.log(`🦄 [${lifecycle}]: Creating Compiler`)
   const compiler = new OnAssembleCompiler({ project, plugins, mode })
   const configs = await compiler.getConfig('webnew')
 
   prettyPrint(configs)
 }
 
-export default error(main)
+export default main

@@ -2,7 +2,7 @@ import loadable from '@loadable/component'
 import React from 'react'
 import { NavLink, Link } from '@vtex/micro-react-router'
 
-import { PlaceHolder } from '../placeholder'
+import Huge from '../hugeComponent1'
 import { Layout } from '../layout'
 import { Loading } from '../loading'
 
@@ -23,7 +23,7 @@ const Page: React.SFC<Props> = ({ data }) => {
   const { menu } = data
   return (
     <Layout menu={menu} NavLink={NavLink} Link={Link}>
-      <PlaceHolder />
+      <Huge />
       <BelowTheFold fallback={<Loading/>}/>
     </Layout>
   )

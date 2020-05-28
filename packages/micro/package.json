@@ -12,7 +12,6 @@
     "prepublish": "yarn build"
   },
   "main": "./.micro/onBuild/cjs/index.js",
-  "types": "./.micro/onBuild/cjs/index.js",
   "module": "./.micro/onBuild/es6/components/index.js",
   "browser": "./components/index.ts",
   "dependencies": {
@@ -49,5 +48,5 @@
     "globby": "^11.0.0",
     "typescript": "^3.8.3"
   },
-  "gitHead": "80ebed40e2a06983fcae622b22fdea18799b9076"
+  "gitHead": "d3bf4affcd0a5ac51316a399f715933ab8edbc3a"
 }

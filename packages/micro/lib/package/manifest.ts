@@ -11,7 +11,6 @@ type MicroOptions = {
 
 export const BaseManifest = {
   main: './.micro/onBuild/cjs/index.js',
-  types: './.micro/onBuild/cjs/index.js',
   module: './.micro/onBuild/es6/components/index.js',
   browser: './components/index.ts',
   micro: {
@@ -25,7 +24,7 @@ export const BaseManifest = {
   }
 }
 
-const necessary = pick(BaseManifest, ['main', 'types', 'module', 'browser'])
+const necessary = pick(BaseManifest, ['main', 'module', 'browser'])
 const required = pick(BaseManifest, ['micro'])
 
 type Base = typeof BaseManifest
@@ -45,7 +44,6 @@ export const isManifest = (obj: any): obj is Manifest => {
   return typeof obj?.name === 'string' &&
     isSemver(obj.version) &&
     obj.main === BaseManifest.main &&
-    obj.types === BaseManifest.types &&
     obj.module === BaseManifest.module &&
     obj.browser === BaseManifest.browser &&
     isMicro(obj.micro)

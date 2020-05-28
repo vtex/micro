@@ -54,7 +54,7 @@ export default class OnAssemble extends OnAssemblePlugin {
         'process.env.NODE_ENV': this.mode
       }),
       resolve({
-        extensions: ['.tsx', '.ts', '.js', '.jsx'],
+        extensions: ['.tsx', '.ts', '.js', '.jsx', '.json'],
         plugins: [
           PnpPlugin
         ],

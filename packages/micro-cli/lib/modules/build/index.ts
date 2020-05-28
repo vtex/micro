@@ -1,7 +1,6 @@
 import { Mode } from '@vtex/micro'
 import chalk from 'chalk'
 
-import { error } from '../../common/error'
 import { newProject } from '../../common/project'
 import { getBuilders, clean } from './builder'
 
@@ -41,4 +40,4 @@ const main = async (options: Options) => {
   console.timeEnd(msg)
 }
 
-export default error(main)
+export default main

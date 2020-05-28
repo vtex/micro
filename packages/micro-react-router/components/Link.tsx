@@ -11,12 +11,12 @@ import { onMobileDevice } from './utils/env'
 import { locationFromProps } from './utils/location'
 
 type Props = LinkProps & {
-  prefetch: boolean
+  prefetch?: boolean
 }
 
 const noop = () => {}
 
-export const Link: React.SFC<Props> = ({ children, to, prefetch, ...rest }) => {
+export const Link: React.SFC<Props> = ({ children, to, prefetch = false, ...rest }) => {
   const router = useContext(MicroRouterContext)
   const currentLocation = useLocation()
 

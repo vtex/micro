@@ -1,6 +1,7 @@
 import loadable from '@loadable/component'
 import React from 'react'
 import { NavLink, Link } from '@vtex/micro-react-router'
+import { FormattedMessage } from '@vtex/micro-react-intl'
 
 import { PlaceHolder } from '../placeholder'
 import { Layout } from '../layout'
@@ -24,6 +25,7 @@ const Page: React.SFC<Props> = ({ data }) => {
   return (
     <Layout menu={menu} NavLink={NavLink} Link={Link}>
       <PlaceHolder />
+      <FormattedMessage id='greeting' />
       <BelowTheFold fallback={<Loading/>}/>
     </Layout>
   )

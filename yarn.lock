@@ -24,7 +24,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:^7.9.6":
+"@babel/core@npm:^7.9.0, @babel/core@npm:^7.9.6":
   version: 7.9.6
   resolution: "@babel/core@npm:7.9.6"
   dependencies:
@@ -1203,6 +1203,49 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@formatjs/intl-displaynames@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@formatjs/intl-displaynames@npm:2.2.0"
+  dependencies:
+    "@formatjs/intl-utils": ^3.1.0
+  checksum: 8beb46dd3cf491c4378a56af017660a6cb87af7d9f92df38275cdecac685f15ccdc553c93dda1d73a96f967c490e8430ef1e729099820dd330babe2e81401fd3
+  languageName: node
+  linkType: hard
+
+"@formatjs/intl-listformat@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@formatjs/intl-listformat@npm:2.2.0"
+  dependencies:
+    "@formatjs/intl-utils": ^3.1.0
+  checksum: 836f757757a07fed07bf4ff43db41f01b1be75670a7306b30784666f19c4bb211014470d4fb5c14d43619099e3915a67ea755d83be8cd794b8abbffe4060aa0f
+  languageName: node
+  linkType: hard
+
+"@formatjs/intl-numberformat@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "@formatjs/intl-numberformat@npm:4.2.0"
+  dependencies:
+    "@formatjs/intl-utils": ^3.1.0
+  checksum: d5a78fa2e5a6a655eb1b44e9c1daa10d7df31e6e8cc2115ee676774ce868582a51d64740c593d5771951e1da6bf38af1c0c1a6f0dc32cff9c61623345c6e0c61
+  languageName: node
+  linkType: hard
+
+"@formatjs/intl-relativetimeformat@npm:^5.2.0":
+  version: 5.2.0
+  resolution: "@formatjs/intl-relativetimeformat@npm:5.2.0"
+  dependencies:
+    "@formatjs/intl-utils": ^3.1.0
+  checksum: 1964fa738d863687094d06319744f67cf8906edd9476c952222bf1263be5f3a2d4ac8afeaa96cb9b23578e47a76a7d96716c55af706c23cdbbe652acd6b5bb54
+  languageName: node
+  linkType: hard
+
+"@formatjs/intl-utils@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "@formatjs/intl-utils@npm:3.1.0"
+  checksum: 9192466b318aef302bcad66d29d08587bbf8b4a0fef034ee444ad9d24ffb7dc546fb90e7eae9ba9af7dddf584bd54da82a37b0486b127622c835f785eafe3053
+  languageName: node
+  linkType: hard
+
 "@hot-loader/react-dom@npm:^16.13.0":
   version: 16.13.0
   resolution: "@hot-loader/react-dom@npm:16.13.0"
@@ -1536,10 +1579,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/hoist-non-react-statics@npm:^3.3.1":
+  version: 3.3.1
+  resolution: "@types/hoist-non-react-statics@npm:3.3.1"
+  dependencies:
+    "@types/react": "*"
+    hoist-non-react-statics: ^3.3.0
+  checksum: 96c317a1fe7e81077d09f40f9ac4bb2a3c9d3f47e587c0a5d6d1fd093a0c375c58e19a5a63e376911c27c5f9a9cb4a8b1bff34648d66862ecffe8967aa4cf2e5
+  languageName: node
+  linkType: hard
+
 "@types/http-cache-semantics@npm:*":
   version: 4.0.0
   resolution: "@types/http-cache-semantics@npm:4.0.0"
   checksum: a3b8ef18e44a016a3dd177965cb53882f22714f21ab8f6b77f8a9370dc3a087a914cd2a463ba6f0122071f192ce0e71c6f911c7ef9971ddea04597538c40fccc
+  languageName: node
+  linkType: hard
+
+"@types/invariant@npm:^2.2.31":
+  version: 2.2.33
+  resolution: "@types/invariant@npm:2.2.33"
+  checksum: b4bc5e3d4ccdf2ebaedad79ca13dd4fdbfc6e6bc18b1bd9782f5a012ae8171b547931a870ddc9741f2f5f50285b415131296608252f6e4274141e127984355f6
   languageName: node
   linkType: hard
 
@@ -1719,6 +1779,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-intl@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@types/react-intl@npm:3.0.0"
+  dependencies:
+    react-intl: "*"
+  checksum: 538d93503a85491a2bbb40f23eedec75c30756e8783d0038c08330bc5bff3b5c460c466bf9f12c9c1f622a7692756be7b3d5d88255d5c23a38c4cc6a7ee792d3
+  languageName: node
+  linkType: hard
+
 "@types/react-router-dom@npm:^5.1.5":
   version: 5.1.5
   resolution: "@types/react-router-dom@npm:5.1.5"
@@ -1756,6 +1825,15 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: c1c22a0558a6252f9c75c42d64e2f66bda16556f8801d954fd516e2d5170a78f36b246fef2b815df506925d87af7aee0236a2594307df3f4305db49d411c1c8c
+  languageName: node
+  linkType: hard
+
+"@types/schema-utils@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "@types/schema-utils@npm:2.4.0"
+  dependencies:
+    schema-utils: "*"
+  checksum: a54587d164b9c276c7da974a3c60daed3bf8eef861a5992ea1dbb0104e699baabcf44089ff4bfac1eaf16b53000c21751693c02f5f12a0dbd1ef36f636d0b6d9
   languageName: node
   linkType: hard
 
@@ -2026,7 +2104,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vtex/micro-cli@^1.1.1-alpha.2, @vtex/micro-cli@workspace:packages/micro-cli":
+"@vtex/micro-assets@workspace:packages/micro-assets":
+  version: 0.0.0-use.local
+  resolution: "@vtex/micro-assets@workspace:packages/micro-assets"
+  dependencies:
+    "@types/babel__core": ^7.1.7
+    "@types/webpack": ^4.41.12
+    "@types/webpack-blocks": ^2.0.0
+    "@vtex/micro": ^1.1.1-alpha.3
+    "@vtex/micro-cli": ^1.1.1-alpha.3
+    babel-plugin-inline-json-import: ^0.3.2
+    babel-plugin-transform-remove-imports: ^1.3.2
+    typescript: ^3.8.3
+    webpack-blocks: ^2.1.0
+  languageName: unknown
+  linkType: soft
+
+"@vtex/micro-cli@^1.1.1-alpha.3, @vtex/micro-cli@workspace:packages/micro-cli":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-cli@workspace:packages/micro-cli"
   dependencies:
@@ -2039,8 +2133,8 @@ __metadata:
     "@types/open": ^6.2.1
     "@types/ramda": ^0.27.4
     "@types/webpack": ^4.41.12
-    "@vtex/micro": ^1.1.1-alpha.2
-    "@vtex/micro-server": ^1.1.1-alpha.2
+    "@vtex/micro": ^1.1.1-alpha.3
+    "@vtex/micro-server": ^1.1.1-alpha.3
     chalk: ^4.0.0
     chokidar: ^3.4.0
     findhelp: ^1.1.0
@@ -2057,11 +2151,53 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-react-router@^1.1.1-alpha.2, @vtex/micro-react-router@workspace:packages/micro-react-router":
+"@vtex/micro-css@workspace:packages/micro-css":
+  version: 0.0.0-use.local
+  resolution: "@vtex/micro-css@workspace:packages/micro-css"
+  dependencies:
+    "@types/babel__core": ^7.1.7
+    "@types/mini-css-extract-plugin": ^0.9.1
+    "@types/optimize-css-assets-webpack-plugin": ^5.0.1
+    "@types/terser-webpack-plugin": ^2.2.0
+    "@types/webpack": ^4.41.12
+    "@types/webpack-blocks": ^2.0.0
+    "@vtex/micro": ^1.1.1-alpha.3
+    "@vtex/micro-cli": ^1.1.1-alpha.3
+    babel-plugin-ignore-html-and-css-imports: ^0.0.2
+    css-loader: ^3.5.3
+    mini-css-extract-plugin: ^0.9.0
+    optimize-css-assets-webpack-plugin: ^5.0.3
+    purgecss-webpack-plugin: ^2.2.0
+    terser-webpack-plugin: ^3.0.1
+    typescript: ^3.8.3
+    webpack: ^4.43.0
+    webpack-blocks: ^2.1.0
+  languageName: unknown
+  linkType: soft
+
+"@vtex/micro-react-intl@1.0.0, @vtex/micro-react-intl@workspace:packages/micro-react-intl":
+  version: 0.0.0-use.local
+  resolution: "@vtex/micro-react-intl@workspace:packages/micro-react-intl"
+  dependencies:
+    "@types/react": ^16.9.35
+    "@types/react-intl": ^3.0.0
+    "@types/webpack-blocks": ^2.0.0
+    "@vtex/micro": ^1.1.1-alpha.3
+    "@vtex/micro-cli": ^1.1.1-alpha.3
+    "@vtex/micro-react": ^1.1.1-alpha.3
+    babel-plugin-react-intl: ^7.5.14
+    intl-messageformat-parser: ^5.0.10
+    react-intl: ^4.6.0
+    webpack-blocks: ^2.1.0
+  peerDependencies:
+    react: "*"
+  languageName: unknown
+  linkType: soft
+
+"@vtex/micro-react-router@^1.1.1-alpha.3, @vtex/micro-react-router@workspace:packages/micro-react-router":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-react-router@workspace:packages/micro-react-router"
   dependencies:
-    "@loadable/component": ^5.12.0
     "@types/history": ^4.7.5
     "@types/loadable__component": ^5.10.0
     "@types/react": ^16.9.35
@@ -2069,19 +2205,22 @@ __metadata:
     "@types/react-router-dom": ^5.1.5
     "@types/webpack": ^4.41.13
     "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro": ^1.1.1-alpha.2
-    "@vtex/micro-cli": ^1.1.1-alpha.2
-    "@vtex/micro-react": ^1.1.1-alpha.2
+    "@vtex/micro": ^1.1.1-alpha.3
+    "@vtex/micro-cli": ^1.1.1-alpha.3
+    "@vtex/micro-react": ^1.1.1-alpha.3
     history: ^4.10.1
-    react: ^16.13.1
     react-in-viewport: ^1.0.0-alpha.11
     react-router-dom: ^5.1.2
     typescript: ^3.8.3
     webpack-blocks: ^2.1.0
+  peerDependencies:
+    "@loadable/component": "*"
+    react: "*"
+    react-dom: "*"
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-react@^1.1.1-alpha.2, @vtex/micro-react@workspace:packages/micro-react":
+"@vtex/micro-react@^1.1.1-alpha.3, @vtex/micro-react@workspace:packages/micro-react":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-react@workspace:packages/micro-react"
   dependencies:
@@ -2094,10 +2233,10 @@ __metadata:
     "@babel/preset-typescript": ^7.9.0
     "@hot-loader/react-dom": ^16.13.0
     "@loadable/babel-plugin": ^5.12.0
-    "@loadable/component": ^5.12.0
     "@loadable/server": ^5.12.0
     "@loadable/webpack-plugin": ^5.12.0
     "@types/babel__core": ^7.1.7
+    "@types/fs-extra": ^9.0.1
     "@types/loadable__component": ^5.10.0
     "@types/loadable__server": ^5.12.1
     "@types/loadable__webpack-plugin": ^5.7.0
@@ -2108,29 +2247,31 @@ __metadata:
     "@types/terser-webpack-plugin": ^2.2.0
     "@types/webpack": ^4.41.12
     "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro": ^1.1.1-alpha.2
-    "@vtex/micro-cli": ^1.1.1-alpha.2
+    "@vtex/micro": ^1.1.1-alpha.3
+    "@vtex/micro-cli": ^1.1.1-alpha.3
     babel-loader: ^8.1.0
     css-loader: ^3.5.3
     file-loader: ^6.0.0
+    fs-extra: ^9.0.0
     mini-css-extract-plugin: ^0.9.0
     optimize-css-assets-webpack-plugin: ^5.0.3
     purgecss-webpack-plugin: ^2.2.0
-    react: ^16.13.1
-    react-dom: ^16.13.1
     terser-webpack-plugin: ^3.0.1
     typescript: ^3.8.3
     webpack: ^4.43.0
     webpack-blocks: ^2.1.0
     webpack-messages: ^2.0.4
+  peerDependencies:
+    "@loadable/component": "*"
+    react: "*"
+    react-dom: "*"
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-server@^1.1.1-alpha.2, @vtex/micro-server@workspace:packages/micro-server":
+"@vtex/micro-server@^1.1.1-alpha.3, @vtex/micro-server@workspace:packages/micro-server":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-server@workspace:packages/micro-server"
   dependencies:
-    "@loadable/component": ^5.12.0
     "@loadable/server": ^5.12.0
     "@types/compression": ^1.7.0
     "@types/cookie": ^0.3.3
@@ -2146,7 +2287,7 @@ __metadata:
     "@types/react-router-dom": ^5.1.5
     "@types/webpack": ^4.41.12
     "@types/webpack-dev-middleware": ^3.7.0
-    "@vtex/micro": ^1.1.1-alpha.2
+    "@vtex/micro": ^1.1.1-alpha.3
     "@yarnpkg/fslib": ^2.0.0-rc.20
     "@yarnpkg/libzip": ^2.0.0-rc.11
     compression: ^1.7.4
@@ -2158,16 +2299,18 @@ __metadata:
     nodemon: ^2.0.3
     pnpapi: ^0.0.0
     pretty: ^2.0.0
-    react: ^16.13.1
-    react-dom: ^16.13.1
     react-router-dom: ^5.1.2
     typescript: ^3.8.3
     webpack: ^4.43.0
     webpack-dev-middleware: ^3.7.2
+  peerDependencies:
+    "@loadable/component": "*"
+    react: "*"
+    react-dom: "*"
   languageName: unknown
   linkType: soft
 
-"@vtex/micro@^1.1.1-alpha.2, @vtex/micro@workspace:packages/micro":
+"@vtex/micro@^1.1.1-alpha.3, @vtex/micro@workspace:packages/micro":
   version: 0.0.0-use.local
   resolution: "@vtex/micro@workspace:packages/micro"
   dependencies:
@@ -2184,7 +2327,7 @@ __metadata:
     "@types/ramda": ^0.27.4
     "@types/webpack": ^4.41.12
     "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro-cli": ^1.1.1-alpha.2
+    "@vtex/micro-cli": ^1.1.1-alpha.3
     "@yarnpkg/fslib": ^2.0.0-rc.20
     "@yarnpkg/libzip": ^2.0.0-rc.11
     babel-plugin-ignore-html-and-css-imports: ^0.0.2
@@ -3156,6 +3299,41 @@ __metadata:
   languageName: node
   linkType: hard
 
+"babel-plugin-inline-json-import@npm:^0.3.2":
+  version: 0.3.2
+  resolution: "babel-plugin-inline-json-import@npm:0.3.2"
+  dependencies:
+    decache: ^4.5.1
+  checksum: 1d748f4f4c99cd221aed9539be94d194294fbc9ff9a2b8b0f6477e0870c1ded53bc42cdcb0e05946d432447bfb78fe4e9d6735a891f1f9d543dc188ff424d17a
+  languageName: node
+  linkType: hard
+
+"babel-plugin-react-intl@npm:^7.5.14":
+  version: 7.5.14
+  resolution: "babel-plugin-react-intl@npm:7.5.14"
+  dependencies:
+    "@babel/core": ^7.9.0
+    "@babel/helper-plugin-utils": ^7.8.3
+    "@babel/types": ^7.9.5
+    "@types/babel__core": ^7.1.7
+    "@types/fs-extra": ^8.1.0
+    "@types/schema-utils": ^2.4.0
+    fs-extra: ^9.0.0
+    intl-messageformat-parser: ^5.0.10
+    schema-utils: ^2.6.6
+  checksum: f3f69c1725ce15bafec268b842eb9be35e5c4beebf68e881ef3c50845b872cf876b6a3bc130cb654ba05d3203e8447cc6bcd5be363f5867665fbe38d15075641
+  languageName: node
+  linkType: hard
+
+"babel-plugin-transform-remove-imports@npm:^1.3.2":
+  version: 1.3.2
+  resolution: "babel-plugin-transform-remove-imports@npm:1.3.2"
+  peerDependencies:
+    "@babel/core": ^7.0.0-0
+  checksum: d5ee6d4770c80f3fa516233be4b766cb6316fc9aa0b8fe8e20e527453d2714c7e45da77914a93bcd9a0d10f21f68bf8bdb486cd2472639164c60068f63d8ad95
+  languageName: node
+  linkType: hard
+
 "balanced-match@npm:^1.0.0":
   version: 1.0.0
   resolution: "balanced-match@npm:1.0.0"
@@ -3646,6 +3824,13 @@ __metadata:
   dependencies:
     caller-callsite: ^2.0.0
   checksum: 56dfca957892cc755e6e8ac2a110f9aa82c72b0907bc40b6b10736930ef2ba31f510f5e5afa2351c1ed5fdafaf0e1eab8439e8b07905e00e79432a343df214e6
+  languageName: node
+  linkType: hard
+
+"callsite@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "callsite@npm:1.0.0"
+  checksum: 0d9cc94acf5892c626760b6f12655a9a5e1012772f7cd0b0543123451a3efe6781ccb6a341194a24335d1e4799a5937c4f52c1bf1d8accaa7f45d7c56ce04fa8
   languageName: node
   linkType: hard
 
@@ -4639,6 +4824,15 @@ __metadata:
   dependencies:
     ms: ^2.1.1
   checksum: e3bfa1544ced80ac5764aa313530150af442e5ce53f91090f00e3aff33a8b535ce60a7502d1451b3cbc2b9cd6994b3a08a38fbd3ff7a2ec801ad79d8b457b8e8
+  languageName: node
+  linkType: hard
+
+"decache@npm:^4.5.1":
+  version: 4.6.0
+  resolution: "decache@npm:4.6.0"
+  dependencies:
+    callsite: ^1.0.0
+  checksum: 02799d6d83092339380d5b7c3c45e5b910d248922933ec3989364542d97fd93e08ede28152ca415db512eaf7fcc0c14451c47753c8d380dd3e3780ad9707cbcf
   languageName: node
   linkType: hard
 
@@ -6578,12 +6772,29 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"hoist-non-react-statics@npm:^3.0.0, hoist-non-react-statics@npm:^3.1.0, hoist-non-react-statics@npm:^3.3.1":
+"hoist-non-react-statics@npm:^2.3.1":
+  version: 2.5.5
+  resolution: "hoist-non-react-statics@npm:2.5.5"
+  checksum: c4f742b59f594a24bc484beaa186d8f57ba2defaa64705c0df6423d3fcbe42dd2062041d7504e73ca795cf25e1b18bf3c0bb24d62a8611d5b1387d8a2c901159
+  languageName: node
+  linkType: hard
+
+"hoist-non-react-statics@npm:^3.0.0, hoist-non-react-statics@npm:^3.1.0, hoist-non-react-statics@npm:^3.3.0, hoist-non-react-statics@npm:^3.3.1, hoist-non-react-statics@npm:^3.3.2":
   version: 3.3.2
   resolution: "hoist-non-react-statics@npm:3.3.2"
   dependencies:
     react-is: ^16.7.0
   checksum: 0149f2c7a4ffc9e5d0550ac3dd19592673c1c8f1d0881e8db5641502c5d16900ecbd4b70b50c4086d4cafb05d2b84ba01ac06ad575bdf3ef742c97893b7273d1
+  languageName: node
+  linkType: hard
+
+"hoist-react-statics@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "hoist-react-statics@npm:1.0.2"
+  dependencies:
+    hoist-non-react-statics: ^2.3.1
+    react-display-name: ^0.2.3
+  checksum: d0337811b6a45f81dbf3e8ca025185c3474e60579109ceaf7ed4ec69e53fc6880f169e76119c2ad16528b1e4aa1046a01f42f29b8578adbbbfcdcef4d261ffb1
   languageName: node
   linkType: hard
 
@@ -6973,6 +7184,32 @@ fsevents@~2.1.2:
     has: ^1.0.3
     side-channel: ^1.0.2
   checksum: 1c7fd683906dcd5fa390af7ce613f533c770929a026760603a952fc8e82aa037f4687ef5b4e2907295ccaaba3873f6cfc592ee9fdd239ceb6dd9d7b56e09eb88
+  languageName: node
+  linkType: hard
+
+"intl-format-cache@npm:^4.2.32":
+  version: 4.2.32
+  resolution: "intl-format-cache@npm:4.2.32"
+  checksum: f0d3dbafdd729eb6ec6a43462ceac50103c3d28f88067c995ce2a4eedb0a75a98c853f37a5ef3cc1e6502a38b2abbbdeeb1df283ac28feb2633832a843defaef
+  languageName: node
+  linkType: hard
+
+"intl-messageformat-parser@npm:^5.0.10":
+  version: 5.0.10
+  resolution: "intl-messageformat-parser@npm:5.0.10"
+  dependencies:
+    "@formatjs/intl-numberformat": ^4.2.0
+  checksum: 8ba1db0ab0a3bbc8c14d84581f3a52666210f0ae33d11f587c3241d0de24567635c084278b154005a44eae41f88bbaeb9f3b6f586ae928ec0825318350f3bd94
+  languageName: node
+  linkType: hard
+
+"intl-messageformat@npm:^8.3.17":
+  version: 8.3.17
+  resolution: "intl-messageformat@npm:8.3.17"
+  dependencies:
+    intl-format-cache: ^4.2.32
+    intl-messageformat-parser: ^5.0.10
+  checksum: 13f505c3b8ab36381e626e6a10ed6edf9cbefd2217f949cd9e831440063c99600778cc3227a26058844627e809de618621f3923f201c8294c0f7fe2083770a63
   languageName: node
   linkType: hard
 
@@ -8535,6 +8772,13 @@ fsevents@~2.1.2:
   dependencies:
     node-gyp: latest
   checksum: 4dda81bf28e402eeccc5a427e565f2cab5dd40368370f68d218dd9b07b5db8f6a7afa0266444e22c4dc1e4425dfbdaf0a2f0a6a9c930ccfdeed7e5e1dd9e0033
+  languageName: node
+  linkType: hard
+
+"nanoid@npm:^2.0.1":
+  version: 2.1.11
+  resolution: "nanoid@npm:2.1.11"
+  checksum: 55d52cc6b33fa3f2927d0108c3268ad7f57c9d5d0c6a007ad35ed6a345f11d7100dcad588229793806d672e91d4b0ec909ae97b86033e6ba232cd8d0e7c41dda
   languageName: node
   linkType: hard
 
@@ -10378,6 +10622,13 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"react-display-name@npm:^0.2.3":
+  version: 0.2.5
+  resolution: "react-display-name@npm:0.2.5"
+  checksum: ebbfc798f76bc989b0bfbc01bb358883679d11a3df23f917abe76eb7797c57bd4990a75c171b5f57dcc01c8ee45c5259a4e360144a32edc916b4a1579bdfb7f6
+  languageName: node
+  linkType: hard
+
 "react-dom@npm:*, react-dom@npm:^16.13.1":
   version: 16.13.1
   resolution: "react-dom@npm:16.13.1"
@@ -10404,10 +10655,46 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"react-intl@npm:*, react-intl@npm:^4.6.0":
+  version: 4.6.0
+  resolution: "react-intl@npm:4.6.0"
+  dependencies:
+    "@formatjs/intl-displaynames": ^2.2.0
+    "@formatjs/intl-listformat": ^2.2.0
+    "@formatjs/intl-numberformat": ^4.2.0
+    "@formatjs/intl-relativetimeformat": ^5.2.0
+    "@formatjs/intl-utils": ^3.1.0
+    "@types/hoist-non-react-statics": ^3.3.1
+    "@types/invariant": ^2.2.31
+    hoist-non-react-statics: ^3.3.2
+    intl-format-cache: ^4.2.32
+    intl-messageformat: ^8.3.17
+    intl-messageformat-parser: ^5.0.10
+    shallow-equal: ^1.2.1
+  peerDependencies:
+    react: ^16.3.0
+  checksum: 274010d02e0d3fdd885cb331334434a23fda0ac72455b327461178e6dd05b9b9b2415b302488955f2648dd6fe5b3c48f88d476d975884de1624ba93bce60c3d2
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.6.0, react-is@npm:^16.7.0, react-is@npm:^16.8.1":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
   checksum: 9659c004a370c15275784b1e848b735a7d403b5ba455e76b48d0840b05ee12bd79ef1dea520e7d70228367e0d95cc3cb894fbcbfda91c198b3339a96a0ecacc4
+  languageName: node
+  linkType: hard
+
+"react-prerendered-component@npm:^1.2.4":
+  version: 1.2.4
+  resolution: "react-prerendered-component@npm:1.2.4"
+  dependencies:
+    detect-node: ^2.0.4
+    hoist-react-statics: ^1.0.2
+    nanoid: ^2.0.1
+    react-uid: ^2.2.0
+  peerDependencies:
+    react: ^16.3.0
+  checksum: 1b602e2d08aa2431533e2b1366f525553eb471a3c39db6af2d8586e3bfcee56b1dd4a8153ddb8ea85cbaa6f6aedf96a97550fe2a22210cf823ebf00bfac62b19
   languageName: node
   linkType: hard
 
@@ -10445,6 +10732,15 @@ fsevents@~2.1.2:
   peerDependencies:
     react: ">=15"
   checksum: 8944e65462cc8570088195cfcff50d40f4d618e7d1c5364fc52a39fa8823911f4eda82ba43e25caaa6b8bdf9b9dad1d8a1dea1c0626e033888eb77a195a50d98
+  languageName: node
+  linkType: hard
+
+"react-uid@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "react-uid@npm:2.2.0"
+  peerDependencies:
+    react: ^16.3.0
+  checksum: 83778a888b96b2dfc937e05ad0ace9bcfa51ee1d69c0335494e2c272605ad13e18ae0b16cea6a602c61c958e34194e1e6fc57d68ffc3379e103a01cf57e5563e
   languageName: node
   linkType: hard
 
@@ -11054,6 +11350,16 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"schema-utils@npm:*, schema-utils@npm:^2.6.1, schema-utils@npm:^2.6.5, schema-utils@npm:^2.6.6":
+  version: 2.6.6
+  resolution: "schema-utils@npm:2.6.6"
+  dependencies:
+    ajv: ^6.12.0
+    ajv-keywords: ^3.4.1
+  checksum: 6a023953564a9c67cc0f259dc8f2d5d437fc63e30a490ce1b394f62c6e100c59185d9544042782dd89b4d4e756d16f0c10e93b447895892d5b1133a3c1f5daeb
+  languageName: node
+  linkType: hard
+
 "schema-utils@npm:^0.4.5":
   version: 0.4.7
   resolution: "schema-utils@npm:0.4.7"
@@ -11072,16 +11378,6 @@ fsevents@~2.1.2:
     ajv-errors: ^1.0.0
     ajv-keywords: ^3.1.0
   checksum: 02a21af0ede9c237e2af6528f36449ac7cc3e65440817ccd543da66853f3b5b21f15811b4c8ec22f999cd8a11f8801d4ab4a388fde6a5af650b376d9501b6004
-  languageName: node
-  linkType: hard
-
-"schema-utils@npm:^2.6.1, schema-utils@npm:^2.6.5, schema-utils@npm:^2.6.6":
-  version: 2.6.6
-  resolution: "schema-utils@npm:2.6.6"
-  dependencies:
-    ajv: ^6.12.0
-    ajv-keywords: ^3.4.1
-  checksum: 6a023953564a9c67cc0f259dc8f2d5d437fc63e30a490ce1b394f62c6e100c59185d9544042782dd89b4d4e756d16f0c10e93b447895892d5b1133a3c1f5daeb
   languageName: node
   linkType: hard
 
@@ -11295,6 +11591,13 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"shallow-equal@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "shallow-equal@npm:1.2.1"
+  checksum: 77e9fca4d81b001011df68df75bb563b8bdabe58c7608d6fc13d0c797ab4f37ff2c670ed0904ebe8ebccbd021a3784f492335ef75b5e9aa4ae9ed68c59abc9d5
+  languageName: node
+  linkType: hard
+
 "shebang-command@npm:^1.2.0":
   version: 1.2.0
   resolution: "shebang-command@npm:1.2.0"
@@ -11355,12 +11658,14 @@ fsevents@~2.1.2:
     "@types/react-dom": ^16.9.7
     "@types/uikit": ^3.3.0
     "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro": ^1.1.1-alpha.2
-    "@vtex/micro-cli": ^1.1.1-alpha.2
-    "@vtex/micro-react": ^1.1.1-alpha.2
-    "@vtex/micro-react-router": ^1.1.1-alpha.2
+    "@vtex/micro": ^1.1.1-alpha.3
+    "@vtex/micro-cli": ^1.1.1-alpha.3
+    "@vtex/micro-react": ^1.1.1-alpha.3
+    "@vtex/micro-react-intl": 1.0.0
+    "@vtex/micro-react-router": ^1.1.1-alpha.3
     react: ^16.13.1
     react-dom: ^16.13.1
+    react-prerendered-component: ^1.2.4
     typescript: ^3.8.3
     vtex-tachyons: ^3.2.0
     webpack-blocks: ^2.1.0

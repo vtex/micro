@@ -54,5 +54,5 @@
     "@types/webpack-blocks": "^2.0.0",
     "typescript": "^3.8.3"
   },
-  "gitHead": "d3bf4affcd0a5ac51316a399f715933ab8edbc3a"
+  "gitHead": "d9dbb29779a19f00512533591f52b24497e08e46"
 }

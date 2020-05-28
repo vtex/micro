@@ -27,6 +27,7 @@
     "css-loader": "^3.5.3",
     "exenv": "^1.2.2",
     "fs-extra": "^9.0.0",
+    "globby": "^11.0.0",
     "pnp-webpack-plugin": "^1.6.4",
     "pnpapi": "^0.0.0",
     "ramda": "^0.27.0",
@@ -45,7 +46,6 @@
     "@types/ramda": "^0.27.4",
     "@types/webpack": "^4.41.12",
     "@types/webpack-blocks": "^2.0.0",
-    "globby": "^11.0.0",
     "typescript": "^3.8.3"
   },
   "gitHead": "bb9dc5eeb39d1175d4a55b08cef518a758d2ed00"

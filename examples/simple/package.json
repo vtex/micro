@@ -12,6 +12,7 @@
       "@vtex/micro-react-router"
     ]
   },
+  "private": true,
   "scripts": {
     "build": "yarn run micro build",
     "watch": "yarn run micro link",
@@ -46,5 +47,5 @@
     "@types/webpack-blocks": "^2.0.0",
     "typescript": "^3.8.3"
   },
-  "gitHead": "491f8d6d75cc8d52b323d68e5641e51d22ab81f5"
+  "gitHead": "90509147496c3f6549b38581b49797595084256b"
 }

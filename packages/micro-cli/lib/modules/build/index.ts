@@ -2,7 +2,7 @@ import { Mode } from '@vtex/micro-core'
 import chalk from 'chalk'
 
 import { newProject } from '../../common/project'
-import { getBuilders, clean } from './builder'
+import { clean, getBuilders, rejectDeclarationFiles } from './builder'
 
 interface Options {
   dev?: boolean
@@ -26,8 +26,8 @@ const main = async (options: Options) => {
   console.log(`🦄 [${lifecycle}]: Starting the build`)
 
   const [framework, userland] = await Promise.all([
-    project.root.getFiles('lib', 'plugins', 'index'),
-    project.root.getFiles('components', 'pages', 'router')
+    project.root.getFiles('lib', 'plugins', 'index').then(rejectDeclarationFiles),
+    project.root.getFiles('components', 'pages', 'router').then(rejectDeclarationFiles)
   ])
 
   const msg = `🦄 [${lifecycle}]: The build of ${framework.length + userland.length} files finished in`

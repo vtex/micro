@@ -1,8 +1,8 @@
 import { transformFileAsync, TransformOptions } from '@babel/core'
 import { BuildCompiler, BuildTarget, Mode, Project } from '@vtex/micro-core'
+import chalk from 'chalk'
 import { outputFile } from 'fs-extra'
 import { join } from 'path'
-import chalk from 'chalk'
 
 import { ensureDist, resolvePlugins } from '../../common/project'
 
@@ -14,6 +14,10 @@ export const createGetFolderFromFile = (project: Project) => (file: string) => {
 }
 
 const hrtimeToMilis = ([s, ns]: [number, number]) => s * 1e3 + ns / 1e6
+
+export const rejectDeclarationFiles = (files: string[]) => files.filter(
+  f => !f.endsWith('.d.ts')
+)
 
 export const getBuilders = async (
   project: Project,

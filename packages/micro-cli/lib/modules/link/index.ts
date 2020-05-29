@@ -9,7 +9,8 @@ import {
   clean,
   createGetFolderFromFile,
   getBuilders,
-  lifecycle
+  lifecycle,
+  rejectDeclarationFiles
 } from '../build/builder'
 
 const waitForReady = (watcher: chokidar.FSWatcher) => new Promise(resolve => watcher.on('ready', resolve))
@@ -29,8 +30,8 @@ const main = async () => {
   console.log(`🦄 [${lifecycle}]: Starting the build`)
 
   const [framework, userland] = await Promise.all([
-    project.root.getFiles('lib', 'plugins', 'index'),
-    project.root.getFiles('components', 'pages', 'router')
+    project.root.getFiles('lib', 'plugins', 'index').then(rejectDeclarationFiles),
+    project.root.getFiles('components', 'pages', 'router').then(rejectDeclarationFiles)
   ])
 
   const msg = `🦄 [${lifecycle}]: The build of ${framework.length + userland.length} files finished in`

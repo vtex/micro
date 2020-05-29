@@ -3194,8 +3194,8 @@ __metadata:
     "@types/terser-webpack-plugin": ^2.2.0
     "@types/webpack": ^4.41.12
     "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro": ^1.1.1-alpha.6
     "@vtex/micro-cli": ^1.1.1-alpha.6
+    "@vtex/micro-core": ^1.1.1-alpha.6
     babel-plugin-ignore-html-and-css-imports: ^0.0.2
     css-loader: ^3.5.3
     mini-css-extract-plugin: ^0.9.0
@@ -3215,8 +3215,8 @@ __metadata:
     "@types/react": ^16.9.35
     "@types/react-intl": ^3.0.0
     "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro": ^1.1.1-alpha.6
     "@vtex/micro-cli": ^1.1.1-alpha.6
+    "@vtex/micro-core": ^1.1.1-alpha.6
     "@vtex/micro-react": ^1.1.1-alpha.6
     babel-plugin-react-intl: ^7.5.14
     intl-messageformat-parser: ^5.0.10
@@ -3240,8 +3240,8 @@ __metadata:
     "@types/react-router-dom": ^5.1.5
     "@types/webpack": ^4.41.13
     "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro": ^1.1.1-alpha.6
     "@vtex/micro-cli": ^1.1.1-alpha.6
+    "@vtex/micro-core": ^1.1.1-alpha.6
     "@vtex/micro-react": ^1.1.1-alpha.6
     history: ^4.10.1
     react-in-viewport: ^1.0.0-alpha.11

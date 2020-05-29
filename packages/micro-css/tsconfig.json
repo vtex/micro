@@ -9,7 +9,7 @@
     "target": "es2019",
     "module": "commonjs",
     "moduleResolution": "node",
-    "outDir": ".micro/onBuild/cjs",
+    "outDir": "dist/build/cjs",
     "jsx": "preserve",
     "strict": true,
     "esModuleInterop": true,
@@ -25,7 +25,7 @@
     "components"
   ],
   "exclude": [
-    ".micro",
+    "dist",
     "pages"
   ]
 }

@@ -3,23 +3,22 @@
   "version": "1.1.1-alpha.6",
   "license": "MIT",
   "micro": {
-    "plugins": {
-      "onBuild": [
-        "@vtex/micro-react"
-      ]
-    }
+    "plugins": [
+      "@vtex/micro-core",
+      "@vtex/micro-react"
+    ]
   },
   "scripts": {
     "build": "yarn run micro build",
     "watch": "yarn run micro link",
-    "clean": "rm -r .micro",
+    "clean": "rm -r dist",
     "prepublish": "yarn build"
   },
-  "main": "./.micro/onBuild/cjs/index.js",
-  "module": "./.micro/onBuild/es6/components/index.js",
+  "main": "./dist/build/cjs/index.js",
+  "module": "./dist/build/es6/components/index.js",
   "browser": "./components/index.ts",
   "dependencies": {
-    "@vtex/micro": "^1.1.1-alpha.6",
+    "@vtex/micro-core": "^1.1.1-alpha.6",
     "@vtex/micro-react": "^1.1.1-alpha.6",
     "babel-plugin-react-intl": "^7.5.14",
     "intl-messageformat-parser": "^5.0.10",

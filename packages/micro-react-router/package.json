@@ -3,23 +3,22 @@
   "version": "1.1.1-alpha.6",
   "license": "MIT",
   "micro": {
-    "plugins": {
-      "onBuild": [
-        "@vtex/micro-react"
-      ]
-    }
+    "plugins": [
+      "@vtex/micro-core",
+      "@vtex/micro-react"
+    ]
   },
   "scripts": {
     "build": "yarn run micro build",
     "watch": "yarn run micro link",
-    "clean": "rm -r .micro",
+    "clean": "rm -r dist",
     "prepublish": "yarn build"
   },
-  "main": "./.micro/onBuild/cjs/index.js",
-  "module": "./.micro/onBuild/es6/components/index.js",
+  "main": "./dist/build/cjs/index.js",
+  "module": "./dist/build/es6/components/index.js",
   "browser": "./components/index.ts",
   "dependencies": {
-    "@vtex/micro": "^1.1.1-alpha.6",
+    "@vtex/micro-core": "^1.1.1-alpha.6",
     "@vtex/micro-react": "^1.1.1-alpha.6",
     "history": "^4.10.1",
     "react-in-viewport": "^1.0.0-alpha.11",
@@ -37,10 +36,10 @@
     "@vtex/micro-cli": "^1.1.1-alpha.6",
     "typescript": "^3.8.3"
   },
-  "gitHead": "8b647c201cd501df130d10289ed8f0556f1e4a65",
   "peerDependencies": {
     "@loadable/component": "*",
     "react": "*",
     "react-dom": "*"
-  }
+  },
+  "gitHead": "8b647c201cd501df130d10289ed8f0556f1e4a65"
 }

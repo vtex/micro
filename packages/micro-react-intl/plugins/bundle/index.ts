@@ -1,14 +1,14 @@
 import {
-  cacheGroup,
-  OnAssemblePlugin,
+  BundlePlugin,
   pagesFrameworkName,
   pagesRuntimeName
-} from '@vtex/micro'
+} from '@vtex/micro-core'
+import { cacheGroup } from '@vtex/micro-react'
 import { Block, Context, group, resolve } from 'webpack-blocks'
 
 import { aliases } from '../aliases'
 
-export default class OnAssemble extends OnAssemblePlugin {
+export default class Bundle extends BundlePlugin {
   public getConfig = async (config: Block<Context>): Promise<Block<Context>> => {
     return group([
       config,

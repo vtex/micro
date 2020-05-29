@@ -1,12 +1,12 @@
 import { TransformOptions } from '@babel/core'
-import { BuildTarget, OnBuildPlugin } from '@vtex/micro'
+import { BuildPlugin, BuildTarget } from '@vtex/micro-core'
 
 const cjsPlugins = [
   [require.resolve('babel-plugin-transform-remove-imports'), { test: '\\.(png|svg|jpg|gif)$' }],
   require.resolve('babel-plugin-inline-json-import')
 ]
 
-export default class OnBuild extends OnBuildPlugin {
+export default class Build extends BuildPlugin {
   public getConfig = async (previous: TransformOptions, target: BuildTarget): Promise<TransformOptions> => {
     // TODO: Do we really need this ?
     const plugins = target === 'cjs' ? cjsPlugins : []

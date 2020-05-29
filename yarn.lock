@@ -3184,7 +3184,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-css@workspace:packages/micro-css":
+"@vtex/micro-css@^1.1.1-alpha.6, @vtex/micro-css@workspace:packages/micro-css":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-css@workspace:packages/micro-css"
   dependencies:
@@ -3336,35 +3336,6 @@ __metadata:
     typescript: ^3.8.3
   languageName: unknown
   linkType: soft
-
-"@vtex/micro@npm:^1.1.1-alpha.6":
-  version: 1.1.1-alpha.6
-  resolution: "@vtex/micro@npm:1.1.1-alpha.6"
-  dependencies:
-    "@babel/core": ^7.9.6
-    "@babel/plugin-proposal-class-properties": ^7.8.3
-    "@babel/plugin-proposal-optional-chaining": ^7.9.0
-    "@babel/preset-env": ^7.9.6
-    "@babel/preset-typescript": ^7.9.0
-    "@vtex/micro-cli": ^1.1.1-alpha.6
-    "@yarnpkg/fslib": ^2.0.0-rc.20
-    "@yarnpkg/libzip": ^2.0.0-rc.11
-    babel-plugin-ignore-html-and-css-imports: ^0.0.2
-    css-loader: ^3.5.3
-    exenv: ^1.2.2
-    fs-extra: ^9.0.0
-    globby: ^11.0.0
-    pnp-webpack-plugin: ^1.6.4
-    pnpapi: ^0.0.0
-    ramda: ^0.27.0
-    time-fix-plugin: ^2.0.6
-    webpack: ^4.43.0
-    webpack-blocks: ^2.1.0
-    webpack-blocks-utils: ^1.3.1
-    webpack-dynamic-public-path: ^1.0.5
-  checksum: 3df3028fd2e655b23bbf36c853ea96fc107dd44b99a690a45709c92fecec04cc0129ad5575a11240eb664368cb7ea60a87c147e03b9678713e0993cfa80f16b7
-  languageName: node
-  linkType: hard
 
 "@webassemblyjs/ast@npm:1.9.0":
   version: 1.9.0
@@ -3571,15 +3542,6 @@ __metadata:
     "@babel/core": ^7.0.0
     "@webpack-blocks/core": ^2.0.0
   checksum: 0f564b080789685567b3634157d7161500b429379d144cea1f1ac4db75d1edd911bfa463515b1e7356d11524e3aa4eef13ff7481c5fc7fdf47545dbe01624716
-  languageName: node
-  linkType: hard
-
-"@webpack-blocks/core@npm:^0.4.0":
-  version: 0.4.0
-  resolution: "@webpack-blocks/core@npm:0.4.0"
-  dependencies:
-    webpack-merge: ^2.3.1
-  checksum: 57921842c4a71317a4aa9b653e1acc23162a4673192ff6d959287ec1e5bc7217962a19b70cfe09d15c007e71884cd8a2f9fc1f61fa8aa18d47039b25ff8afba4
   languageName: node
   linkType: hard
 
@@ -9152,7 +9114,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.0.0, lodash@npm:^4.17.11, lodash@npm:^4.17.13, lodash@npm:^4.17.14, lodash@npm:^4.17.15, lodash@npm:^4.17.4, lodash@npm:^4.17.5, lodash@npm:~4.17.12":
+"lodash@npm:^4.0.0, lodash@npm:^4.17.11, lodash@npm:^4.17.13, lodash@npm:^4.17.14, lodash@npm:^4.17.15, lodash@npm:^4.17.5, lodash@npm:~4.17.12":
   version: 4.17.15
   resolution: "lodash@npm:4.17.15"
   checksum: b018ec8d4c95f14a4b57005a247eca1bc25639322939471a1958d3bc721b4f18e90edb6ea564854593a8bc1f94956a0352cf0cd372991b98c42d61c0cd11e5a3
@@ -12677,9 +12639,9 @@ fsevents@~2.1.2:
     "@types/react-dom": ^16.9.7
     "@types/uikit": ^3.3.0
     "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro": ^1.1.1-alpha.6
     "@vtex/micro-cli": ^1.1.1-alpha.6
-    "@vtex/micro-css": "workspace:packages/micro-css"
+    "@vtex/micro-core": ^1.1.1-alpha.6
+    "@vtex/micro-css": ^1.1.1-alpha.6
     "@vtex/micro-react": ^1.1.1-alpha.6
     "@vtex/micro-react-intl": ^1.1.1-alpha.6
     "@vtex/micro-react-router": ^1.1.1-alpha.6
@@ -14188,15 +14150,6 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"webpack-blocks-utils@npm:^1.3.1":
-  version: 1.3.1
-  resolution: "webpack-blocks-utils@npm:1.3.1"
-  dependencies:
-    "@webpack-blocks/core": ^0.4.0
-  checksum: a5bbcf3dfb8fac35d89f8e2e1ddf7744c2e29c0732284bcfc3c3f2ffac8a2c3385ab0955595d1d18a43d84ee5fd032629df9ab0e3b16c4ae38e142bcba449ff6
-  languageName: node
-  linkType: hard
-
 "webpack-blocks@npm:^2.1.0":
   version: 2.1.0
   resolution: "webpack-blocks@npm:2.1.0"
@@ -14313,15 +14266,6 @@ fsevents@~2.1.2:
     ansi-colors: ^3.0.0
     uuid: ^3.3.2
   checksum: 1eac9214dda83bbeef012b138d16bce9ba9e6080439d54558af8f8ef85b111ca63ab28cd5448ea377a535d1b60eff85d66f9bfcfa275a547d172452813f35088
-  languageName: node
-  linkType: hard
-
-"webpack-merge@npm:^2.3.1":
-  version: 2.6.1
-  resolution: "webpack-merge@npm:2.6.1"
-  dependencies:
-    lodash: ^4.17.4
-  checksum: 5e4c77f34506f50d03b9b8d062234dbc3a535db868da0c356aa913874cb3ca24fa8652c37cbe08548e72bad3999fd22d1606f33a83509a77deb51b66dd3ebf51
   languageName: node
   linkType: hard
 

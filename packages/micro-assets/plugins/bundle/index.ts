@@ -1,7 +1,7 @@
-import { OnAssemblePlugin } from '@vtex/micro'
+import { BundlePlugin } from '@vtex/micro-core'
 import { Block, Context, file, group, match } from 'webpack-blocks'
 
-export default class OnAssemble extends OnAssemblePlugin {
+export default class Bundle extends BundlePlugin {
   public getConfig = async (config: Block<Context>): Promise<Block<Context>> => {
     const block: Block<Context>[] = [
       match(['*.png', '*.svg', '*.jpg', '*.gif', '*.ico'], [

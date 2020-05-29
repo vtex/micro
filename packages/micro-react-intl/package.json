@@ -1,6 +1,6 @@
 {
   "name": "@vtex/micro-react-intl",
-  "version": "1.1.1-alpha.6",
+  "version": "1.1.1-alpha.7",
   "license": "MIT",
   "micro": {
     "plugins": [
@@ -18,8 +18,8 @@
   "module": "./dist/build/es6/components/index.js",
   "browser": "./components/index.ts",
   "dependencies": {
-    "@vtex/micro-core": "^1.1.1-alpha.6",
-    "@vtex/micro-react": "^1.1.1-alpha.6",
+    "@vtex/micro-core": "^1.1.1-alpha.7",
+    "@vtex/micro-react": "^1.1.1-alpha.7",
     "babel-plugin-react-intl": "^7.5.14",
     "intl-messageformat-parser": "^5.0.10",
     "react-intl": "^4.6.0",
@@ -29,7 +29,7 @@
     "@types/react": "^16.9.35",
     "@types/react-intl": "^3.0.0",
     "@types/webpack-blocks": "^2.0.0",
-    "@vtex/micro-cli": "^1.1.1-alpha.6"
+    "@vtex/micro-cli": "^1.1.1-alpha.7"
   },
   "peerDependencies": {
     "@loadable/component": "*",

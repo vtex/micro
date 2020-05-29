@@ -3,20 +3,19 @@
   "version": "1.1.1-alpha.6",
   "license": "MIT",
   "micro": {
-    "plugins": {
-      "onBuild": [
-        "@vtex/micro-react"
-      ]
-    }
+    "plugins": [
+      "@vtex/micro-core",
+      "@vtex/micro-react"
+    ]
   },
   "scripts": {
     "build": "yarn run micro build",
     "watch": "yarn run micro link",
-    "clean": "rm -r .micro",
+    "clean": "rm -r dist",
     "prepublish": "yarn build"
   },
-  "main": "./.micro/onBuild/cjs/index.js",
-  "module": "./.micro/onBuild/es6/components/index.js",
+  "main": "./dist/build/cjs/index.js",
+  "module": "./dist/build/es6/components/index.js",
   "browser": "./components/index.ts",
   "dependencies": {
     "@babel/core": "^7.9.6",
@@ -30,21 +29,26 @@
     "@loadable/babel-plugin": "^5.12.0",
     "@loadable/server": "^5.12.0",
     "@loadable/webpack-plugin": "^5.12.0",
-    "@vtex/micro": "^1.1.1-alpha.6",
+    "@vtex/micro-core": "^1.1.1-alpha.6",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.5.3",
+    "exenv": "^1.2.2",
     "file-loader": "^6.0.0",
     "fs-extra": "^9.0.0",
     "mini-css-extract-plugin": "^0.9.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "pnp-webpack-plugin": "^1.6.4",
     "purgecss-webpack-plugin": "^2.2.0",
     "terser-webpack-plugin": "^3.0.1",
+    "time-fix-plugin": "^2.0.6",
     "webpack": "^4.43.0",
     "webpack-blocks": "^2.1.0",
+    "webpack-dynamic-public-path": "^1.0.5",
     "webpack-messages": "^2.0.4"
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.7",
+    "@types/exenv": "^1.2.0",
     "@types/fs-extra": "^9.0.1",
     "@types/loadable__component": "^5.10.0",
     "@types/loadable__server": "^5.12.1",
@@ -59,10 +63,10 @@
     "@vtex/micro-cli": "^1.1.1-alpha.6",
     "typescript": "^3.8.3"
   },
-  "gitHead": "bb9dc5eeb39d1175d4a55b08cef518a758d2ed00",
   "peerDependencies": {
     "@loadable/component": "*",
     "react": "*",
     "react-dom": "*"
-  }
+  },
+  "gitHead": "8b647c201cd501df130d10289ed8f0556f1e4a65"
 }

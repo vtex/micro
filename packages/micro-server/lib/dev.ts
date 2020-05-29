@@ -1,10 +1,10 @@
 import {
   ImportMap,
-  OnRequestCompiler,
+  ServeCompiler,
   Plugins,
   Project,
   PublicPaths
-} from '@vtex/micro'
+} from '@vtex/micro-core'
 import compress from 'compression'
 import express from 'express'
 import logger from 'morgan'
@@ -21,7 +21,7 @@ interface DevServerOptions {
   importMap: ImportMap
   statsJson: Stats.ToJsonOutput
   project: Project,
-  plugins: Plugins['onRequest'][]
+  plugins: Plugins['serve'][]
   publicPaths: PublicPaths
   host: string
   port: number
@@ -34,13 +34,13 @@ const context = (
   publicPaths: PublicPaths
 ) => (req: Req, res: Res, next: Next) => {
   const { locals: { route: { page, path } } } = res
-  res.locals.compiler = new OnRequestCompiler({
+  res.locals.compiler = new ServeCompiler({
     project,
     plugins,
     options: {
       stats: statsJson,
       mode: 'development',
-      lifecycleTarget: 'onBuild',
+      lifecycleTarget: 'build',
       publicPaths,
       page,
       path

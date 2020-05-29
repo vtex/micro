@@ -1,4 +1,4 @@
-import { importMapFromAliases, Mode } from '@vtex/micro'
+import { importMapFromAliases, Mode } from '@vtex/micro-core'
 import { startDevServer } from '@vtex/micro-server'
 import chalk from 'chalk'
 import chokidar from 'chokidar'
@@ -24,7 +24,7 @@ const main = async () => {
 
   const { createBuild, createPreBuild } = await getBuilders(project, mode)
 
-  await clean(project, 'onBuild')
+  await clean(project, 'build')
 
   console.log(`🦄 [${lifecycle}]: Starting the build`)
 
@@ -86,7 +86,7 @@ const main = async () => {
       publicPaths: PUBLIC_PATHS,
       importMap,
       project,
-      plugins: await resolvePlugins(project, 'onRequest'),
+      plugins: await resolvePlugins(project, 'serve'),
       host: HOST,
       port: SERVER_PORT
     } as any)

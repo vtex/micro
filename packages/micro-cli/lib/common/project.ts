@@ -1,4 +1,4 @@
-import { LifeCycle, MICRO_BUILD_DIR, Plugins, Project, walk } from '@vtex/micro'
+import { LifeCycle, MICRO_BUILD_DIR, Plugins, Project, walk } from '@vtex/micro-core'
 import assert from 'assert'
 import chalk from 'chalk'
 import { ensureDir } from 'fs-extra'
@@ -27,7 +27,7 @@ export const resolvePlugins = async <T extends LifeCycle>(project: Project, life
   const {
     root: { manifest: { micro: { plugins: pls } } }
   } = project
-  const names = (pls[lifecycle] || []) as string[]
+  const names = (pls || []) as string[]
 
   console.log(`🦄 [${lifecycle}]: Resolving plugins`)
   const plugins = await project.resolvePlugins(lifecycle)

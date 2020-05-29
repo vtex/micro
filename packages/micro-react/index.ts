@@ -1,2 +1,2 @@
 export * from './components'
-export * from './plugins/onAssemble/modules/purgeCSS'
+export * from './plugins/bundle/modules/purgeCSS'

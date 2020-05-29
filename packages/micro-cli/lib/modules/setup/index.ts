@@ -1,4 +1,4 @@
-import { genManifest, genTSConfig, PackageStructure } from '@vtex/micro'
+import { genManifest, genTSConfig, PackageStructure } from '@vtex/micro-core'
 import { outputFile, readJSON } from 'fs-extra'
 import { join } from 'path'
 

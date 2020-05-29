@@ -1,4 +1,4 @@
-import { Project, PublicPaths } from '@vtex/micro'
+import { Project, PublicPaths } from '@vtex/micro-core'
 import { PosixFS, ZipOpenFS } from '@yarnpkg/fslib'
 import { getLibzipSync } from '@yarnpkg/libzip'
 import assert from 'assert'

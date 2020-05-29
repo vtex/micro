@@ -1,6 +1,6 @@
 export const tree = {
   build: {
-    description: 'Access for onBuild Micro lifecycle',
+    description: 'Access for Build Micro lifecycle',
     options: [
       {
         description: 'Build with dev environment',
@@ -9,8 +9,8 @@ export const tree = {
       }
     ]
   },
-  assemble: {
-    description: 'Access for onAssemble Micro lifecycle',
+  bundle: {
+    description: 'Access for Bundle Micro lifecycle',
     options: [
       {
         description: 'Build with dev environment',
@@ -19,17 +19,17 @@ export const tree = {
       }
     ],
     report: {
-      description: 'Assemble and generate report'
+      description: 'Generate a report using a bundled build'
     },
     config: {
-      description: 'Print webpack config'
+      description: 'Print webpack config that would be generated in a normal bundle assembly'
     }
   },
   link: {
     description: 'Develop a Micro project'
   },
   serve: {
-    description: 'Serve an assembled Micro project',
+    description: 'Serve a bundled Micro project',
     options: [
       {
         description: 'Build with dev environment',

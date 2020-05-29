@@ -1,4 +1,9 @@
-import { OnRequestCompiler, Plugins, Project, PublicPaths } from '@vtex/micro'
+import {
+  ServeCompiler,
+  Plugins,
+  Project,
+  PublicPaths
+} from '@vtex/micro-core'
 import compress from 'compression'
 import express from 'express'
 import logger from 'morgan'
@@ -14,7 +19,7 @@ import { Next, Req, Res } from './typings'
 interface ProdServerOptions {
   statsJson: Stats.ToJsonOutput
   project: Project
-  plugins: Plugins['onRequest'][]
+  plugins: Plugins['serve'][]
   publicPaths: PublicPaths
   host: string
   port: number
@@ -27,13 +32,13 @@ const context = (
   publicPaths: PublicPaths
 ) => (req: Req, res: Res, next: Next) => {
   const { locals: { route: { page, path } } } = res
-  res.locals.compiler = new OnRequestCompiler({
+  res.locals.compiler = new ServeCompiler({
     project,
     plugins,
     options: {
       stats: statsJson,
       mode: 'development',
-      lifecycleTarget: 'onAssemble',
+      lifecycleTarget: 'bundle',
       publicPaths,
       page,
       path

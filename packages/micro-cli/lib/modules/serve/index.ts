@@ -1,4 +1,4 @@
-import { Mode } from '@vtex/micro'
+import { Mode } from '@vtex/micro-core'
 import { startDevServer, startProdServer } from '@vtex/micro-server'
 import chalk from 'chalk'
 import { readJSON } from 'fs-extra'
@@ -7,7 +7,7 @@ import { join } from 'path'
 import { newProject, resolvePlugins } from '../../common/project'
 import { BUILD, HOST, PUBLIC_PATHS, SERVER_PORT } from '../../constants'
 
-const lifecycle = 'onRequest'
+const lifecycle = 'serve'
 
 interface Options {
   dev: boolean

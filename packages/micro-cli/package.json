@@ -2,22 +2,22 @@
   "name": "@vtex/micro-cli",
   "version": "1.1.1-alpha.6",
   "license": "MIT",
-  "main": "./.micro/onBuild/cjs/index.js",
-  "module": "./.micro/onBuild/es6/index.js",
+  "main": "./dist/build/cjs/index.js",
+  "module": "./dist/build/es6/index.js",
   "browser": "./components/index.ts",
   "bin": {
-    "micro": "./.micro/onBuild/cjs/lib/index.js"
+    "micro": "./dist/build/cjs/lib/index.js"
   },
   "scripts": {
     "build": "yarn run tsc",
     "watch": "yarn run tsc --watch",
-    "clean": "rm -r .micro",
+    "clean": "rm -r dist",
     "prepublish": "yarn build"
   },
   "dependencies": {
     "@babel/core": "^7.9.6",
     "@types/babel__core": "^7.1.7",
-    "@vtex/micro": "^1.1.1-alpha.6",
+    "@vtex/micro-core": "^1.1.1-alpha.6",
     "@vtex/micro-server": "^1.1.1-alpha.6",
     "chalk": "^4.0.0",
     "chokidar": "^3.4.0",
@@ -40,5 +40,5 @@
     "nodemon": "^2.0.3",
     "typescript": "^3.8.3"
   },
-  "gitHead": "bb9dc5eeb39d1175d4a55b08cef518a758d2ed00"
+  "gitHead": "8b647c201cd501df130d10289ed8f0556f1e4a65"
 }

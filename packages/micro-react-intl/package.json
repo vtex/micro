@@ -33,7 +33,9 @@
     "@vtex/micro-cli": "^1.1.1-alpha.6"
   },
   "peerDependencies": {
-    "react": "*"
+    "@loadable/component": "*",
+    "react": "*",
+    "react-dom": "*"
   },
-  "gitHead": "bb9dc5eeb39d1175d4a55b08cef518a758d2ed00"
+  "gitHead": "8b647c201cd501df130d10289ed8f0556f1e4a65"
 }

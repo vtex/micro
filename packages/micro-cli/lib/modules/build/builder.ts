@@ -1,20 +1,12 @@
 import { transformFileAsync, TransformOptions } from '@babel/core'
-import {
-  BuildTarget,
-  Mode,
-  OnBuildCompiler,
-  OnBuildPlugin,
-  OnBuildPluginOptions,
-  Project
-} from '@vtex/micro'
+import { BuildCompiler, BuildTarget, Mode, Project } from '@vtex/micro-core'
 import { outputFile } from 'fs-extra'
 import { join } from 'path'
+import chalk from 'chalk'
 
 import { ensureDist, resolvePlugins } from '../../common/project'
 
-export const lifecycle = 'onBuild'
-
-export type BuildPlugin = new (options: OnBuildPluginOptions) => OnBuildPlugin
+export const lifecycle = 'build'
 
 export const createGetFolderFromFile = (project: Project) => (file: string) => {
   const [folder] = file.replace(project.rootPath + '/', '').split('/')
@@ -27,31 +19,26 @@ export const getBuilders = async (
   project: Project,
   mode: Mode
 ) => {
-  const plugins = await resolvePlugins(project, 'onBuild')
+  const plugins = await resolvePlugins(project, lifecycle)
 
   // File Watcher does not starts with Project Path. We need to fix it to get absolute paths
   const fixWatcherPath = (f: string) => f.startsWith(project.rootPath) ? f : join(project.rootPath, f)
 
   const createPreBuild = async () => {
     const target: BuildTarget = 'cjs'
-    const compiler = new OnBuildCompiler({ project, plugins, mode })
+    const compiler = new BuildCompiler({ project, plugins, mode })
     const config = await compiler.getConfig(target) // TODO: It may take a while to get all configs every time
     const dist = compiler.getDist(target)
 
     const prebuild = async (f: string, printFile: boolean = true) => {
-      try {
-        const start = process.hrtime()
-        const file = fixWatcherPath(f)
-        const transformed = await transformFileAsync(file, config)
-        const targetFile = file.replace(project.rootPath, dist).replace(/.tsx?$/, '.js')
-        if (printFile) {
-          console.log('📃 Compiling', f.replace(project.rootPath, ''), '->', targetFile.replace(project.rootPath, '.'), 'took', hrtimeToMilis(process.hrtime(start)), 'ms')
-        }
-        await outputFile(targetFile, transformed?.code)
-      } catch (error) {
-        console.error(error)
-        throw error
+      const start = process.hrtime()
+      const file = fixWatcherPath(f)
+      const transformed = await transformFileAsync(file, config)
+      const targetFile = file.replace(project.rootPath, dist).replace(/.tsx?$/, '.js')
+      if (printFile) {
+        console.log(`📃 [${chalk.blue(lifecycle)}:${chalk.magenta(target)}] ${chalk.green('Compiling')} ${f.replace(project.rootPath, '')} ${chalk.green('->')} ${targetFile.replace(project.rootPath, '.')} took ${chalk.yellow(hrtimeToMilis(process.hrtime(start)))}ms`)
       }
+      await outputFile(targetFile, transformed?.code)
     }
 
     return {
@@ -63,27 +50,22 @@ export const getBuilders = async (
   const createBuild = async () => {
     const selfPlugin = await project.getSelfPlugin(lifecycle)
     const allPlugins = selfPlugin ? [...plugins, selfPlugin] : plugins
-    const compiler = new OnBuildCompiler({ project, plugins: allPlugins, mode })
-    const targetConfigs: [string, TransformOptions][] = [
-      [compiler.getDist('cjs'), await compiler.getConfig('cjs')],
-      [compiler.getDist('es6'), await compiler.getConfig('es6')]
+    const compiler = new BuildCompiler({ project, plugins: allPlugins, mode })
+    const targetConfigs: [BuildTarget, string, TransformOptions][] = [
+      ['cjs', compiler.getDist('cjs'), await compiler.getConfig('cjs')],
+      ['es6', compiler.getDist('es6'), await compiler.getConfig('es6')]
     ]
 
     const build = async (f: string, printFile: boolean = true) => {
-      try {
-        const start = process.hrtime()
-        const file = fixWatcherPath(f)
-        for (const [dist, config] of targetConfigs) {
-          const transformed = await transformFileAsync(file, config)
-          const targetFile = file.replace(project.rootPath, dist).replace(/.tsx?$/, '.js')
-          if (printFile) {
-            console.log('📃 Compiling', f.replace(project.rootPath, ''), '->', targetFile.replace(project.rootPath, '.'), 'took', hrtimeToMilis(process.hrtime(start)), 'ms')
-          }
-          await outputFile(targetFile, transformed?.code)
+      const start = process.hrtime()
+      const file = fixWatcherPath(f)
+      for (const [target, dist, config] of targetConfigs) {
+        const transformed = await transformFileAsync(file, config)
+        const targetFile = file.replace(project.rootPath, dist).replace(/.tsx?$/, '.js')
+        if (printFile) {
+          console.log(`📃 [${chalk.blue(lifecycle)}:${target === 'cjs' ? chalk.magenta(target) : chalk.red(target)}] ${chalk.green('Compiling')} ${f.replace(project.rootPath, '')} ${chalk.green('->')} ${targetFile.replace(project.rootPath, '.')} took ${chalk.yellow(hrtimeToMilis(process.hrtime(start)))}ms`)
         }
-      } catch (error) {
-        console.error(error)
-        throw error
+        await outputFile(targetFile, transformed?.code)
       }
     }
 

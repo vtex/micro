@@ -1,11 +1,11 @@
-import { ImportMap, OnRequestCompiler } from '@vtex/micro'
+import { ImportMap, ServeCompiler } from '@vtex/micro-core'
 import pretty from 'pretty'
 
 import { featuresFromReq } from '../features'
 import { Req, Res } from '../typings'
 
 const ok = (
-  compiler: OnRequestCompiler<unknown>,
+  compiler: ServeCompiler<unknown>,
   body: string
 ) => `<!DOCTYPE html>
 <html>
@@ -32,7 +32,7 @@ export const middleware = (req: Req, res: Res) => {
 }
 
 const okSSR = (
-  compiler: OnRequestCompiler<unknown>,
+  compiler: ServeCompiler<unknown>,
   body: string,
   importMap: ImportMap
 ) => `<!DOCTYPE html>

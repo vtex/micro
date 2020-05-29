@@ -3,19 +3,21 @@
   "version": "1.1.1-alpha.6",
   "license": "MIT",
   "micro": {
-    "plugins": {}
+    "plugins": [
+      "@vtex/micro-core"
+    ]
   },
   "scripts": {
     "build": "yarn run micro build",
     "watch": "yarn run micro link",
-    "clean": "rm -r .micro",
+    "clean": "rm -r dist",
     "prepublish": "yarn build"
   },
-  "main": "./.micro/onBuild/cjs/index.js",
-  "module": "./.micro/onBuild/es6/components/index.js",
+  "main": "./dist/build/cjs/index.js",
+  "module": "./dist/build/es6/components/index.js",
   "browser": "./components/index.ts",
   "dependencies": {
-    "@vtex/micro": "^1.1.1-alpha.6",
+    "@vtex/micro-core": "^1.1.1-alpha.6",
     "babel-plugin-inline-json-import": "^0.3.2",
     "babel-plugin-transform-remove-imports": "^1.3.2",
     "webpack-blocks": "^2.1.0"
@@ -27,5 +29,5 @@
     "@vtex/micro-cli": "^1.1.1-alpha.6",
     "typescript": "^3.8.3"
   },
-  "gitHead": "bb9dc5eeb39d1175d4a55b08cef518a758d2ed00"
+  "gitHead": "8b647c201cd501df130d10289ed8f0556f1e4a65"
 }

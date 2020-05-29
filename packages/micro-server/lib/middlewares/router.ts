@@ -3,7 +3,7 @@ import {
   isResolvedRedirect,
   Project,
   PublicPaths
-} from '@vtex/micro'
+} from '@vtex/micro-core'
 import assert from 'assert'
 
 import { Next, Req, Res } from '../typings'

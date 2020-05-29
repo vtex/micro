@@ -1,9 +1,9 @@
-import { OnRequestCompiler, ResolvedPage } from '@vtex/micro'
+import { ServeCompiler, ResolvedPage } from '@vtex/micro-core'
 import express, { NextFunction, Request, Response } from 'express'
 import { Stats } from 'webpack'
 
 interface Locals {
-  compiler: OnRequestCompiler<unknown>,
+  compiler: ServeCompiler<unknown>,
   route: {
     page: ResolvedPage<any>
     path: string

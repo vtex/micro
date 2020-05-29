@@ -1,4 +1,4 @@
-import { Mode } from '@vtex/micro'
+import { Mode } from '@vtex/micro-core'
 import chalk from 'chalk'
 
 import { newProject } from '../../common/project'
@@ -8,7 +8,7 @@ interface Options {
   dev?: boolean
 }
 
-const lifecycle = 'onBuild'
+const lifecycle = 'build'
 
 const main = async (options: Options) => {
   const dev = !!options.dev

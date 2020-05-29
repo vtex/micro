@@ -2,6 +2,7 @@
 // projects using this package as a plugin will use this package's
 // versions of the following packages
 export const aliases = [
+  'exenv',
   'react',
   'react-dom',
   '@loadable/component'

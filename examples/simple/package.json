@@ -36,6 +36,7 @@
     "@loadable/component": "^5.12.0",
     "@vtex/micro": "^1.1.1-alpha.6",
     "@vtex/micro-cli": "^1.1.1-alpha.6",
+    "@vtex/micro-css": "workspace:packages/micro-css",
     "@vtex/micro-react": "^1.1.1-alpha.6",
     "@vtex/micro-react-intl": "^1.1.1-alpha.6",
     "@vtex/micro-react-router": "^1.1.1-alpha.6",
@@ -54,5 +55,5 @@
     "@types/webpack-blocks": "^2.0.0",
     "typescript": "^3.8.3"
   },
-  "gitHead": "bb9dc5eeb39d1175d4a55b08cef518a758d2ed00"
+  "gitHead": "8b647c201cd501df130d10289ed8f0556f1e4a65"
 }

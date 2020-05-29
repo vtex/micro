@@ -40,6 +40,5 @@
     "@loadable/component": "*",
     "react": "*",
     "react-dom": "*"
-  },
-  "gitHead": "90509147496c3f6549b38581b49797595084256b"
+  }
 }

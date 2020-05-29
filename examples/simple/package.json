@@ -1,6 +1,6 @@
 {
   "name": "simple",
-  "version": "1.1.1-alpha.12",
+  "version": "1.1.1-alpha.13",
   "license": "MIT",
   "micro": {
     "plugins": [
@@ -25,13 +25,13 @@
   "browser": "./components/index.ts",
   "dependencies": {
     "@loadable/component": "^5.12.0",
-    "@vtex/micro-assets": "^1.1.1-alpha.12",
-    "@vtex/micro-cli": "^1.1.1-alpha.12",
-    "@vtex/micro-core": "^1.1.1-alpha.12",
-    "@vtex/micro-css": "^1.1.1-alpha.12",
-    "@vtex/micro-react": "^1.1.1-alpha.12",
-    "@vtex/micro-react-intl": "^1.1.1-alpha.12",
-    "@vtex/micro-react-router": "^1.1.1-alpha.12",
+    "@vtex/micro-assets": "^1.1.1-alpha.13",
+    "@vtex/micro-cli": "^1.1.1-alpha.13",
+    "@vtex/micro-core": "^1.1.1-alpha.13",
+    "@vtex/micro-css": "^1.1.1-alpha.13",
+    "@vtex/micro-react": "^1.1.1-alpha.13",
+    "@vtex/micro-react-intl": "^1.1.1-alpha.13",
+    "@vtex/micro-react-router": "^1.1.1-alpha.13",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-prerendered-component": "^1.2.4",

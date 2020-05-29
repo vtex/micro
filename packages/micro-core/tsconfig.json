@@ -9,7 +9,7 @@
     "lib": [
       "ES2019",
       "ES2019.Array",
-      "ESNext.Array",
+      "ESNext.Array"
     ],
     "target": "es6",
     "module": "commonjs",

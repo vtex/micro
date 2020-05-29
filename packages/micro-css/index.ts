@@ -1,2 +1,2 @@
-export * from './plugins/onAssemble/modules/purgeCSS'
-export * from './plugins/onAssemble/modules/htmlTags'
+export * from './plugins/bundle/modules/purgeCSS'
+export * from './plugins/bundle/modules/htmlTags'

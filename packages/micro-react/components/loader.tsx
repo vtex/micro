@@ -1,10 +1,11 @@
 import { loadableReady } from '@loadable/component'
-import { canUseDOM, getPageData } from '@vtex/micro'
+import { canUseDOM } from 'exenv'
 import React, { StrictMode } from 'react'
 import { hydrate, render } from 'react-dom'
 
 import { getAppContainer } from './container'
 import { Runtime } from './context/Runtime'
+import { getPageData } from './data'
 import { once } from './once'
 import { getRuntimeData } from './runtime'
 

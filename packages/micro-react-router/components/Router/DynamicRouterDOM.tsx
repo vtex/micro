@@ -1,6 +1,5 @@
 import { LoadableComponent } from '@loadable/component'
-import { join, inflight } from '@vtex/micro'
-import { RuntimeData, Runtime } from '@vtex/micro-react'
+import { RuntimeData, Runtime, join, inflight } from '@vtex/micro-react'
 import { LocationDescriptorObject } from 'history'
 import React from 'react'
 import { matchPath, Route, useLocation } from 'react-router-dom'

@@ -1,5 +1,5 @@
 import loadable from '@loadable/component'
-import { canUseDOM } from '@vtex/micro'
+import { canUseDOM } from '@vtex/micro-react'
 import { LocationDescriptorObject } from 'history'
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'

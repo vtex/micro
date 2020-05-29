@@ -11,7 +11,7 @@ import { externalPublicPathVariable } from '../../components/publicPaths'
 import { withRuntimeTags } from '../../components/runtime'
 import { CJSChunkExtractor, Extractor } from './cjsChunkExtractor'
 
-export default class OnRequest extends ServeFrameworkPlugin<JSX.Element> {
+export default class Serve extends ServeFrameworkPlugin<JSX.Element> {
   public extractor: Extractor
 
   constructor (options: ServePluginOptions) {

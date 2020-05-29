@@ -38,12 +38,12 @@ export class Project {
     return files.flat()
   }
 
-  public resolvePlugins = async <T extends LifeCycle>(target: T): Promise<NonNullable<Plugins[T]>[]> => {
+  public resolvePlugins = async <T extends LifeCycle>(target: T): Promise<Record<string, NonNullable<Plugins[T]>>> => {
     assert(this.root, '💣 Could not find a package. Did you forget to resolve/restore packages ?')
     const dependencies = this.root.manifest.dependencies || {}
     const locators: string[] | undefined = this.root!.manifest.micro.plugins
     if (!locators) {
-      return []
+      return {}
     }
     const packages: Package[] = []
     walk(this.root, async curr => {
@@ -57,8 +57,20 @@ export class Project {
         packages.splice(index, 0, curr)
       }
     })
-    const plugins = await Promise.all(packages.map(p => p.getPlugin(target)))
-    return plugins.filter((p): p is NonNullable<Plugins[T]> => !!p)
+    const plugins = await packages.reduce(
+      async (accPromise, pkg) => {
+        const [acc, plugin] = await Promise.all([
+          accPromise,
+          pkg.getPlugin(target)
+        ])
+        if (plugin) {
+          acc[pkg.manifest.name] = plugin as NonNullable<Plugins[T]>
+        }
+        return acc
+      },
+      Promise.resolve({} as Record<string, NonNullable<Plugins[T]>>)
+    )
+    return plugins
   }
 
   public getSelfPlugin = async <T extends LifeCycle>(target: T): Promise<NonNullable<Plugins[T]> | null> => {

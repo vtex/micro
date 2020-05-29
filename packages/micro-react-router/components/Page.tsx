@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ResolvedPage, Serializable } from '@vtex/micro'
+import { ResolvedPage, Serializable } from '@vtex/micro-core'
 import React, { Fragment, useContext } from 'react'
 import { useLocation } from 'react-router-dom'
 

@@ -1,4 +1,4 @@
-import { canUseDOM } from '@vtex/micro'
+import { canUseDOM } from '@vtex/micro-react'
 
 // Script grabbed from http://detectmobilebrowser.com/mobile
 

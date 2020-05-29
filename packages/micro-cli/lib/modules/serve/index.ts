@@ -31,7 +31,7 @@ const main = async (options: Options) => {
 
   if (mode === 'production') {
     console.log(`🦄 Reading build state on ${project.dist.replace(project.rootPath, '.')}`)
-    const statsJson = await readJSON(join(project.dist, 'onAssemble', BUILD))
+    const statsJson = await readJSON(join(project.dist, 'bundle', BUILD))
 
     console.log(`🦄 [${lifecycle}]: Starting ProdServer`)
     await startProdServer({

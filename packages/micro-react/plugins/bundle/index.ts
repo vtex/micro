@@ -50,7 +50,7 @@ const entriesFromPages = async (project: Project) => {
   )
 }
 
-export default class OnAssemble extends BundlePlugin {
+export default class Bundle extends BundlePlugin {
   public getConfig = async (config: Block<Context>, target: BundleTarget): Promise<Block<Context>> => {
     const entrypoints = await entriesFromPages(this.project)
     const block: Block<Context>[] = [

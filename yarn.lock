@@ -3109,7 +3109,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vtex/micro-assets@workspace:packages/micro-assets":
+"@vtex/micro-assets@^1.1.1-alpha.6, @vtex/micro-assets@workspace:packages/micro-assets":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-assets@workspace:packages/micro-assets"
   dependencies:
@@ -12639,6 +12639,7 @@ fsevents@~2.1.2:
     "@types/react-dom": ^16.9.7
     "@types/uikit": ^3.3.0
     "@types/webpack-blocks": ^2.0.0
+    "@vtex/micro-assets": ^1.1.1-alpha.6
     "@vtex/micro-cli": ^1.1.1-alpha.6
     "@vtex/micro-core": ^1.1.1-alpha.6
     "@vtex/micro-css": ^1.1.1-alpha.6

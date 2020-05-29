@@ -1,3 +1,3 @@
 export * from './components'
-export * from './plugins/onAssemble'
-export * from './plugins/onRequest'
+export * from './plugins/bundle'
+export * from './plugins/serve'

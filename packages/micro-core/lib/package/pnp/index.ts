@@ -36,8 +36,12 @@ export class PnpPackage extends Package {
   }
 
   public getPlugin = async (target: LifeCycle) => {
-    const { default: plugins } = requirePnp<{ default: Plugins }>(`plugins/${target}`, this.manifest.name, this.issuer)
-    return plugins
+    try {
+      const { default: plugins } = requirePnp<{ default: Plugins }>(`plugins/${target}`, this.manifest.name, this.issuer)
+      return plugins
+    } catch (err) {
+      return null
+    }
   }
 
   public getRouter = async <T extends Serializable>() => {

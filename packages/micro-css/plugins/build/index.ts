@@ -1,7 +1,7 @@
 import { TransformOptions } from '@babel/core'
 import { BuildPlugin, BuildTarget } from '@vtex/micro-core'
 
-export default class OnBuild extends BuildPlugin {
+export default class Build extends BuildPlugin {
   public getConfig = async (previous: TransformOptions, target: BuildTarget): Promise<TransformOptions> => {
     // TODO: Do we really need this ?
     const plugins = target === 'cjs'

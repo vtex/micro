@@ -72,8 +72,8 @@ const resolveES6Assets = async (assetsRootPath: string, path: string) => {
 
 export const middleware = (project: Project, publicPaths: PublicPaths) => {
   const assetsRootPath = process.env.NODE_ENV === 'production'
-    ? join(project.dist, 'onAssemble/webnew')
-    : join(project.dist, 'onBuild/es6')
+    ? join(project.dist, 'bundle/webnew')
+    : join(project.dist, 'build/es6')
 
   return async (req: Req, res: Res) => {
     try {

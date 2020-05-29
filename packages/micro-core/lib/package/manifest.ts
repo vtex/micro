@@ -50,7 +50,10 @@ export const isManifest = (obj: any): obj is Manifest => {
 export const genManifest = (partial: Pick<Manifest, 'name' | 'version'>): Manifest => {
   const {
     name,
+    vendor,
     version,
+    description,
+    title,
     license,
     micro,
     main,
@@ -72,7 +75,10 @@ export const genManifest = (partial: Pick<Manifest, 'name' | 'version'>): Manife
 
   return {
     name,
+    vendor,
     version,
+    description,
+    title,
     license,
     micro,
     scripts: {

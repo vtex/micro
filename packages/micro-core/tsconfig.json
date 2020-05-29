@@ -7,7 +7,9 @@
       "components/typings"
     ],
     "lib": [
-      "es2019"
+      "ES2019",
+      "ES2019.Array",
+      "ESNext.Array",
     ],
     "target": "es6",
     "module": "commonjs",

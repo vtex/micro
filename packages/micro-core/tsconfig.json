@@ -6,7 +6,10 @@
       "plugins/typings",
       "components/typings"
     ],
-    "target": "es2019",
+    "lib": [
+      "es2019"
+    ],
+    "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "dist/build/cjs",

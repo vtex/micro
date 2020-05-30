@@ -66,7 +66,7 @@ const main = async (options: Options) => {
     for (const warning of statsJSON.warnings) {
       console.log(warning)
     }
-    console.warn(`❗ Please run ${chalk.blue('micro assemble report')} for a better view of what is going on with your bundle`)
+    console.warn(`❗ Please run ${chalk.blue('micro bundle report')} for a better view of what is going on with your bundle`)
   }
 
   const dist = join(compiler.dist, BUILD)

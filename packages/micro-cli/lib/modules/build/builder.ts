@@ -5,6 +5,7 @@ import { outputFile } from 'fs-extra'
 import { join } from 'path'
 
 import { ensureDist, resolvePlugins } from '../../common/project'
+import { resolveSelfPlugin } from './../../common/project'
 
 export const lifecycle = 'build'
 
@@ -52,7 +53,7 @@ export const getBuilders = async (
   }
 
   const createBuild = async () => {
-    const selfPlugin = await project.getSelfPlugin(lifecycle)
+    const selfPlugin = await resolveSelfPlugin(project, lifecycle)
     const allPlugins = selfPlugin ? [...plugins, selfPlugin] : plugins
     const compiler = new BuildCompiler({ project, plugins: allPlugins, mode })
     const targetConfigs: [BuildTarget, string, TransformOptions][] = [

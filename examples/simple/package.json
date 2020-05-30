@@ -9,7 +9,8 @@
       "@vtex/micro-react",
       "@vtex/micro-assets",
       "@vtex/micro-react-intl",
-      "@vtex/micro-react-router"
+      "@vtex/micro-react-router",
+      "simple"
     ]
   },
   "private": true,

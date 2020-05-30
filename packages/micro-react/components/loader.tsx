@@ -56,12 +56,13 @@ const renderOrHydrate = (App: React.ReactType) => async () => {
 export const LoadMicroComponent = (App: React.ReactType) => {
   if (canUseDOM) {
     const renderOnce = once(renderOrHydrate(App))
+    setTimeout(renderOnce, 6e3)
+
     if (document.readyState !== 'complete') {
       window.onload = () => loadableReady(renderOnce)
     } else {
       loadableReady(renderOnce)
     }
-    setTimeout(renderOnce, 6e3)
   }
   return App
 }

@@ -47,26 +47,13 @@ export default class Serve extends ServeFrameworkPlugin<JSX.Element> {
   }
 
   public getScriptTags = () => {
-    let tags: string[] = []
-    tags.push(withRuntimeTags({ publicPaths: this.options.publicPaths }))
-    tags.push('<script id="__LOADABLE_REQUIRED_CHUNKS__">[]</script>')
+    const {
+      publicPaths
+    } = this.options
+    const tags: string[] = []
+    tags.push(withRuntimeTags({ publicPaths }))
     tags.push(`<script type="application/javascript">${externalPublicPathVariable}="${this.options.publicPaths.assets}"</script>`)
-
-    if (this.options.stats) {
-      const {
-        page: { name },
-        stats: { namedChunkGroups },
-        publicPaths: { assets }
-      } = this.options
-      const criticalAssets = namedChunkGroups?.[name]?.assets?.filter(x => x.endsWith('.js'))
-      if (criticalAssets) {
-        const ts = criticalAssets.map(x => `<script async data-chunk="${name}" src="${assets}${x}"></script>`)
-        tags = tags.concat(ts)
-      }
-    } else {
-      tags.push(this.extractor.getScriptTags())
-    }
-
+    tags.push(this.extractor.getScriptTags())
     return tags.join('\n')
   }
 
@@ -80,8 +67,7 @@ export default class Serve extends ServeFrameworkPlugin<JSX.Element> {
         }
       ).join('\n')
     }
-
-    return this.extractor!.getStyleTags()
+    // return this.extractor.getStyleTags()
   }
 
   public getLinkTags = () => {
@@ -92,6 +78,10 @@ export default class Serve extends ServeFrameworkPlugin<JSX.Element> {
       tagsNoCSS,
       dataTags
     ].join('\n')
+    // return [
+    //   dataTags,
+    //   this.extractor.getLinkTags()
+    // ].join('\n')
   }
 
   public getMetaTags = () => [

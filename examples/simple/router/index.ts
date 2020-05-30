@@ -1,4 +1,4 @@
-import { Router } from '@vtex/micro'
+import { Router } from '@vtex/micro-core'
 import { pack } from '@vtex/micro-react-router'
 
 const removeSlash = (x: string) => x.startsWith('/') ? x.slice(1) : x
@@ -14,7 +14,7 @@ const locales = new Set(['en', 'pt'])
 
 const router: Router<any> = async request => {
   const { path, query } = request
-  const locale = locales.has(query.locale) ? query.locale : undefined
+  const locale = locales.has(query.locale) ? query.locale : 'en'
   const name = path === '/' ? 'home' : removeSlash(path)
 
   const resolved = {

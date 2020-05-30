@@ -28,15 +28,29 @@ export const ensureDist = async (target: string, path: string) => {
   await ensureDir(path)
 }
 
+const reportPlugin = (lifecycle: string, pkg: string) => {
+  console.log(`🔌 [${lifecycle}]: Plugin found ${pkg}`)
+}
+
 export const resolvePlugins = async <T extends LifeCycle>(project: Project, lifecycle: T): Promise<NonNullable<Plugins[T]>[]> => {
   console.log(`🦄 [${lifecycle}]: Resolving plugins`)
   const plugins = await project.resolvePlugins(lifecycle)
 
   for (const pkg of Object.keys(plugins)) {
-    console.log(`🔌 [${lifecycle}]: Plugin found ${pkg}`)
+    reportPlugin(lifecycle, pkg)
   }
 
   return Object.values(plugins)
+}
+
+export const resolveSelfPlugin = async <T extends LifeCycle>(project: Project, lifecycle: T): Promise<Plugins[T] | null> => {
+  const plugin = await project.getSelfPlugin(lifecycle)
+
+  if (plugin) {
+    reportPlugin(lifecycle, project.root.manifest.name)
+  }
+
+  return plugin
 }
 
 export const loadProject = () => {

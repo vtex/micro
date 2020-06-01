@@ -1,4 +1,5 @@
 import { join } from 'path'
+
 import { Stats } from 'webpack'
 
 import { PublicPaths } from '../common/publicPaths'
@@ -9,8 +10,15 @@ import { ResolvedPage } from '../router'
 
 const lifecycle = 'serve'
 
-export type ServeCompilerOptions<T> = Omit<CompilerOptions<ServePlugin<T>>, 'target' | 'plugins'> & {
-  plugins: Array<new (options: ServePluginOptions) => (ServePlugin<T> | ServeFrameworkPlugin<T>)>
+export type ServeCompilerOptions<T> = Omit<
+  CompilerOptions<ServePlugin<T>>,
+  'target' | 'plugins'
+> & {
+  plugins: Array<
+    new (options: ServePluginOptions) =>
+      | ServePlugin<T>
+      | ServeFrameworkPlugin<T>
+  >
   options: Omit<ServePluginOptions, 'assetsDist'>
 }
 
@@ -18,14 +26,14 @@ const assetsDistForLifecycle = (root: string, lifecycle: LifeCycle) => {
   if (lifecycle === 'build') {
     return {
       webnew: join(root, 'build/es6'),
-      nodejs: join(root, 'build/cjs')
+      nodejs: join(root, 'build/cjs'),
     }
   }
   if (lifecycle === 'bundle') {
     return {
       webnew: join(root, 'bundle/webnew'),
       webold: join(root, 'bundle/webold'),
-      nodejs: join(root, 'build/cjs')
+      nodejs: join(root, 'build/cjs'),
     }
   }
   throw new Error('💣 Targeting this lifecycle makes no sense')
@@ -34,21 +42,27 @@ const assetsDistForLifecycle = (root: string, lifecycle: LifeCycle) => {
 export class ServeCompiler<T> extends Compiler<ServePlugin<T>> {
   protected frameworkPlugin: ServeFrameworkPlugin<T>
 
-  constructor ({ project, plugins, options }: ServeCompilerOptions<T>) {
+  constructor({ project, plugins, options }: ServeCompilerOptions<T>) {
     super({ project, plugins: [], target: lifecycle })
     const fullOptions = {
       ...options,
-      assetsDist: assetsDistForLifecycle(project.dist, options.lifecycleTarget)
+      assetsDist: assetsDistForLifecycle(project.dist, options.lifecycleTarget),
     }
-    this.plugins = plugins.map(P => new P(fullOptions))
-    const frameworkIndex = this.plugins.findIndex(p => p instanceof ServeFrameworkPlugin)
+    this.plugins = plugins.map((P) => new P(fullOptions))
+    const frameworkIndex = this.plugins.findIndex(
+      (p) => p instanceof ServeFrameworkPlugin
+    )
     if (frameworkIndex < 0) {
-      throw new Error('💣 At least one framework plugin is required. Take a look at @vtex/micro-react for using the React Framework')
+      throw new Error(
+        '💣 At least one framework plugin is required. Take a look at @vtex/micro-react for using the React Framework'
+      )
     }
-    this.frameworkPlugin = this.plugins[frameworkIndex] as ServeFrameworkPlugin<T>
+    this.frameworkPlugin = this.plugins[frameworkIndex] as ServeFrameworkPlugin<
+      T
+    >
   }
 
-  public renderToString = (disableSSR: boolean = false) => {
+  public renderToString = (disableSSR = false) => {
     let App: T | null = null
 
     if (!disableSSR) {
@@ -58,38 +72,29 @@ export class ServeCompiler<T> extends Compiler<ServePlugin<T>> {
       App = this.frameworkPlugin.requireEntrypoint()
 
       if (App === null) {
-        throw new Error('💣 No entrypoint was required during Server Side Rendering')
+        throw new Error(
+          '💣 No entrypoint was required during Server Side Rendering'
+        )
       }
 
       // Compose the App for SSR
-      App = this.plugins.reduce(
-        (acc, p) => p.render(acc),
-        App
-      )
+      App = this.plugins.reduce((acc, p) => p.render(acc), App)
     }
 
     return this.frameworkPlugin.renderToString(App)
   }
 
-  public getScriptTags = () => this.plugins.reduce(
-    (acc, plugin) => acc + plugin.getScriptTags(),
-    ''
-  )
+  public getScriptTags = () =>
+    this.plugins.reduce((acc, plugin) => acc + plugin.getScriptTags(), '')
 
-  public getLinkTags = () => this.plugins.reduce(
-    (acc, plugin) => acc + plugin.getLinkTags(),
-    ''
-  )
+  public getLinkTags = () =>
+    this.plugins.reduce((acc, plugin) => acc + plugin.getLinkTags(), '')
 
-  public getStyleTags = () => this.plugins.reduce(
-    (acc, plugin) => acc + plugin.getStyleTags(),
-    ''
-  )
+  public getStyleTags = () =>
+    this.plugins.reduce((acc, plugin) => acc + plugin.getStyleTags(), '')
 
-  public getMetaTags = () => this.plugins.reduce(
-    (acc, plugin) => acc + plugin.getMetaTags(),
-    ''
-  )
+  public getMetaTags = () =>
+    this.plugins.reduce((acc, plugin) => acc + plugin.getMetaTags(), '')
 }
 
 interface AssetsDist {
@@ -109,9 +114,7 @@ export interface ServePluginOptions {
 }
 
 export abstract class ServePlugin<T> extends Plugin {
-  constructor (
-    protected options: ServePluginOptions
-  ) {
+  constructor(protected options: ServePluginOptions) {
     super({ target: lifecycle })
   }
 

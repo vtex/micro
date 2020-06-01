@@ -1,11 +1,18 @@
-import { TransformOptions } from '@babel/core'
 import assert from 'assert'
+
+import { TransformOptions } from '@babel/core'
 
 import { BuildPlugin, BuildTarget } from '../../lib/lifecycles/build'
 
 export default class Build extends BuildPlugin {
-  public getConfig = async (previous: TransformOptions, target: BuildTarget): Promise<TransformOptions> => {
-    assert(Object.keys(previous).length === 0, '💣 micro-core should be used as first plugin. You can either move it to the begining or use another toplevel plugin')
+  public getConfig = async (
+    previous: TransformOptions,
+    target: BuildTarget
+  ): Promise<TransformOptions> => {
+    assert(
+      Object.keys(previous).length === 0,
+      '💣 micro-core should be used as first plugin. You can either move it to the begining or use another toplevel plugin'
+    )
 
     return {
       root: this.project.rootPath,
@@ -21,10 +28,10 @@ export default class Build extends BuildPlugin {
       caller: { name: target },
       presets: [
         [
-          require.resolve('@babel/preset-env'), {
-            targets: target === 'es6'
-              ? { esmodules: true }
-              : { node: 'current' },
+          require.resolve('@babel/preset-env'),
+          {
+            targets:
+              target === 'es6' ? { esmodules: true } : { node: 'current' },
             bugfixes: true,
             modules: target === 'es6' ? false : 'commonjs',
             exclude: [
@@ -36,21 +43,22 @@ export default class Build extends BuildPlugin {
               '@babel/plugin-transform-destructuring',
               '@babel/plugin-transform-for-of',
               '@babel/plugin-transform-spread',
-              '@babel/plugin-transform-typeof-symbol'
-            ]
-          }
+              '@babel/plugin-transform-typeof-symbol',
+            ],
+          },
         ],
         [
-          require.resolve('@babel/preset-typescript'), {
+          require.resolve('@babel/preset-typescript'),
+          {
             isTSX: true,
-            allExtensions: true
-          }
-        ]
+            allExtensions: true,
+          },
+        ],
       ],
       plugins: [
         '@babel/plugin-proposal-class-properties',
-        '@babel/plugin-proposal-optional-chaining'
-      ].map(require.resolve as (x: string) => string)
+        '@babel/plugin-proposal-optional-chaining',
+      ].map(require.resolve as (x: string) => string),
     }
   }
 }

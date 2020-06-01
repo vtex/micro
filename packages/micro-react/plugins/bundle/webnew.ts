@@ -2,7 +2,7 @@ import { Block, Context } from 'webpack-blocks'
 
 import { babel } from './modules/babel'
 
-export const webnewBabel: Block<Context> = babel({
+export const webnewBabel: Block = babel({
   comments: true,
   minified: false,
   retainLines: true,
@@ -10,9 +10,10 @@ export const webnewBabel: Block<Context> = babel({
   caller: { target: 'webnew' },
   presets: [
     [
-      require.resolve('@babel/preset-env'), {
+      require.resolve('@babel/preset-env'),
+      {
         targets: {
-          esmodules: true
+          esmodules: true,
         },
         modules: false,
         bugfixes: true,
@@ -25,25 +26,27 @@ export const webnewBabel: Block<Context> = babel({
           '@babel/plugin-transform-destructuring',
           '@babel/plugin-transform-for-of',
           '@babel/plugin-transform-spread',
-          '@babel/plugin-transform-typeof-symbol'
-        ]
-      }
+          '@babel/plugin-transform-typeof-symbol',
+        ],
+      },
     ],
     [
-      require.resolve('@babel/preset-react'), {
-        useBuiltIns: true
-      }
+      require.resolve('@babel/preset-react'),
+      {
+        useBuiltIns: true,
+      },
     ],
     [
-      require.resolve('@babel/preset-typescript'), {
+      require.resolve('@babel/preset-typescript'),
+      {
         isTSX: true,
-        allExtensions: true
-      }
-    ]
+        allExtensions: true,
+      },
+    ],
   ],
   plugins: [
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-syntax-dynamic-import',
-    '@loadable/babel-plugin'
-  ].map(require.resolve as any)
+    '@loadable/babel-plugin',
+  ].map(require.resolve as any),
 } as any)

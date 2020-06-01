@@ -1,8 +1,9 @@
+import assert from 'assert'
+import { join } from 'path'
+
 import { PosixFS, ZipOpenFS } from '@yarnpkg/fslib'
 import * as yarnLibZip from '@yarnpkg/libzip'
-import assert from 'assert'
 import globby from 'globby'
-import { join } from 'path'
 import pnp, { getPackageInformation, PackageLocator } from 'pnpapi'
 
 import { PnpPackage } from '.'
@@ -25,27 +26,39 @@ export const requirePnp = <T>(target: string, pkg: string, issuer: string) => {
 }
 
 export const globPnp = async (pkg: string, issuer: string, query: string) => {
-  const locator: string = (pnp as any).resolveRequest(`${pkg}/${PackageStructure.manifest}`, issuer)
+  const locator: string = (pnp as any).resolveRequest(
+    `${pkg}/${PackageStructure.manifest}`,
+    issuer
+  )
   const path = locator.replace(`/${PackageStructure.manifest}`, '')
   const matches = await globby(query, { cwd: path })
-  return matches.map(p => join(path, p))
+  return matches.map((p) => join(path, p))
 }
 
 export const readJsonPnp = async (
-  pkg : PackageLocator,
+  pkg: PackageLocator,
   issuer: PackageLocator,
   target: keyof typeof PackageStructure
 ) => {
   const path = pnp.getPackageInformation(pkg).packageLocation
   // const virtualPath = pnp.resolveToUnqualified(`${pkg.name}/${PackageStructure[target]}`, issuer.name)
-  assert(path, `💣 Package path can not be null: Package: ${pkg.name}, Issuer: ${issuer.name}`)
+  assert(
+    path,
+    `💣 Package path can not be null: Package: ${pkg.name}, Issuer: ${issuer.name}`
+  )
   const fullPath = join(path, PackageStructure[target])
   return crossFs.readJsonPromise(fullPath)
 }
 
-export const readManifest = async (info: PackageLocator, issuer: PackageLocator) => {
+export const readManifest = async (
+  info: PackageLocator,
+  issuer: PackageLocator
+) => {
   const manifest = await readJsonPnp(info, issuer, 'manifest')
-  return manifest as Pick<Manifest, 'name' | 'version' | 'dependencies' | 'peerDependencies' | 'devDependencies'>
+  return manifest as Pick<
+    Manifest,
+    'name' | 'version' | 'dependencies' | 'peerDependencies' | 'devDependencies'
+  >
 }
 
 const getKey = <T>(locator: T) => JSON.stringify(locator)
@@ -61,7 +74,7 @@ export const createDepTree = async (
 
   // only go forward if it is a Micro package
   if (seen.has(node) || !isManifest(manifest)) {
-    return seen.get(node) || null
+    return seen.get(node) ?? null
   }
 
   // Set Package as seen
@@ -75,7 +88,9 @@ export const createDepTree = async (
   pkg.tsconfig = await readJsonPnp(pkgLocator, parentLocator, 'tsconfig')
 
   for (const [name, referencish] of info.packageDependencies) {
-    const locator = referencish && (pnp as any).getLocator(name, referencish) as PackageLocator | null
+    const locator =
+      referencish &&
+      ((pnp as any).getLocator(name, referencish) as PackageLocator | null)
     const childInfo = locator && getPackageInformation(locator)
     if (!childInfo || !locator || getKey(locator) === node) {
       continue
@@ -90,9 +105,17 @@ export const createDepTree = async (
   return pkg
 }
 
-export type VisitFn = (node: PackageLocator, parent: PackageLocator | null) => Promise<void>
+export type VisitFn = (
+  node: PackageLocator,
+  parent: PackageLocator | null
+) => Promise<void>
 
-const walkRec = async (node: PackageLocator, parent: PackageLocator | null, visit: VisitFn, seen: Set<string>) => {
+const walkRec = async (
+  node: PackageLocator,
+  parent: PackageLocator | null,
+  visit: VisitFn,
+  seen: Set<string>
+) => {
   const nodeStr = getKey(node)
 
   if (seen.has(nodeStr)) {
@@ -108,7 +131,9 @@ const walkRec = async (node: PackageLocator, parent: PackageLocator | null, visi
   await visit(node, parent)
 
   for (const [name, referencish] of info.packageDependencies) {
-    const locator = referencish && (pnp as any).getLocator(name, referencish) as PackageLocator | null
+    const locator =
+      referencish &&
+      ((pnp as any).getLocator(name, referencish) as PackageLocator | null)
     if (!locator) {
       continue
     }

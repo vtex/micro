@@ -1,14 +1,18 @@
+import assert from 'assert'
+
 import {
   isResolvedPage,
   isResolvedRedirect,
   Project,
-  PublicPaths
+  PublicPaths,
 } from '@vtex/micro-core'
-import assert from 'assert'
 
 import { Next, Req, Res } from '../typings'
 
-export const middleware = async (project: Project, publicPaths: PublicPaths) => {
+export const middleware = async (
+  project: Project,
+  publicPaths: PublicPaths
+) => {
   const router = await project.getRouter()
 
   assert(typeof router === 'function', '💣 No router found for package')
@@ -20,7 +24,10 @@ export const middleware = async (project: Project, publicPaths: PublicPaths) => 
       : '/'
     const path = req.path.replace(rootPath, '/')
 
-    const page = await router({ path, query: req.query as Record<string, string> }, {})
+    const page = await router(
+      { path, query: req.query as Record<string, string> },
+      {}
+    )
 
     if (isResolvedRedirect(page)) {
       res.redirect(page.status, page.location)

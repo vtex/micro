@@ -1,13 +1,14 @@
+import { join } from 'path'
+
 import {
   LifeCycle,
   MICRO_BUILD_DIR,
   Plugins,
   Project,
-  walk
+  walk,
 } from '@vtex/micro-core'
 import chalk from 'chalk'
 import { ensureDir } from 'fs-extra'
-import { join } from 'path'
 
 export const newProject = async () => {
   const projectPath = process.cwd()
@@ -16,7 +17,7 @@ export const newProject = async () => {
 
   console.log('🦄 Resolving dependencies')
   await project.resolvePackages()
-  walk(project.root, curr => {
+  walk(project.root, (curr) => {
     console.info(`📦 Micro package found: ${curr.toString()}`)
   })
 
@@ -24,7 +25,11 @@ export const newProject = async () => {
 }
 
 export const ensureDist = async (target: string, path: string) => {
-  console.log(`🎯 [${target}]: Ensuring dist folder in ${chalk.cyanBright(join(MICRO_BUILD_DIR, path.split(MICRO_BUILD_DIR)[1]))}`)
+  console.log(
+    `🎯 [${target}]: Ensuring dist folder in ${chalk.cyanBright(
+      join(MICRO_BUILD_DIR, path.split(MICRO_BUILD_DIR)[1])
+    )}`
+  )
   await ensureDir(path)
 }
 
@@ -32,7 +37,10 @@ const reportPlugin = (lifecycle: string, pkg: string) => {
   console.log(`🔌 [${lifecycle}]: Plugin found ${pkg}`)
 }
 
-export const resolvePlugins = async <T extends LifeCycle>(project: Project, lifecycle: T): Promise<NonNullable<Plugins[T]>[]> => {
+export const resolvePlugins = async <T extends LifeCycle>(
+  project: Project,
+  lifecycle: T
+): Promise<Array<NonNullable<Plugins[T]>>> => {
   console.log(`🦄 [${lifecycle}]: Resolving plugins`)
   const plugins = await project.resolvePlugins(lifecycle)
 
@@ -43,7 +51,10 @@ export const resolvePlugins = async <T extends LifeCycle>(project: Project, life
   return Object.values(plugins)
 }
 
-export const resolveSelfPlugin = async <T extends LifeCycle>(project: Project, lifecycle: T): Promise<Plugins[T] | null> => {
+export const resolveSelfPlugin = async <T extends LifeCycle>(
+  project: Project,
+  lifecycle: T
+): Promise<Plugins[T] | null> => {
   const plugin = await project.getSelfPlugin(lifecycle)
 
   if (plugin) {
@@ -53,6 +64,4 @@ export const resolveSelfPlugin = async <T extends LifeCycle>(project: Project, l
   return plugin
 }
 
-export const loadProject = () => {
-
-}
+export const loadProject = () => {}

@@ -12,14 +12,14 @@ export const BaseManifest = {
   module: `./${MICRO_BUILD_DIR}/${lifecycle}/es6/components/index.js`,
   browser: './components/index.ts',
   micro: {
-    plugins: []
+    plugins: [],
   } as MicroOptions,
   scripts: {
     build: 'yarn run micro build',
     watch: 'yarn run micro link',
     clean: `rm -r ${MICRO_BUILD_DIR}`,
-    prepublish: 'yarn build'
-  }
+    prepublish: 'yarn build',
+  },
 }
 
 const necessary = pick(BaseManifest, ['main', 'module', 'browser'])
@@ -39,15 +39,19 @@ export interface Manifest extends Base {
 const isMicro = (x: any): x is MicroOptions => Array.isArray(x?.plugins)
 
 export const isManifest = (obj: any): obj is Manifest => {
-  return typeof obj?.name === 'string' &&
+  return (
+    typeof obj?.name === 'string' &&
     isSemver(obj.version) &&
     obj.main === BaseManifest.main &&
     obj.module === BaseManifest.module &&
     obj.browser === BaseManifest.browser &&
     isMicro(obj.micro)
+  )
 }
 
-export const genManifest = (partial: Pick<Manifest, 'name' | 'version'>): Manifest => {
+export const genManifest = (
+  partial: Pick<Manifest, 'name' | 'version'>
+): Manifest => {
   const {
     name,
     vendor,
@@ -70,7 +74,7 @@ export const genManifest = (partial: Pick<Manifest, 'name' | 'version'>): Manife
   } = {
     ...required,
     ...partial,
-    ...necessary
+    ...necessary,
   } as any
 
   return {
@@ -83,7 +87,7 @@ export const genManifest = (partial: Pick<Manifest, 'name' | 'version'>): Manife
     micro,
     scripts: {
       ...BaseManifest.scripts,
-      ...scripts
+      ...scripts,
     },
     main,
     types,
@@ -92,6 +96,6 @@ export const genManifest = (partial: Pick<Manifest, 'name' | 'version'>): Manife
     dependencies,
     devDependencies,
     peerDependencies,
-    ...rest
+    ...rest,
   }
 }

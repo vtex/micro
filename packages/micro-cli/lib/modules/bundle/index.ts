@@ -1,23 +1,29 @@
+import { join } from 'path'
+
 import { BundleCompiler, Mode } from '@vtex/micro-core'
 import chalk from 'chalk'
 import { outputJSON } from 'fs-extra'
-import { join } from 'path'
 import webpack, { Compiler, Stats } from 'webpack'
 
-import { ensureDist, newProject, resolvePlugins } from '../../common/project'
+import {
+  ensureDist,
+  newProject,
+  resolvePlugins,
+  resolveSelfPlugin,
+} from '../../common/project'
 import { BUILD } from '../../constants'
-import { resolveSelfPlugin } from './../../common/project'
 
 const lifecycle = 'bundle'
 
-const runWebpack = (compiler: Compiler) => new Promise<Stats>((resolve, reject) => {
-  compiler.run((err, stats) => {
-    if (err) {
-      reject(err)
-    }
-    return resolve(stats)
+const runWebpack = (compiler: Compiler) =>
+  new Promise<Stats>((resolve, reject) => {
+    compiler.run((err, stats) => {
+      if (err) {
+        reject(err)
+      }
+      return resolve(stats)
+    })
   })
-})
 
 interface Options {
   dev?: boolean
@@ -30,7 +36,11 @@ const main = async (options: Options) => {
 
   const project = await newProject()
 
-  console.log(`🦄 Starting Micro for ${chalk.magenta(project)} at ${chalk.blue(lifecycle)}:${chalk.blue(mode)}`)
+  console.log(
+    `🦄 Starting Micro for ${chalk.magenta(project)} at ${chalk.blue(
+      lifecycle
+    )}:${chalk.blue(mode)}`
+  )
 
   const partial = await resolvePlugins(project, lifecycle)
   const self = await resolveSelfPlugin(project, lifecycle)
@@ -42,7 +52,7 @@ const main = async (options: Options) => {
 
   await ensureDist(lifecycle, compiler.dist)
 
-  for (const page of Object.keys(configs.entry || {})) {
+  for (const page of Object.keys(configs.entry ?? {})) {
     console.log(`📄 [${lifecycle}]: Page found: ${page}`)
   }
 
@@ -67,11 +77,20 @@ const main = async (options: Options) => {
     for (const warning of statsJSON.warnings) {
       console.log(warning)
     }
-    console.warn(`❗ Please run ${chalk.blue('micro bundle report')} for a better view of what is going on with your bundle`)
+    console.warn(
+      `❗ Please run ${chalk.blue(
+        'micro bundle report'
+      )} for a better view of what is going on with your bundle`
+    )
   }
 
   const dist = join(compiler.dist, BUILD)
-  console.log(`🦄 [${lifecycle}]: Persisting Build on ${dist.replace(project.rootPath, '')}`)
+  console.log(
+    `🦄 [${lifecycle}]: Persisting Build on ${dist.replace(
+      project.rootPath,
+      ''
+    )}`
+  )
   await outputJSON(dist, statsJSON, { spaces: 2 })
 }
 

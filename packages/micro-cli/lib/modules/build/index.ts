@@ -17,7 +17,11 @@ const main = async (options: Options) => {
 
   const project = await newProject()
 
-  console.log(`🦄 Starting Micro for ${chalk.magenta(project)} at ${chalk.blue(lifecycle)}:${chalk.blue(mode)}`)
+  console.log(
+    `🦄 Starting Micro for ${chalk.magenta(project)} at ${chalk.blue(
+      lifecycle
+    )}:${chalk.blue(mode)}`
+  )
 
   const { createBuild, createPreBuild } = await getBuilders(project, mode)
 
@@ -26,17 +30,23 @@ const main = async (options: Options) => {
   console.log(`🦄 [${lifecycle}]: Starting the build`)
 
   const [framework, userland] = await Promise.all([
-    project.root.getFiles('lib', 'plugins', 'index').then(rejectDeclarationFiles),
-    project.root.getFiles('components', 'pages', 'router').then(rejectDeclarationFiles)
+    project.root
+      .getFiles('lib', 'plugins', 'index')
+      .then(rejectDeclarationFiles),
+    project.root
+      .getFiles('components', 'pages', 'router')
+      .then(rejectDeclarationFiles),
   ])
 
-  const msg = `🦄 [${lifecycle}]: The build of ${framework.length + userland.length} files finished in`
+  const msg = `🦄 [${lifecycle}]: The build of ${
+    framework.length + userland.length
+  } files finished in`
   console.time(msg)
   const { prebuild } = await createPreBuild()
-  await Promise.all(framework.map(f => prebuild(f, false)))
+  await Promise.all(framework.map((f) => prebuild(f, false)))
 
   const { build } = await createBuild()
-  await Promise.all(userland.map(f => build(f, false)))
+  await Promise.all(userland.map((f) => build(f, false)))
   console.timeEnd(msg)
 }
 

@@ -1,1 +1,1 @@
-declare module 'time-fix-plugin';
+declare module 'time-fix-plugin'

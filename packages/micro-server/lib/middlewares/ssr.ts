@@ -4,10 +4,7 @@ import pretty from 'pretty'
 import { featuresFromReq } from '../features'
 import { Req, Res } from '../typings'
 
-const ok = (
-  compiler: ServeCompiler<unknown>,
-  body: string
-) => `<!DOCTYPE html>
+const ok = (compiler: ServeCompiler<unknown>, body: string) => `<!DOCTYPE html>
 <html>
 <head>
 ${compiler.getMetaTags()}
@@ -22,7 +19,14 @@ ${compiler.getScriptTags()}
 `
 
 export const middleware = (req: Req, res: Res) => {
-  const { locals: { compiler, route: { page: { status } } } } = res
+  const {
+    locals: {
+      compiler,
+      route: {
+        page: { status },
+      },
+    },
+  } = res
   const { disableSSR } = featuresFromReq(req)
 
   const body = compiler.renderToString(disableSSR)
@@ -52,9 +56,15 @@ ${body}
 
 export const devSSR = (importMap: ImportMap) => {
   return (req: Req, res: Res) => {
-    const { locals: { route: { page: { status } } } } = res
+    const {
+      locals: {
+        route: {
+          page: { status },
+        },
+      },
+    } = res
     const { disableSSR } = featuresFromReq(req)
-    const compiler = res.locals.compiler
+    const { compiler } = res.locals
 
     const body = compiler.renderToString(disableSSR)
     const html = pretty(okSSR(compiler, body, importMap))

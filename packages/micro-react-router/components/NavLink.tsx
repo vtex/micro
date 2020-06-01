@@ -1,5 +1,9 @@
 import React, { useContext, useEffect, useRef } from 'react'
-import { NavLink as ReactRouterNavLink, NavLinkProps, useLocation } from 'react-router-dom'
+import {
+  NavLink as ReactRouterNavLink,
+  NavLinkProps,
+  useLocation,
+} from 'react-router-dom'
 import { useInViewport } from 'react-in-viewport'
 
 import { locationFromProps } from './utils/location'
@@ -12,7 +16,12 @@ type Props = NavLinkProps & {
 
 const noop = () => {}
 
-export const NavLink: React.SFC<Props> = ({ children, to, prefetch = false, ...rest }) => {
+export const NavLink: React.SFC<Props> = ({
+  children,
+  to,
+  prefetch = false,
+  ...rest
+}) => {
   const router = useContext(MicroRouterContext)
   const currentLocation = useLocation()
 
@@ -31,10 +40,15 @@ export const NavLink: React.SFC<Props> = ({ children, to, prefetch = false, ...r
   }
 
   const node = useRef(null)
-  useInViewport(node, null, { disconnectOnLeave: true }, {
-    onEnterViewport: prefetchPage(onMobileDevice),
-    onLeaveViewport: noop
-  })
+  useInViewport(
+    node,
+    null,
+    { disconnectOnLeave: true },
+    {
+      onEnterViewport: prefetchPage(onMobileDevice),
+      onLeaveViewport: noop,
+    }
+  )
 
   useEffect(prefetchPage(prefetch), [currentLocation, prefetch])
 
@@ -46,7 +60,7 @@ export const NavLink: React.SFC<Props> = ({ children, to, prefetch = false, ...r
       onMouseEnter={preloadPage}
       {...rest}
     >
-      { children }
+      {children}
     </ReactRouterNavLink>
   )
 }

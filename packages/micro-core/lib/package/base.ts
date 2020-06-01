@@ -1,13 +1,10 @@
 import { parse } from '../common/semver'
-import {
-  BundlePlugin,
-  BundlePluginOptions
-} from '../lifecycles/bundle'
+import { BundlePlugin, BundlePluginOptions } from '../lifecycles/bundle'
 import { BuildPlugin, BuildPluginOptions } from '../lifecycles/build'
 import {
   ServeFrameworkPlugin,
   ServePlugin,
-  ServePluginOptions
+  ServePluginOptions,
 } from '../lifecycles/serve'
 import { LifeCycle } from '../project'
 import { Router, Serializable } from '../router'
@@ -15,8 +12,10 @@ import { Manifest } from './manifest'
 import { TSConfig } from './tsconfig'
 
 export interface Plugins {
-  serve?: new (options: ServePluginOptions) => ServePlugin<any> | ServeFrameworkPlugin<any>,
-  bundle?: new (options: BundlePluginOptions) => BundlePlugin,
+  serve?: new (options: ServePluginOptions) =>
+    | ServePlugin<any>
+    | ServeFrameworkPlugin<any>
+  bundle?: new (options: BundlePluginOptions) => BundlePlugin
   build?: new (options: BuildPluginOptions) => BuildPlugin
 }
 
@@ -28,7 +27,7 @@ export const PackageStructure = {
   plugins: 'plugins',
   components: 'components',
   manifest: 'package.json',
-  tsconfig: 'tsconfig.json'
+  tsconfig: 'tsconfig.json',
 }
 
 export type PackageRootEntries = keyof typeof PackageStructure
@@ -58,21 +57,28 @@ export abstract class Package {
     throw new Error(`💣 not implemented: ${projectRoot}`)
   }
 
-  public abstract getFiles = async (...targets: PackageRootEntries[]): Promise<string[]> => {
+  public abstract getFiles = async (
+    ...targets: PackageRootEntries[]
+  ): Promise<string[]> => {
     throw new Error(`💣 not implemented: ${targets}`)
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public abstract getPlugin = async <T extends LifeCycle>(target: T): Promise<Plugins[T]> => {
+  public abstract getPlugin = async <T extends LifeCycle>(
+    target: T
+  ): Promise<Plugins[T]> => {
     throw new Error('💣 not implemented')
   }
 
-  public abstract getRouter = async <T extends Serializable>(): Promise<Router<T>> => {
+  public abstract getRouter = async <T extends Serializable>(): Promise<
+    Router<T>
+  > => {
     throw new Error('💣 not implemented')
   }
 
   public getGlobby = (...targets: PackageRootEntries[]) =>
-    `@(${targets.map(t => PackageStructure[t]).join('|')})?(/**/*.ts?(x))`
+    `@(${targets.map((t) => PackageStructure[t]).join('|')})?(/**/*.ts?(x))`
 
-  public toString = () => `${this.manifest.name}@${parse(this.manifest.version).major}.x`
+  public toString = () =>
+    `${this.manifest.name}@${parse(this.manifest.version).major}.x`
 }

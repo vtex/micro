@@ -21,7 +21,7 @@ export interface RouterProps {
   error: any
 }
 
-type AsyncImport = (x: { name: string}) => Promise<any>
+type AsyncImport = (x: { name: string }) => Promise<any>
 
 export interface RouterStateModifier {
   // Prefetching should have lower priority than a preload. Also, you should be
@@ -32,7 +32,9 @@ export interface RouterStateModifier {
   preloadPage: (location: LocationDescriptorObject) => Promise<void>
 }
 
-export const MicroRouterContext = React.createContext<RouterStateModifier>({} as any)
+export const MicroRouterContext = React.createContext<RouterStateModifier>(
+  {} as any
+)
 MicroRouterContext.displayName = 'MicroRouterContext'
 
 export const withRouter = (
@@ -41,10 +43,10 @@ export const withRouter = (
 ): React.SFC<RouterProps> => {
   const AsyncPage = loadable<AsyncPageProps>(AsyncImport, {
     cacheKey: ({ name }) => name,
-    ssr: false
+    ssr: false,
   })
 
-  return function MicroReactRouter ({ data, error }) {
+  return function MicroReactRouter({ data, error }) {
     if (!canUseDOM) {
       return <RouterSSR data={data} error={error} InitialPage={InitialPage} />
     }

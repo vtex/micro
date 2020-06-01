@@ -7,7 +7,7 @@ export interface Features {
 }
 
 const DEFAULT_FEATURES: Features = {
-  disableSSR: false
+  disableSSR: false,
 }
 
 export const featuresFromReq = (req: Req) => {
@@ -17,7 +17,7 @@ export const featuresFromReq = (req: Req) => {
     const maybeFeatures = JSON.parse(maybeFeaturesStr)
     return {
       ...DEFAULT_FEATURES,
-      ...maybeFeatures
+      ...maybeFeatures,
     }
   }
   return DEFAULT_FEATURES

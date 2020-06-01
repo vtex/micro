@@ -1,6 +1,7 @@
+import { join } from 'path'
+
 import { TransformOptions } from '@babel/core'
 import { readJSON } from 'fs-extra'
-import { join } from 'path'
 
 import { parse } from '../common/semver'
 import { Mode } from '../common/mode'
@@ -18,7 +19,10 @@ export interface Alias {
   resolve?: string
 }
 
-export type BuildCompilerOptions = Omit<CompilerOptions<BuildPlugin>, 'target' | 'plugins'> & {
+export type BuildCompilerOptions = Omit<
+  CompilerOptions<BuildPlugin>,
+  'target' | 'plugins'
+> & {
   plugins: Array<new (opts: BuildPluginOptions) => BuildPlugin>
   mode: Mode
 }
@@ -26,9 +30,9 @@ export type BuildCompilerOptions = Omit<CompilerOptions<BuildPlugin>, 'target' |
 export class BuildCompiler extends Compiler<BuildPlugin> {
   private mode: Mode
 
-  constructor ({ project, plugins, mode }: BuildCompilerOptions) {
+  constructor({ project, plugins, mode }: BuildCompilerOptions) {
     super({ project, plugins: [], target: lifecycle })
-    this.plugins = plugins.map(P => new P({ project, mode }))
+    this.plugins = plugins.map((P) => new P({ project, mode }))
     this.mode = mode
   }
 
@@ -41,7 +45,9 @@ export class BuildCompiler extends Compiler<BuildPlugin> {
     )
   }
 
-  public getAliases = async (onConflict: 'throw' | 'warn' | 'skip' = 'warn'): Promise<Alias[]> => {
+  public getAliases = async (
+    onConflict: 'throw' | 'warn' | 'skip' = 'warn'
+  ): Promise<Alias[]> => {
     const aliases = await this.plugins.reduce(
       async (acc, plugin) => plugin.getAliases(await acc),
       Promise.resolve([] as Alias[])
@@ -68,10 +74,18 @@ export class BuildCompiler extends Compiler<BuildPlugin> {
       if (previousMajor !== currentMajor) {
         switch (onConflict) {
           case 'throw':
-            throw new Error(`💣 Dependency ${name} found duplicated. Need to resolve to ${previousMajor}.x or ${currentMajor}.x`)
+            throw new Error(
+              `💣 Dependency ${name} found duplicated. Need to resolve to ${previousMajor}.x or ${currentMajor}.x`
+            )
           case 'warn':
-            console.warn(`💣 Dependency ${name} found duplicated. Resolving to ${Math.max(previousMajor, currentMajor)}.x`)
-            resolvedAliases[name] = previousMajor > currentMajor ? previous : current
+            console.warn(
+              `💣 Dependency ${name} found duplicated. Resolving to ${Math.max(
+                previousMajor,
+                currentMajor
+              )}.x`
+            )
+            resolvedAliases[name] =
+              previousMajor > currentMajor ? previous : current
         }
       }
     }
@@ -89,19 +103,25 @@ export class BuildPlugin extends Plugin {
   public mode: Mode
   public project: Project
 
-  constructor (options: BuildPluginOptions) {
+  constructor(options: BuildPluginOptions) {
     super({ target: lifecycle })
     this.mode = options.mode
     this.project = options.project
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public getConfig = async (previous: TransformOptions, target: BuildTarget): Promise<TransformOptions> => previous
+  public getConfig = async (
+    previous: TransformOptions,
+    target: BuildTarget
+  ): Promise<TransformOptions> => previous
 
   public getAliases = async (previous: Alias[]): Promise<Alias[]> => previous
 }
 
-export const packageToAlias = async (name: string, resolve: (x: string) => string): Promise<Alias> => {
+export const packageToAlias = async (
+  name: string,
+  resolve: (x: string) => string
+): Promise<Alias> => {
   const packageJSONPath = resolve(`${name}/package.json`)
   const { version } = await readJSON(packageJSONPath)
   return { name, version: `^${version}` }

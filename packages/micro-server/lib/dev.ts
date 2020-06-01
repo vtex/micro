@@ -3,7 +3,7 @@ import {
   ServeCompiler,
   Plugins,
   Project,
-  PublicPaths
+  PublicPaths,
 } from '@vtex/micro-core'
 import compress from 'compression'
 import express from 'express'
@@ -20,8 +20,8 @@ import { Next, Req, Res } from './typings'
 interface DevServerOptions {
   importMap: ImportMap
   statsJson: Stats.ToJsonOutput
-  project: Project,
-  plugins: Plugins['serve'][]
+  project: Project
+  plugins: Array<Plugins['serve']>
   publicPaths: PublicPaths
   host: string
   port: number
@@ -33,7 +33,11 @@ const context = (
   statsJson: Stats.ToJsonOutput,
   publicPaths: PublicPaths
 ) => (req: Req, res: Res, next: Next) => {
-  const { locals: { route: { page, path } } } = res
+  const {
+    locals: {
+      route: { page, path },
+    },
+  } = res
   res.locals.compiler = new ServeCompiler({
     project,
     plugins,
@@ -43,8 +47,8 @@ const context = (
       lifecycleTarget: 'build',
       publicPaths,
       page,
-      path
-    }
+      path,
+    },
   })
   next()
 }
@@ -56,7 +60,7 @@ export const startDevServer = async ({
   project,
   plugins,
   host,
-  port
+  port,
 }: DevServerOptions) => {
   const routerMiddleware = await router(project, publicPaths)
   const contextMiddleware = context(project, plugins, statsJson, publicPaths)
@@ -66,9 +70,18 @@ export const startDevServer = async ({
   app.use(logger('dev'))
   app.use(compress())
 
-  app.get('/favicon.ico', (req: Req, res: Res) => { res.status(404); res.send(null) })
+  app.get('/favicon.ico', (req: Req, res: Res) => {
+    res.status(404)
+    res.send(null)
+  })
   app.get(`${publicPaths.assets}*`, headers, streamAssets(project, publicPaths))
-  app.get(`${publicPaths.data}*`, headers, routerMiddleware, contextMiddleware, respondData)
+  app.get(
+    `${publicPaths.data}*`,
+    headers,
+    routerMiddleware,
+    contextMiddleware,
+    respondData
+  )
   app.get('/*', headers, routerMiddleware, contextMiddleware, devSSR(importMap))
 
   app.listen(port, () => console.log(`🦄 DevServer is UP on ${host}:${port}`))

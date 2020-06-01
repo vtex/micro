@@ -1,4 +1,5 @@
 import { join } from 'path'
+
 import { Configuration } from 'webpack'
 import { Block, Context, createConfig, setOutput } from 'webpack-blocks'
 
@@ -15,21 +16,24 @@ export const pagesFrameworkName = 'micro-framework'
 
 export type BundleTarget = 'webnew' | 'webold'
 
-export type BundleCompilerOptions = Omit<CompilerOptions<BundlePlugin>, 'target' | 'plugins'> & {
+export type BundleCompilerOptions = Omit<
+  CompilerOptions<BundlePlugin>,
+  'target' | 'plugins'
+> & {
   plugins: Array<new (options: BundlePluginOptions) => BundlePlugin>
   mode: Mode
 }
 
 export class BundleCompiler extends Compiler<BundlePlugin> {
-  constructor ({ project, plugins, mode }: BundleCompilerOptions) {
+  constructor({ project, plugins, mode }: BundleCompilerOptions) {
     super({ project, plugins: [], target: lifecycle })
-    this.plugins = plugins.map(P => new P({ project, mode }))
+    this.plugins = plugins.map((P) => new P({ project, mode }))
   }
 
   public getConfig = async (target: BundleTarget): Promise<Configuration> => {
     const initialConfig = setOutput({
       path: join(this.dist, target),
-      publicPath: '/assets'
+      publicPath: '/assets',
     })
     const merged = await this.plugins.reduce(
       async (acc, plugin) => plugin.getConfig(await acc, target),
@@ -48,16 +52,17 @@ export abstract class BundlePlugin extends Plugin {
   public project: Project
   public mode: Mode
 
-  constructor (
-    options: BundlePluginOptions
-  ) {
+  constructor(options: BundlePluginOptions) {
     super({ target: lifecycle })
     this.project = options.project
     this.mode = options.mode
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public abstract getConfig = async (config: Block<Context>, target: BundleTarget): Promise<Block<Context>> => {
+  public abstract getConfig = async (
+    config: Block,
+    target: BundleTarget
+  ): Promise<Block> => {
     throw new Error(`💣 not implemented: ${target}, ${config}`)
   }
 }

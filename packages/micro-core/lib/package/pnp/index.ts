@@ -1,6 +1,7 @@
 import assert from 'assert'
-import { readJSON } from 'fs-extra'
 import { join } from 'path'
+
+import { readJSON } from 'fs-extra'
 
 import { LifeCycle } from '../../project'
 import { Router, Serializable } from '../../router'
@@ -10,13 +11,16 @@ import { getLocatorFromPackageInWorkspace } from './common'
 import { globPnp, requirePnp, createDepTree } from './dfs'
 
 export class PnpPackage extends Package {
-  public issuer: string = ''
+  public issuer = ''
 
   // TODO: Make it resolve based on major and not only on the package name
   public resolve = async (projectRoot: string) => {
     const manifestPath = join(projectRoot, this.structure.manifest)
     const manifest = await readJSON(manifestPath)
-    assert(isManifest(manifest), '💣 Root manifest needs to be a valid Micro Project')
+    assert(
+      isManifest(manifest),
+      '💣 Root manifest needs to be a valid Micro Project'
+    )
     const root = getLocatorFromPackageInWorkspace(manifest.name)
     assert(root, '💣 Could not find this package in this workspace')
     const resolved = await createDepTree(root, manifest, root, new Map())
@@ -37,7 +41,11 @@ export class PnpPackage extends Package {
 
   public getPlugin = async (target: LifeCycle) => {
     try {
-      const { default: plugins } = requirePnp<{ default: Plugins }>(`plugins/${target}`, this.manifest.name, this.issuer)
+      const { default: plugins } = requirePnp<{ default: Plugins }>(
+        `plugins/${target}`,
+        this.manifest.name,
+        this.issuer
+      )
       return plugins
     } catch (err) {
       return null
@@ -45,7 +53,11 @@ export class PnpPackage extends Package {
   }
 
   public getRouter = async <T extends Serializable>() => {
-    const { default: router } = requirePnp<{ default: Router<T> }>('router', this.manifest.name, this.issuer)
+    const { default: router } = requirePnp<{ default: Router<T> }>(
+      'router',
+      this.manifest.name,
+      this.issuer
+    )
     return router
   }
 

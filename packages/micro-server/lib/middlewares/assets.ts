@@ -1,10 +1,11 @@
+import assert from 'assert'
+import { basename, extname, join } from 'path'
+
 import { Project, PublicPaths } from '@vtex/micro-core'
 import { PosixFS, ZipOpenFS } from '@yarnpkg/fslib'
 import { getLibzipSync } from '@yarnpkg/libzip'
-import assert from 'assert'
 import { createReadStream, pathExists } from 'fs-extra'
 import mime from 'mime-types'
-import { basename, extname, join } from 'path'
 import pnp from 'pnpapi'
 
 import { Req, Res } from '../typings'
@@ -29,7 +30,10 @@ const resolveES6Assets = async (assetsRootPath: string, path: string) => {
   }
 
   // Maybe this was a default import ?
-  const relativeDefaultImport = join(relativeImport.replace('.js', ''), 'index.js')
+  const relativeDefaultImport = join(
+    relativeImport.replace('.js', ''),
+    'index.js'
+  )
   if (await pathExists(relativeDefaultImport)) {
     return createReadStream(relativeDefaultImport, { encoding: 'utf-8' })
   }
@@ -37,11 +41,13 @@ const resolveES6Assets = async (assetsRootPath: string, path: string) => {
   // It's a module. Let's resolve it using PnP API
   const [issuer, rest] = path.split('__imports__')
   const splitted = rest.slice(1).split('/')
-  const module = splitted[0].startsWith('@') ? splitted.slice(0, 2).join('/') : splitted[0]
+  const module = splitted[0].startsWith('@')
+    ? splitted.slice(0, 2).join('/')
+    : splitted[0]
   const filepath = rest.replace(module, '')
 
   // Let's first read the package json so we read the module property
-  const unqualified = pnp.resolveToUnqualified(module, issuer) || ''
+  const unqualified = pnp.resolveToUnqualified(module, issuer) ?? ''
   const packageJSONPath = join(unqualified, 'package.json')
   const packageJSON = await crossFs.readJsonPromise(packageJSONPath)
 
@@ -51,7 +57,10 @@ const resolveES6Assets = async (assetsRootPath: string, path: string) => {
     return createReadStream(moduleRelativeImport, { encoding: 'utf-8' })
   }
 
-  assert(packageJSON.module, `💣 The package should contain a module locator for es6 packages. Maybe package ${module} is not compatbile with Micro 😞`)
+  assert(
+    packageJSON.module,
+    `💣 The package should contain a module locator for es6 packages. Maybe package ${module} is not compatbile with Micro 😞`
+  )
 
   // Now let's try to resolve the path
   const moduleSplitted = packageJSON.module.split('/')
@@ -71,9 +80,10 @@ const resolveES6Assets = async (assetsRootPath: string, path: string) => {
 }
 
 export const middleware = (project: Project, publicPaths: PublicPaths) => {
-  const assetsRootPath = process.env.NODE_ENV === 'production'
-    ? join(project.dist, 'bundle/webnew')
-    : join(project.dist, 'build/es6')
+  const assetsRootPath =
+    process.env.NODE_ENV === 'production'
+      ? join(project.dist, 'bundle/webnew')
+      : join(project.dist, 'build/es6')
 
   return async (req: Req, res: Res) => {
     try {
@@ -90,9 +100,10 @@ export const middleware = (project: Project, publicPaths: PublicPaths) => {
         res.set('content-type', contentType)
       }
 
-      const stream = process.env.NODE_ENV === 'production'
-        ? resolveBundleAssets(assetsRootPath, path)
-        : await resolveES6Assets(assetsRootPath, path)
+      const stream =
+        process.env.NODE_ENV === 'production'
+          ? resolveBundleAssets(assetsRootPath, path)
+          : await resolveES6Assets(assetsRootPath, path)
 
       res.statusCode = 200
       stream.pipe(res)

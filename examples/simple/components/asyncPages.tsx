@@ -6,4 +6,5 @@ export const AsyncPages: LoadableComponent<any> = loadable<AsyncPageProps>(
   { ssr: false }
 )
 
-export const AsyncImport = /* #__LOADABLE__ */ ({ name }: { name: string }) => import(`./pages/${name}`)
+export const AsyncImport = /* #__LOADABLE__ */ ({ name }: { name: string }) =>
+  import(`./pages/${name}`)

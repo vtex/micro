@@ -1,18 +1,18 @@
 import { Router } from '@vtex/micro-core'
 import { pack } from '@vtex/micro-react-router'
 
-const removeSlash = (x: string) => x.startsWith('/') ? x.slice(1) : x
+const removeSlash = (x: string) => (x.startsWith('/') ? x.slice(1) : x)
 
 const menu = {
   '/': 'Home',
   '/about': 'About',
   '/500': '500',
-  '/404': '404'
+  '/404': '404',
 }
 
 const locales = new Set(['en', 'pt'])
 
-const router: Router<any> = async request => {
+const router: Router<any> = async (request) => {
   const { path, query } = request
   const locale = locales.has(query.locale) ? query.locale : 'en'
   const name = path === '/' ? 'home' : removeSlash(path)
@@ -20,7 +20,7 @@ const router: Router<any> = async request => {
   const resolved = {
     name: locale ? `${name}.${locale}` : name,
     data: { menu },
-    status: 200
+    status: 200,
   }
 
   return pack(resolved, path)

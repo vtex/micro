@@ -1,13 +1,14 @@
+import { basename } from 'path'
+
 import LoadablePlugin from '@loadable/webpack-plugin'
 import {
   BundlePlugin,
   BundleTarget,
   pagesFrameworkName,
   pagesRuntimeName,
-  Project
+  Project,
 } from '@vtex/micro-core'
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'
-import { basename } from 'path'
 import PnpPlugin from 'pnp-webpack-plugin'
 import TerserJSPlugin from 'terser-webpack-plugin'
 import TimeFixPlugin from 'time-fix-plugin'
@@ -26,7 +27,7 @@ import {
   resolve,
   setContext,
   setMode,
-  sourceMaps
+  sourceMaps,
 } from 'webpack-blocks'
 import DynamicPublicPathPlugin from 'webpack-dynamic-public-path'
 
@@ -38,60 +39,55 @@ import { weboldBabel } from './webold'
 
 const entriesFromPages = async (project: Project) => {
   const files = await project.root.getFiles('pages')
-  return files.reduce(
-    (acc, path) => {
-      if (path.endsWith('.tsx')) {
-        const name = basename(path, '.tsx')
-        acc[name] = path.replace(project.rootPath, '.')
-      }
-      return acc
-    },
-  {} as Record<string, string>
-  )
+  return files.reduce((acc, path) => {
+    if (path.endsWith('.tsx')) {
+      const name = basename(path, '.tsx')
+      acc[name] = path.replace(project.rootPath, '.')
+    }
+    return acc
+  }, {} as Record<string, string>)
 }
 
 export default class Bundle extends BundlePlugin {
-  public getConfig = async (config: Block<Context>, target: BundleTarget): Promise<Block<Context>> => {
+  public getConfig = async (
+    config: Block,
+    target: BundleTarget
+  ): Promise<Block> => {
     const entrypoints = await entriesFromPages(this.project)
-    const block: Block<Context>[] = [
+    const block: Block[] = [
       setMode(this.mode),
       setContext(this.project.rootPath),
       entryPoint(entrypoints),
       defineConstants({
-        'process.env.NODE_ENV': this.mode
+        'process.env.NODE_ENV': this.mode,
       }),
       addPlugins([
         new LoadablePlugin({
           outputAsset: false,
-          writeToDisk: false
+          writeToDisk: false,
         }),
         new DynamicPublicPathPlugin({
-          externalPublicPath: externalPublicPathVariable
-        })
+          externalPublicPath: externalPublicPathVariable,
+        }),
       ]),
       resolve({
-        alias: aliases.reduce(
-          (acc, packageName) => {
-            acc[packageName] = require.resolve(packageName)
-            return acc
-          },
-          {} as Record<string, string>
-        ),
+        alias: aliases.reduce((acc, packageName) => {
+          acc[packageName] = require.resolve(packageName)
+          return acc
+        }, {} as Record<string, string>),
         extensions: ['.tsx', '.ts', '.js', '.jsx', '.json'],
-        plugins: [
-          PnpPlugin
-        ]
+        plugins: [PnpPlugin],
       }),
       cacheGroup(pagesRuntimeName, /\/react\/|\/react-dom\/|\/@loadable\//),
       cacheGroup(pagesFrameworkName, /\/micro-react\/components\//),
       optimization({
         runtimeChunk: {
-          name: 'webpack-runtime'
+          name: 'webpack-runtime',
         },
         splitChunks: {
           maxInitialRequests: 30,
-          maxAsyncRequests: 10
-        }
+          maxAsyncRequests: 10,
+        },
       } as any),
       customConfig({
         name: target,
@@ -100,11 +96,9 @@ export default class Bundle extends BundlePlugin {
         node: false,
         profile: true,
         resolveLoader: {
-          plugins: [
-            PnpPlugin.moduleLoader(module)
-          ]
-        }
-      }) as Block<Context>,
+          plugins: [PnpPlugin.moduleLoader(module)],
+        },
+      }) as Block,
       env('production', [
         optimization({
           noEmitOnErrors: true,
@@ -125,37 +119,38 @@ export default class Bundle extends BundlePlugin {
           portableRecords: false,
           minimizer: [
             new TerserJSPlugin({
-              extractComments: true
+              extractComments: true,
             }),
             new OptimizeCSSAssetsPlugin({
               cssProcessorPluginOptions: {
-                preset: ['default', { discardComments: { removeAll: true } }]
-              }
-            })
-          ]
+                preset: ['default', { discardComments: { removeAll: true } }],
+              },
+            }),
+          ],
         } as any),
         performance({
-          hints: 'warning'
-        })
+          hints: 'warning',
+        }),
       ]),
       env('development', [
-        addPlugins([
-          new TimeFixPlugin()
-        ]),
+        addPlugins([new TimeFixPlugin()]),
         sourceMaps('inline-source-map'),
         customConfig({
           watchOptions: {
             ignored: `${this.project.dist}`,
-            aggregateTimeout: 300
-          }
-        }) as Block<Context>
-      ])
+            aggregateTimeout: 300,
+          },
+        }) as Block,
+      ]),
     ]
 
     return group([
       config,
       ...block,
-      match(['*.tsx', '*.ts'], [target === 'webnew' ? webnewBabel : weboldBabel])
+      match(
+        ['*.tsx', '*.ts'],
+        [target === 'webnew' ? webnewBabel : weboldBabel]
+      ),
     ])
   }
 }

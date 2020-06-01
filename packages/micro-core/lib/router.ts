@@ -18,11 +18,13 @@ interface ResolvedRedirect {
 
 type Resolved<T extends Serializable> = ResolvedPage<T> | ResolvedRedirect
 
-export const isResolvedPage = <T extends Serializable>(obj: Resolved<T>): obj is ResolvedPage<T> =>
-  typeof (obj as any).name === 'string'
+export const isResolvedPage = <T extends Serializable>(
+  obj: Resolved<T>
+): obj is ResolvedPage<T> => typeof (obj as any).name === 'string'
 
-export const isResolvedRedirect = <T extends Serializable>(obj: Resolved<T>): obj is ResolvedRedirect =>
-  typeof (obj as any).location === 'string'
+export const isResolvedRedirect = <T extends Serializable>(
+  obj: Resolved<T>
+): obj is ResolvedRedirect => typeof (obj as any).location === 'string'
 
 export interface Page {
   name: string

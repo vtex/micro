@@ -2,8 +2,11 @@ import { BundleCompiler, Mode } from '@vtex/micro-core'
 import chalk from 'chalk'
 
 import { prettyPrint } from '../../../common/print'
-import { newProject, resolvePlugins } from '../../../common/project'
-import { resolveSelfPlugin } from './../../../common/project'
+import {
+  newProject,
+  resolvePlugins,
+  resolveSelfPlugin,
+} from '../../../common/project'
 
 const lifecycle = 'bundle'
 
@@ -18,7 +21,11 @@ const main = async (options: Options) => {
 
   const project = await newProject()
 
-  console.log(`🦄 Starting Micro for ${chalk.magenta(project)} at ${chalk.blue(lifecycle)}:${chalk.blue(mode)}`)
+  console.log(
+    `🦄 Starting Micro for ${chalk.magenta(project)} at ${chalk.blue(
+      lifecycle
+    )}:${chalk.blue(mode)}`
+  )
 
   const partial = await resolvePlugins(project, lifecycle)
   const self = await resolveSelfPlugin(project, lifecycle)

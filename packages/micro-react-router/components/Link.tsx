@@ -3,7 +3,7 @@ import { useInViewport } from 'react-in-viewport'
 import {
   Link as ReactRouterLink,
   LinkProps,
-  useLocation
+  useLocation,
 } from 'react-router-dom'
 
 import { MicroRouterContext } from './Router/Router'
@@ -16,7 +16,12 @@ type Props = LinkProps & {
 
 const noop = () => {}
 
-export const Link: React.SFC<Props> = ({ children, to, prefetch = false, ...rest }) => {
+export const Link: React.SFC<Props> = ({
+  children,
+  to,
+  prefetch = false,
+  ...rest
+}) => {
   const router = useContext(MicroRouterContext)
   const currentLocation = useLocation()
 
@@ -35,10 +40,15 @@ export const Link: React.SFC<Props> = ({ children, to, prefetch = false, ...rest
   }
 
   const node = useRef(null)
-  useInViewport(node, null, { disconnectOnLeave: true }, {
-    onEnterViewport: prefetchPage(onMobileDevice),
-    onLeaveViewport: noop
-  })
+  useInViewport(
+    node,
+    null,
+    { disconnectOnLeave: true },
+    {
+      onEnterViewport: prefetchPage(onMobileDevice),
+      onLeaveViewport: noop,
+    }
+  )
 
   useEffect(prefetchPage(prefetch), [currentLocation, prefetch])
 
@@ -50,7 +60,7 @@ export const Link: React.SFC<Props> = ({ children, to, prefetch = false, ...rest
       onMouseEnter={preloadPage}
       {...rest}
     >
-      { children }
+      {children}
     </ReactRouterLink>
   )
 }

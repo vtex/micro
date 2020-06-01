@@ -1,1 +1,1 @@
-declare module 'vtex-tachyons';
+declare module 'vtex-tachyons'

@@ -1,8 +1,8 @@
-import { ImportMap, ServeCompiler } from '@vtex/micro-core'
-import pretty from 'pretty'
+import { ImportMap, ServeCompiler } from '@vtex/micro-core/lib';
+import pretty from 'pretty';
 
-import { featuresFromReq } from '../features'
-import { Req, Res } from '../typings'
+import { featuresFromReq } from '../features';
+import { Req, Res } from '../typings';
 
 const ok = (
   compiler: ServeCompiler<unknown>,
@@ -19,17 +19,17 @@ ${body}
 ${compiler.getScriptTags()}
 </body>
 </html>
-`
+`;
 
 export const middleware = (req: Req, res: Res) => {
-  const { locals: { compiler, route: { page: { status } } } } = res
-  const { disableSSR } = featuresFromReq(req)
+  const { locals: { compiler, route: { page: { status } } } } = res;
+  const { disableSSR } = featuresFromReq(req);
 
-  const body = compiler.renderToString(disableSSR)
-  const html = ok(compiler, body)
+  const body = compiler.renderToString(disableSSR);
+  const html = ok(compiler, body);
 
-  res.status(status).send(html)
-}
+  res.status(status).send(html);
+};
 
 const okSSR = (
   compiler: ServeCompiler<unknown>,
@@ -48,18 +48,18 @@ ${compiler.getScriptTags()}
 ${body}
 </body>
 </html>
-`
+`;
 
 export const devSSR = (importMap: ImportMap) => {
   return (req: Req, res: Res) => {
-    const { locals: { route: { page: { status } } } } = res
-    const { disableSSR } = featuresFromReq(req)
-    const compiler = res.locals.compiler
+    const { locals: { route: { page: { status } } } } = res;
+    const { disableSSR } = featuresFromReq(req);
+    const compiler = res.locals.compiler;
 
-    const body = compiler.renderToString(disableSSR)
-    const html = pretty(okSSR(compiler, body, importMap))
+    const body = compiler.renderToString(disableSSR);
+    const html = pretty(okSSR(compiler, body, importMap));
 
-    res.type('html')
-    res.status(status).send(html)
-  }
-}
+    res.type('html');
+    res.status(status).send(html);
+  };
+};

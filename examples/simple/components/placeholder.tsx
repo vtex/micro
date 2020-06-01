@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 export const PlaceHolder: React.SFC = () => {
   return (
@@ -11,5 +11,5 @@ export const PlaceHolder: React.SFC = () => {
         ))
       }
     </ul>
-  )
-}
+  );
+};

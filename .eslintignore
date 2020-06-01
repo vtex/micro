@@ -1,0 +1,5 @@
+**/dist/**
+.yarn
+**/*.test.*
+**/*.d.ts
+**/*.json

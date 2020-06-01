@@ -1,0 +1,7 @@
+{
+  "sideEffects": false,
+  "main": "../dist/build/cjs/components/index.js",
+  "module": "../dist/build/es6/components/index.js",
+  "browser": "./index.ts",
+  "types": "./index.ts"
+}

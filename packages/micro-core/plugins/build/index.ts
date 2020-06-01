@@ -1,11 +1,11 @@
-import { TransformOptions } from '@babel/core'
-import assert from 'assert'
+import { TransformOptions } from '@babel/core';
+import assert from 'assert';
 
-import { BuildPlugin, BuildTarget } from '../../lib/lifecycles/build'
+import { BuildPlugin, BuildTarget } from '../../lib/lifecycles/build';
 
 export default class Build extends BuildPlugin {
-  public getConfig = async (previous: TransformOptions, target: BuildTarget): Promise<TransformOptions> => {
-    assert(Object.keys(previous).length === 0, '💣 micro-core should be used as first plugin. You can either move it to the begining or use another toplevel plugin')
+  public getBabelConfig = async (previous: TransformOptions, target: BuildTarget): Promise<TransformOptions> => {
+    assert(Object.keys(previous).length === 0, '💣 micro-core should be used as first plugin. You can either move it to the begining or use another toplevel plugin');
 
     return {
       root: this.project.rootPath,
@@ -51,6 +51,6 @@ export default class Build extends BuildPlugin {
         '@babel/plugin-proposal-class-properties',
         '@babel/plugin-proposal-optional-chaining'
       ].map(require.resolve as (x: string) => string)
-    }
+    };
   }
 }

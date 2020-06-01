@@ -1,12 +1,12 @@
-import React from 'react'
+import React from 'react';
 
-import { unpack } from '../Page'
+import { unpack } from '../Page';
 import {
   MicroRouterContext,
   PageProps,
   RouterProps,
   RouterStateModifier
-} from './Router'
+} from './Router';
 
 interface RouterSSRProps extends RouterProps {
   InitialPage: React.ElementType<PageProps>
@@ -14,19 +14,19 @@ interface RouterSSRProps extends RouterProps {
 
 export class RouterSSR extends React.Component<RouterSSRProps, RouterStateModifier> {
   constructor (props: RouterSSRProps) {
-    super(props)
+    super(props);
     this.state = {
-      prefetchPage: () => { throw new Error('💣 Cannot prefetch page in SSR') },
-      preloadPage: () => { throw new Error('💣 Cannot fetch page in SSR') }
-    }
+      prefetchPage: () => { throw new Error('💣 Cannot prefetch page in SSR'); },
+      preloadPage: () => { throw new Error('💣 Cannot fetch page in SSR'); }
+    };
   }
 
   public render = () => {
-    const { InitialPage } = this.props
+    const { InitialPage } = this.props;
     return (
       <MicroRouterContext.Provider value={this.state}>
         <InitialPage data={unpack(this.props.data)} />
       </MicroRouterContext.Provider>
-    )
+    );
   }
 }

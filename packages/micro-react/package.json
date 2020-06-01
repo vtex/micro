@@ -14,10 +14,10 @@
     "clean": "rm -r dist",
     "prepublish": "yarn build"
   },
-  "type": "module",
   "main": "./dist/build/cjs/index.js",
   "module": "./dist/build/es6/components/index.js",
   "browser": "./components/index.ts",
+  "sideEffects": false,
   "dependencies": {
     "@babel/core": "^7.9.6",
     "@babel/plugin-proposal-class-properties": "^7.8.3",

@@ -12,8 +12,6 @@
     "prepublish": "yarn build"
   },
   "main": "./dist/build/cjs/index.js",
-  "module": "./dist/build/es6/components/index.js",
-  "browser": "./components/index.ts",
   "dependencies": {
     "@babel/core": "^7.10.1",
     "@babel/plugin-proposal-class-properties": "^7.10.1",

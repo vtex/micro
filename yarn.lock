@@ -2703,15 +2703,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/http-proxy@npm:^1.17.4":
-  version: 1.17.4
-  resolution: "@types/http-proxy@npm:1.17.4"
-  dependencies:
-    "@types/node": "*"
-  checksum: e64ab91a79aeac44baf564f5280ea05753e9c75f98d09e1cde217db83d04095a290b3ee695191b4480efe3081061090f8450e68c4c46cbf48d2cde6763665860
-  languageName: node
-  linkType: hard
-
 "@types/invariant@npm:^2.2.31":
   version: 2.2.33
   resolution: "@types/invariant@npm:2.2.33"
@@ -2798,15 +2789,6 @@ __metadata:
   version: 3.0.3
   resolution: "@types/minimatch@npm:3.0.3"
   checksum: c0a07410b9723d53260b5c471a0036204115b0a7866380142e6882c5a2a3521a5e6c9152a756696946daa422d6986dad00c3b8f5c883e0cb11412199b0612b9b
-  languageName: node
-  linkType: hard
-
-"@types/minipass@npm:*":
-  version: 2.2.0
-  resolution: "@types/minipass@npm:2.2.0"
-  dependencies:
-    "@types/node": "*"
-  checksum: 9c69029b6d1689c3ffb172512a11b4765468aac481da2d51687f86c17f63f6c6426aca8f4731faa3d6ebd6544564da8c8bd59cefdc9607bb076cd32272feb327
   languageName: node
   linkType: hard
 
@@ -3002,16 +2984,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/tar@npm:^4.0.3":
-  version: 4.0.3
-  resolution: "@types/tar@npm:4.0.3"
-  dependencies:
-    "@types/minipass": "*"
-    "@types/node": "*"
-  checksum: 6598247e92685fece8d83d0ca26e25116c395f555828e9378c7d5f670830be98c31ced59d5bce790498b4001c9b9bccbd9b2aea64831df890c2c2063a5555d0c
-  languageName: node
-  linkType: hard
-
 "@types/terser-webpack-plugin@npm:^2.2.0":
   version: 2.2.0
   resolution: "@types/terser-webpack-plugin@npm:2.2.0"
@@ -3028,13 +3000,6 @@ __metadata:
   dependencies:
     source-map: ^0.6.1
   checksum: 3c322d22369a5e18133f6acb5ae3857d3c87ba669f38e078f09402fd95c69091122cf6ed607d903fb1c18acc627d1c4eaf7571fa341f597e98f3c51577efacd6
-  languageName: node
-  linkType: hard
-
-"@types/uikit@npm:^3.3.0":
-  version: 3.3.0
-  resolution: "@types/uikit@npm:3.3.0"
-  checksum: 5940cf4da6cdc1829a8db5cb6291ca2efe17a60f93cc499574f8942c944b069bb1fc8cf0649ddc1d3526fc5b50cb35b2030a45b2ceee6e8ff703653d7f02355b
   languageName: node
   linkType: hard
 
@@ -4033,7 +3998,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ansi-escapes@npm:^4.2.1, ansi-escapes@npm:^4.3.1":
+"ansi-escapes@npm:^4.2.1":
   version: 4.3.1
   resolution: "ansi-escapes@npm:4.3.1"
   dependencies:
@@ -8073,29 +8038,12 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"hoist-non-react-statics@npm:^2.3.1":
-  version: 2.5.5
-  resolution: "hoist-non-react-statics@npm:2.5.5"
-  checksum: c4f742b59f594a24bc484beaa186d8f57ba2defaa64705c0df6423d3fcbe42dd2062041d7504e73ca795cf25e1b18bf3c0bb24d62a8611d5b1387d8a2c901159
-  languageName: node
-  linkType: hard
-
 "hoist-non-react-statics@npm:^3.0.0, hoist-non-react-statics@npm:^3.1.0, hoist-non-react-statics@npm:^3.3.0, hoist-non-react-statics@npm:^3.3.1, hoist-non-react-statics@npm:^3.3.2":
   version: 3.3.2
   resolution: "hoist-non-react-statics@npm:3.3.2"
   dependencies:
     react-is: ^16.7.0
   checksum: 0149f2c7a4ffc9e5d0550ac3dd19592673c1c8f1d0881e8db5641502c5d16900ecbd4b70b50c4086d4cafb05d2b84ba01ac06ad575bdf3ef742c97893b7273d1
-  languageName: node
-  linkType: hard
-
-"hoist-react-statics@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "hoist-react-statics@npm:1.0.2"
-  dependencies:
-    hoist-non-react-statics: ^2.3.1
-    react-display-name: ^0.2.3
-  checksum: d0337811b6a45f81dbf3e8ca025185c3474e60579109ceaf7ed4ec69e53fc6880f169e76119c2ad16528b1e4aa1046a01f42f29b8578adbbbfcdcef4d261ffb1
   languageName: node
   linkType: hard
 
@@ -10179,13 +10127,6 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^2.0.1":
-  version: 2.1.11
-  resolution: "nanoid@npm:2.1.11"
-  checksum: 55d52cc6b33fa3f2927d0108c3268ad7f57c9d5d0c6a007ad35ed6a345f11d7100dcad588229793806d672e91d4b0ec909ae97b86033e6ba232cd8d0e7c41dda
-  languageName: node
-  linkType: hard
-
 "nanomatch@npm:^1.2.9":
   version: 1.2.13
   resolution: "nanomatch@npm:1.2.13"
@@ -12139,13 +12080,6 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"react-display-name@npm:^0.2.3":
-  version: 0.2.5
-  resolution: "react-display-name@npm:0.2.5"
-  checksum: ebbfc798f76bc989b0bfbc01bb358883679d11a3df23f917abe76eb7797c57bd4990a75c171b5f57dcc01c8ee45c5259a4e360144a32edc916b4a1579bdfb7f6
-  languageName: node
-  linkType: hard
-
 "react-dom@npm:*, react-dom@npm:^16.13.1":
   version: 16.13.1
   resolution: "react-dom@npm:16.13.1"
@@ -12201,20 +12135,6 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"react-prerendered-component@npm:^1.2.4":
-  version: 1.2.4
-  resolution: "react-prerendered-component@npm:1.2.4"
-  dependencies:
-    detect-node: ^2.0.4
-    hoist-react-statics: ^1.0.2
-    nanoid: ^2.0.1
-    react-uid: ^2.2.0
-  peerDependencies:
-    react: ^16.3.0
-  checksum: 1b602e2d08aa2431533e2b1366f525553eb471a3c39db6af2d8586e3bfcee56b1dd4a8153ddb8ea85cbaa6f6aedf96a97550fe2a22210cf823ebf00bfac62b19
-  languageName: node
-  linkType: hard
-
 "react-router-dom@npm:^5.1.2":
   version: 5.2.0
   resolution: "react-router-dom@npm:5.2.0"
@@ -12249,15 +12169,6 @@ fsevents@~2.1.2:
   peerDependencies:
     react: ">=15"
   checksum: 8944e65462cc8570088195cfcff50d40f4d618e7d1c5364fc52a39fa8823911f4eda82ba43e25caaa6b8bdf9b9dad1d8a1dea1c0626e033888eb77a195a50d98
-  languageName: node
-  linkType: hard
-
-"react-uid@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "react-uid@npm:2.2.0"
-  peerDependencies:
-    react: ^16.3.0
-  checksum: 83778a888b96b2dfc937e05ad0ace9bcfa51ee1d69c0335494e2c272605ad13e18ae0b16cea6a602c61c958e34194e1e6fc57d68ffc3379e103a01cf57e5563e
   languageName: node
   linkType: hard
 
@@ -13210,7 +13121,6 @@ fsevents@~2.1.2:
     "@types/node": ^13.13.4
     "@types/react": ^16.9.34
     "@types/react-dom": ^16.9.7
-    "@types/uikit": ^3.3.0
     "@types/webpack-blocks": ^2.0.0
     "@vtex/micro-assets": ^1.1.1-alpha.17
     "@vtex/micro-cli": ^1.1.1-alpha.17
@@ -13221,7 +13131,6 @@ fsevents@~2.1.2:
     "@vtex/micro-react-router": ^1.1.1-alpha.17
     react: ^16.13.1
     react-dom: ^16.13.1
-    react-prerendered-component: ^1.2.4
     snowpack: ^2.1.0
     typescript: ^3.8.3
     vtex-tachyons: ^3.2.0
@@ -13284,8 +13193,8 @@ fsevents@~2.1.2:
   linkType: hard
 
 "snowpack@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "snowpack@npm:2.1.0"
+  version: 2.2.0
+  resolution: "snowpack@npm:2.2.0"
   dependencies:
     "@babel/plugin-syntax-import-meta": ^7.8.3
     "@rollup/plugin-alias": ^3.0.1
@@ -13293,9 +13202,6 @@ fsevents@~2.1.2:
     "@rollup/plugin-json": ^4.0.0
     "@rollup/plugin-node-resolve": ^7.1.0
     "@rollup/plugin-replace": ^2.1.0
-    "@types/http-proxy": ^1.17.4
-    "@types/tar": ^4.0.3
-    ansi-escapes: ^4.3.1
     cacache: ^15.0.0
     cachedir: ^2.3.0
     chalk: ^4.0.0
@@ -13331,7 +13237,7 @@ fsevents@~2.1.2:
   bin:
     snowpack: dist-node/index.bin.js
     sp: dist-node/index.bin.js
-  checksum: 92451d004fb57c4e91f9447b76361e558e0839d97cafd2ad1bf6c43aaa2213170dd6387bc1f0326e5705730ae7fb428c5dd73e50e929cc36dda366657929eaad
+  checksum: 554406c16d85a2ced23290b438e0cae1c16471d981b6a22701c984feefb9aae905652dad3cb5ceedeb3411bf7db0a23345585db59eb653907718bf1c416b771b
   languageName: node
   linkType: hard
 

@@ -1,15 +1,16 @@
-import { pick } from '../common/pick'
-import { isSemver } from '../common/semver'
-import { MICRO_BUILD_DIR } from '../constants'
-import { lifecycle } from '../lifecycles/build'
+import { pick } from '../common/pick';
+import { isSemver } from '../common/semver';
+import { MICRO_BUILD_DIR } from '../constants';
+import { lifecycle } from '../lifecycles/build';
 
 type MicroOptions = {
   plugins: string[]
 }
 
 export const BaseManifest = {
+  sideEffects: false,
   main: `./${MICRO_BUILD_DIR}/${lifecycle}/cjs/index.js`,
-  module: `./${MICRO_BUILD_DIR}/${lifecycle}/es6/components/index.js`,
+  module: `./${MICRO_BUILD_DIR}/${lifecycle}/es6/index.js`,
   browser: './components/index.ts',
   micro: {
     plugins: []
@@ -20,10 +21,10 @@ export const BaseManifest = {
     clean: `rm -r ${MICRO_BUILD_DIR}`,
     prepublish: 'yarn build'
   }
-}
+};
 
-const necessary = pick(BaseManifest, ['main', 'module', 'browser'])
-const required = pick(BaseManifest, ['micro'])
+const necessary = pick(BaseManifest, ['main']);
+const required = pick(BaseManifest, ['micro']);
 
 type Base = typeof BaseManifest
 
@@ -36,16 +37,14 @@ export interface Manifest extends Base {
 }
 
 // TODO: improve this condition
-const isMicro = (x: any): x is MicroOptions => Array.isArray(x?.plugins)
+const isMicro = (x: any): x is MicroOptions => Array.isArray(x?.plugins);
 
 export const isManifest = (obj: any): obj is Manifest => {
   return typeof obj?.name === 'string' &&
     isSemver(obj.version) &&
     obj.main === BaseManifest.main &&
-    obj.module === BaseManifest.module &&
-    obj.browser === BaseManifest.browser &&
-    isMicro(obj.micro)
-}
+    isMicro(obj.micro);
+};
 
 export const genManifest = (partial: Pick<Manifest, 'name' | 'version'>): Manifest => {
   const {
@@ -71,7 +70,7 @@ export const genManifest = (partial: Pick<Manifest, 'name' | 'version'>): Manife
     ...required,
     ...partial,
     ...necessary
-  } as any
+  } as any;
 
   return {
     name,
@@ -93,5 +92,5 @@ export const genManifest = (partial: Pick<Manifest, 'name' | 'version'>): Manife
     devDependencies,
     peerDependencies,
     ...rest
-  }
-}
+  };
+};

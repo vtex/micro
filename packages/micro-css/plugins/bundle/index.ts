@@ -1,11 +1,11 @@
-import { BundlePlugin } from '@vtex/micro-core'
-import { Block, Context, css, group, match } from 'webpack-blocks'
+import { BundlePlugin } from '@vtex/micro-core/lib';
+import { Block, Context, css, group, match } from 'webpack-blocks';
 
-import { extractCss } from './modules/extractCSS'
-import { purgeCSS } from './modules/purgeCSS'
+import { extractCss } from './modules/extractCSS';
+import { purgeCSS } from './modules/purgeCSS';
 
 export default class Bundle extends BundlePlugin {
-  public getConfig = async (config: Block<Context>): Promise<Block<Context>> => {
+  public getWebpackConfig = async (config: Block<Context>): Promise<Block<Context>> => {
     const block: Block<Context>[] = [
       purgeCSS({
         paths: await this.project.resolveFiles('pages', 'components')
@@ -17,11 +17,11 @@ export default class Bundle extends BundlePlugin {
         }),
         css({ styleLoader: false } as any)
       ])
-    ]
+    ];
 
     return group([
       config,
       ...block
-    ])
+    ]);
   }
 }

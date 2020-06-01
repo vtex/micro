@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 
-import { HeaderProps, LinkServer } from './header'
+import { HeaderProps, LinkServer } from './Header';
 
 type Props = Pick<HeaderProps, 'Link'>
 
@@ -14,6 +14,6 @@ const Footer: React.SFC<Props> = ({ Link = LinkServer }) => (
       <li><Link className="link dim rebel-pink dib mr3" to='/reactOnly'>react only</Link></li>
     </ul>
   </footer>
-)
+);
 
-export default Footer
+export default Footer;

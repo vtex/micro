@@ -3,4 +3,4 @@
 // versions of the following packages
 export const aliases = [
   'react-intl'
-]
+];

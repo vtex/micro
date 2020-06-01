@@ -1,17 +1,17 @@
-import loadable from '@loadable/component'
-import React from 'react'
-import { NavLink, Link } from '@vtex/micro-react-router'
-import { FormattedMessage } from '@vtex/micro-react-intl'
+import loadable from '@loadable/component';
+import { FormattedMessage } from '@vtex/micro-react-intl/components';
+import { Link, NavLink } from '@vtex/micro-react-router/components';
+import React from 'react';
 
-import { PlaceHolder } from '../placeholder'
-import { Layout } from '../layout'
-import { Loading } from '../loading'
+import { Layout } from '../layout';
+import { Loading } from '../loading';
+import { PlaceHolder } from '../placeholder';
 
 const BelowTheFold = loadable(() => import(
   /* webpackChunkName: "BelowTheFold" */
   /* webpackPreload: true */
   '../hugeComponent1'
-), { ssr: false })
+), { ssr: false });
 
 interface Props {
   data: {
@@ -21,14 +21,14 @@ interface Props {
 }
 
 const Page: React.SFC<Props> = ({ data }) => {
-  const { menu } = data
+  const { menu } = data;
   return (
     <Layout menu={menu} NavLink={NavLink} Link={Link}>
       <PlaceHolder />
       <FormattedMessage id='greeting' />
       <BelowTheFold fallback={<Loading/>}/>
     </Layout>
-  )
-}
+  );
+};
 
-export default Page
+export default Page;

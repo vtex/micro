@@ -119,4 +119,4 @@ export const htmlTags = [
   'var',
   'video',
   'wbr'
-]
+];

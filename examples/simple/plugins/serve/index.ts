@@ -1,5 +1,5 @@
-import { router } from './router'
+import { Router } from './router'
 
 export default {
-  router
+  router: Router
 }

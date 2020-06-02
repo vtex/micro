@@ -6,7 +6,7 @@ import {
   HtmlPlugin,
   HtmlPluginOptions
 } from '../lifecycles/serve/html'
-import { Router } from '../lifecycles/serve/router'
+import { RoutePlugin, RoutePluginOptions } from '../lifecycles/serve/router'
 import { Manifest } from './manifest'
 import { TSConfig } from './tsconfig'
 import { LifeCycle } from '../project'
@@ -14,7 +14,7 @@ import { LifeCycle } from '../project'
 export interface Plugins {
   serve?: {
     html?: new (options: HtmlPluginOptions) => HtmlPlugin<any> | HtmlFrameworkPlugin<any>,
-    router?: Router<any>
+    router?: new (options: RoutePluginOptions) => RoutePlugin,
     assets?: (x: string) => string
   }
   bundle?: new (options: BundlePluginOptions) => BundlePlugin,

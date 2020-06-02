@@ -5,3 +5,8 @@ export interface ResolvedPage<T extends Serializable> {
   data: T
   status: number
 }
+
+export interface ResolvedRedirect {
+  location: string
+  status: 301 | 302
+}

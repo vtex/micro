@@ -7,10 +7,15 @@ import { createGetFolderFromFile, lifecycle } from '../build/builder'
 
 const waitForReady = (watcher: chokidar.FSWatcher) => new Promise(resolve => watcher.on('ready', resolve))
 
-// TODO: We should call `micro build` first and than watch files.
-// This would make the logic in one single place
-const main = async () => {
-  const { project, prebuild, build } = await buildCommand({ dev: true })
+interface Options {
+  install?: boolean
+}
+
+const main = async (options: Options) => {
+  const { project, prebuild, build } = await buildCommand({
+    install: options.install,
+    dev: true
+  })
 
   // This function will select if we should apply Build or Prebuild
   // once a watched file changes

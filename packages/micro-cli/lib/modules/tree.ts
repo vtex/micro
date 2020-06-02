@@ -6,6 +6,11 @@ export const tree = {
         description: 'Build with dev environment',
         long: 'dev',
         type: 'boolean'
+      },
+      {
+        description: 'Reinstall web_modules',
+        long: 'install',
+        type: 'boolean'
       }
     ]
   },
@@ -26,7 +31,14 @@ export const tree = {
     }
   },
   link: {
-    description: 'Develop a Micro project'
+    description: 'Develop a Micro project',
+    options: [
+      {
+        description: 'Reinstall web_modules',
+        long: 'install',
+        type: 'boolean'
+      }
+    ]
   },
   serve: {
     description: 'Serve a bundled Micro project',

@@ -23,7 +23,12 @@ export class PnpPackage extends Package {
     )
     const root = getLocatorFromPackageInWorkspace(manifest.name)
     assert(root, '💣 Could not find this package in this workspace')
-    const resolved = await createDepTree(root, manifest, root, new Map())
+    const resolved = await createDepTree({
+      pkgLocator: root,
+      manifest,
+      parentLocator: root,
+      seen: new Map(),
+    })
     assert(resolved, '💣 Dependency tree traversal must return a package')
     this.dependencies = resolved.dependencies
     this.manifest = resolved.manifest

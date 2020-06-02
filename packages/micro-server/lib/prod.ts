@@ -20,12 +20,17 @@ interface ProdServerOptions {
   port: number
 }
 
-const context = (
-  project: Project,
-  plugins: any,
-  statsJson: Stats.ToJsonOutput,
+const context = ({
+  project,
+  plugins,
+  statsJson,
+  publicPaths,
+}: {
+  project: Project
+  plugins: any
+  statsJson: Stats.ToJsonOutput
   publicPaths: PublicPaths
-) => (req: Req, res: Res, next: Next) => {
+}) => (req: Req, res: Res, next: Next) => {
   const {
     locals: {
       route: { page, path },
@@ -55,7 +60,12 @@ export const startProdServer = async ({
   port,
 }: ProdServerOptions) => {
   const routerMiddleware = await router(project, publicPaths)
-  const contextMiddleware = context(project, plugins, statsJson, publicPaths)
+  const contextMiddleware = context({
+    project,
+    plugins,
+    statsJson,
+    publicPaths,
+  })
 
   const app = express()
 

@@ -75,11 +75,12 @@ export const getBuilders = async (project: Project, mode: Mode) => {
     const build = async (f: string, printFile = true) => {
       const start = process.hrtime()
       const file = fixWatcherPath(f)
-      for (const [target, dist, config] of targetConfigs) {
+      for await (const [target, dist, config] of targetConfigs) {
         const transformed = await transformFileAsync(file, config)
         const targetFile = file
           .replace(project.rootPath, dist)
           .replace(/.tsx?$/, '.js')
+
         if (printFile) {
           console.log(
             `📃 [${chalk.blue(lifecycle)}:${
@@ -93,6 +94,7 @@ export const getBuilders = async (project: Project, mode: Mode) => {
             )} took ${chalk.yellow(hrtimeToMilis(process.hrtime(start)))}ms`
           )
         }
+
         await outputFile(targetFile, transformed?.code)
       }
     }

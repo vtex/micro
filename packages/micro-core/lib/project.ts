@@ -8,9 +8,40 @@ import { Package, PackageRootEntries, Plugins } from './package/base'
 import { PnpPackage } from './package/pnp'
 
 export type LifeCycle = 'serve' | 'bundle' | 'build'
-
+export type WalkFn = (r: Package, p: Package | null) => void
 export interface ProjectOptions {
   rootPath: string
+}
+
+const walkRec = ({
+  root,
+  parent,
+  fn,
+  seen,
+}: {
+  root: Package
+  parent: Package | null
+  fn: WalkFn
+  seen: Set<string>
+}) => {
+  const node = root.toString()
+
+  if (seen.has(node)) {
+    return
+  }
+
+  seen.add(node)
+  fn(root, parent)
+
+  for (const dependency of root.dependencies) {
+    walkRec({ root: dependency, parent: root, fn, seen })
+  }
+}
+
+export const walk = (root: Package, fn: WalkFn) => {
+  const seen = new Set<string>()
+  walkRec({ root, parent: null, fn, seen })
+  return root
 }
 
 /**
@@ -61,13 +92,15 @@ export class Project {
       if (index < 0) {
         return
       }
+
       const maybeVersion = dependencies[curr.manifest.name]
+      // eslint-disable-next-line vtex/prefer-early-return
       if (
         maybeVersion &&
         parse(maybeVersion).major === parse(curr.manifest.version).major
       ) {
-        const index = locators.findIndex((x) => curr.manifest.name === x)
-        packages.splice(index, 0, curr)
+        const idx = locators.findIndex((x) => curr.manifest.name === x)
+        packages.splice(idx, 0, curr)
       }
     })
     const plugins = await packages.reduce(async (accPromise, pkg) => {
@@ -75,9 +108,11 @@ export class Project {
         accPromise,
         pkg.getPlugin(target),
       ])
+
       if (plugin) {
         acc[pkg.manifest.name] = plugin as NonNullable<Plugins[T]>
       }
+
       return acc
     }, Promise.resolve({} as Record<string, NonNullable<Plugins[T]>>))
     return plugins
@@ -122,32 +157,4 @@ export class Project {
   }
 
   public resolveAliases = () => resolveProjectAliases(this)
-}
-
-export type WalkFn = (r: Package, p: Package | null) => void
-
-export const walk = (root: Package, fn: WalkFn) => {
-  const seen = new Set<string>()
-  walkRec(root, null, fn, seen)
-  return root
-}
-
-const walkRec = (
-  root: Package,
-  parent: Package | null,
-  fn: WalkFn,
-  seen: Set<string>
-) => {
-  const node = root.toString()
-
-  if (seen.has(node)) {
-    return
-  }
-
-  seen.add(node)
-  fn(root, parent)
-
-  for (const dependency of root.dependencies) {
-    walkRec(dependency, root, fn, seen)
-  }
 }

@@ -39,7 +39,7 @@ export const FetchCurrentPage: React.SFC = ({ children }) => {
 
   React.useEffect(() => {
     router.preloadPage(location)
-  }, [location])
+  }, [location, router])
 
   return <Fragment>{children}</Fragment>
 }

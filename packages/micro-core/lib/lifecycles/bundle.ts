@@ -1,7 +1,7 @@
 import { join } from 'path'
 
 import { Configuration } from 'webpack'
-import { Block, Context, createConfig, setOutput } from 'webpack-blocks'
+import { Block, createConfig, setOutput } from 'webpack-blocks'
 
 import { Mode } from '../common/mode'
 import { Compiler, CompilerOptions } from '../compiler'

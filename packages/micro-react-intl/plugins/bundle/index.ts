@@ -4,7 +4,7 @@ import {
   pagesRuntimeName,
 } from '@vtex/micro-core'
 import { cacheGroup } from '@vtex/micro-react'
-import { Block, Context, group, resolve } from 'webpack-blocks'
+import { Block, group, resolve } from 'webpack-blocks'
 
 import { aliases } from '../aliases'
 

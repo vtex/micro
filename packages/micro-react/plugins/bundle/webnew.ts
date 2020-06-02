@@ -1,4 +1,4 @@
-import { Block, Context } from 'webpack-blocks'
+import { Block } from 'webpack-blocks'
 
 import { babel } from './modules/babel'
 

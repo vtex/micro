@@ -27,12 +27,14 @@ export const Link: React.SFC<Props> = ({
 
   let fetched = false
   const prefetchPage = (condition: boolean) => () => {
+    // eslint-disable-next-line vtex/prefer-early-return
     if (!fetched && condition) {
       fetched = true
       router.prefetchPage(locationFromProps(to as any, currentLocation))
     }
   }
   const preloadPage = () => {
+    // eslint-disable-next-line vtex/prefer-early-return
     if (!fetched) {
       fetched = true
       router.preloadPage(locationFromProps(to as any, currentLocation))

@@ -1,5 +1,5 @@
 import { BundlePlugin } from '@vtex/micro-core'
-import { Block, Context, css, group, match } from 'webpack-blocks'
+import { Block, css, group, match } from 'webpack-blocks'
 
 import { extractCss } from './modules/extractCSS'
 import { purgeCSS } from './modules/purgeCSS'

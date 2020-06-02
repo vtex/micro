@@ -1,4 +1,4 @@
-export const SERVER_PORT = Number.parseInt(process.env.PORT ?? '3000')
+export const SERVER_PORT = Number.parseInt(process.env.PORT ?? '3000', 10)
 
 export const HOST = 'http://localhost'
 

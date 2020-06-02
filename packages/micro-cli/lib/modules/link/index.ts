@@ -95,31 +95,33 @@ const main = async () => {
 
   const hasPages = (await project.root.getFiles('pages')).length > 0
   const hasRouter = (await project.root.getFiles('router')).length > 0
-  if (hasRouter && hasPages) {
-    console.log('🦄 Resolving aliases')
-    const [pluginAliases, projectAliases] = await Promise.all([
-      buildCompiler.getAliases('warn'),
-      project.resolveAliases(),
-    ])
-
-    console.log('🦄 Building import map')
-    const importMap = importMapFromAliases(
-      projectAliases,
-      pluginAliases,
-      PUBLIC_PATHS
-    )
-
-    console.log(`🦄 [${lifecycle}]: Starting DevServer`)
-
-    await startDevServer({
-      publicPaths: PUBLIC_PATHS,
-      importMap,
-      project,
-      plugins: await resolvePlugins(project, 'serve'),
-      host: HOST,
-      port: SERVER_PORT,
-    } as any)
+  if (!hasRouter || !hasPages) {
+    return
   }
+
+  console.log('🦄 Resolving aliases')
+  const [pluginAliases, projectAliases] = await Promise.all([
+    buildCompiler.getAliases('warn'),
+    project.resolveAliases(),
+  ])
+
+  console.log('🦄 Building import map')
+  const importMap = importMapFromAliases(
+    projectAliases,
+    pluginAliases,
+    PUBLIC_PATHS
+  )
+
+  console.log(`🦄 [${lifecycle}]: Starting DevServer`)
+
+  await startDevServer({
+    publicPaths: PUBLIC_PATHS,
+    importMap,
+    project,
+    plugins: await resolvePlugins(project, 'serve'),
+    host: HOST,
+    port: SERVER_PORT,
+  } as any)
 }
 
 export default main

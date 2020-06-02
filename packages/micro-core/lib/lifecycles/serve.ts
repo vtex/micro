@@ -8,7 +8,7 @@ import { Plugin } from '../plugin'
 import { LifeCycle } from '../project'
 import { ResolvedPage } from '../router'
 
-const lifecycle = 'serve'
+const LIFECYCLE = 'serve'
 
 export type ServeCompilerOptions<T> = Omit<
   CompilerOptions<ServePlugin<T>>,
@@ -43,7 +43,7 @@ export class ServeCompiler<T> extends Compiler<ServePlugin<T>> {
   protected frameworkPlugin: ServeFrameworkPlugin<T>
 
   constructor({ project, plugins, options }: ServeCompilerOptions<T>) {
-    super({ project, plugins: [], target: lifecycle })
+    super({ project, plugins: [], target: LIFECYCLE })
     const fullOptions = {
       ...options,
       assetsDist: assetsDistForLifecycle(project.dist, options.lifecycleTarget),
@@ -115,7 +115,7 @@ export interface ServePluginOptions {
 
 export abstract class ServePlugin<T> extends Plugin {
   constructor(protected options: ServePluginOptions) {
-    super({ target: lifecycle })
+    super({ target: LIFECYCLE })
   }
 
   public render = (element: T): T => element

@@ -71,6 +71,7 @@ export class BuildCompiler extends Compiler<BuildPlugin> {
 
       const { major: previousMajor } = parse(previous.version)
       const { major: currentMajor } = parse(version)
+
       if (previousMajor !== currentMajor) {
         switch (onConflict) {
           case 'throw':
@@ -86,6 +87,9 @@ export class BuildCompiler extends Compiler<BuildPlugin> {
             )
             resolvedAliases[name] =
               previousMajor > currentMajor ? previous : current
+            break
+
+          // no default
         }
       }
     }
@@ -112,7 +116,7 @@ export class BuildPlugin extends Plugin {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public getConfig = async (
     previous: TransformOptions,
-    target: BuildTarget
+    _target: BuildTarget
   ): Promise<TransformOptions> => previous
 
   public getAliases = async (previous: Alias[]): Promise<Alias[]> => previous

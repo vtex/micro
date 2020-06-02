@@ -64,12 +64,17 @@ export const readManifest = async (
 const getKey = <T>(locator: T) => JSON.stringify(locator)
 
 // DFS
-export const createDepTree = async (
-  pkgLocator: PackageLocator,
-  manifest: Manifest,
-  parentLocator: PackageLocator,
+export const createDepTree = async ({
+  pkgLocator,
+  manifest,
+  parentLocator,
+  seen,
+}: {
+  pkgLocator: PackageLocator
+  manifest: Manifest
+  parentLocator: PackageLocator
   seen: Map<string, PnpPackage>
-): Promise<PnpPackage | null> => {
+}): Promise<PnpPackage | null> => {
   const node = getKey(pkgLocator)
 
   // only go forward if it is a Micro package
@@ -87,7 +92,7 @@ export const createDepTree = async (
   pkg.manifest = manifest
   pkg.tsconfig = await readJsonPnp(pkgLocator, parentLocator, 'tsconfig')
 
-  for (const [name, referencish] of info.packageDependencies) {
+  for await (const [name, referencish] of info.packageDependencies) {
     const locator =
       referencish &&
       ((pnp as any).getLocator(name, referencish) as PackageLocator | null)
@@ -96,7 +101,12 @@ export const createDepTree = async (
       continue
     }
     const childManifest = await readJsonPnp(locator, pkgLocator, 'manifest')
-    const child = await createDepTree(locator, childManifest, pkgLocator, seen)
+    const child = await createDepTree({
+      pkgLocator: locator,
+      manifest: childManifest,
+      parentLocator: pkgLocator,
+      seen,
+    })
     if (child) {
       pkg.dependencies.push(child)
     }
@@ -110,12 +120,17 @@ export type VisitFn = (
   parent: PackageLocator | null
 ) => Promise<void>
 
-const walkRec = async (
-  node: PackageLocator,
-  parent: PackageLocator | null,
-  visit: VisitFn,
+const walkRec = async ({
+  node,
+  parent,
+  visit,
+  seen,
+}: {
+  node: PackageLocator
+  parent: PackageLocator | null
+  visit: VisitFn
   seen: Set<string>
-) => {
+}) => {
   const nodeStr = getKey(node)
 
   if (seen.has(nodeStr)) {
@@ -130,16 +145,16 @@ const walkRec = async (
   seen.add(nodeStr)
   await visit(node, parent)
 
-  for (const [name, referencish] of info.packageDependencies) {
+  for await (const [name, referencish] of info.packageDependencies) {
     const locator =
       referencish &&
       ((pnp as any).getLocator(name, referencish) as PackageLocator | null)
     if (!locator) {
       continue
     }
-    await walkRec(locator, node, visit, seen)
+    await walkRec({ node: locator, parent: node, visit, seen })
   }
 }
 
 export const walk = (root: PackageLocator, visit: VisitFn) =>
-  walkRec(root, null, visit, new Set())
+  walkRec({ node: root, parent: null, visit, seen: new Set() })

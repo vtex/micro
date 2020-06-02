@@ -1,3 +1,6 @@
+// temporarily disabling the no-console rule
+/* eslint-disable no-console */
+
 import { loadableReady } from '@loadable/component'
 import { canUseDOM } from 'exenv'
 import React, { StrictMode } from 'react'

@@ -63,6 +63,7 @@ export default class Serve extends ServeFrameworkPlugin<JSX.Element> {
   }
 
   public getStyleTags = () => {
+    // eslint-disable-next-line vtex/prefer-early-return
     if (typeof (this.extractor as any).getMainAssets === 'function') {
       const assets = (this.extractor as any).getMainAssets('style')
       return assets
@@ -85,7 +86,12 @@ export default class Serve extends ServeFrameworkPlugin<JSX.Element> {
       .split('\n')
       .filter((x) => !x.includes('as="style"'))
       .join('\n')
-    const dataTags = withPageDataTags(name, data, dataRootPath, path)
+    const dataTags = withPageDataTags({
+      pageName: name,
+      pageData: data,
+      dataRootPath,
+      path,
+    })
     return [tagsNoCSS, dataTags].join('\n')
     // return [
     //   dataTags,

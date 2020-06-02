@@ -65,7 +65,7 @@ export abstract class Package {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public abstract getPlugin = async <T extends LifeCycle>(
-    target: T
+    _target: T
   ): Promise<Plugins[T]> => {
     throw new Error('💣 not implemented')
   }

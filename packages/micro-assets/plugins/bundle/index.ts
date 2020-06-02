@@ -1,4 +1,4 @@
-import { BundlePlugin } from '@vtex/micro-core'
+import { BundlePlugin } from '@vtex/micro-core/lib'
 import { Block, Context, file, group, match } from 'webpack-blocks'
 
 export default class Bundle extends BundlePlugin {

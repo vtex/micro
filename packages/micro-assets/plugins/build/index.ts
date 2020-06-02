@@ -1,5 +1,5 @@
 import { TransformOptions } from '@babel/core'
-import { BuildPlugin, BuildTarget } from '@vtex/micro-core'
+import { BuildPlugin, BuildTarget } from '@vtex/micro-core/lib'
 import merge from 'babel-merge'
 
 const cjsPlugins = [

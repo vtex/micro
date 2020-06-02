@@ -1,5 +1,7 @@
 import { Mode } from '@vtex/micro-core/lib'
 import chalk from 'chalk'
+import { ensureDir } from 'fs-extra'
+import { join } from 'path'
 
 import { newProject } from '../../common/project'
 import { clean, getBuilders, rejectDeclarationFiles } from './builder'
@@ -46,6 +48,11 @@ const main = async (options: Options) => {
   if (userland.length > 0) {
     const isRenderableProject = userland.some(x => x.includes('/pages/'))
     if (isRenderableProject) {
+      // Somehow, Snopack needs a node_modules directory in order to work properly.
+      // This is not true in a monorepo, where node_modules is in the parent folder,
+      // so let's emulate a node_modules in the project's root folder
+      await ensureDir(join(project.rootPath, 'node_modules'))
+
       const installMsg = `🦄 [${lifecycle}]: web_modules installation took`
       console.time(installMsg)
       await installWebModules(buildCompiler)

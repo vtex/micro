@@ -1,4 +1,4 @@
-import { ResolvedPage, Serializable } from '../components/page'
+import { ResolvedPage, Serializable } from '../../../components/page'
 
 interface MicroRequest {
   path: string

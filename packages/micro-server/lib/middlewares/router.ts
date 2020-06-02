@@ -14,18 +14,19 @@ const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development
 
 let router: Router<Serializable> | null = null
 const getRouter = async (project: Project) => {
-  if (mode === 'development') {
-    return project.getRouter()
+  if (mode !== 'development' && router) {
+    return router
   }
+  const servePlugin = await project.root.getPlugin('serve')
+  assert(servePlugin && servePlugin.router, '💣 The project must have a router plugin to be serveable')
 
-  if (router === null) {
-    const r = await project.getRouter()
-    assert(typeof r === 'function', '💣 No router found for package')
+  // Let's only log once that we've found the router config
+  if (!router) {
     console.log('🐙 [router]: Found router config')
-    router = r
   }
 
-  return router
+  router = servePlugin.router
+  return servePlugin.router
 }
 
 export const middleware = async (project: Project, publicPaths: PublicPaths) => {

@@ -3,7 +3,6 @@ import { readJSON, readJson } from 'fs-extra'
 import globby from 'globby'
 import { join } from 'path'
 
-import { Serializable } from '../../../components/page'
 import { LifeCycle } from '../../project'
 import { Package, PackageRootEntries, PackageStructure } from '../base'
 import { isManifest } from '../manifest'
@@ -73,18 +72,6 @@ export class ModulesPackage extends Package {
     } catch (err) {
       return null
     }
-  }
-
-  public getRouter = async <T extends Serializable>() => {
-    const resolved = require.resolve(join(this.manifest.name, 'router'))
-
-    // Do not cache modules in development
-    if (mode === 'development') {
-      delete require.cache[resolved]
-    }
-
-    const { default: router } = require(join(resolved, '..', 'index.js'))
-    return router
   }
 
   public getFiles = async (...targets: PackageRootEntries[]) => {

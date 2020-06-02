@@ -1,5 +1,6 @@
 import { TransformOptions } from '@babel/core'
 import deepmerge from 'deepmerge'
+import babelmerge from 'babel-merge'
 import { join } from 'path'
 
 import {
@@ -11,7 +12,7 @@ import { MICRO_BUILD_DIR } from './../../lib/constants'
 
 export default class Build extends BuildPlugin {
   public getBabelConfig = async (previous: TransformOptions, target: BuildTarget): Promise<TransformOptions> => {
-    return deepmerge(previous, {
+    return babelmerge(previous, {
       root: this.project.rootPath,
       cwd: this.project.rootPath,
       sourceMaps: this.mode === 'production' ? false : 'inline',

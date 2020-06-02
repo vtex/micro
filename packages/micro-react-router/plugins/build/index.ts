@@ -1,4 +1,4 @@
-import { Alias, BuildPlugin, packageToAlias } from '@vtex/micro-core'
+import { Alias, BuildPlugin, packageToAlias } from '@vtex/micro-core/lib'
 
 import { aliases } from '../aliases'
 

@@ -2,8 +2,8 @@ import { TransformOptions } from '@babel/core';
 import { readJSON } from 'fs-extra';
 import { join } from 'path';
 
-import { parse } from '../common/semver';
 import { Mode } from '../common/mode';
+import { parse } from '../common/semver';
 import { Compiler, CompilerOptions } from '../compiler';
 import { Plugin } from '../plugin';
 import { Project } from '../project';
@@ -35,9 +35,18 @@ export class BuildCompiler extends Compiler<BuildPlugin> {
   public getDist = (target: BuildTarget) => join(this.dist, target)
 
   public getBabelConfig = async (target: BuildTarget) => {
+    const initialConfig: TransformOptions = {};
     return this.plugins.reduce(
       async (acc, plugin) => plugin.getBabelConfig(await acc, target),
-      Promise.resolve({} as TransformOptions)
+      Promise.resolve(initialConfig)
+    );
+  }
+
+  public getSnowpackConfig = async () => {
+    const initialConfig: SnowpackConfig = {};
+    return this.plugins.reduce(
+      async (acc, plugin) => plugin.getSnowpackConfig(await acc),
+      Promise.resolve(initialConfig)
     );
   }
 
@@ -98,6 +107,8 @@ export class BuildPlugin extends Plugin {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public getBabelConfig = async (previous: TransformOptions, target: BuildTarget): Promise<TransformOptions> => previous
 
+  public getSnowpackConfig = async (previous: SnowpackConfig): Promise<SnowpackConfig> => previous
+
   public getAliases = async (previous: Alias[]): Promise<Alias[]> => previous
 }
 
@@ -106,3 +117,29 @@ export const packageToAlias = async (name: string, resolve: (x: string) => strin
   const { version } = await readJSON(packageJSONPath);
   return { name, version: `^${version}` };
 };
+
+type EnvVarReplacements = Record<string, string | number | true>;
+
+type RollupPlugin = (...args: any) => any
+
+// Copied from
+// https://github.com/pikapkg/snowpack/blob/ad9b6d87776c92e27a6316e6e0b5b38b07dac32f/src/config.ts#L85
+export interface SnowpackConfig {
+  extends?: string;
+  exclude?: string[];
+  knownEntrypoints?: string[];
+  webDependencies?: {[packageName: string]: string};
+  installOptions?: {
+    dest?: string;
+    env?: EnvVarReplacements;
+    installTypes: boolean;
+    sourceMap?: boolean | 'inline';
+    externalPackage?: string[];
+    alias?: {[key: string]: string};
+    rollup?: {
+      plugins?: RollupPlugin[];
+      dedupe?: string[];
+      namedExports?: {[filepath: string]: string[]};
+    };
+  };
+}

@@ -1,20 +1,36 @@
+import { Serializable } from '@vtex/micro-core/components';
 import {
   isResolvedPage,
   isResolvedRedirect,
   Project,
-  PublicPaths
+  PublicPaths,
+  Router
 } from '@vtex/micro-core/lib';
 import assert from 'assert';
 
 import { Next, Req, Res } from '../typings';
 
+const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development';
+
+let router: Router<Serializable> | null = null;
+const getRouter = async (project: Project) => {
+  if (mode === 'development') {
+    return project.getRouter();
+  }
+
+  if (router === null) {
+    const r = await project.getRouter();
+    assert(typeof r === 'function', '💣 No router found for package');
+    console.log('🐙 [router]: Found router config');
+    router = r;
+  }
+
+  return router;
+};
+
 export const middleware = async (project: Project, publicPaths: PublicPaths) => {
-  const router = await project.getRouter();
-
-  assert(typeof router === 'function', '💣 No router found for package');
-  console.log('🐙 [router]: Found router config');
-
   return async (req: Req, res: Res, next: Next) => {
+    const router = await getRouter(project);
     const rootPath = req.path.startsWith(publicPaths!.data)
       ? publicPaths!.data
       : '/';

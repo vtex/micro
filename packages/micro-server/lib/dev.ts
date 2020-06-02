@@ -1,5 +1,4 @@
 import {
-  ImportMap,
   ServeCompiler,
   Plugins,
   Project,
@@ -18,7 +17,6 @@ import { devSSR } from './middlewares/ssr';
 import { Next, Req, Res } from './typings';
 
 interface DevServerOptions {
-  importMap: ImportMap
   statsJson: Stats.ToJsonOutput
   project: Project,
   plugins: Plugins['serve'][]
@@ -51,7 +49,6 @@ const context = (
 
 export const startDevServer = async ({
   publicPaths,
-  importMap,
   statsJson,
   project,
   plugins,
@@ -69,7 +66,7 @@ export const startDevServer = async ({
   app.get('/favicon.ico', (req: Req, res: Res) => { res.status(404); res.send(null); });
   app.get(`${publicPaths.assets}*`, headers, streamAssets(project, publicPaths));
   app.get(`${publicPaths.data}*`, headers, routerMiddleware, contextMiddleware, respondData);
-  app.get('/*', headers, routerMiddleware, contextMiddleware, devSSR(importMap));
+  app.get('/*', headers, routerMiddleware, contextMiddleware, devSSR(publicPaths));
 
   app.listen(port, () => console.log(`🦄 DevServer is UP on ${host}:${port}`));
 };

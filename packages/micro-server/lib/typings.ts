@@ -1,4 +1,5 @@
-import { ServeCompiler, ResolvedPage } from '@vtex/micro-core/lib';
+import { ResolvedPage } from '@vtex/micro-core/components';
+import { ServeCompiler } from '@vtex/micro-core/lib';
 import express, { NextFunction, Request, Response } from 'express';
 import { Stats } from 'webpack';
 

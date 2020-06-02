@@ -1,13 +1,17 @@
 import { TransformOptions } from '@babel/core';
-import assert from 'assert';
+import deepmerge from 'deepmerge';
+import { join } from 'path';
 
-import { BuildPlugin, BuildTarget } from '../../lib/lifecycles/build';
+import {
+  BuildPlugin,
+  BuildTarget,
+  SnowpackConfig
+} from '../../lib/lifecycles/build';
+import { MICRO_BUILD_DIR } from './../../lib/constants';
 
 export default class Build extends BuildPlugin {
   public getBabelConfig = async (previous: TransformOptions, target: BuildTarget): Promise<TransformOptions> => {
-    assert(Object.keys(previous).length === 0, '💣 micro-core should be used as first plugin. You can either move it to the begining or use another toplevel plugin');
-
-    return {
+    return deepmerge(previous, {
       root: this.project.rootPath,
       cwd: this.project.rootPath,
       sourceMaps: this.mode === 'production' ? false : 'inline',
@@ -51,6 +55,24 @@ export default class Build extends BuildPlugin {
         '@babel/plugin-proposal-class-properties',
         '@babel/plugin-proposal-optional-chaining'
       ].map(require.resolve as (x: string) => string)
-    };
+    });
+  }
+
+  public getSnowpackConfig = async (previous: SnowpackConfig): Promise<SnowpackConfig> => {
+    return deepmerge(previous, {
+      exclude: [
+        'router/*', // TODO: remove this from here once server extensibility is solved
+        `${MICRO_BUILD_DIR}/**/*`,
+        'plugins/**/*',
+        '!**/*.ts?(x)',
+        '**/*.d.ts'
+      ],
+      installOptions: {
+        dest: join(this.project.dist, this.target, 'es6'),
+        env: {
+          NODE_ENV: this.mode
+        }
+      }
+    });
   }
 }

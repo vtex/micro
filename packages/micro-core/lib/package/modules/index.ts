@@ -2,11 +2,13 @@ import assert from 'assert';
 import { readJSON, readJson } from 'fs-extra';
 import { join } from 'path';
 
+import { Serializable } from '../../../components/page';
 import { LifeCycle } from '../../project';
-import { Serializable } from '../../router';
 import { Package, PackageRootEntries, PackageStructure } from '../base';
 import { isManifest } from '../manifest';
 import { createDepTree, globModule } from './dfs';
+
+const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development';
 
 export class ModulesPackage extends Package {
   public issuer: string = ''
@@ -49,6 +51,12 @@ export class ModulesPackage extends Package {
   public getPlugin = async (target: LifeCycle) => {
     try {
       const resolved = require.resolve(join(this.manifest.name, 'plugins'));
+
+      // Do not cache modules in development
+      if (mode === 'development') {
+        delete require.cache[resolved];
+      }
+
       const { default: plugins } = require(join(resolved, '..', target, 'index.js'));
       return plugins;
     } catch (err) {
@@ -58,6 +66,12 @@ export class ModulesPackage extends Package {
 
   public getRouter = async <T extends Serializable>() => {
     const resolved = require.resolve(join(this.manifest.name, 'router'));
+
+    // Do not cache modules in development
+    if (mode === 'development') {
+      delete require.cache[resolved];
+    }
+
     const { default: router } = require(join(resolved, '..', 'index.js'));
     return router;
   }

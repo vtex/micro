@@ -3,7 +3,6 @@ import { join } from 'path';
 
 import { parse } from './common/semver';
 import { MICRO_BUILD_DIR } from './constants';
-import { resolveProjectAliases } from './importMap';
 import { Package, PackageRootEntries, Plugins } from './package/base';
 import { ModulesPackage } from './package/modules';
 
@@ -100,8 +99,6 @@ export class Project {
     assert(this.root, '💣 Could not find a package. Did you forget to resolve/restore packages ?');
     return `${this.root.manifest.name}@${parse(this.root.manifest.version).major}.x`;
   }
-
-  public resolveAliases = () => resolveProjectAliases(this)
 }
 
 export type WalkFn = (r: Package, p: Package | null) => void

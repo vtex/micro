@@ -1,16 +1,14 @@
+import { Serializable } from '../../components/page';
 import { parse } from '../common/semver';
-import {
-  BundlePlugin,
-  BundlePluginOptions
-} from '../lifecycles/bundle';
 import { BuildPlugin, BuildPluginOptions } from '../lifecycles/build';
+import { BundlePlugin, BundlePluginOptions } from '../lifecycles/bundle';
 import {
   ServeFrameworkPlugin,
   ServePlugin,
   ServePluginOptions
 } from '../lifecycles/serve';
 import { LifeCycle } from '../project';
-import { Router, Serializable } from '../router';
+import { Router } from '../router';
 import { Manifest } from './manifest';
 import { TSConfig } from './tsconfig';
 

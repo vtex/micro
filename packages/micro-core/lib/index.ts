@@ -8,7 +8,6 @@ export * from './lifecycles/serve';
 export * from './lifecycles/build';
 export * from './common/webpack';
 export * from './common/mode';
-export * from './common/publicPaths';
 export * from './common/semver';
 export * from './router';
-export * from './importMap';
+export * from '../components/publicPaths';

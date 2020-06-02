@@ -1,11 +1,11 @@
 import { join } from 'path';
 import { Stats } from 'webpack';
 
-import { PublicPaths } from '../common/publicPaths';
+import { PublicPaths } from '../../components/publicPaths';
 import { Compiler, CompilerOptions } from '../compiler';
 import { Plugin } from '../plugin';
 import { LifeCycle } from '../project';
-import { ResolvedPage } from '../router';
+import { ResolvedPage } from '../../components/page';
 
 const lifecycle = 'serve';
 

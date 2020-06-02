@@ -67,6 +67,7 @@ export default class Serve extends ServeFrameworkPlugin<JSX.Element> {
         }
       ).join('\n');
     }
+    return '';
     // return this.extractor.getStyleTags()
   }
 

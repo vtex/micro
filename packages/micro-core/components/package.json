@@ -1,0 +1,4 @@
+{
+  "sideEffects": false,
+  "main": "../dist/build/cjs/components/index.js"
+}

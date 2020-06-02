@@ -2576,6 +2576,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/deepmerge@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@types/deepmerge@npm:2.2.0"
+  dependencies:
+    deepmerge: "*"
+  checksum: 1293a83b7a8cb150819c898bad7b8cf92324c2f49a00d410d2188e300dbb88a626a6a40e27e0e49fc2ccde8d4643efaffcd4780b7b9ad72c4ca993c35aa16e97
+  languageName: node
+  linkType: hard
+
 "@types/emscripten@npm:^1.38.0":
   version: 1.39.4
   resolution: "@types/emscripten@npm:1.39.4"
@@ -3260,6 +3269,7 @@ __metadata:
     nodemon: ^2.0.3
     open: ^7.0.4
     ramda: ^0.27.0
+    snowpack: ^2.2.0
     typescript: ^3.8.3
     webpack: ^4.43.0
   bin:
@@ -3277,6 +3287,7 @@ __metadata:
     "@babel/preset-env": ^7.10.1
     "@babel/preset-typescript": ^7.10.1
     "@types/babel__core": ^7.1.7
+    "@types/deepmerge": ^2.2.0
     "@types/fs-extra": ^8.1.0
     "@types/globby": ^9.1.0
     "@types/pnpapi": ^0.0.0
@@ -3285,6 +3296,7 @@ __metadata:
     "@types/webpack-blocks": ^2.0.0
     "@yarnpkg/fslib": ^2.0.0-rc.20
     "@yarnpkg/libzip": ^2.0.0-rc.11
+    deepmerge: ^4.2.2
     fs-extra: ^9.0.0
     globby: ^11.0.0
     pnpapi: ^0.0.0
@@ -6081,7 +6093,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"deepmerge@npm:^4.2.2":
+"deepmerge@npm:*, deepmerge@npm:^4.2.2":
   version: 4.2.2
   resolution: "deepmerge@npm:4.2.2"
   checksum: 0c33d82f7402c61b296b6ee72ed6972c18bc2f65fe911354fff941967adc8e50cd201f22cf2bb948ae8ab9b881d22890e51f94ad695914a6269bc301204172ea
@@ -13192,7 +13204,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"snowpack@npm:^2.1.0":
+"snowpack@npm:^2.1.0, snowpack@npm:^2.2.0":
   version: 2.2.0
   resolution: "snowpack@npm:2.2.0"
   dependencies:

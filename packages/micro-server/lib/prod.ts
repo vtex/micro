@@ -4,7 +4,7 @@ import express from 'express'
 import logger from 'morgan'
 import { Stats } from 'webpack'
 
-import { HtmlPlugin, resolvePlugins } from './common'
+import { HtmlPlugin, resolvePlugins, RouterPlugin } from './common'
 import { middleware as streamAssets } from './middlewares/assets'
 import { middleware as respondData } from './middlewares/data'
 import { middleware as headers } from './middlewares/headers'
@@ -51,8 +51,9 @@ export const startProdServer = async ({
 }: ProdServerOptions) => {
   const plugins = await resolvePlugins(project)
   const htmlPlugins = plugins.map(p => p?.html).filter((p): p is NonNullable<HtmlPlugin> => !!p)
+  const routerPlugins = plugins.map(p => p?.router).filter((p): p is NonNullable<RouterPlugin> => !!p)
 
-  const routerMiddleware = await router(project, publicPaths)
+  const routerMiddleware = await router(project, routerPlugins, publicPaths)
   const contextMiddleware = context(project, htmlPlugins, statsJson, publicPaths)
 
   const app = express()

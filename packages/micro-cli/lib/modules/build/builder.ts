@@ -59,7 +59,7 @@ export const getBuilders = async (
 
   const createBuild = async () => {
     const selfPlugin = await resolveSelfPlugin(project, lifecycle)
-    const allPlugins = selfPlugin ? [...plugins, selfPlugin] : plugins
+    const allPlugins = selfPlugin ? [selfPlugin, ...plugins] : plugins
     const compiler = new BuildCompiler({ project, plugins: allPlugins, mode })
     const targetConfigs: [BuildTarget, string, TransformOptions][] = [
       ['cjs', compiler.getDist('cjs'), await compiler.getBabelConfig('cjs')],

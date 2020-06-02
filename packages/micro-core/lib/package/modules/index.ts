@@ -82,14 +82,15 @@ export class ModulesPackage extends Package {
   }
 
   public getFiles = async (...targets: PackageRootEntries[]) => {
-    let path = ''
     // We can't require.resolve since we are the root. We need to use the raw Filesystem instead
+    let path = ''
     if (this.issuer === ROOT) {
       path = this.projectRootPath
     } else {
       const locator: string = require.resolve(join(this.manifest.name, PackageStructure.manifest))
       path = join(locator, '..')
     }
+
     const query = this.getGlobby(...targets)
     const matches = await globby(query, { cwd: path })
     return matches.map(p => join(path, p))

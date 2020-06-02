@@ -1,7 +1,7 @@
 import loadable from '@loadable/component'
 import React from 'react'
 
-import { LinkServer } from '../header'
+import { LinkServer } from '../Header'
 import { Layout } from '../layout'
 import { Loading } from '../loading'
 import { PlaceHolder } from '../placeholder'

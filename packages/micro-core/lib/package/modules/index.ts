@@ -1,21 +1,26 @@
 import assert from 'assert'
 import { readJSON, readJson } from 'fs-extra'
+import globby from 'globby'
 import { join } from 'path'
 
 import { Serializable } from '../../../components/page'
 import { LifeCycle } from '../../project'
 import { Package, PackageRootEntries, PackageStructure } from '../base'
 import { isManifest } from '../manifest'
-import { createDepTree, globModule } from './dfs'
+import { createDepTree } from './dfs'
 
 const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development'
 
+const ROOT = 'root'
+
 export class ModulesPackage extends Package {
   public issuer: string = ''
+  public projectRootPath: string = ''
 
   // TODO: Make it resolve based on major and not only on the package name
   public resolve = async (projectRoot: string) => {
-    this.issuer = 'self'
+    this.issuer = ROOT
+    this.projectRootPath = projectRoot
 
     const seen = new Map()
 
@@ -33,7 +38,7 @@ export class ModulesPackage extends Package {
       if (!isManifest(childManifest)) {
         continue
       }
-      const child = await createDepTree(childManifest, seen)
+      const child = await createDepTree(childManifest, this.manifest.name, seen)
       if (child) {
         this.dependencies.push(child)
       }
@@ -76,6 +81,18 @@ export class ModulesPackage extends Package {
     return router
   }
 
-  public getFiles = async (...targets: PackageRootEntries[]) =>
-    globModule(this.manifest.name, this.issuer, this.getGlobby(...targets))
+  public getFiles = async (...targets: PackageRootEntries[]) => {
+    // We can't require.resolve since we are the root. We need to use the raw Filesystem instead
+    let path = ''
+    if (this.issuer === ROOT) {
+      path = this.projectRootPath
+    } else {
+      const locator: string = require.resolve(join(this.manifest.name, PackageStructure.manifest))
+      path = join(locator, '..')
+    }
+
+    const query = this.getGlobby(...targets)
+    const matches = await globby(query, { cwd: path })
+    return matches.map(p => join(path, p))
+  }
 }

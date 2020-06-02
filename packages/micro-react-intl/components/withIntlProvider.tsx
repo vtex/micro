@@ -1,5 +1,5 @@
-import React from 'react';
-import { IntlProvider } from 'react-intl';
+import React from 'react'
+import { IntlProvider } from 'react-intl'
 
 export type Messages = Record<string, string>
 
@@ -18,6 +18,6 @@ export const withIntlProvider = (
       <IntlProvider messages={messages} locale={locale} key={locale}>
         <Page data={data} error={error} />
       </IntlProvider>
-    );
-  };
-};
+    )
+  }
+}

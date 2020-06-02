@@ -1,8 +1,8 @@
-import { join } from 'path';
+import { join } from 'path'
 
-import { Plugins } from './package/base';
-import { Plugin } from './plugin';
-import { Project } from './project';
+import { Plugins } from './package/base'
+import { Plugin } from './plugin'
+import { Project } from './project'
 
 export interface CompilerOptions<T> {
   plugins: T[]
@@ -16,8 +16,8 @@ export class Compiler<T extends Plugin> {
   public project: Project
 
   constructor ({ project, target, plugins }: CompilerOptions<T>) {
-    this.project = project;
-    this.plugins = plugins;
-    this.dist = join(this.project.dist, target);
+    this.project = project
+    this.plugins = plugins
+    this.dist = join(this.project.dist, target)
   }
 }

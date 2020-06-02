@@ -1,11 +1,11 @@
-import open from 'open';
+import open from 'open'
 
-const target = 'bundle';
+const target = 'bundle'
 
 const main = async () => {
-  console.log(`🦄 Starting ${target} report`);
+  console.log(`🦄 Starting ${target} report`)
 
-  open('http://webpack.github.io/analyse/');
-};
+  open('http://webpack.github.io/analyse/')
+}
 
-export default main;
+export default main

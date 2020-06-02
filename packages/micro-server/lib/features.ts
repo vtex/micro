@@ -1,6 +1,6 @@
-import cookie from 'cookie';
+import cookie from 'cookie'
 
-import { Req } from './typings';
+import { Req } from './typings'
 
 export interface Features {
   disableSSR: boolean
@@ -8,17 +8,17 @@ export interface Features {
 
 const DEFAULT_FEATURES: Features = {
   disableSSR: false
-};
+}
 
 export const featuresFromReq = (req: Req) => {
-  const cookies = req.headers.cookie;
-  const maybeFeaturesStr = cookies && cookie.parse(cookies)?.['micro-features'];
+  const cookies = req.headers.cookie
+  const maybeFeaturesStr = cookies && cookie.parse(cookies)?.['micro-features']
   if (maybeFeaturesStr) {
-    const maybeFeatures = JSON.parse(maybeFeaturesStr);
+    const maybeFeatures = JSON.parse(maybeFeaturesStr)
     return {
       ...DEFAULT_FEATURES,
       ...maybeFeatures
-    };
+    }
   }
-  return DEFAULT_FEATURES;
-};
+  return DEFAULT_FEATURES
+}

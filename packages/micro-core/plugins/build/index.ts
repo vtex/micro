@@ -1,13 +1,13 @@
-import { TransformOptions } from '@babel/core';
-import deepmerge from 'deepmerge';
-import { join } from 'path';
+import { TransformOptions } from '@babel/core'
+import deepmerge from 'deepmerge'
+import { join } from 'path'
 
 import {
   BuildPlugin,
   BuildTarget,
   SnowpackConfig
-} from '../../lib/lifecycles/build';
-import { MICRO_BUILD_DIR } from './../../lib/constants';
+} from '../../lib/lifecycles/build'
+import { MICRO_BUILD_DIR } from './../../lib/constants'
 
 export default class Build extends BuildPlugin {
   public getBabelConfig = async (previous: TransformOptions, target: BuildTarget): Promise<TransformOptions> => {
@@ -55,7 +55,7 @@ export default class Build extends BuildPlugin {
         '@babel/plugin-proposal-class-properties',
         '@babel/plugin-proposal-optional-chaining'
       ].map(require.resolve as (x: string) => string)
-    });
+    })
   }
 
   public getSnowpackConfig = async (previous: SnowpackConfig): Promise<SnowpackConfig> => {
@@ -73,6 +73,6 @@ export default class Build extends BuildPlugin {
           NODE_ENV: this.mode
         }
       }
-    });
+    })
   }
 }

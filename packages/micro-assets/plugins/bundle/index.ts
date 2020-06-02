@@ -1,5 +1,5 @@
-import { BundlePlugin } from '@vtex/micro-core';
-import { Block, Context, file, group, match } from 'webpack-blocks';
+import { BundlePlugin } from '@vtex/micro-core'
+import { Block, Context, file, group, match } from 'webpack-blocks'
 
 export default class Bundle extends BundlePlugin {
   public getWebpackConfig = async (config: Block<Context>): Promise<Block<Context>> => {
@@ -9,11 +9,11 @@ export default class Bundle extends BundlePlugin {
           name: '[name].[ext]'
         })
       ])
-    ];
+    ]
 
     return group([
       config,
       ...block
-    ]);
+    ])
   }
 }

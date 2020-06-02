@@ -29,6 +29,6 @@
     "no-useless-constructor": "off",
     "react/prop-types": "off",
     "@typescript-eslint/no-unused-vars": "error",
-    "semi": ["error", "always"]
+    "semi": ["error", "never"]
   }
 }

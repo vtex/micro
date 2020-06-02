@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment } from 'react'
 
 const HugeComponent: React.SFC = () => {
   return (
@@ -7,7 +7,7 @@ const HugeComponent: React.SFC = () => {
         {[...Array(100)].map((_, index) => (<li key={index}>Etiam luctus laoreet erat, nec laoreet augue malesuada ut.</li>))}
       </ul>
     </Fragment>
-  );
-};
+  )
+}
 
-export default HugeComponent;
+export default HugeComponent

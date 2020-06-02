@@ -1,6 +1,6 @@
-import { Block, Context } from 'webpack-blocks';
+import { Block, Context } from 'webpack-blocks'
 
-import { babel } from './modules/babel';
+import { babel } from './modules/babel'
 
 export const weboldBabel: Block<Context> = babel({
   caller: { target: 'webold' },
@@ -23,4 +23,4 @@ export const weboldBabel: Block<Context> = babel({
     '@babel/plugin-syntax-dynamic-import',
     '@loadable/babel-plugin'
   ]
-} as any);
+} as any)

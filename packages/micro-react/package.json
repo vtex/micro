@@ -32,6 +32,7 @@
     "@loadable/webpack-plugin": "^5.12.0",
     "@vtex/micro-core": "^1.1.1-alpha.16",
     "babel-loader": "^8.1.0",
+    "babel-merge": "^3.0.0",
     "css-loader": "^3.5.3",
     "exenv": "^1.2.2",
     "file-loader": "^6.0.0",

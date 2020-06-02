@@ -1,7 +1,7 @@
-import { help } from 'findhelp';
+import { help } from 'findhelp'
 
-import { tree } from './tree';
+import { tree } from './tree'
 
 export default async () => {
-  console.log(help(tree, { name: 'micro' }));
-};
+  console.log(help(tree, { name: 'micro' }))
+}

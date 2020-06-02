@@ -1,16 +1,16 @@
-import LoadablePlugin from '@loadable/webpack-plugin';
+import LoadablePlugin from '@loadable/webpack-plugin'
 import {
   BundlePlugin,
   BundleTarget,
   pagesFrameworkName,
   pagesRuntimeName,
   Project
-} from '@vtex/micro-core/lib';
-import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
-import { basename } from 'path';
-import PnpPlugin from 'pnp-webpack-plugin';
-import TerserJSPlugin from 'terser-webpack-plugin';
-import TimeFixPlugin from 'time-fix-plugin';
+} from '@vtex/micro-core/lib'
+import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'
+import { basename } from 'path'
+import PnpPlugin from 'pnp-webpack-plugin'
+import TerserJSPlugin from 'terser-webpack-plugin'
+import TimeFixPlugin from 'time-fix-plugin'
 import {
   addPlugins,
   Block,
@@ -27,32 +27,32 @@ import {
   setContext,
   setMode,
   sourceMaps
-} from 'webpack-blocks';
-import DynamicPublicPathPlugin from 'webpack-dynamic-public-path';
+} from 'webpack-blocks'
+import DynamicPublicPathPlugin from 'webpack-dynamic-public-path'
 
-import { externalPublicPathVariable } from '../../components/publicPaths';
-import { aliases } from '../aliases';
-import { cacheGroup } from './modules/cacheGroups';
-import { webnewBabel } from './webnew';
-import { weboldBabel } from './webold';
+import { externalPublicPathVariable } from '../../components/publicPaths'
+import { aliases } from '../aliases'
+import { cacheGroup } from './modules/cacheGroups'
+import { webnewBabel } from './webnew'
+import { weboldBabel } from './webold'
 
 const entriesFromPages = async (project: Project) => {
-  const files = await project.root.getFiles('pages');
+  const files = await project.root.getFiles('pages')
   return files.reduce(
     (acc, path) => {
       if (path.endsWith('.tsx')) {
-        const name = basename(path, '.tsx');
-        acc[name] = path.replace(project.rootPath, '.');
+        const name = basename(path, '.tsx')
+        acc[name] = path.replace(project.rootPath, '.')
       }
-      return acc;
+      return acc
     },
   {} as Record<string, string>
-  );
-};
+  )
+}
 
 export default class Bundle extends BundlePlugin {
   public getWebpackConfig = async (config: Block<Context>, target: BundleTarget): Promise<Block<Context>> => {
-    const entrypoints = await entriesFromPages(this.project);
+    const entrypoints = await entriesFromPages(this.project)
     const block: Block<Context>[] = [
       setMode(this.mode),
       setContext(this.project.rootPath),
@@ -72,8 +72,8 @@ export default class Bundle extends BundlePlugin {
       resolve({
         alias: aliases.reduce(
           (acc, packageName) => {
-            acc[packageName] = require.resolve(packageName);
-            return acc;
+            acc[packageName] = require.resolve(packageName)
+            return acc
           },
           {} as Record<string, string>
         ),
@@ -150,12 +150,12 @@ export default class Bundle extends BundlePlugin {
           }
         }) as Block<Context>
       ])
-    ];
+    ]
 
     return group([
       config,
       ...block,
       match(['*.tsx', '*.ts'], [target === 'webnew' ? webnewBabel : weboldBabel])
-    ]);
+    ])
   }
 }

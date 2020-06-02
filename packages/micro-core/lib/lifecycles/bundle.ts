@@ -1,17 +1,17 @@
-import { join } from 'path';
-import { Configuration } from 'webpack';
-import { Block, Context, createConfig, setOutput } from 'webpack-blocks';
+import { join } from 'path'
+import { Configuration } from 'webpack'
+import { Block, Context, createConfig, setOutput } from 'webpack-blocks'
 
-import { Mode } from '../common/mode';
-import { Compiler, CompilerOptions } from '../compiler';
-import { Plugin } from '../plugin';
-import { Project } from '../project';
+import { Mode } from '../common/mode'
+import { Compiler, CompilerOptions } from '../compiler'
+import { Plugin } from '../plugin'
+import { Project } from '../project'
 
-const lifecycle = 'bundle';
+const lifecycle = 'bundle'
 
-export const pagesRuntimeName = 'micro-runtime';
-export const webpackRuntimeName = 'webpack-runtime';
-export const pagesFrameworkName = 'micro-framework';
+export const pagesRuntimeName = 'micro-runtime'
+export const webpackRuntimeName = 'webpack-runtime'
+export const pagesFrameworkName = 'micro-framework'
 
 export type BundleTarget = 'webnew' | 'webold'
 
@@ -22,20 +22,20 @@ export type BundleCompilerOptions = Omit<CompilerOptions<BundlePlugin>, 'target'
 
 export class BundleCompiler extends Compiler<BundlePlugin> {
   constructor ({ project, plugins, mode }: BundleCompilerOptions) {
-    super({ project, plugins: [], target: lifecycle });
-    this.plugins = plugins.map(P => new P({ project, mode }));
+    super({ project, plugins: [], target: lifecycle })
+    this.plugins = plugins.map(P => new P({ project, mode }))
   }
 
   public getWebpackConfig = async (target: BundleTarget): Promise<Configuration> => {
     const initialConfig = setOutput({
       path: join(this.dist, target),
       publicPath: '/assets'
-    });
+    })
     const merged = await this.plugins.reduce(
       async (acc, plugin) => plugin.getWebpackConfig(await acc, target),
       Promise.resolve(initialConfig)
-    );
-    return createConfig(merged);
+    )
+    return createConfig(merged)
   }
 }
 
@@ -51,13 +51,13 @@ export abstract class BundlePlugin extends Plugin {
   constructor (
     options: BundlePluginOptions
   ) {
-    super({ target: lifecycle });
-    this.project = options.project;
-    this.mode = options.mode;
+    super({ target: lifecycle })
+    this.project = options.project
+    this.mode = options.mode
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public abstract getWebpackConfig = async (config: Block<Context>, target: BundleTarget): Promise<Block<Context>> => {
-    throw new Error(`💣 not implemented: ${target}, ${config}`);
+    throw new Error(`💣 not implemented: ${target}, ${config}`)
   }
 }

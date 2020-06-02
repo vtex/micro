@@ -1,8 +1,8 @@
-import { Configuration } from 'webpack';
-import { Context } from 'webpack-blocks';
+import { Configuration } from 'webpack'
+import { Context } from 'webpack-blocks'
 
 export const cacheGroup = (name: string, regexp: RegExp) => (_: Context, util: any) => (prevConfig: Configuration) => {
-  const previousRegexp = getRegexFromCacheGroup(name, prevConfig.optimization);
+  const previousRegexp = getRegexFromCacheGroup(name, prevConfig.optimization)
 
   return util.merge({
     optimization: {
@@ -18,17 +18,17 @@ export const cacheGroup = (name: string, regexp: RegExp) => (_: Context, util: a
         }
       }
     }
-  })(prevConfig);
-};
+  })(prevConfig)
+}
 
 const mergeRegex = (r1: RegExp, r2: RegExp | undefined): RegExp => {
   if (!r2) {
-    return r1;
+    return r1
   }
-  return new RegExp(r1.source + '|' + r2.source);
-};
+  return new RegExp(r1.source + '|' + r2.source)
+}
 
-const isRegExp = (a: any): a is RegExp => typeof a.exec === 'function';
+const isRegExp = (a: any): a is RegExp => typeof a.exec === 'function'
 
 const getRegexFromCacheGroup = (name: string, optimization: Configuration['optimization']) => {
   if (
@@ -39,13 +39,13 @@ const getRegexFromCacheGroup = (name: string, optimization: Configuration['optim
     typeof optimization.splitChunks.cacheGroups === 'function' ||
     isRegExp(optimization.splitChunks.cacheGroups)
   ) {
-    return;
+    return
   }
-  const cacheGroup = optimization.splitChunks.cacheGroups[name];
+  const cacheGroup = optimization.splitChunks.cacheGroups[name]
   if (!cacheGroup) {
-    return;
+    return
   }
   if (isRegExp(cacheGroup.test)) {
-    return cacheGroup.test;
+    return cacheGroup.test
   }
-};
+}

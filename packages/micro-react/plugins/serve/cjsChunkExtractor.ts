@@ -1,4 +1,4 @@
-import { ServePlugin } from '@vtex/micro-core';
+import { ServePlugin } from '@vtex/micro-core'
 
 export interface Extractor {
   addChunk: (chunk: string) => void
@@ -17,12 +17,12 @@ window.process = {
     NODE_ENV: "${options.mode}"
   }
 }
-</script>`;
+</script>`
 
 const getModuleImportTag = (options: ServePlugin<unknown>['options']) =>
 `<script type="module-shim">
 import "${options.publicPaths.assets}pages/${options.page.name}.js";
-</script>`;
+</script>`
 
 // TODO: We should figure out a way to preload the script tags are we require them
 export class CJSChunkExtractor implements Extractor {
@@ -34,7 +34,7 @@ export class CJSChunkExtractor implements Extractor {
 
   public addChunk = (chunk: string) => {
     if (!this.chunks.has(chunk)) {
-      this.chunks.add(chunk);
+      this.chunks.add(chunk)
     }
   }
 

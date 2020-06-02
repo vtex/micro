@@ -1,8 +1,8 @@
-import { BundlePlugin } from '@vtex/micro-core/lib';
-import { Block, Context, css, group, match } from 'webpack-blocks';
+import { BundlePlugin } from '@vtex/micro-core/lib'
+import { Block, Context, css, group, match } from 'webpack-blocks'
 
-import { extractCss } from './modules/extractCSS';
-import { purgeCSS } from './modules/purgeCSS';
+import { extractCss } from './modules/extractCSS'
+import { purgeCSS } from './modules/purgeCSS'
 
 export default class Bundle extends BundlePlugin {
   public getWebpackConfig = async (config: Block<Context>): Promise<Block<Context>> => {
@@ -17,11 +17,11 @@ export default class Bundle extends BundlePlugin {
         }),
         css({ styleLoader: false } as any)
       ])
-    ];
+    ]
 
     return group([
       config,
       ...block
-    ]);
+    ])
   }
 }

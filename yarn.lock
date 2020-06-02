@@ -2463,6 +2463,54 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/babel-core@npm:^6.25.6":
+  version: 6.25.6
+  resolution: "@types/babel-core@npm:6.25.6"
+  dependencies:
+    "@types/babel-generator": "*"
+    "@types/babel-template": "*"
+    "@types/babel-traverse": "*"
+    "@types/babel-types": "*"
+    "@types/babylon": "*"
+  checksum: 883ad5746b417c3856fa18eb47d9ad42c9ff4d394ff55dc1faffa2aa08230852c6fb77d74bbdf21b3cd179f0ff114d0e09548785344560721d4947cfb5c6194f
+  languageName: node
+  linkType: hard
+
+"@types/babel-generator@npm:*":
+  version: 6.25.3
+  resolution: "@types/babel-generator@npm:6.25.3"
+  dependencies:
+    "@types/babel-types": "*"
+  checksum: 8633593fe95618a2a0c97c5753139c0634eff7bf2fc0c1168623a821bce311e63b2ddd8c64fa49b76c15bc37a7fb8ef2aede71f1f57aef5b432b4581a03c8de9
+  languageName: node
+  linkType: hard
+
+"@types/babel-template@npm:*":
+  version: 6.25.2
+  resolution: "@types/babel-template@npm:6.25.2"
+  dependencies:
+    "@types/babel-types": "*"
+    "@types/babylon": "*"
+  checksum: 3bbb3a0e82f98e63482472a92b4de620e9fe47f67fe9a6d4ddf694318cb7dbc3fd6a6bb97073deb7f3dd64699bb28fe15663ace352e129ae89b37fffdcfa7433
+  languageName: node
+  linkType: hard
+
+"@types/babel-traverse@npm:*":
+  version: 6.25.5
+  resolution: "@types/babel-traverse@npm:6.25.5"
+  dependencies:
+    "@types/babel-types": "*"
+  checksum: 501d0037c8a542138c40d32a2cf44f980a11d3a7b2086c39aa7b4e9b4714b670de2b8e07bf01d784e58529faa32a809a367a2aaff09d4a9659be3fe4c19db803
+  languageName: node
+  linkType: hard
+
+"@types/babel-types@npm:*":
+  version: 7.0.7
+  resolution: "@types/babel-types@npm:7.0.7"
+  checksum: f02210c954d402150434d8e060327245a9b435c3a371704478d7bc358979811a08b0393583ed04aee63d62fb7d0da2ba17895adc2ba12e42ff54a711751408be
+  languageName: node
+  linkType: hard
+
 "@types/babel__core@npm:^7.1.7":
   version: 7.1.7
   resolution: "@types/babel__core@npm:7.1.7"
@@ -2501,6 +2549,15 @@ __metadata:
   dependencies:
     "@babel/types": ^7.3.0
   checksum: b4f6f25e1e645a4768f0b7b294bca5c8ae7255224b15b9305b0e32ead05200d18acdefb989931c3202287e53b2b26f14147f292abf9d1bf4c525eca8cb57254a
+  languageName: node
+  linkType: hard
+
+"@types/babylon@npm:*":
+  version: 6.16.5
+  resolution: "@types/babylon@npm:6.16.5"
+  dependencies:
+    "@types/babel-types": "*"
+  checksum: 5c2591476f1047ded057e0ba6e2bee2ec68ef38f5a9517c1146146a21fef6f23ce9b9d049b9e7f01e914a5b9484e9b28dd607d46af3d28b2df2e548b8d02973e
   languageName: node
   linkType: hard
 
@@ -3238,6 +3295,7 @@ __metadata:
     "@types/webpack-blocks": ^2.0.0
     "@vtex/micro-cli": ^1.1.1-alpha.17
     "@vtex/micro-core": ^1.1.1-alpha.16
+    babel-merge: ^3.0.0
     babel-plugin-inline-json-import: ^0.3.2
     babel-plugin-transform-remove-imports: ^1.3.2
     typescript: ^3.8.3
@@ -3319,6 +3377,7 @@ __metadata:
     "@types/webpack-blocks": ^2.0.0
     "@vtex/micro-cli": ^1.1.1-alpha.17
     "@vtex/micro-core": ^1.1.1-alpha.16
+    babel-merge: ^3.0.0
     babel-plugin-ignore-html-and-css-imports: ^0.0.2
     css-loader: ^3.5.3
     mini-css-extract-plugin: ^0.9.0
@@ -3335,12 +3394,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vtex/micro-react-intl@workspace:packages/micro-react-intl"
   dependencies:
+    "@types/babel-core": ^6.25.6
     "@types/react": ^16.9.35
     "@types/react-intl": ^3.0.0
     "@types/webpack-blocks": ^2.0.0
     "@vtex/micro-cli": ^1.1.1-alpha.17
     "@vtex/micro-core": ^1.1.1-alpha.16
     "@vtex/micro-react": ^1.1.1-alpha.17
+    babel-merge: ^3.0.0
+    babel-plugin-inline-json-import: ^0.3.2
     babel-plugin-react-intl: ^7.5.14
     intl-messageformat-parser: ^5.0.10
     react-intl: ^4.6.0
@@ -3366,6 +3428,7 @@ __metadata:
     "@vtex/micro-cli": ^1.1.1-alpha.17
     "@vtex/micro-core": ^1.1.1-alpha.16
     "@vtex/micro-react": ^1.1.1-alpha.17
+    babel-merge: ^3.0.0
     history: ^4.10.1
     react-in-viewport: ^1.0.0-alpha.11
     react-router-dom: ^5.1.2
@@ -3409,6 +3472,7 @@ __metadata:
     "@vtex/micro-cli": ^1.1.1-alpha.17
     "@vtex/micro-core": ^1.1.1-alpha.16
     babel-loader: ^8.1.0
+    babel-merge: ^3.0.0
     css-loader: ^3.5.3
     exenv: ^1.2.2
     file-loader: ^6.0.0
@@ -4384,6 +4448,18 @@ __metadata:
     "@babel/core": ^7.0.0
     webpack: ">=2"
   checksum: d0cfedaf416cd1e228ccc62daa9d45f75eedab551a9b9e5a8268c0ba360e2e8848b6b57b7b33a07c98387ccb2ec52af976901247a93d8eb375c1313cdedbad80
+  languageName: node
+  linkType: hard
+
+"babel-merge@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "babel-merge@npm:3.0.0"
+  dependencies:
+    deepmerge: ^2.2.1
+    object.omit: ^3.0.0
+  peerDependencies:
+    "@babel/core": ^7.0.0
+  checksum: f903c7c19ed8a88f7c1feb277b90d0f089436397ed80b3d5753b9802ae2b986a8000b54226b7f683d5526bb0ef3ca071e16cc24eea9cb1a88b49c890aa277a7c
   languageName: node
   linkType: hard
 
@@ -6097,6 +6173,13 @@ __metadata:
   version: 4.2.2
   resolution: "deepmerge@npm:4.2.2"
   checksum: 0c33d82f7402c61b296b6ee72ed6972c18bc2f65fe911354fff941967adc8e50cd201f22cf2bb948ae8ab9b881d22890e51f94ad695914a6269bc301204172ea
+  languageName: node
+  linkType: hard
+
+"deepmerge@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "deepmerge@npm:2.2.1"
+  checksum: 16eaa582590d442efa9add13dcfa71bd706d245e3f5771c007ebd328c8fbf539820c97aee57e39e6f4c10b24a2f5e5578b3871b1ca2885191b13eda86a39ad5a
   languageName: node
   linkType: hard
 
@@ -8716,7 +8799,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"is-extendable@npm:^1.0.1":
+"is-extendable@npm:^1.0.0, is-extendable@npm:^1.0.1":
   version: 1.0.1
   resolution: "is-extendable@npm:1.0.1"
   dependencies:
@@ -10573,6 +10656,15 @@ fsevents@~2.1.2:
     define-properties: ^1.1.3
     es-abstract: ^1.17.0-next.1
   checksum: 56f4880e6b689089507664ff3844fb002e37c54d28d09f2472c9dd0a711fd48a9bb4f359ee367ba31c675bf7d4223c5b6ed7ad2406a0b2ec298f9df85098d6d2
+  languageName: node
+  linkType: hard
+
+"object.omit@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "object.omit@npm:3.0.0"
+  dependencies:
+    is-extendable: ^1.0.0
+  checksum: f410341bc398a96d5d58e0d9e1f3063b7265b5a100cf8e61c70c3575a388118e63c12e3ee534a4b675bdfbf907f43f97c46419bdc0ea62e9dbf52e12b75e4c2f
   languageName: node
   linkType: hard
 

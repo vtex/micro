@@ -5,4 +5,4 @@ export const aliases = [
   'history',
   'react-router-dom',
   'react-in-viewport'
-];
+]

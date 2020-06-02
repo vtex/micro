@@ -1,2 +1,2 @@
-export * from './publicPaths';
-export * from './page';
+export * from './publicPaths'
+export * from './page'

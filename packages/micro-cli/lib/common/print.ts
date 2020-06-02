@@ -1,5 +1,5 @@
-import { inspect } from 'util';
+import { inspect } from 'util'
 
 export const prettyPrint = (obj: any) => {
-  console.log(inspect(obj, false, 100, true));
-};
+  console.log(inspect(obj, false, 100, true))
+}

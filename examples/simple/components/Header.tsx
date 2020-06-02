@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 interface LinkProps {
   to: string
@@ -8,7 +8,7 @@ interface LinkProps {
 
 export const LinkServer: React.SFC<LinkProps> = ({ to, className, children }) => (
   <a href={to} className={className}>{children}</a>
-);
+)
 
 export interface HeaderProps {
   Link?: React.SFC<LinkProps>
@@ -25,5 +25,5 @@ export const Header: React.SFC<HeaderProps> = ({ menu, Link = LinkServer }) => {
         ))}
       </nav>
     </header>
-  );
-};
+  )
+}

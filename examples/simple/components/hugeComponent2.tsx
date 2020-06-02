@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment } from 'react'
 
 const HugeComponent: React.SFC = () => {
   return (
@@ -19,7 +19,7 @@ const HugeComponent: React.SFC = () => {
         Ut lacus libero, auctor a nunc quis, euismod interdum quam. Etiam a aliquam libero. Vestibulum ligula ligula, accumsan ac erat id, iaculis laoreet mauris. Aliquam sed orci nec nisl feugiat pulvinar at non urna. Aliquam felis enim, porttitor id hendrerit convallis, cursus a lacus. Nullam eget elit volutpat, efficitur ante ac, euismod lacus. Sed a mi auctor velit sagittis pellentesque et a metus. Praesent tristique et odio et auctor. Cras congue consectetur ex ac venenatis. Donec fermentum commodo fermentum. Mauris quam tortor, cursus nec justo sodales, ultricies tempor urna.
       </p>
     </Fragment>
-  );
-};
+  )
+}
 
-export default HugeComponent;
+export default HugeComponent

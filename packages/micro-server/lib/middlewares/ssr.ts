@@ -71,7 +71,7 @@ const scopeImportMapToPublicPath = ({ assets }: PublicPaths) => (importMap: Impo
   imports: {
     ...Object.keys(importMap.imports || {}).reduce(
       (acc, ref) => {
-        acc[ref] = join(assets, importMap.imports[ref])
+        acc[ref] = join(assets, 'web_modules', importMap.imports[ref])
         return acc
       },
       {} as Record<string, string>

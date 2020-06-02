@@ -55,14 +55,20 @@ export class ModulesPackage extends Package {
 
   public getPlugin = async (target: LifeCycle) => {
     try {
-      const resolved = require.resolve(join(this.manifest.name, 'plugins'))
+      let resolved = ''
+      if (this.issuer === ROOT) {
+        resolved = join(this.projectRootPath, 'dist', 'build', 'cjs', 'plugins', target, 'index.js')
+      } else {
+        const locator: string = require.resolve(join(this.manifest.name, 'plugins'))
+        resolved = join(locator, '..', target, 'index.js')
+      }
 
       // Do not cache modules in development
       if (mode === 'development') {
         delete require.cache[resolved]
       }
 
-      const { default: plugins } = require(join(resolved, '..', target, 'index.js'))
+      const { default: plugins } = require(resolved)
       return plugins
     } catch (err) {
       return null

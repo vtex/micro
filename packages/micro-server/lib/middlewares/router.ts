@@ -13,7 +13,11 @@ import { RouterPlugin } from './../common'
 export const middleware = async (project: Project, plugins: NonNullable<RouterPlugin>[], publicPaths: PublicPaths) => {
   assert(plugins.length > 0, '💣 The project must have a router plugin to be serveable')
   console.log('🐙 [router]: Found router config')
-  const router = new RouteCompiler({ plugins, project })
+  const router = new RouteCompiler({
+    plugins,
+    project,
+    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development'
+  })
 
   return async (req: Req, res: Res, next: Next) => {
     const rootPath = req.path.startsWith(publicPaths!.data)

@@ -23,7 +23,7 @@
     "@vtex/micro-react": "^1.1.1-alpha.21",
     "babel-merge": "^3.0.0",
     "babel-plugin-inline-json-import": "^0.3.2",
-    "babel-plugin-react-intl": "^7.5.14",
+    "babel-plugin-react-intl": "^7.5.15",
     "intl-messageformat-parser": "^5.0.10",
     "react-intl": "^4.6.0",
     "webpack-blocks": "^2.1.0"

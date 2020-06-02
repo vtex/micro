@@ -1,6 +1,6 @@
-import { Mode } from '@vtex/micro-core/lib'
+import { BuildCompiler, Mode } from '@vtex/micro-core/lib'
 import chalk from 'chalk'
-import { ensureDir } from 'fs-extra'
+import { ensureDir, pathExists } from 'fs-extra'
 import { join } from 'path'
 
 import { newProject } from '../../common/project'
@@ -9,12 +9,20 @@ import { installWebModules } from './installer'
 
 interface Options {
   dev?: boolean
+  install?: boolean
 }
 
 const lifecycle = 'build'
 
+const shouldInstallDepsAutomatically = async (compiler: BuildCompiler, userland: string[]) => {
+  const hasWebModules = await pathExists(join(compiler.dist, 'es6', 'web_modules'))
+  const hasPages = userland.some(x => x.includes('/pages/'))
+  return !hasWebModules && hasPages
+}
+
 const main = async (options: Options) => {
   const dev = !!options.dev
+  const forceInstall = !!options.install
   const mode: Mode = dev ? 'development' : 'production'
   process.env.NODE_ENV = mode
 
@@ -46,8 +54,7 @@ const main = async (options: Options) => {
 
   const { build, compiler: buildCompiler } = await createBuild()
   if (userland.length > 0) {
-    const isRenderableProject = userland.some(x => x.includes('/pages/'))
-    if (isRenderableProject) {
+    if (await shouldInstallDepsAutomatically(buildCompiler, userland) || forceInstall) {
       // Somehow, Snopack needs a node_modules directory in order to work properly.
       // This is not true in a monorepo, where node_modules is in the parent folder,
       // so let's emulate a node_modules in the project's root folder

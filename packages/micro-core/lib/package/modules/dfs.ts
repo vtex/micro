@@ -15,6 +15,7 @@ export const globModule = async (pkg: string, issuer: string, query: string) => 
 // DFS
 export const createDepTree = async (
   manifest: Manifest,
+  parent: string,
   seen: Map<string, ModulesPackage>
 ): Promise<ModulesPackage | null> => {
   const pkgName = manifest.name
@@ -30,7 +31,7 @@ export const createDepTree = async (
   seen.set(pkgLocator, pkg)
 
   // Finish instantiating the package
-  pkg.issuer = pkgName
+  pkg.issuer = parent
   pkg.manifest = manifest
   pkg.tsconfig = require(`${pkgName}/${PackageStructure.tsconfig}`)
 
@@ -40,7 +41,7 @@ export const createDepTree = async (
     if (!isManifest(childManifest)) {
       continue
     }
-    const child = await createDepTree(childManifest, seen)
+    const child = await createDepTree(childManifest, manifest.name, seen)
     if (child) {
       pkg.dependencies.push(child)
     }

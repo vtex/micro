@@ -58,7 +58,7 @@ ${body}
 `
 
 const readImportMap = async (compiler: ServeCompiler<unknown>) => {
-  const importMapPath = join(compiler.dist, '..', 'build', 'es6', 'import-map.json')
+  const importMapPath = join(compiler.dist, '..', 'build', 'es6', 'web_modules', 'import-map.json')
   const exists = await pathExists(importMapPath)
   if (exists) {
     return readJson(importMapPath)

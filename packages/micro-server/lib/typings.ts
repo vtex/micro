@@ -1,10 +1,10 @@
 import { ResolvedPage } from '@vtex/micro-core/components'
-import { ServeCompiler } from '@vtex/micro-core/lib'
+import { HtmlCompiler } from '@vtex/micro-core/lib'
 import express, { NextFunction, Request, Response } from 'express'
 import { Stats } from 'webpack'
 
 interface Locals {
-  compiler: ServeCompiler<unknown>,
+  compiler: HtmlCompiler<unknown>,
   route: {
     page: ResolvedPage<any>
     path: string

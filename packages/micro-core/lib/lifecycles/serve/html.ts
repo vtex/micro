@@ -1,17 +1,17 @@
 import { join } from 'path'
 import { Stats } from 'webpack'
 
-import { PublicPaths } from '../../components/publicPaths'
-import { Compiler, CompilerOptions } from '../compiler'
-import { Plugin } from '../plugin'
-import { LifeCycle } from '../project'
-import { ResolvedPage } from '../../components/page'
+import { PublicPaths } from '../../../components/publicPaths'
+import { Compiler, CompilerOptions } from '../../compiler'
+import { Plugin } from '../../plugin'
+import { LifeCycle } from '../../project'
+import { ResolvedPage } from '../../../components/page'
 
 const lifecycle = 'serve'
 
-export type ServeCompilerOptions<T> = Omit<CompilerOptions<ServePlugin<T>>, 'target' | 'plugins'> & {
-  plugins: Array<new (options: ServePluginOptions) => (ServePlugin<T> | ServeFrameworkPlugin<T>)>
-  options: Omit<ServePluginOptions, 'assetsDist'>
+export type HtmlCompilerOptions<T> = Omit<CompilerOptions<HtmlPlugin<T>>, 'target' | 'plugins'> & {
+  plugins: Array<new (options: HtmlPluginOptions) => (HtmlPlugin<T> | HtmlFrameworkPlugin<T>)>
+  options: Omit<HtmlPluginOptions, 'assetsDist'>
 }
 
 const assetsDistForLifecycle = (root: string, lifecycle: LifeCycle) => {
@@ -31,21 +31,21 @@ const assetsDistForLifecycle = (root: string, lifecycle: LifeCycle) => {
   throw new Error('💣 Targeting this lifecycle makes no sense')
 }
 
-export class ServeCompiler<T> extends Compiler<ServePlugin<T>> {
-  protected frameworkPlugin: ServeFrameworkPlugin<T>
+export class HtmlCompiler<T> extends Compiler<HtmlPlugin<T>> {
+  protected frameworkPlugin: HtmlFrameworkPlugin<T>
 
-  constructor ({ project, plugins, options }: ServeCompilerOptions<T>) {
+  constructor ({ project, plugins, options }: HtmlCompilerOptions<T>) {
     super({ project, plugins: [], target: lifecycle })
     const fullOptions = {
       ...options,
       assetsDist: assetsDistForLifecycle(project.dist, options.lifecycleTarget)
     }
     this.plugins = plugins.map(P => new P(fullOptions))
-    const frameworkIndex = this.plugins.findIndex(p => p instanceof ServeFrameworkPlugin)
+    const frameworkIndex = this.plugins.findIndex(p => p instanceof HtmlFrameworkPlugin)
     if (frameworkIndex < 0) {
       throw new Error('💣 At least one framework plugin is required. Take a look at @vtex/micro-react for using the React Framework')
     }
-    this.frameworkPlugin = this.plugins[frameworkIndex] as ServeFrameworkPlugin<T>
+    this.frameworkPlugin = this.plugins[frameworkIndex] as HtmlFrameworkPlugin<T>
   }
 
   public renderToString = (disableSSR: boolean = false) => {
@@ -98,7 +98,7 @@ interface AssetsDist {
   webold?: string
 }
 
-export interface ServePluginOptions {
+export interface HtmlPluginOptions {
   mode: 'production' | 'development'
   lifecycleTarget: 'build' | 'bundle'
   stats: Stats.ToJsonOutput
@@ -108,9 +108,9 @@ export interface ServePluginOptions {
   path: string
 }
 
-export abstract class ServePlugin<T> extends Plugin {
+export abstract class HtmlPlugin<T> extends Plugin {
   constructor (
-    protected options: ServePluginOptions
+    protected options: HtmlPluginOptions
   ) {
     super({ target: lifecycle })
   }
@@ -126,7 +126,7 @@ export abstract class ServePlugin<T> extends Plugin {
   public getMetaTags = () => ''
 }
 
-export abstract class ServeFrameworkPlugin<T> extends ServePlugin<T> {
+export abstract class HtmlFrameworkPlugin<T> extends HtmlPlugin<T> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public renderToString = (_element: T | null): string => ''
 

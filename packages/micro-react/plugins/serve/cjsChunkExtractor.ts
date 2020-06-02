@@ -1,4 +1,4 @@
-import { ServePlugin } from '@vtex/micro-core'
+import { HtmlPlugin } from '@vtex/micro-core/lib'
 
 export interface Extractor {
   addChunk: (chunk: string) => void
@@ -10,7 +10,7 @@ export interface Extractor {
 // Some dependencies think they have access to this variable. Webpack
 // has a plugin for adding this to the bundles, however we need to
 // add this while using es6 only
-const setupEnvVar = (options: ServePlugin<unknown>['options']) =>
+const setupEnvVar = (options: HtmlPlugin<unknown>['options']) =>
 `<script>
 window.process = {
   env: {
@@ -19,7 +19,7 @@ window.process = {
 }
 </script>`
 
-const getModuleImportTag = (options: ServePlugin<unknown>['options']) =>
+const getModuleImportTag = (options: HtmlPlugin<unknown>['options']) =>
 `<script type="module-shim">
 import "${options.publicPaths.assets}pages/${options.page.name}.js";
 </script>`
@@ -29,7 +29,7 @@ export class CJSChunkExtractor implements Extractor {
   protected chunks: Set<string> = new Set()
 
   constructor (
-    public options: ServePlugin<unknown>['options']
+    public options: HtmlPlugin<unknown>['options']
   ) {}
 
   public addChunk = (chunk: string) => {

@@ -1,5 +1,5 @@
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server'
-import { ServeFrameworkPlugin, ServePluginOptions } from '@vtex/micro-core'
+import { HtmlFrameworkPlugin, HtmlPluginOptions } from '@vtex/micro-core/lib'
 import { readFileSync } from 'fs-extra'
 import { join } from 'path'
 import { createElement } from 'react'
@@ -11,10 +11,10 @@ import { externalPublicPathVariable } from '../../components/publicPaths'
 import { withRuntimeTags } from '../../components/runtime'
 import { CJSChunkExtractor, Extractor } from './cjsChunkExtractor'
 
-export default class Serve extends ServeFrameworkPlugin<JSX.Element> {
+class Html extends HtmlFrameworkPlugin<JSX.Element> {
   public extractor: Extractor
 
-  constructor (options: ServePluginOptions) {
+  constructor (options: HtmlPluginOptions) {
     super(options)
     if (this.options.lifecycleTarget === 'bundle') {
       this.extractor = new ChunkExtractor({
@@ -90,4 +90,8 @@ export default class Serve extends ServeFrameworkPlugin<JSX.Element> {
     '<meta name="generator" content="micro@1.x">',
     '<meta charset=\'utf-8\'>'
   ].join('\n')
+}
+
+export default {
+  html: Html
 }

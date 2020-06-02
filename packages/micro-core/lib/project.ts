@@ -84,11 +84,6 @@ export class Project {
     return null
   }
 
-  public getRouter = () => {
-    assert(this.root, '💣 Could not find a package. Did you forget to resolve/restore packages ?')
-    return this.root.getRouter()
-  }
-
   public resolvePackages = async (linker: 'pnp' | 'node-modules' = 'node-modules') => {
     assert(linker === 'node-modules', '💣 Only NodeModules linker is implemented yet') // TODO: implement other linkers
     this.root = new ModulesPackage()

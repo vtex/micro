@@ -1,19 +1,22 @@
-import { Serializable } from '../../components/page'
 import { parse } from '../common/semver'
 import { BuildPlugin, BuildPluginOptions } from '../lifecycles/build'
 import { BundlePlugin, BundlePluginOptions } from '../lifecycles/bundle'
 import {
-  ServeFrameworkPlugin,
-  ServePlugin,
-  ServePluginOptions
-} from '../lifecycles/serve'
-import { LifeCycle } from '../project'
-import { Router } from '../router'
+  HtmlFrameworkPlugin,
+  HtmlPlugin,
+  HtmlPluginOptions
+} from '../lifecycles/serve/html'
+import { Router } from '../lifecycles/serve/router'
 import { Manifest } from './manifest'
 import { TSConfig } from './tsconfig'
+import { LifeCycle } from '../project'
 
 export interface Plugins {
-  serve?: new (options: ServePluginOptions) => ServePlugin<any> | ServeFrameworkPlugin<any>,
+  serve?: {
+    html?: new (options: HtmlPluginOptions) => HtmlPlugin<any> | HtmlFrameworkPlugin<any>,
+    router?: Router<any>
+    assets?: (x: string) => string
+  }
   bundle?: new (options: BundlePluginOptions) => BundlePlugin,
   build?: new (options: BuildPluginOptions) => BuildPlugin
 }
@@ -30,13 +33,6 @@ export const PackageStructure = {
 }
 
 export type PackageRootEntries = keyof typeof PackageStructure
-
-export interface PackageOptions {
-  plugins: Plugins
-  tsconfig: TSConfig
-  manifest: Manifest
-  dependencies: Package[]
-}
 
 export abstract class Package {
   public tsconfig: TSConfig = null as any
@@ -62,10 +58,6 @@ export abstract class Package {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public abstract getPlugin = async <T extends LifeCycle>(target: T): Promise<Plugins[T]> => {
-    throw new Error('💣 not implemented')
-  }
-
-  public abstract getRouter = async <T extends Serializable>(): Promise<Router<T>> => {
     throw new Error('💣 not implemented')
   }
 

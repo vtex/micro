@@ -1,7 +1,6 @@
 import { startDevServer } from '@vtex/micro-server'
 import chokidar from 'chokidar'
 
-import { resolvePlugins } from '../../common/project'
 import { HOST, PUBLIC_PATHS, SERVER_PORT } from '../../constants'
 import buildCommand from '../build'
 import { createGetFolderFromFile, lifecycle } from '../build/builder'
@@ -40,14 +39,13 @@ const main = async () => {
   await waitForReady(watcher)
 
   const hasPages = (await project.root.getFiles('pages')).length > 0
-  const hasRouter = (await project.root.getFiles('router')).length > 0
+  const hasRouter = typeof (await project.getSelfPlugin('serve'))?.router === 'function'
   if (hasRouter && hasPages) {
     console.log(`🦄 [${lifecycle}]: Starting DevServer`)
 
     await startDevServer({
       publicPaths: PUBLIC_PATHS,
       project,
-      plugins: await resolvePlugins(project, 'serve'),
       host: HOST,
       port: SERVER_PORT
     } as any)

@@ -4,9 +4,8 @@ import chalk from 'chalk'
 import { readJSON } from 'fs-extra'
 import { join } from 'path'
 
-import { newProject, resolvePlugins } from '../../common/project'
+import { newProject } from '../../common/project'
 import { BUILD, HOST, PUBLIC_PATHS, SERVER_PORT } from '../../constants'
-import { resolveSelfPlugin } from './../../common/project'
 
 const lifecycle = 'serve'
 
@@ -24,10 +23,6 @@ const main = async (options: Options) => {
 
   console.log(`🦄 Starting Micro for ${chalk.magenta(project)} at ${chalk.blue(lifecycle)}:${chalk.blue(mode)}`)
 
-  const partial = await resolvePlugins(project, lifecycle)
-  const self = await resolveSelfPlugin(project, lifecycle)
-  const plugins = self ? [...partial, self] : partial
-
   console.log(`🦄 Serving ${project.root.toString()}`)
 
   if (mode === 'production') {
@@ -39,7 +34,6 @@ const main = async (options: Options) => {
       publicPaths: PUBLIC_PATHS,
       statsJson,
       project,
-      plugins,
       host: HOST,
       port
     })
@@ -49,7 +43,6 @@ const main = async (options: Options) => {
     await startDevServer({
       publicPaths: PUBLIC_PATHS,
       project,
-      plugins,
       port,
       host: HOST
     } as any)

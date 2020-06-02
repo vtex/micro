@@ -2,7 +2,7 @@ import {
   BundlePlugin,
   pagesFrameworkName,
   pagesRuntimeName
-} from '@vtex/micro-core'
+} from '@vtex/micro-core/lib'
 import { cacheGroup } from '@vtex/micro-react/plugins'
 import { Block, Context, group, resolve } from 'webpack-blocks'
 

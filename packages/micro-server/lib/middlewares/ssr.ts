@@ -1,4 +1,4 @@
-import { PublicPaths, ServeCompiler } from '@vtex/micro-core/lib'
+import { PublicPaths, HtmlCompiler } from '@vtex/micro-core/lib'
 import { pathExists, readJson } from 'fs-extra'
 import { join } from 'path'
 import pretty from 'pretty'
@@ -7,7 +7,7 @@ import { featuresFromReq } from '../features'
 import { Req, Res } from '../typings'
 
 const ok = (
-  compiler: ServeCompiler<unknown>,
+  compiler: HtmlCompiler<unknown>,
   body: string
 ) => `<!DOCTYPE html>
 <html>
@@ -39,7 +39,7 @@ interface ImportMap {
 }
 
 const okSSR = (
-  compiler: ServeCompiler<unknown>,
+  compiler: HtmlCompiler<unknown>,
   body: string,
   importMap: ImportMap
 ) => `<!DOCTYPE html>
@@ -57,7 +57,7 @@ ${body}
 </html>
 `
 
-const readImportMap = async (compiler: ServeCompiler<unknown>) => {
+const readImportMap = async (compiler: HtmlCompiler<unknown>) => {
   const importMapPath = join(compiler.dist, '..', 'build', 'es6', 'web_modules', 'import-map.json')
   const exists = await pathExists(importMapPath)
   if (exists) {

@@ -68,7 +68,7 @@ export default class Build extends BuildPlugin {
         '**/*.d.ts'
       ],
       installOptions: {
-        dest: join(this.project.dist, this.target, 'es6'),
+        dest: join(this.project.dist, this.target, 'es6', 'web_modules'),
         env: {
           NODE_ENV: this.mode
         }

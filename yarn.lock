@@ -3286,15 +3286,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vtex/micro-assets@^1.1.1-alpha.17, @vtex/micro-assets@workspace:packages/micro-assets":
+"@vtex/micro-assets@^1.1.1-alpha.20, @vtex/micro-assets@workspace:packages/micro-assets":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-assets@workspace:packages/micro-assets"
   dependencies:
     "@types/babel__core": ^7.1.7
     "@types/webpack": ^4.41.12
     "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro-cli": ^1.1.1-alpha.17
-    "@vtex/micro-core": ^1.1.1-alpha.16
+    "@vtex/micro-cli": ^1.1.1-alpha.20
+    "@vtex/micro-core": ^1.1.1-alpha.20
     babel-merge: ^3.0.0
     babel-plugin-inline-json-import: ^0.3.2
     babel-plugin-transform-remove-imports: ^1.3.2
@@ -3303,7 +3303,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-cli@^1.1.1-alpha.17, @vtex/micro-cli@workspace:packages/micro-cli":
+"@vtex/micro-cli@^1.1.1-alpha.20, @vtex/micro-cli@workspace:packages/micro-cli":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-cli@workspace:packages/micro-cli"
   dependencies:
@@ -3316,8 +3316,8 @@ __metadata:
     "@types/open": ^6.2.1
     "@types/ramda": ^0.27.4
     "@types/webpack": ^4.41.12
-    "@vtex/micro-core": ^1.1.1-alpha.16
-    "@vtex/micro-server": ^1.1.1-alpha.16
+    "@vtex/micro-core": ^1.1.1-alpha.20
+    "@vtex/micro-server": ^1.1.1-alpha.20
     chalk: ^4.0.0
     chokidar: ^3.4.0
     findhelp: ^1.1.0
@@ -3327,7 +3327,7 @@ __metadata:
     nodemon: ^2.0.3
     open: ^7.0.4
     ramda: ^0.27.0
-    snowpack: ^2.2.0
+    snowpack: ^2.2.1
     typescript: ^3.8.3
     webpack: ^4.43.0
   bin:
@@ -3335,7 +3335,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-core@^1.1.1-alpha.16, @vtex/micro-core@workspace:packages/micro-core":
+"@vtex/micro-core@^1.1.1-alpha.20, @vtex/micro-core@workspace:packages/micro-core":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-core@workspace:packages/micro-core"
   dependencies:
@@ -3365,7 +3365,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-css@^1.1.1-alpha.17, @vtex/micro-css@workspace:packages/micro-css":
+"@vtex/micro-css@^1.1.1-alpha.20, @vtex/micro-css@workspace:packages/micro-css":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-css@workspace:packages/micro-css"
   dependencies:
@@ -3375,8 +3375,8 @@ __metadata:
     "@types/terser-webpack-plugin": ^2.2.0
     "@types/webpack": ^4.41.12
     "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro-cli": ^1.1.1-alpha.17
-    "@vtex/micro-core": ^1.1.1-alpha.16
+    "@vtex/micro-cli": ^1.1.1-alpha.20
+    "@vtex/micro-core": ^1.1.1-alpha.20
     babel-merge: ^3.0.0
     babel-plugin-ignore-html-and-css-imports: ^0.0.2
     css-loader: ^3.5.3
@@ -3390,7 +3390,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-react-intl@^1.1.1-alpha.17, @vtex/micro-react-intl@workspace:packages/micro-react-intl":
+"@vtex/micro-react-intl@^1.1.1-alpha.20, @vtex/micro-react-intl@workspace:packages/micro-react-intl":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-react-intl@workspace:packages/micro-react-intl"
   dependencies:
@@ -3398,9 +3398,9 @@ __metadata:
     "@types/react": ^16.9.35
     "@types/react-intl": ^3.0.0
     "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro-cli": ^1.1.1-alpha.17
-    "@vtex/micro-core": ^1.1.1-alpha.16
-    "@vtex/micro-react": ^1.1.1-alpha.17
+    "@vtex/micro-cli": ^1.1.1-alpha.20
+    "@vtex/micro-core": ^1.1.1-alpha.20
+    "@vtex/micro-react": ^1.1.1-alpha.20
     babel-merge: ^3.0.0
     babel-plugin-inline-json-import: ^0.3.2
     babel-plugin-react-intl: ^7.5.14
@@ -3414,7 +3414,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-react-router@^1.1.1-alpha.17, @vtex/micro-react-router@workspace:packages/micro-react-router":
+"@vtex/micro-react-router@^1.1.1-alpha.20, @vtex/micro-react-router@workspace:packages/micro-react-router":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-react-router@workspace:packages/micro-react-router"
   dependencies:
@@ -3425,9 +3425,9 @@ __metadata:
     "@types/react-router-dom": ^5.1.5
     "@types/webpack": ^4.41.13
     "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro-cli": ^1.1.1-alpha.17
-    "@vtex/micro-core": ^1.1.1-alpha.16
-    "@vtex/micro-react": ^1.1.1-alpha.17
+    "@vtex/micro-cli": ^1.1.1-alpha.20
+    "@vtex/micro-core": ^1.1.1-alpha.20
+    "@vtex/micro-react": ^1.1.1-alpha.20
     babel-merge: ^3.0.0
     history: ^4.10.1
     react-in-viewport: ^1.0.0-alpha.11
@@ -3441,7 +3441,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-react@^1.1.1-alpha.17, @vtex/micro-react@workspace:packages/micro-react":
+"@vtex/micro-react@^1.1.1-alpha.20, @vtex/micro-react@workspace:packages/micro-react":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-react@workspace:packages/micro-react"
   dependencies:
@@ -3469,8 +3469,8 @@ __metadata:
     "@types/terser-webpack-plugin": ^2.2.0
     "@types/webpack": ^4.41.12
     "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro-cli": ^1.1.1-alpha.17
-    "@vtex/micro-core": ^1.1.1-alpha.16
+    "@vtex/micro-cli": ^1.1.1-alpha.20
+    "@vtex/micro-core": ^1.1.1-alpha.20
     babel-loader: ^8.1.0
     babel-merge: ^3.0.0
     css-loader: ^3.5.3
@@ -3495,7 +3495,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-server@^1.1.1-alpha.16, @vtex/micro-server@workspace:packages/micro-server":
+"@vtex/micro-server@^1.1.1-alpha.20, @vtex/micro-server@workspace:packages/micro-server":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-server@workspace:packages/micro-server"
   dependencies:
@@ -3510,7 +3510,7 @@ __metadata:
     "@types/pretty": ^2.0.0
     "@types/webpack": ^4.41.12
     "@types/webpack-dev-middleware": ^3.7.0
-    "@vtex/micro-core": ^1.1.1-alpha.16
+    "@vtex/micro-core": ^1.1.1-alpha.20
     "@yarnpkg/fslib": ^2.0.0-rc.20
     "@yarnpkg/libzip": ^2.0.0-rc.11
     compression: ^1.7.4
@@ -13226,16 +13226,16 @@ fsevents@~2.1.2:
     "@types/react": ^16.9.34
     "@types/react-dom": ^16.9.7
     "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro-assets": ^1.1.1-alpha.17
-    "@vtex/micro-cli": ^1.1.1-alpha.17
-    "@vtex/micro-core": ^1.1.1-alpha.16
-    "@vtex/micro-css": ^1.1.1-alpha.17
-    "@vtex/micro-react": ^1.1.1-alpha.17
-    "@vtex/micro-react-intl": ^1.1.1-alpha.17
-    "@vtex/micro-react-router": ^1.1.1-alpha.17
+    "@vtex/micro-assets": ^1.1.1-alpha.20
+    "@vtex/micro-cli": ^1.1.1-alpha.20
+    "@vtex/micro-core": ^1.1.1-alpha.20
+    "@vtex/micro-css": ^1.1.1-alpha.20
+    "@vtex/micro-react": ^1.1.1-alpha.20
+    "@vtex/micro-react-intl": ^1.1.1-alpha.20
+    "@vtex/micro-react-router": ^1.1.1-alpha.20
     react: ^16.13.1
     react-dom: ^16.13.1
-    snowpack: ^2.1.0
+    snowpack: ^2.2.1
     typescript: ^3.8.3
     vtex-tachyons: ^3.2.0
     webpack-blocks: ^2.1.0
@@ -13296,9 +13296,9 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"snowpack@npm:^2.1.0, snowpack@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "snowpack@npm:2.2.0"
+"snowpack@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "snowpack@npm:2.2.1"
   dependencies:
     "@babel/plugin-syntax-import-meta": ^7.8.3
     "@rollup/plugin-alias": ^3.0.1
@@ -13341,7 +13341,7 @@ fsevents@~2.1.2:
   bin:
     snowpack: dist-node/index.bin.js
     sp: dist-node/index.bin.js
-  checksum: 554406c16d85a2ced23290b438e0cae1c16471d981b6a22701c984feefb9aae905652dad3cb5ceedeb3411bf7db0a23345585db59eb653907718bf1c416b771b
+  checksum: b3ff7eb4d0d44199f1e2b4455afa66fc295dc3fd58916e23346fba42429281ba03a5a5f6f9d188e39678eadd3aec330b4d92b93b6b1e2e5e44a2b5351b99d361
   languageName: node
   linkType: hard
 

@@ -1,5 +1,5 @@
-import React from 'react'
+import React from 'react';
 
-import { RuntimeData } from '../runtime'
+import { RuntimeData } from '../runtime';
 
-export const Runtime = React.createContext<RuntimeData>({} as RuntimeData)
+export const Runtime = React.createContext<RuntimeData>({} as RuntimeData);

@@ -1,1 +1,1 @@
-export const MICRO_BUILD_DIR = 'dist'
+export const MICRO_BUILD_DIR = 'dist';

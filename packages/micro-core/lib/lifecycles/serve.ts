@@ -1,13 +1,13 @@
-import { join } from 'path'
-import { Stats } from 'webpack'
+import { join } from 'path';
+import { Stats } from 'webpack';
 
-import { PublicPaths } from '../common/publicPaths'
-import { Compiler, CompilerOptions } from '../compiler'
-import { Plugin } from '../plugin'
-import { LifeCycle } from '../project'
-import { ResolvedPage } from '../router'
+import { PublicPaths } from '../../components/publicPaths';
+import { Compiler, CompilerOptions } from '../compiler';
+import { Plugin } from '../plugin';
+import { LifeCycle } from '../project';
+import { ResolvedPage } from '../../components/page';
 
-const lifecycle = 'serve'
+const lifecycle = 'serve';
 
 export type ServeCompilerOptions<T> = Omit<CompilerOptions<ServePlugin<T>>, 'target' | 'plugins'> & {
   plugins: Array<new (options: ServePluginOptions) => (ServePlugin<T> | ServeFrameworkPlugin<T>)>
@@ -19,56 +19,56 @@ const assetsDistForLifecycle = (root: string, lifecycle: LifeCycle) => {
     return {
       webnew: join(root, 'build/es6'),
       nodejs: join(root, 'build/cjs')
-    }
+    };
   }
   if (lifecycle === 'bundle') {
     return {
       webnew: join(root, 'bundle/webnew'),
       webold: join(root, 'bundle/webold'),
       nodejs: join(root, 'build/cjs')
-    }
+    };
   }
-  throw new Error('💣 Targeting this lifecycle makes no sense')
-}
+  throw new Error('💣 Targeting this lifecycle makes no sense');
+};
 
 export class ServeCompiler<T> extends Compiler<ServePlugin<T>> {
   protected frameworkPlugin: ServeFrameworkPlugin<T>
 
   constructor ({ project, plugins, options }: ServeCompilerOptions<T>) {
-    super({ project, plugins: [], target: lifecycle })
+    super({ project, plugins: [], target: lifecycle });
     const fullOptions = {
       ...options,
       assetsDist: assetsDistForLifecycle(project.dist, options.lifecycleTarget)
-    }
-    this.plugins = plugins.map(P => new P(fullOptions))
-    const frameworkIndex = this.plugins.findIndex(p => p instanceof ServeFrameworkPlugin)
+    };
+    this.plugins = plugins.map(P => new P(fullOptions));
+    const frameworkIndex = this.plugins.findIndex(p => p instanceof ServeFrameworkPlugin);
     if (frameworkIndex < 0) {
-      throw new Error('💣 At least one framework plugin is required. Take a look at @vtex/micro-react for using the React Framework')
+      throw new Error('💣 At least one framework plugin is required. Take a look at @vtex/micro-react for using the React Framework');
     }
-    this.frameworkPlugin = this.plugins[frameworkIndex] as ServeFrameworkPlugin<T>
+    this.frameworkPlugin = this.plugins[frameworkIndex] as ServeFrameworkPlugin<T>;
   }
 
   public renderToString = (disableSSR: boolean = false) => {
-    let App: T | null = null
+    let App: T | null = null;
 
     if (!disableSSR) {
       // Find a plugin that is able to require an entrypoint
       // Maybe this should be done by the framework itself
       // instead of via plugin
-      App = this.frameworkPlugin.requireEntrypoint()
+      App = this.frameworkPlugin.requireEntrypoint();
 
       if (App === null) {
-        throw new Error('💣 No entrypoint was required during Server Side Rendering')
+        throw new Error('💣 No entrypoint was required during Server Side Rendering');
       }
 
       // Compose the App for SSR
       App = this.plugins.reduce(
         (acc, p) => p.render(acc),
         App
-      )
+      );
     }
 
-    return this.frameworkPlugin.renderToString(App)
+    return this.frameworkPlugin.renderToString(App);
   }
 
   public getScriptTags = () => this.plugins.reduce(
@@ -112,7 +112,7 @@ export abstract class ServePlugin<T> extends Plugin {
   constructor (
     protected options: ServePluginOptions
   ) {
-    super({ target: lifecycle })
+    super({ target: lifecycle });
   }
 
   public render = (element: T): T => element

@@ -18,7 +18,7 @@
     "declaration": true
   },
   "include": [
-    "index.ts",
+    "plugins/index.ts",
     "lib",
     "router",
     "plugins",

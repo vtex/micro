@@ -1,5 +1,5 @@
-import { MICRO_BUILD_DIR } from '../constants'
-import { lifecycle } from '../lifecycles/build'
+import { MICRO_BUILD_DIR } from '../constants';
+import { lifecycle } from '../lifecycles/build';
 
 export const BaseTSConfig = {
   compilerOptions: {
@@ -22,7 +22,7 @@ export const BaseTSConfig = {
   },
   include: ['index.ts', 'lib', 'router', 'plugins', 'components'],
   exclude: [MICRO_BUILD_DIR, 'pages']
-}
+};
 
 export type TSConfig = typeof BaseTSConfig
 
@@ -35,5 +35,5 @@ export const genTSConfig = (partial: any): TSConfig => {
       ...partial?.compilerOptions,
       ...BaseTSConfig.compilerOptions
     }
-  }
-}
+  };
+};

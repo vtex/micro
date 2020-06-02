@@ -27,6 +27,7 @@
     "minimist": "^1.2.5",
     "open": "^7.0.4",
     "ramda": "^0.27.0",
+    "snowpack": "^2.2.0",
     "webpack": "^4.43.0"
   },
   "devDependencies": {

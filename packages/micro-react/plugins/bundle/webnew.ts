@@ -1,6 +1,6 @@
-import { Block, Context } from 'webpack-blocks'
+import { Block, Context } from 'webpack-blocks';
 
-import { babel } from './modules/babel'
+import { babel } from './modules/babel';
 
 export const webnewBabel: Block<Context> = babel({
   comments: true,
@@ -46,4 +46,4 @@ export const webnewBabel: Block<Context> = babel({
     '@babel/plugin-syntax-dynamic-import',
     '@loadable/babel-plugin'
   ].map(require.resolve as any)
-} as any)
+} as any);

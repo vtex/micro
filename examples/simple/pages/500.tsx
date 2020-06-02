@@ -1,9 +1,9 @@
-import 'vtex-tachyons/tachyons.css'
+import 'vtex-tachyons/tachyons.css';
 
-import { LoadMicroComponent } from '@vtex/micro-react'
-import { withRouter } from '@vtex/micro-react-router'
+import { LoadMicroComponent } from '@vtex/micro-react/components';
+import { withRouter } from '@vtex/micro-react-router/components';
 
-import Page from '../components/pages/500'
-import { AsyncImport } from '../components/asyncPages'
+import { AsyncImport } from '../components/asyncPages';
+import Page from '../components/pages/500';
 
-export default LoadMicroComponent(withRouter(Page, AsyncImport))
+export default LoadMicroComponent(withRouter(Page, AsyncImport));

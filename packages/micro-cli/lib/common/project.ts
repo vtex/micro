@@ -4,55 +4,55 @@ import {
   Plugins,
   Project,
   walk
-} from '@vtex/micro-core'
-import chalk from 'chalk'
-import { ensureDir } from 'fs-extra'
-import { join } from 'path'
+} from '@vtex/micro-core/lib';
+import chalk from 'chalk';
+import { ensureDir } from 'fs-extra';
+import { join } from 'path';
 
 export const newProject = async () => {
-  const projectPath = process.cwd()
+  const projectPath = process.cwd();
 
-  const project = new Project({ rootPath: projectPath })
+  const project = new Project({ rootPath: projectPath });
 
-  console.log('🦄 Resolving dependencies')
-  await project.resolvePackages()
+  console.log('🦄 Resolving dependencies');
+  await project.resolvePackages();
   walk(project.root, curr => {
-    console.info(`📦 Micro package found: ${curr.toString()}`)
-  })
+    console.info(`📦 Micro package found: ${curr.toString()}`);
+  });
 
-  return project
-}
+  return project;
+};
 
 export const ensureDist = async (target: string, path: string) => {
-  console.log(`🎯 [${target}]: Ensuring dist folder in ${chalk.cyanBright(join(MICRO_BUILD_DIR, path.split(MICRO_BUILD_DIR)[1]))}`)
-  await ensureDir(path)
-}
+  console.log(`🎯 [${target}]: Ensuring dist folder in ${chalk.cyanBright(join(MICRO_BUILD_DIR, path.split(MICRO_BUILD_DIR)[1]))}`);
+  await ensureDir(path);
+};
 
 const reportPlugin = (lifecycle: string, pkg: string) => {
-  console.log(`🔌 [${lifecycle}]: Plugin found ${pkg}`)
-}
+  console.log(`🔌 [${lifecycle}]: Plugin found ${pkg}`);
+};
 
 export const resolvePlugins = async <T extends LifeCycle>(project: Project, lifecycle: T): Promise<NonNullable<Plugins[T]>[]> => {
-  console.log(`🦄 [${lifecycle}]: Resolving plugins`)
-  const plugins = await project.resolvePlugins(lifecycle)
+  console.log(`🦄 [${lifecycle}]: Resolving plugins`);
+  const plugins = await project.resolvePlugins(lifecycle);
 
   for (const pkg of Object.keys(plugins)) {
-    reportPlugin(lifecycle, pkg)
+    reportPlugin(lifecycle, pkg);
   }
 
-  return Object.values(plugins)
-}
+  return Object.values(plugins);
+};
 
 export const resolveSelfPlugin = async <T extends LifeCycle>(project: Project, lifecycle: T): Promise<Plugins[T] | null> => {
-  const plugin = await project.getSelfPlugin(lifecycle)
+  const plugin = await project.getSelfPlugin(lifecycle);
 
   if (plugin) {
-    reportPlugin(lifecycle, project.root.manifest.name)
+    reportPlugin(lifecycle, project.root.manifest.name);
   }
 
-  return plugin
-}
+  return plugin;
+};
 
 export const loadProject = () => {
 
-}
+};

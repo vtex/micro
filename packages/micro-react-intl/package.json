@@ -14,6 +14,7 @@
     "clean": "rm -r dist",
     "prepublish": "yarn build"
   },
+  "sideEffects": false,
   "main": "./dist/build/cjs/index.js",
   "module": "./dist/build/es6/components/index.js",
   "browser": "./components/index.ts",

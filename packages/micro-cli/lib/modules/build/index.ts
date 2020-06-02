@@ -44,10 +44,13 @@ const main = async (options: Options) => {
 
   const { build, compiler: buildCompiler } = await createBuild()
   if (userland.length > 0) {
-    const installMsg = `🦄 [${lifecycle}]: web_modules installation took`
-    console.time(installMsg)
-    await installWebModules(buildCompiler)
-    console.timeEnd(installMsg)
+    const isRenderableProject = userland.some(x => x.includes('/pages/'))
+    if (isRenderableProject) {
+      const installMsg = `🦄 [${lifecycle}]: web_modules installation took`
+      console.time(installMsg)
+      await installWebModules(buildCompiler)
+      console.timeEnd(installMsg)
+    }
 
     const buildMsg = `🦄 [${lifecycle}]: Performing build ${userland.length} files finished in`
     console.time(buildMsg)
@@ -56,6 +59,12 @@ const main = async (options: Options) => {
   }
 
   console.timeEnd(msg)
+
+  return {
+    project,
+    prebuild,
+    build
+  }
 }
 
 export default main

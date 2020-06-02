@@ -1,7 +1,7 @@
 import loadable from '@loadable/component'
 import React, { Fragment } from 'react'
 
-import { Header, HeaderProps } from './header'
+import { Header, HeaderProps } from './Header'
 import { Loading } from './loading'
 
 const Footer = loadable(() => import(

@@ -11,7 +11,7 @@ export interface Extractor {
 // has a plugin for adding this to the bundles, however we need to
 // add this while using es6 only
 const setupEnvVar = (options: HtmlPlugin<unknown>['options']) =>
-`<script>
+  `<script>
 window.process = {
   env: {
     NODE_ENV: "${options.mode}"
@@ -20,7 +20,7 @@ window.process = {
 </script>`
 
 const getModuleImportTag = (options: HtmlPlugin<unknown>['options']) =>
-`<script type="module-shim">
+  `<script type="module-shim">
 import "${options.publicPaths.assets}pages/${options.page.name}.js";
 </script>`
 
@@ -28,9 +28,7 @@ import "${options.publicPaths.assets}pages/${options.page.name}.js";
 export class CJSChunkExtractor implements Extractor {
   protected chunks: Set<string> = new Set()
 
-  constructor (
-    public options: HtmlPlugin<unknown>['options']
-  ) {}
+  constructor(public options: HtmlPlugin<unknown>['options']) {}
 
   public addChunk = (chunk: string) => {
     if (!this.chunks.has(chunk)) {
@@ -39,10 +37,11 @@ export class CJSChunkExtractor implements Extractor {
   }
 
   public getScriptTags = () =>
-    '<script id="__LOADABLE_REQUIRED_CHUNKS__">[]</script>' +
-    setupEnvVar(this.options) +
-    getModuleImportTag(this.options) +
-    '<script src="https://unpkg.com/es-module-shims"></script>' // TODO: Remove this once chrome supports import maps
+    `<script id="__LOADABLE_REQUIRED_CHUNKS__">[]</script>${setupEnvVar(
+      this.options
+    )}${getModuleImportTag(
+      this.options
+    )}<script src="https://unpkg.com/es-module-shims"></script>` // TODO: Remove this once chrome supports import maps
 
   public getStyleTags = () => ''
   public getLinkTags = () => ''

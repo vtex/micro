@@ -1,1 +1,1 @@
-declare module 'babel-merge';
+declare module 'babel-merge'

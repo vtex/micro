@@ -1,6 +1,7 @@
+import { join } from 'path'
+
 import { BuildCompiler } from '@vtex/micro-core/lib'
 import { outputJSON } from 'fs-extra'
-import { join } from 'path'
 import * as snowpack from 'snowpack'
 
 import { lifecycle } from './builder'

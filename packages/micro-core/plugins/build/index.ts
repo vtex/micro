@@ -1,17 +1,21 @@
+import { join } from 'path'
+
 import { TransformOptions } from '@babel/core'
 import deepmerge from 'deepmerge'
 import babelmerge from 'babel-merge'
-import { join } from 'path'
 
 import {
   BuildPlugin,
   BuildTarget,
-  SnowpackConfig
+  SnowpackConfig,
 } from '../../lib/lifecycles/build'
-import { MICRO_BUILD_DIR } from './../../lib/constants'
+import { MICRO_BUILD_DIR } from '../../lib/constants'
 
 export default class Build extends BuildPlugin {
-  public getBabelConfig = async (previous: TransformOptions, target: BuildTarget): Promise<TransformOptions> => {
+  public getBabelConfig = async (
+    previous: TransformOptions,
+    target: BuildTarget
+  ): Promise<TransformOptions> => {
     return babelmerge(previous, {
       root: this.project.rootPath,
       cwd: this.project.rootPath,
@@ -26,10 +30,10 @@ export default class Build extends BuildPlugin {
       caller: { name: target },
       presets: [
         [
-          require.resolve('@babel/preset-env'), {
-            targets: target === 'es6'
-              ? { esmodules: true }
-              : { node: 'current' },
+          require.resolve('@babel/preset-env'),
+          {
+            targets:
+              target === 'es6' ? { esmodules: true } : { node: 'current' },
             bugfixes: true,
             modules: target === 'es6' ? false : 'commonjs',
             exclude: [
@@ -41,39 +45,42 @@ export default class Build extends BuildPlugin {
               '@babel/plugin-transform-destructuring',
               '@babel/plugin-transform-for-of',
               '@babel/plugin-transform-spread',
-              '@babel/plugin-transform-typeof-symbol'
-            ]
-          }
+              '@babel/plugin-transform-typeof-symbol',
+            ],
+          },
         ],
         [
-          require.resolve('@babel/preset-typescript'), {
+          require.resolve('@babel/preset-typescript'),
+          {
             isTSX: true,
-            allExtensions: true
-          }
-        ]
+            allExtensions: true,
+          },
+        ],
       ],
       plugins: [
         '@babel/plugin-proposal-class-properties',
-        '@babel/plugin-proposal-optional-chaining'
-      ].map(require.resolve as (x: string) => string)
+        '@babel/plugin-proposal-optional-chaining',
+      ].map(require.resolve as (x: string) => string),
     })
   }
 
-  public getSnowpackConfig = async (previous: SnowpackConfig): Promise<SnowpackConfig> => {
+  public getSnowpackConfig = async (
+    previous: SnowpackConfig
+  ): Promise<SnowpackConfig> => {
     return deepmerge(previous, {
       exclude: [
         'router/*', // TODO: remove this from here once server extensibility is solved
         `${MICRO_BUILD_DIR}/**/*`,
         'plugins/**/*',
         '!**/*.ts?(x)',
-        '**/*.d.ts'
+        '**/*.d.ts',
       ],
       installOptions: {
         dest: join(this.project.dist, this.target, 'es6', 'web_modules'),
         env: {
-          NODE_ENV: this.mode
-        }
-      }
+          NODE_ENV: this.mode,
+        },
+      },
     })
   }
 }

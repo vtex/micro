@@ -1,4 +1,5 @@
 import { join } from 'path'
+
 import { Stats } from 'webpack'
 
 import { PublicPaths } from '../../../components/publicPaths'
@@ -7,10 +8,15 @@ import { Plugin } from '../../plugin'
 import { LifeCycle } from '../../project'
 import { ResolvedPage } from '../../../components/page'
 
-const lifecycle = 'serve'
+const LIFECYCLE = 'serve'
 
-export type HtmlCompilerOptions<T> = Omit<CompilerOptions<HtmlPlugin<T>>, 'target' | 'plugins'> & {
-  plugins: Array<new (options: HtmlPluginOptions) => (HtmlPlugin<T> | HtmlFrameworkPlugin<T>)>
+export type HtmlCompilerOptions<T> = Omit<
+  CompilerOptions<HtmlPlugin<T>>,
+  'target' | 'plugins'
+> & {
+  plugins: Array<
+    new (options: HtmlPluginOptions) => HtmlPlugin<T> | HtmlFrameworkPlugin<T>
+  >
   options: Omit<HtmlPluginOptions, 'assetsDist'>
 }
 
@@ -18,14 +24,14 @@ const assetsDistForLifecycle = (root: string, lifecycle: LifeCycle) => {
   if (lifecycle === 'build') {
     return {
       webnew: join(root, 'build/es6'),
-      nodejs: join(root, 'build/cjs')
+      nodejs: join(root, 'build/cjs'),
     }
   }
   if (lifecycle === 'bundle') {
     return {
       webnew: join(root, 'bundle/webnew'),
       webold: join(root, 'bundle/webold'),
-      nodejs: join(root, 'build/cjs')
+      nodejs: join(root, 'build/cjs'),
     }
   }
   throw new Error('💣 Targeting this lifecycle makes no sense')
@@ -34,21 +40,27 @@ const assetsDistForLifecycle = (root: string, lifecycle: LifeCycle) => {
 export class HtmlCompiler<T> extends Compiler<HtmlPlugin<T>> {
   protected frameworkPlugin: HtmlFrameworkPlugin<T>
 
-  constructor ({ project, plugins, options }: HtmlCompilerOptions<T>) {
-    super({ project, plugins: [], target: lifecycle })
+  constructor({ project, plugins, options }: HtmlCompilerOptions<T>) {
+    super({ project, plugins: [], target: LIFECYCLE })
     const fullOptions = {
       ...options,
-      assetsDist: assetsDistForLifecycle(project.dist, options.lifecycleTarget)
+      assetsDist: assetsDistForLifecycle(project.dist, options.lifecycleTarget),
     }
-    this.plugins = plugins.map(P => new P(fullOptions))
-    const frameworkIndex = this.plugins.findIndex(p => p instanceof HtmlFrameworkPlugin)
+    this.plugins = plugins.map((P) => new P(fullOptions))
+    const frameworkIndex = this.plugins.findIndex(
+      (p) => p instanceof HtmlFrameworkPlugin
+    )
     if (frameworkIndex < 0) {
-      throw new Error('💣 At least one framework plugin is required. Take a look at @vtex/micro-react for using the React Framework')
+      throw new Error(
+        '💣 At least one framework plugin is required. Take a look at @vtex/micro-react for using the React Framework'
+      )
     }
-    this.frameworkPlugin = this.plugins[frameworkIndex] as HtmlFrameworkPlugin<T>
+    this.frameworkPlugin = this.plugins[frameworkIndex] as HtmlFrameworkPlugin<
+      T
+    >
   }
 
-  public renderToString = (disableSSR: boolean = false) => {
+  public renderToString = (disableSSR = false) => {
     let App: T | null = null
 
     if (!disableSSR) {
@@ -58,38 +70,29 @@ export class HtmlCompiler<T> extends Compiler<HtmlPlugin<T>> {
       App = this.frameworkPlugin.requireEntrypoint()
 
       if (App === null) {
-        throw new Error('💣 No entrypoint was required during Server Side Rendering')
+        throw new Error(
+          '💣 No entrypoint was required during Server Side Rendering'
+        )
       }
 
       // Compose the App for SSR
-      App = this.plugins.reduce(
-        (acc, p) => p.render(acc),
-        App
-      )
+      App = this.plugins.reduce((acc, p) => p.render(acc), App)
     }
 
     return this.frameworkPlugin.renderToString(App)
   }
 
-  public getScriptTags = () => this.plugins.reduce(
-    (acc, plugin) => acc + plugin.getScriptTags(),
-    ''
-  )
+  public getScriptTags = () =>
+    this.plugins.reduce((acc, plugin) => acc + plugin.getScriptTags(), '')
 
-  public getLinkTags = () => this.plugins.reduce(
-    (acc, plugin) => acc + plugin.getLinkTags(),
-    ''
-  )
+  public getLinkTags = () =>
+    this.plugins.reduce((acc, plugin) => acc + plugin.getLinkTags(), '')
 
-  public getStyleTags = () => this.plugins.reduce(
-    (acc, plugin) => acc + plugin.getStyleTags(),
-    ''
-  )
+  public getStyleTags = () =>
+    this.plugins.reduce((acc, plugin) => acc + plugin.getStyleTags(), '')
 
-  public getMetaTags = () => this.plugins.reduce(
-    (acc, plugin) => acc + plugin.getMetaTags(),
-    ''
-  )
+  public getMetaTags = () =>
+    this.plugins.reduce((acc, plugin) => acc + plugin.getMetaTags(), '')
 }
 
 interface AssetsDist {
@@ -109,10 +112,8 @@ export interface HtmlPluginOptions {
 }
 
 export abstract class HtmlPlugin<T> extends Plugin {
-  constructor (
-    protected options: HtmlPluginOptions
-  ) {
-    super({ target: lifecycle })
+  constructor(protected options: HtmlPluginOptions) {
+    super({ target: LIFECYCLE })
   }
 
   public render = (element: T): T => element
@@ -127,7 +128,6 @@ export abstract class HtmlPlugin<T> extends Plugin {
 }
 
 export abstract class HtmlFrameworkPlugin<T> extends HtmlPlugin<T> {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public renderToString = (_element: T | null): string => ''
 
   public requireEntrypoint = (): T | null => null

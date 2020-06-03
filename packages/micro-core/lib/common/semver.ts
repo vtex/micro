@@ -13,12 +13,14 @@ export const parse = (version: string): Semver => {
     major: Number(major),
     minor: Number(minor),
     patch: Number(patch),
-    pre
+    pre,
   }
 }
 
 export const format = ({ major, minor, patch, pre }: Semver) =>
-  `${major.toString()}.${minor.toString()}.${patch.toString}${pre ? `-${pre}` : ''}`
+  `${major.toString()}.${minor.toString()}.${patch.toString}${
+    pre ? `-${pre}` : ''
+  }`
 
 // TODO: improve this to a real regex
 export const isSemver = (x: any): x is Semver => typeof x === 'string'

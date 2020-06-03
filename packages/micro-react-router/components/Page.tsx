@@ -18,31 +18,28 @@ export type RouterResolvedEntry<T> = {
 
 export const unpack = <T extends Serializable>(packed: Page<T>) => packed.data
 
-export const pack = <T extends Serializable>(resolved: ResolvedPage<T>, path: string): ResolvedPage<Page<T>> => ({
+export const pack = <T extends Serializable>(
+  resolved: ResolvedPage<T>,
+  path: string
+): ResolvedPage<Page<T>> => ({
   ...resolved,
   data: {
     data: resolved.data,
     name: resolved.name,
-    path
-  }
+    path,
+  },
 })
 
 export const isPage = (obj: any): obj is Page =>
-  typeof obj.name === 'string' &&
-  typeof obj.path === 'string'
+  typeof obj.name === 'string' && typeof obj.path === 'string'
 
 export const FetchCurrentPage: React.SFC = ({ children }) => {
   const router = useContext(MicroRouterContext)
   const location = useLocation()
 
-  React.useEffect(
-    () => { router.preloadPage(location) },
-    [location]
-  )
+  React.useEffect(() => {
+    router.preloadPage(location)
+  }, [location, router])
 
-  return (
-    <Fragment>
-      {children}
-    </Fragment>
-  )
+  return <Fragment>{children}</Fragment>
 }

@@ -1,27 +1,24 @@
 import { BundlePlugin } from '@vtex/micro-core/lib'
-import { Block, Context, css, group, match } from 'webpack-blocks'
+import { Block, css, group, match } from 'webpack-blocks'
 
 import { extractCss } from './modules/extractCSS'
 import { purgeCSS } from './modules/purgeCSS'
 
 export default class Bundle extends BundlePlugin {
-  public getWebpackConfig = async (config: Block<Context>): Promise<Block<Context>> => {
-    const block: Block<Context>[] = [
+  public getWebpackConfig = async (config: Block): Promise<Block> => {
+    const block: Block[] = [
       purgeCSS({
-        paths: await this.project.resolveFiles('pages', 'components')
+        paths: await this.project.resolveFiles('pages', 'components'),
       }),
       match('*.css', [
         extractCss({
           plugin: { filename: '[name].css' },
-          loader: { esModule: true }
+          loader: { esModule: true },
         }),
-        css({ styleLoader: false } as any)
-      ])
+        css({ styleLoader: false } as any),
+      ]),
     ]
 
-    return group([
-      config,
-      ...block
-    ])
+    return group([config, ...block])
   }
 }

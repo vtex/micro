@@ -1,26 +1,30 @@
-import { Block, Context } from 'webpack-blocks'
+import { Block } from 'webpack-blocks'
 
 import { babel } from './modules/babel'
 
-export const weboldBabel: Block<Context> = babel({
+export const weboldBabel: Block = babel({
   caller: { target: 'webold' },
   presets: [
-    ['@babel/preset-env', {
-      targets: {
-        browsers: 'cover 99.5%'
-      }
-    }],
+    [
+      '@babel/preset-env',
+      {
+        targets: {
+          browsers: 'cover 99.5%',
+        },
+      },
+    ],
     '@babel/preset-react',
     [
-      '@babel/preset-typescript', {
+      '@babel/preset-typescript',
+      {
         isTSX: true,
-        allExtensions: true
-      }
-    ]
+        allExtensions: true,
+      },
+    ],
   ],
   plugins: [
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-syntax-dynamic-import',
-    '@loadable/babel-plugin'
-  ]
+    '@loadable/babel-plugin',
+  ],
 } as any)

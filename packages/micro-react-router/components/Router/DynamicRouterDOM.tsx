@@ -3,15 +3,11 @@ import {
   inflight,
   join,
   Runtime,
-  RuntimeData
+  RuntimeData,
 } from '@vtex/micro-react/components'
 import { LocationDescriptorObject } from 'history'
 import React from 'react'
-import {
-  matchPath,
-  Route,
-  useLocation
-} from 'react-router-dom'
+import { matchPath, Route, useLocation } from 'react-router-dom'
 
 import { FetchCurrentPage, isPage, Page } from '../Page'
 import {
@@ -19,7 +15,7 @@ import {
   MicroRouterContext,
   PageProps,
   RouterProps,
-  RouterStateModifier
+  RouterStateModifier,
 } from './Router'
 
 interface RouterState extends RouterStateModifier {
@@ -36,13 +32,13 @@ interface RouterDOMProps extends RouterProps {
 }
 
 class PrivateRouterDOM extends React.Component<RouterDOMProps, RouterState> {
-  constructor (props: RouterDOMProps) {
+  constructor(props: RouterDOMProps) {
     super(props)
     this.state = {
       prefetchPage: this.prefetchPage,
       preloadPage: this.preloadPage,
       pages: new Map(),
-      assets: new Set()
+      assets: new Set(),
     }
   }
 
@@ -70,33 +66,40 @@ class PrivateRouterDOM extends React.Component<RouterDOMProps, RouterState> {
     if (alreadyLoaded || isInitialPage) {
       return
     }
-    await inflight(page.name, async () => new Promise(resolve => {
-      this.setState(state => {
-        this.props.AsyncPage.preload(page)
-        state.assets.add(page.name)
-        resolve()
-        return state
-      })
-    }))
+    await inflight(
+      page.name,
+      async () =>
+        new Promise((resolve) => {
+          this.setState((state) => {
+            this.props.AsyncPage.preload(page)
+            state.assets.add(page.name)
+            resolve()
+            return state
+          })
+        })
+    )
   }
 
-  protected async loadPage (location: LocationDescriptorObject): Promise<any> {
+  protected async loadPage(location: LocationDescriptorObject): Promise<any> {
     const path = this.locationToPath(location) || ''
     return inflight(path, async () => {
-      const page = await fetch(path).then(r => r.json())
+      const page = await fetch(path).then((r) => r.json())
       if (isPage(page)) {
         this.updatePages(page.path, page)
         this.loadAsset(page)
       } else {
-        throw new Error(`💣 Fetched location was not a valid page: ${location.pathname}`)
+        throw new Error(
+          `💣 Fetched location was not a valid page: ${location.pathname}`
+        )
       }
     })
   }
 
-  protected updatePages = (path: string, page: Page) => this.setState(state => {
-    state.pages.set(path, page)
-    return state
-  })
+  protected updatePages = (path: string, page: Page) =>
+    this.setState((state) => {
+      state.pages.set(path, page)
+      return state
+    })
 
   protected locationToPath = (location: LocationDescriptorObject) => {
     if (typeof location.pathname !== 'string') {
@@ -109,7 +112,11 @@ class PrivateRouterDOM extends React.Component<RouterDOMProps, RouterState> {
     const { data, InitialPage, AsyncPage, location } = this.props
     const { pages } = this.state
 
-    const isInitialPage = matchPath(location.pathname || '', { ...data, exact: true, strict: false })
+    const isInitialPage = matchPath(location.pathname ?? '', {
+      ...data,
+      exact: true,
+      strict: false,
+    })
 
     if (isInitialPage) {
       return (
@@ -123,9 +130,13 @@ class PrivateRouterDOM extends React.Component<RouterDOMProps, RouterState> {
 
     // Iterate over the pages map and find a match
     // I think we could improve this algorithm, but YoLo
-    let matched: Page<any> | null = null
+    let matched: Page | null = null
     for (const [, page] of pages) {
-      const m = matchPath(location.pathname || '', { ...page, exact: true, strict: false })
+      const m = matchPath(location.pathname ?? '', {
+        ...page,
+        exact: true,
+        strict: false,
+      })
       if (m) {
         matched = page
         break
@@ -161,7 +172,7 @@ export const RouterDOM: React.SFC<InjectionProps> = ({
   data,
   error,
   InitialPage,
-  AsyncPage
+  AsyncPage,
 }) => {
   const location = useLocation()
   const runtime = React.useContext(Runtime)

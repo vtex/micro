@@ -25,5 +25,7 @@ export interface RouterStateModifier {
   preloadPage: (location: LocationDescriptorObject) => Promise<void>
 }
 
-export const MicroRouterContext = React.createContext<RouterStateModifier>({} as any)
+export const MicroRouterContext = React.createContext<RouterStateModifier>(
+  {} as any
+)
 MicroRouterContext.displayName = 'MicroRouterContext'

@@ -4,11 +4,11 @@ import express, { NextFunction, Request, Response } from 'express'
 import { Stats } from 'webpack'
 
 interface Locals {
-  compiler: HtmlCompiler<unknown>,
+  compiler: HtmlCompiler<unknown>
   route: {
     page: ResolvedPage<any>
     path: string
-  },
+  }
   webpackStats?: {
     stats: Stats[]
   }

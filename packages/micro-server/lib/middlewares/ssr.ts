@@ -1,15 +1,13 @@
+import { join } from 'path'
+
 import { PublicPaths, HtmlCompiler } from '@vtex/micro-core/lib'
 import { pathExists, readJson } from 'fs-extra'
-import { join } from 'path'
 import pretty from 'pretty'
 
 import { featuresFromReq } from '../features'
 import { Req, Res } from '../typings'
 
-const ok = (
-  compiler: HtmlCompiler<unknown>,
-  body: string
-) => `<!DOCTYPE html>
+const ok = (compiler: HtmlCompiler<unknown>, body: string) => `<!DOCTYPE html>
 <html>
 <head>
 ${compiler.getMetaTags()}
@@ -24,7 +22,14 @@ ${compiler.getScriptTags()}
 `
 
 export const middleware = (req: Req, res: Res) => {
-  const { locals: { compiler, route: { page: { status } } } } = res
+  const {
+    locals: {
+      compiler,
+      route: {
+        page: { status },
+      },
+    },
+  } = res
   const { disableSSR } = featuresFromReq(req)
 
   const body = compiler.renderToString(disableSSR)
@@ -58,7 +63,14 @@ ${body}
 `
 
 const readImportMap = async (compiler: HtmlCompiler<unknown>) => {
-  const importMapPath = join(compiler.dist, '..', 'build', 'es6', 'web_modules', 'import-map.json')
+  const importMapPath = join(
+    compiler.dist,
+    '..',
+    'build',
+    'es6',
+    'web_modules',
+    'import-map.json'
+  )
   const exists = await pathExists(importMapPath)
   if (exists) {
     return readJson(importMapPath)
@@ -66,26 +78,31 @@ const readImportMap = async (compiler: HtmlCompiler<unknown>) => {
   console.error('😐 Could not find import map. Is everything ok ?')
 }
 
-const scopeImportMapToPublicPath = ({ assets }: PublicPaths) => (importMap: ImportMap) => ({
+const scopeImportMapToPublicPath = ({ assets }: PublicPaths) => (
+  importMap: ImportMap
+) => ({
   ...importMap,
   imports: {
-    ...Object.keys(importMap.imports || {}).reduce(
-      (acc, ref) => {
-        acc[ref] = join(assets, 'web_modules', importMap.imports[ref])
-        return acc
-      },
-      {} as Record<string, string>
-    )
-  }
+    ...Object.keys(importMap.imports || {}).reduce((acc, ref) => {
+      acc[ref] = join(assets, 'web_modules', importMap.imports[ref])
+      return acc
+    }, {} as Record<string, string>),
+  },
 })
 
 export const devSSR = (publicPaths: PublicPaths) => {
   const scopeImportMaps = scopeImportMapToPublicPath(publicPaths)
 
   return async (req: Req, res: Res) => {
-    const { locals: { route: { page: { status } } } } = res
+    const {
+      locals: {
+        route: {
+          page: { status },
+        },
+      },
+    } = res
     const { disableSSR } = featuresFromReq(req)
-    const compiler = res.locals.compiler
+    const { compiler } = res.locals
 
     const importMapPromise = readImportMap(compiler).then(scopeImportMaps)
     const body = compiler.renderToString(disableSSR)

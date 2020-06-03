@@ -4,7 +4,7 @@ import chalk from 'chalk'
 import {
   newProject,
   resolvePlugins,
-  resolveSelfPlugin
+  resolveSelfPlugin,
 } from '../../common/project'
 
 const lifecycle = 'bundle'
@@ -20,7 +20,11 @@ export const getBundleCompiler = async (options: Options) => {
 
   const project = await newProject()
 
-  console.log(`🦄 Starting Micro for ${chalk.magenta(project)} at ${chalk.blue(lifecycle)}:${chalk.blue(mode)}`)
+  console.log(
+    `🦄 Starting Micro for ${chalk.magenta(project)} at ${chalk.blue(
+      lifecycle
+    )}:${chalk.blue(mode)}`
+  )
 
   const partial = await resolvePlugins(project, lifecycle)
   const self = await resolveSelfPlugin(project, lifecycle)

@@ -7,7 +7,7 @@ export const once = <T extends (...args: any) => any>(fn: T) => {
       return ret as ReturnType<T>
     }
     called = true
-    ret = fn(...args as any)
+    ret = fn(...(args as any))
     return ret as ReturnType<T>
   }
 }

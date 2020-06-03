@@ -1,1 +1,1 @@
-declare module 'webpack-messages';
+declare module 'webpack-messages'

@@ -118,5 +118,5 @@ export const htmlTags = [
   'ul',
   'var',
   'video',
-  'wbr'
+  'wbr',
 ]

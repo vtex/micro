@@ -14,19 +14,28 @@ import { Next, Req, Res } from './typings'
 
 interface DevServerOptions {
   statsJson: Stats.ToJsonOutput
-  project: Project,
+  project: Project
   publicPaths: PublicPaths
   host: string
   port: number
 }
 
-const context = (
-  project: Project,
-  plugins: NonNullable<HtmlPlugin>[],
-  statsJson: Stats.ToJsonOutput,
+const context = ({
+  project,
+  plugins,
+  statsJson,
+  publicPaths,
+}: {
+  project: Project
+  plugins: Array<NonNullable<HtmlPlugin>>
+  statsJson: Stats.ToJsonOutput
   publicPaths: PublicPaths
-) => (req: Req, res: Res, next: Next) => {
-  const { locals: { route: { page, path } } } = res
+}) => (req: Req, res: Res, next: Next) => {
+  const {
+    locals: {
+      route: { page, path },
+    },
+  } = res
   res.locals.compiler = new HtmlCompiler({
     project,
     plugins,
@@ -36,8 +45,8 @@ const context = (
       lifecycleTarget: 'build',
       publicPaths,
       page,
-      path
-    }
+      path,
+    },
   })
   next()
 }
@@ -47,24 +56,48 @@ export const startDevServer = async ({
   statsJson,
   project,
   host,
-  port
+  port,
 }: DevServerOptions) => {
   const plugins = await resolvePlugins(project)
-  const htmlPlugins = plugins.map(p => p?.html).filter((p): p is NonNullable<HtmlPlugin> => !!p)
-  const routerPlugins = plugins.map(p => p?.router).filter((p): p is NonNullable<RouterPlugin> => !!p)
+  const htmlPlugins = plugins
+    .map((p) => p?.html)
+    .filter((p): p is NonNullable<HtmlPlugin> => !!p)
+  const routerPlugins = plugins
+    .map((p) => p?.router)
+    .filter((p): p is NonNullable<RouterPlugin> => !!p)
 
   const routerMiddleware = await router(project, routerPlugins, publicPaths)
-  const contextMiddleware = context(project, htmlPlugins, statsJson, publicPaths)
+  const contextMiddleware = context({
+    project,
+    plugins: htmlPlugins,
+    statsJson,
+    publicPaths,
+  })
 
   const app = express()
 
   app.use(logger('dev'))
   app.use(compress())
 
-  app.get('/favicon.ico', (req: Req, res: Res) => { res.status(404); res.send(null) })
+  app.get('/favicon.ico', (req: Req, res: Res) => {
+    res.status(404)
+    res.send(null)
+  })
   app.get(`${publicPaths.assets}*`, headers, streamAssets(project, publicPaths))
-  app.get(`${publicPaths.data}*`, headers, routerMiddleware, contextMiddleware, respondData)
-  app.get('/*', headers, routerMiddleware, contextMiddleware, devSSR(publicPaths))
+  app.get(
+    `${publicPaths.data}*`,
+    headers,
+    routerMiddleware,
+    contextMiddleware,
+    respondData
+  )
+  app.get(
+    '/*',
+    headers,
+    routerMiddleware,
+    contextMiddleware,
+    devSSR(publicPaths)
+  )
 
   app.listen(port, () => console.log(`🦄 DevServer is UP on ${host}:${port}`))
 }

@@ -7,7 +7,7 @@ import { RouterDOM } from './DynamicRouterDOM'
 import { AsyncPageProps, PageProps, RouterProps } from './Router'
 import { RouterSSR } from './RouterSSR'
 
-type AsyncImport = (x: { name: string}) => Promise<any>
+type AsyncImport = (x: { name: string }) => Promise<any>
 
 export const withRouter = (
   InitialPage: React.ElementType<PageProps>,
@@ -15,10 +15,10 @@ export const withRouter = (
 ): React.SFC<RouterProps> => {
   const AsyncPage = loadable<AsyncPageProps>(AsyncImport, {
     cacheKey: ({ name }) => name,
-    ssr: false
+    ssr: false,
   })
 
-  return function MicroReactRouter ({ data, error }) {
+  return function MicroReactRouter({ data, error }) {
     if (!canUseDOM) {
       return <RouterSSR data={data} error={error} InitialPage={InitialPage} />
     }

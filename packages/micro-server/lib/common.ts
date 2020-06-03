@@ -15,8 +15,8 @@ export const resolvePlugins = async (project: Project) => {
     reportPlugin('serve', pkg)
   }
   const plugins = [
-    ...selfPlugin ? [selfPlugin] : [],
-    ...Object.values(pluginsRecord)
+    ...(selfPlugin ? [selfPlugin] : []),
+    ...Object.values(pluginsRecord),
   ]
   return plugins.filter((p): p is NonNullable<Plugins['serve']> => !!p)
 }

@@ -13,7 +13,7 @@ export const withIntlProvider = (
   messages: Messages,
   locale: string
 ): React.SFC<PageProps> => {
-  return function MicroReactIntl ({ data, error }) {
+  return function MicroReactIntl({ data, error }) {
     return (
       <IntlProvider messages={messages} locale={locale} key={locale}>
         <Page data={data} error={error} />

@@ -7,7 +7,7 @@ export const BaseTSConfig = {
       'lib/typings',
       'router/typings',
       'plugins/typings',
-      'components/typings'
+      'components/typings',
     ],
     target: 'es2019',
     module: 'commonjs',
@@ -18,10 +18,10 @@ export const BaseTSConfig = {
     esModuleInterop: true,
     forceConsistentCasingInFileNames: false,
     skipLibCheck: true,
-    declaration: true
+    declaration: true,
   },
   include: ['index.ts', 'lib', 'router', 'plugins', 'components'],
-  exclude: [MICRO_BUILD_DIR, 'pages']
+  exclude: [MICRO_BUILD_DIR, 'pages'],
 }
 
 export type TSConfig = typeof BaseTSConfig
@@ -33,7 +33,7 @@ export const genTSConfig = (partial: any): TSConfig => {
     ...BaseTSConfig,
     compilerOptions: {
       ...partial?.compilerOptions,
-      ...BaseTSConfig.compilerOptions
-    }
+      ...BaseTSConfig.compilerOptions,
+    },
   }
 }

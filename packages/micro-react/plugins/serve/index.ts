@@ -79,14 +79,14 @@ class Html extends HtmlFrameworkPlugin<JSX.Element> {
   public getLinkTags = () => {
     const {
       page: { name, data },
-      publicPaths: { data: dataRootPath },
+      publicPaths: { data: rootPath },
       path,
     } = this.options
     const tagsNoCSS = this.extractor!.getLinkTags()
       .split('\n')
       .filter((x) => !x.includes('as="style"'))
       .join('\n')
-    const dataTags = withPageDataTags(name, data, dataRootPath, path)
+    const dataTags = withPageDataTags({ name, data, rootPath, path })
     return [tagsNoCSS, dataTags].join('\n')
     // return [
     //   dataTags,

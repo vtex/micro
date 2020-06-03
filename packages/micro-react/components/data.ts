@@ -20,19 +20,19 @@ export const getPageData = async () => {
 }
 
 export const withPageDataTags = ({
-  pageName,
-  pageData,
-  dataRootPath,
+  name,
+  data,
+  rootPath,
   path,
 }: {
-  pageName: string
-  pageData: any
-  dataRootPath: string
+  name: string
+  data: any
+  rootPath: string
   path: string
-}) =>
-  pageData !== undefined
-    ? `<link id="${id}" data-chunk="${pageName}" rel="preload" as="fetch" href="${join(
-        dataRootPath,
-        path
-      )}" crossorigin="anonymous">`
-    : ''
+}) => {
+  if (data === undefined) {
+    return ''
+  }
+  const href = join(rootPath, path)
+  return `<link id="${id}" data-chunk="${name}" rel="preload" as="fetch" href="${href}" crossorigin="anonymous">`
+}

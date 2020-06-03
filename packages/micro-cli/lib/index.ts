@@ -8,11 +8,14 @@ import {
   MissingRequiredArgsError,
   run as unboundRun,
 } from 'findhelp'
+import { join } from 'path'
+import PrettyError from 'pretty-error'
 
 import { tree } from './modules/tree'
 
-const run = (command: any) =>
-  unboundRun.call(tree, command, join(__dirname, 'modules'))
+const pe = new PrettyError()
+
+const run = (command: any) => unboundRun.call(tree, command, join(__dirname, 'modules'))
 
 const main = async () => {
   try {
@@ -31,7 +34,8 @@ const main = async () => {
         )
         break
       default:
-        console.error(chalk.red('💣 Something exploded:\n'), e)
+        console.error(chalk.red('💣 Something exploded:\n'))
+        console.error(pe.render(e))
     }
   }
 }

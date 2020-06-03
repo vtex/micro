@@ -2,7 +2,6 @@ import { HtmlCompiler, Project, PublicPaths } from '@vtex/micro-core/lib'
 import compress from 'compression'
 import express from 'express'
 import logger from 'morgan'
-import { Stats } from 'webpack'
 
 import { HtmlPlugin, resolvePlugins, RouterPlugin } from './common'
 import { middleware as streamAssets } from './middlewares/assets'
@@ -13,22 +12,17 @@ import { devSSR } from './middlewares/ssr'
 import { Next, Req, Res } from './typings'
 
 interface DevServerOptions {
-  statsJson: Stats.ToJsonOutput
-  project: Project
+  statsJson: any // TODO: Fix this as any
+  project: Project,
   publicPaths: PublicPaths
   host: string
   port: number
 }
 
-const context = ({
-  project,
-  plugins,
-  statsJson,
-  publicPaths,
-}: {
-  project: Project
-  plugins: Array<NonNullable<HtmlPlugin>>
-  statsJson: Stats.ToJsonOutput
+const context = (
+  project: Project,
+  plugins: NonNullable<HtmlPlugin>[],
+  statsJson: any,
   publicPaths: PublicPaths
 }) => (req: Req, res: Res, next: Next) => {
   const {

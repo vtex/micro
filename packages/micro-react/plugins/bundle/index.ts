@@ -101,8 +101,6 @@ export default class Bundle extends BundlePlugin {
       env('production', [
         optimization({
           noEmitOnErrors: true,
-          namedModules: false,
-          namedChunks: false,
           moduleIds: 'size',
           chunkIds: 'total-size',
           nodeEnv: 'production',
@@ -110,7 +108,6 @@ export default class Bundle extends BundlePlugin {
           removeEmptyChunks: true,
           mergeDuplicateChunks: true,
           flagIncludedChunks: true,
-          occurrenceOrder: true,
           providedExports: true,
           usedExports: true,
           concatenateModules: true,

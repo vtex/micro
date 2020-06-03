@@ -1,10 +1,9 @@
 import { join } from 'path'
+import { promisify } from 'util'
 
 import chalk from 'chalk'
 import { outputJSON } from 'fs-extra'
-import { join } from 'path'
 import webpack from 'webpack'
-import { promisify } from 'util'
 import PrettyError from 'pretty-error'
 
 import { ensureDist } from '../../common/project'
@@ -25,7 +24,7 @@ const main = async (options: Options) => {
 
   await ensureDist(lifecycle, compiler.dist)
 
-  for (const page of Object.keys(configs.entry || {})) {
+  for (const page of Object.keys(configs.entry ?? {})) {
     console.log(`📄 [${lifecycle}]: Page found: ${page}`)
   }
 
@@ -46,21 +45,32 @@ const main = async (options: Options) => {
 
     if (stats?.hasErrors()) {
       console.error('⛔⛔ Webpack build finshed with the following errors\n')
-      for (const error of statsJSON.errors as any) { // TODO: why do we need this as any in here ?
+      for (const error of statsJSON.errors as any) {
+        // TODO: why do we need this as any in here ?
         console.log(pe.render(error))
       }
     }
 
     if (stats?.hasWarnings()) {
       console.warn('⛔ Webpack build finshed with the following warnings\n')
-      for (const warning of statsJSON.warnings as any) { // TODO: why do we need this as any in here ?
+      for (const warning of statsJSON.warnings as any) {
+        // TODO: why do we need this as any in here ?
         console.log(pe.render(warning))
       }
-      console.warn(`❗ Please run ${chalk.blue('micro bundle report')} for a better view of what is going on with your bundle`)
+      console.warn(
+        `❗ Please run ${chalk.blue(
+          'micro bundle report'
+        )} for a better view of what is going on with your bundle`
+      )
     }
 
     const dist = join(compiler.dist, BUILD)
-    console.log(`🦄 [${lifecycle}]: Persisting Build on ${dist.replace(process.cwd(), '')}`)
+    console.log(
+      `🦄 [${lifecycle}]: Persisting Build on ${dist.replace(
+        process.cwd(),
+        ''
+      )}`
+    )
     await outputJSON(dist, statsJSON, { spaces: 2 })
   } catch (err) {
     console.error(pe.render(err))

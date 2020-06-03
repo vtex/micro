@@ -1,40 +1,14 @@
+import { Block, group } from 'webpack-blocks'
 
-// import {
-//   BundlePlugin,
-//   BundleTarget,
-//   pagesFrameworkName,
-//   pagesRuntimeName,
-//   Project
-// } from '../'
-
-import { basename } from 'path'
-import {
-  addPlugins,
-  Block,
-  Context,
-  customConfig,
-  defineConstants,
-  entryPoint,
-  env,
-  group,
-  match,
-  optimization,
-  performance,
-  resolve,
-  setContext,
-  setMode,
-  sourceMaps
-} from 'webpack-blocks'
+import { BundlePlugin } from '../../lib/lifecycles/bundle'
 
 export default class Bundle extends BundlePlugin {
-  public getWebpackConfig = async (config: Block<Context>, target: BundleTarget): Promise<Block<Context>> => {
-    const block: Block<Context>[] = [
-      
-    ]
+  public getWebpackConfig = async (
+    config: Block
+    // target: BundleTarget
+  ): Promise<Block> => {
+    const block: Block[] = []
 
-    return group([
-      config,
-      ...block
-    ])
+    return group([config, ...block])
   }
 }

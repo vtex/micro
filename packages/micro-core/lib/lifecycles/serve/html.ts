@@ -1,12 +1,10 @@
 import { join } from 'path'
 
-import { Stats } from 'webpack'
-
+import { ResolvedPage } from '../../../components/page'
 import { PublicPaths } from '../../../components/publicPaths'
 import { Compiler, CompilerOptions } from '../../compiler'
 import { Plugin } from '../../plugin'
 import { LifeCycle } from '../../project'
-import { ResolvedPage } from '../../../components/page'
 
 const LIFECYCLE = 'serve'
 
@@ -104,7 +102,7 @@ interface AssetsDist {
 export interface HtmlPluginOptions {
   mode: 'production' | 'development'
   lifecycleTarget: 'build' | 'bundle'
-  stats: Stats.ToJsonOutput
+  stats: any
   publicPaths: PublicPaths
   assetsDist: AssetsDist
   page: ResolvedPage<any>

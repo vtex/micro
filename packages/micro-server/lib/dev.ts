@@ -13,16 +13,21 @@ import { Next, Req, Res } from './typings'
 
 interface DevServerOptions {
   statsJson: any // TODO: Fix this as any
-  project: Project,
+  project: Project
   publicPaths: PublicPaths
   host: string
   port: number
 }
 
-const context = (
-  project: Project,
-  plugins: NonNullable<HtmlPlugin>[],
-  statsJson: any,
+const context = ({
+  project,
+  plugins,
+  statsJson,
+  publicPaths,
+}: {
+  project: Project
+  plugins: Array<NonNullable<HtmlPlugin>>
+  statsJson: any
   publicPaths: PublicPaths
 }) => (req: Req, res: Res, next: Next) => {
   const {

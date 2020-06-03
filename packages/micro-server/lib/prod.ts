@@ -19,10 +19,15 @@ interface ProdServerOptions {
   port: number
 }
 
-const context = (
-  project: Project,
-  plugins: NonNullable<HtmlPlugin>[],
-  statsJson: any,
+const context = ({
+  project,
+  plugins,
+  statsJson,
+  publicPaths,
+}: {
+  project: Project
+  plugins: Array<NonNullable<HtmlPlugin>>
+  statsJson: any
   publicPaths: PublicPaths
 }) => (req: Req, res: Res, next: Next) => {
   const {

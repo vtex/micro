@@ -15,7 +15,7 @@ export class Compiler<T extends Plugin> {
   public dist: string
   public project: Project
 
-  constructor ({ project, target, plugins }: CompilerOptions<T>) {
+  constructor({ project, target, plugins }: CompilerOptions<T>) {
     this.project = project
     this.plugins = plugins
     this.dist = join(this.project.dist, target)

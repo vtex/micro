@@ -14,9 +14,12 @@ const printPerformance = () => {
   if (!timing) {
     return
   }
-  const domContentLoaded = timing.domContentLoadedEventEnd - timing.navigationStart
+  const domContentLoaded =
+    timing.domContentLoadedEventEnd - timing.navigationStart
   const loaded = timing.loadEventEnd - timing.navigationStart
-  console.log(`[micro-react]: ⚡⚡ DomContentLoaded ${domContentLoaded / 1e3}ms`)
+  console.log(
+    `[micro-react]: ⚡⚡ DomContentLoaded ${domContentLoaded / 1e3}ms`
+  )
   console.log(`[micro-react]: ⚡⚡ Load ${loaded / 1e3}ms`)
 }
 
@@ -26,7 +29,9 @@ const renderOrHydrate = (App: React.ReactType) => async () => {
 
   // This should be preloaded by now
   let error = null
-  const data = await getPageData().catch(err => { error = err })
+  const data = await getPageData().catch((err) => {
+    error = err
+  })
 
   const AppWithContext = (
     <StrictMode>
@@ -39,13 +44,19 @@ const renderOrHydrate = (App: React.ReactType) => async () => {
   if (container.children.length > 0) {
     const msg = '[micro-react]: ⚡⚡ Hydration took'
     console.time(msg)
-    console.log('hydrationStart', (Date.now() - window.performance.timing.navigationStart) / 1e3)
+    console.log(
+      'hydrationStart',
+      (Date.now() - window.performance.timing.navigationStart) / 1e3
+    )
     hydrate(AppWithContext, container)
     console.timeEnd(msg)
   } else {
     const msg = '[micro-react]: ⚡ Rendering took'
     console.time(msg)
-    console.log('renderStart', (Date.now() - window.performance.timing.navigationStart) / 1e3)
+    console.log(
+      'renderStart',
+      (Date.now() - window.performance.timing.navigationStart) / 1e3
+    )
     render(AppWithContext, container)
     console.timeEnd(msg)
   }

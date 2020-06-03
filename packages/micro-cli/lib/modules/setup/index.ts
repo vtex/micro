@@ -1,8 +1,13 @@
-import { genManifest, genTSConfig, PackageStructure } from '@vtex/micro-core/lib'
-import { outputFile, readJSON } from 'fs-extra'
 import { join } from 'path'
 
-import { prettyPrint } from './../../common/print'
+import {
+  genManifest,
+  genTSConfig,
+  PackageStructure,
+} from '@vtex/micro-core/lib'
+import { outputFile, readJSON } from 'fs-extra'
+
+import { prettyPrint } from '../../common/print'
 
 interface Options {
   dry?: boolean
@@ -14,7 +19,7 @@ interface Options {
 //  - yarn add eslint --dev
 //  - yarn dlx @yarnpkg/pnpify --sdk # to setup vscode
 const main = async ({ dry, d }: Options) => {
-  const dryRun = dry || d
+  const dryRun = dry ?? d
 
   const projectPath = process.cwd()
 

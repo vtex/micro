@@ -4,9 +4,9 @@ export const middleware = async (req: Req, res: Res) => {
   const {
     locals: {
       route: {
-        page: { data, status }
-      }
-    }
+        page: { data, status },
+      },
+    },
   } = res
 
   res.type('json')

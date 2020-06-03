@@ -1,20 +1,22 @@
 import assert from 'assert'
+import { join } from 'path'
+
 import { readJSON, readJson } from 'fs-extra'
 import globby from 'globby'
-import { join } from 'path'
 
 import { LifeCycle } from '../../project'
 import { Package, PackageRootEntries, PackageStructure } from '../base'
 import { isManifest } from '../manifest'
 import { createDepTree } from './dfs'
 
-const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development'
+const mode =
+  process.env.NODE_ENV === 'production' ? 'production' : 'development'
 
 const ROOT = 'root'
 
 export class ModulesPackage extends Package {
-  public issuer: string = ''
-  public projectRootPath: string = ''
+  public issuer = ''
+  public projectRootPath = ''
 
   // TODO: Make it resolve based on major and not only on the package name
   public resolve = async (projectRoot: string) => {
@@ -29,10 +31,13 @@ export class ModulesPackage extends Package {
 
     seen.set(this.manifest.name, this)
 
-    assert(isManifest(this.manifest), '💣 Root manifest needs to be a valid Micro Project')
+    assert(
+      isManifest(this.manifest),
+      '💣 Root manifest needs to be a valid Micro Project'
+    )
 
-    const deps = Object.keys(this.manifest.dependencies || {})
-    for (const depName of deps) {
+    const deps = Object.keys(this.manifest.dependencies ?? {})
+    for await (const depName of deps) {
       const childManifest = require(`${depName}/${PackageStructure.manifest}`)
       if (!isManifest(childManifest)) {
         continue
@@ -56,9 +61,19 @@ export class ModulesPackage extends Package {
     try {
       let resolved = ''
       if (this.issuer === ROOT) {
-        resolved = join(this.projectRootPath, 'dist', 'build', 'cjs', 'plugins', target, 'index.js')
+        resolved = join(
+          this.projectRootPath,
+          'dist',
+          'build',
+          'cjs',
+          'plugins',
+          target,
+          'index.js'
+        )
       } else {
-        const locator: string = require.resolve(join(this.manifest.name, 'plugins'))
+        const locator: string = require.resolve(
+          join(this.manifest.name, 'plugins')
+        )
         resolved = join(locator, '..', target, 'index.js')
       }
 
@@ -80,12 +95,14 @@ export class ModulesPackage extends Package {
     if (this.issuer === ROOT) {
       path = this.projectRootPath
     } else {
-      const locator: string = require.resolve(join(this.manifest.name, PackageStructure.manifest))
+      const locator: string = require.resolve(
+        join(this.manifest.name, PackageStructure.manifest)
+      )
       path = join(locator, '..')
     }
 
     const query = this.getGlobby(...targets)
     const matches = await globby(query, { cwd: path })
-    return matches.map(p => join(path, p))
+    return matches.map((p) => join(path, p))
   }
 }

@@ -1,8 +1,9 @@
-import { Project, PublicPaths } from '@vtex/micro-core/lib'
 import assert from 'assert'
+import { basename, extname, join } from 'path'
+
+import { Project, PublicPaths } from '@vtex/micro-core/lib'
 import { createReadStream, pathExists } from 'fs-extra'
 import mime from 'mime-types'
-import { basename, extname, join } from 'path'
 
 import { Req, Res } from '../typings'
 
@@ -15,9 +16,10 @@ const resolveES6Assets = (assetsRootPath: string, path: string) => {
 }
 
 export const middleware = (project: Project, publicPaths: PublicPaths) => {
-  const assetsRootPath = process.env.NODE_ENV === 'production'
-    ? join(project.dist, 'bundle/webnew')
-    : join(project.dist, 'build/es6')
+  const assetsRootPath =
+    process.env.NODE_ENV === 'production'
+      ? join(project.dist, 'bundle/webnew')
+      : join(project.dist, 'build/es6')
 
   return async (req: Req, res: Res) => {
     try {
@@ -34,9 +36,10 @@ export const middleware = (project: Project, publicPaths: PublicPaths) => {
         res.set('content-type', contentType)
       }
 
-      const assetPath = process.env.NODE_ENV === 'production'
-        ? resolveBundleAssets(assetsRootPath, path)
-        : resolveES6Assets(assetsRootPath, path)
+      const assetPath =
+        process.env.NODE_ENV === 'production'
+          ? resolveBundleAssets(assetsRootPath, path)
+          : resolveES6Assets(assetsRootPath, path)
 
       const assetExists = await pathExists(assetPath)
       assert(assetExists, `💣 Could not find asset: ${assetPath}`)

@@ -1,6 +1,7 @@
+import { join } from 'path'
+
 import chalk from 'chalk'
 import { outputJSON } from 'fs-extra'
-import { join } from 'path'
 import webpack, { Compiler, Stats } from 'webpack'
 
 import { ensureDist } from '../../common/project'
@@ -9,14 +10,15 @@ import { getBundleCompiler } from './common'
 
 const lifecycle = 'bundle'
 
-const runWebpack = (compiler: Compiler) => new Promise<Stats>((resolve, reject) => {
-  compiler.run((err, stats) => {
-    if (err) {
-      reject(err)
-    }
-    return resolve(stats)
+const runWebpack = (compiler: Compiler) =>
+  new Promise<Stats>((resolve, reject) => {
+    compiler.run((err, stats) => {
+      if (err) {
+        reject(err)
+      }
+      return resolve(stats)
+    })
   })
-})
 
 interface Options {
   dev?: boolean
@@ -53,11 +55,17 @@ const main = async (options: Options) => {
     for (const warning of statsJSON.warnings) {
       console.log(warning)
     }
-    console.warn(`❗ Please run ${chalk.blue('micro bundle report')} for a better view of what is going on with your bundle`)
+    console.warn(
+      `❗ Please run ${chalk.blue(
+        'micro bundle report'
+      )} for a better view of what is going on with your bundle`
+    )
   }
 
   const dist = join(compiler.dist, BUILD)
-  console.log(`🦄 [${lifecycle}]: Persisting Build on ${dist.replace(process.cwd(), '')}`)
+  console.log(
+    `🦄 [${lifecycle}]: Persisting Build on ${dist.replace(process.cwd(), '')}`
+  )
   await outputJSON(dist, statsJSON, { spaces: 2 })
 }
 

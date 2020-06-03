@@ -2,7 +2,7 @@ import {
   isResolvedPage,
   MicroRequest,
   Resolved,
-  RoutePlugin
+  RoutePlugin,
 } from '@vtex/micro-core/lib'
 
 import { pack } from '../../components/Page'

@@ -1,1 +1,1 @@
-declare module 'webpack-blocks-utils';
+declare module 'webpack-blocks-utils'

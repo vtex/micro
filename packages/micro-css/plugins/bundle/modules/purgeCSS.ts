@@ -21,7 +21,7 @@ export const purgeCSS = (options: Partial<Options>) => {
       const ctx = context as EnhancedContext
       ctx.purgeCSSOptions = {
         ...ctx.purgeCSSOptions,
-        ...options
+        ...options,
       }
       return (config: Configuration) => config
     },

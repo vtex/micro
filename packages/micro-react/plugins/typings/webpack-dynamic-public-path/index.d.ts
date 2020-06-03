@@ -1,1 +1,1 @@
-declare module 'webpack-dynamic-public-path';
+declare module 'webpack-dynamic-public-path'

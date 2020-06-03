@@ -7,7 +7,7 @@ export interface PluginOptions {
 export abstract class Plugin {
   public target: LifeCycle
 
-  constructor ({ target }: PluginOptions) {
+  constructor({ target }: PluginOptions) {
     this.target = target
   }
 }

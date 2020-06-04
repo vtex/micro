@@ -18,10 +18,12 @@
   "module": "./dist/build/es6/components/index.js",
   "browser": "./components/index.ts",
   "dependencies": {
+    "@babel/core": "^7.10.2",
     "@vtex/micro-core": "^1.1.1-alpha.21",
     "babel-merge": "^3.0.0",
     "babel-plugin-inline-json-import": "^0.3.2",
     "babel-plugin-transform-remove-imports": "^1.3.2",
+    "webpack": "next",
     "webpack-blocks": "^2.1.0"
   },
   "devDependencies": {

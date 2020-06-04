@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef } from 'react'
 import { useInViewport } from 'react-in-viewport'
 import {
   Link as ReactRouterLink,
-  LinkProps,
+  LinkProps as ReactRouterLinkProps,
   useLocation,
 } from 'react-router-dom'
 
@@ -10,13 +10,13 @@ import { MicroRouterContext } from './Router/Router'
 import { onMobileDevice } from './utils/env'
 import { locationFromProps } from './utils/location'
 
-type Props = LinkProps & {
+export type LinkProps = ReactRouterLinkProps & {
   prefetch?: boolean
 }
 
 const noop = () => {}
 
-export const Link: React.SFC<Props> = ({
+export const Link: React.SFC<LinkProps> = ({
   children,
   to,
   prefetch = false,

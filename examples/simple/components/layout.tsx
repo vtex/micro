@@ -4,10 +4,12 @@ import React, { Fragment } from 'react'
 import { Header, HeaderProps } from './Header'
 import { Loading } from './loading'
 
-const Footer = loadable(() => import(
-  /* webpackChunkName: "Footer" */
-  './footer'
-))
+const Footer = loadable(() =>
+  import(
+    /* webpackChunkName: "Footer" */
+    './footer'
+  )
+)
 
 type Props = HeaderProps & {
   NavLink: HeaderProps['Link']
@@ -15,8 +17,8 @@ type Props = HeaderProps & {
 
 export const Layout: React.SFC<Props> = ({ menu, children, NavLink, Link }) => (
   <Fragment>
-    <Header menu={menu} Link={NavLink}/>
-    { children }
-    <Footer Link={Link} fallback={<Loading/>} />
+    <Header menu={menu} Link={NavLink} />
+    {children}
+    <Footer Link={Link} fallback={<Loading />} />
   </Fragment>
 )

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef } from 'react'
 import { useInViewport } from 'react-in-viewport'
 import {
-  NavLinkProps,
+  NavLinkProps as ReactRouterNavLinkProps,
   NavLink as ReactRouterNavLink,
   useLocation,
 } from 'react-router-dom'
@@ -10,13 +10,13 @@ import { MicroRouterContext } from './Router/Router'
 import { onMobileDevice } from './utils/env'
 import { locationFromProps } from './utils/location'
 
-type Props = NavLinkProps & {
+export type NavLinkProps = ReactRouterNavLinkProps & {
   prefetch?: boolean
 }
 
 const noop = () => {}
 
-export const NavLink: React.SFC<Props> = ({
+export const NavLink: React.SFC<NavLinkProps> = ({
   children,
   to,
   prefetch = false,

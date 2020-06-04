@@ -1,5 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import webpack from 'webpack'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import { Context, Util } from 'webpack-blocks'
 
@@ -28,5 +26,6 @@ export const extractCss = (options?: Options) => (
         },
       ],
     },
-    plugins: [new MiniCssExtractPlugin(options?.plugin)],
+    // TODO: fix this as any
+    plugins: [new MiniCssExtractPlugin(options?.plugin) as any],
   })

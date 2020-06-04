@@ -8,15 +8,12 @@ import {
   pagesRuntimeName,
   Project,
 } from '@vtex/micro-core/lib'
-import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'
 import PnpPlugin from 'pnp-webpack-plugin'
 import TerserJSPlugin from 'terser-webpack-plugin'
-import TimeFixPlugin from 'time-fix-plugin'
 import {
   addPlugins,
   Block,
   customConfig,
-  defineConstants,
   entryPoint,
   env,
   group,
@@ -24,9 +21,6 @@ import {
   optimization,
   performance,
   resolve,
-  setContext,
-  setMode,
-  sourceMaps,
 } from 'webpack-blocks'
 import DynamicPublicPathPlugin from 'webpack-dynamic-public-path'
 
@@ -54,12 +48,7 @@ export default class Bundle extends BundlePlugin {
   ): Promise<Block> => {
     const entrypoints = await entriesFromPages(this.project)
     const block: Block[] = [
-      setMode(this.mode),
-      setContext(this.project.rootPath),
       entryPoint(entrypoints),
-      defineConstants({
-        'process.env.NODE_ENV': this.mode,
-      }),
       addPlugins([
         new LoadablePlugin({
           outputAsset: false,
@@ -74,15 +63,11 @@ export default class Bundle extends BundlePlugin {
           acc[packageName] = require.resolve(packageName)
           return acc
         }, {} as Record<string, string>),
-        extensions: ['.tsx', '.ts', '.js', '.jsx', '.json'],
         plugins: [PnpPlugin],
       }),
       cacheGroup(pagesRuntimeName, /\/react\/|\/react-dom\/|\/@loadable\//),
       cacheGroup(pagesFrameworkName, /\/micro-react\/components\//),
       optimization({
-        runtimeChunk: {
-          name: 'webpack-runtime',
-        },
         splitChunks: {
           maxInitialRequests: 30,
           maxAsyncRequests: 10,
@@ -117,26 +102,11 @@ export default class Bundle extends BundlePlugin {
             new TerserJSPlugin({
               extractComments: true,
             }),
-            new OptimizeCSSAssetsPlugin({
-              cssProcessorPluginOptions: {
-                preset: ['default', { discardComments: { removeAll: true } }],
-              },
-            }),
           ],
         } as any),
         performance({
           hints: 'warning',
         }),
-      ]),
-      env('development', [
-        addPlugins([new TimeFixPlugin()]),
-        sourceMaps('inline-source-map'),
-        customConfig({
-          watchOptions: {
-            ignored: `${this.project.dist}`,
-            aggregateTimeout: 300,
-          },
-        }) as Block,
       ]),
     ]
 

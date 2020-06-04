@@ -27,8 +27,8 @@
     "babel-plugin-react-intl": "^7.5.14",
     "intl-messageformat-parser": "^5.0.10",
     "react-intl": "^4.6.0",
-    "webpack-blocks": "^2.1.0",
-    "webpack": "next"
+    "webpack": "next",
+    "webpack-blocks": "^2.1.0"
   },
   "devDependencies": {
     "@types/babel-core": "^6.25.6",

@@ -26,8 +26,8 @@
     "history": "^4.10.1",
     "react-in-viewport": "^1.0.0-alpha.11",
     "react-router-dom": "^5.1.2",
-    "webpack-blocks": "^2.1.0",
-    "webpack": "next"
+    "webpack": "next",
+    "webpack-blocks": "^2.1.0"
   },
   "devDependencies": {
     "@types/history": "^4.7.5",

@@ -23,8 +23,8 @@
     "babel-merge": "^3.0.0",
     "babel-plugin-inline-json-import": "^0.3.2",
     "babel-plugin-transform-remove-imports": "^1.3.2",
-    "webpack-blocks": "^2.1.0",
-    "webpack": "next"
+    "webpack": "next",
+    "webpack-blocks": "^2.1.0"
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.7",

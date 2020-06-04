@@ -27,8 +27,8 @@
     "pnpapi": "^0.0.0",
     "ramda": "^0.27.0",
     "time-fix-plugin": "^2.0.6",
-    "webpack-blocks": "^2.1.0",
-    "webpack": "next"
+    "webpack": "next",
+    "webpack-blocks": "^2.1.0"
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.7",

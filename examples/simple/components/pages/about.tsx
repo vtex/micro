@@ -6,11 +6,15 @@ import Huge from '../hugeComponent1'
 import { Layout } from '../layout'
 import { Loading } from '../loading'
 
-const BelowTheFold = loadable(() => import(
-  /* webpackChunkName: "BelowTheFold" */
-  /* webpackPreload: true */
-  '../hugeComponent2'
-), { ssr: false })
+const BelowTheFold = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "BelowTheFold" */
+      /* webpackPreload: true */
+      '../hugeComponent2'
+    ),
+  { ssr: false }
+)
 
 interface Props {
   data: {
@@ -24,7 +28,7 @@ const Page: React.SFC<Props> = ({ data }) => {
   return (
     <Layout menu={menu} NavLink={NavLink} Link={Link}>
       <Huge />
-      <BelowTheFold fallback={<Loading/>}/>
+      <BelowTheFold fallback={<Loading />} />
     </Layout>
   )
 }

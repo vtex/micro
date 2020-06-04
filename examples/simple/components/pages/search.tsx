@@ -6,11 +6,15 @@ import { Layout } from '../layout'
 import { Loading } from '../loading'
 import { PlaceHolder } from '../placeholder'
 
-const BelowTheFold = loadable(() => import(
-  /* webpackChunkName: "BelowTheFold" */
-  /* webpackPreload: true */
-  '../hugeComponent1'
-), { ssr: false })
+const BelowTheFold = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "BelowTheFold" */
+      /* webpackPreload: true */
+      '../hugeComponent1'
+    ),
+  { ssr: false }
+)
 
 interface Props {
   data: {
@@ -24,7 +28,7 @@ const Page: React.SFC<Props> = ({ data }) => {
   return (
     <Layout menu={menu} NavLink={NavLink} Link={Link}>
       <PlaceHolder />
-      <BelowTheFold fallback={<Loading/>}/>
+      <BelowTheFold fallback={<Loading />} />
     </Layout>
   )
 }

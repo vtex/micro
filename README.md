@@ -274,17 +274,19 @@ Having these packages comming from a single dependency makes that all micro comp
 
 ### Installing Dependencies
 
-We use yarn2. Please install yarn 2 with
+We use yarn2, which means when you run the typical `yarn` commands inside of micro, you'll be using yarn2. You can check that by running
 
 ```sh
-yarn global add yarn@2.x
+yarn -v
 ```
 
-If you want to go back using yarn@1.x, in macOS, run
+If you're indeed running yarn2 in this project, everything should be good to go! Just install all dependencies as usual
 
 ```sh
-brew unlink yarn && brew link --overwrite yarn
+yarn
 ```
+
+Note that running `yarn` in the project root folder will install dependencies for all packages, since each of them is a [yarn workspace](https://next.yarnpkg.com/features/workspaces) and cache them for faster installs later.
 
 ### Building
 
@@ -294,7 +296,7 @@ Since this is a lerna managed monorepo we can run
 lerna exec yarn build
 ```
 
-This should build everything. Now, go to your favorite example in `./examples` folder and run 
+This should build everything. Now, go to your favorite example in `./examples` folder and run
 
 ```sh
 yarn micro link

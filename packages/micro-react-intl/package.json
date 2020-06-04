@@ -38,6 +38,7 @@
   "peerDependencies": {
     "@loadable/component": "*",
     "react": "*",
-    "react-dom": "*"
+    "react-dom": "*",
+    "webpack": "*"
   }
 }

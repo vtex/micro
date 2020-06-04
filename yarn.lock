@@ -3420,6 +3420,8 @@ __metadata:
     babel-plugin-transform-remove-imports: ^1.3.2
     typescript: ^3.8.3
     webpack-blocks: ^2.1.0
+  peerDependencies:
+    webpack: "*"
   languageName: unknown
   linkType: soft
 
@@ -3450,7 +3452,7 @@ __metadata:
     ramda: ^0.27.0
     snowpack: ^2.2.1
     typescript: ^3.8.3
-    webpack: next
+    webpack: "npm:next"
   bin:
     micro: ./dist/build/cjs/lib/index.js
   languageName: unknown
@@ -3484,6 +3486,8 @@ __metadata:
     time-fix-plugin: ^2.0.6
     typescript: ^3.8.3
     webpack-blocks: ^2.1.0
+  peerDependencies:
+    webpack: "*"
   languageName: unknown
   linkType: soft
 
@@ -3508,6 +3512,8 @@ __metadata:
     terser-webpack-plugin: ^3.0.1
     typescript: ^3.8.3
     webpack-blocks: ^2.1.0
+  peerDependencies:
+    webpack: "*"
   languageName: unknown
   linkType: soft
 
@@ -3532,6 +3538,7 @@ __metadata:
     "@loadable/component": "*"
     react: "*"
     react-dom: "*"
+    webpack: "*"
   languageName: unknown
   linkType: soft
 
@@ -3559,6 +3566,7 @@ __metadata:
     "@loadable/component": "*"
     react: "*"
     react-dom: "*"
+    webpack: "*"
   languageName: unknown
   linkType: soft
 
@@ -3597,7 +3605,6 @@ __metadata:
     exenv: ^1.2.2
     file-loader: ^6.0.0
     fs-extra: ^9.0.0
-    mini-css-extract-plugin: ^0.9.0
     pnp-webpack-plugin: ^1.6.4
     purgecss-webpack-plugin: ^2.2.0
     terser-webpack-plugin: ^3.0.1
@@ -3608,6 +3615,7 @@ __metadata:
     "@loadable/component": "*"
     react: "*"
     react-dom: "*"
+    webpack: "*"
   languageName: unknown
   linkType: soft
 
@@ -3874,7 +3882,7 @@ __metadata:
   version: 2.1.0
   resolution: "@webpack-blocks/dev-server@npm:2.1.0"
   dependencies:
-    webpack: ^4.42.1
+    webpack: "npm:next"
     webpack-dev-server: ^3.10.3
   peerDependencies:
     "@webpack-blocks/core": ^2.0.0
@@ -4134,6 +4142,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "acorn@npm:^6.4.1":
   version: 6.4.1
   resolution: "acorn@npm:6.4.1"
@@ -4143,6 +4152,8 @@ __metadata:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "acorn@npm:^7.0.0, acorn@npm:^7.1.1":
   version: 7.2.0
   resolution: "acorn@npm:7.2.0"
@@ -4540,6 +4551,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "asn1.js@npm:^4.0.0":
   version: 4.10.1
   resolution: "asn1.js@npm:4.10.1"
@@ -4551,6 +4563,8 @@ __metadata:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "asn1@npm:~0.2.3":
   version: 0.2.4
   resolution: "asn1@npm:0.2.4"
@@ -4567,6 +4581,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "assert@npm:^1.1.1":
   version: 1.5.0
   resolution: "assert@npm:1.5.0"
@@ -4577,6 +4592,8 @@ __metadata:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "assign-symbols@npm:^1.0.0":
   version: 1.0.0
   resolution: "assign-symbols@npm:1.0.0"
@@ -4790,6 +4807,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "base64-js@npm:^1.0.2":
   version: 1.3.1
   resolution: "base64-js@npm:1.3.1"
@@ -4797,6 +4815,8 @@ __metadata:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "base@npm:^0.11.1":
   version: 0.11.2
   resolution: "base@npm:0.11.2"
@@ -4890,6 +4910,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "bn.js@npm:^4.0.0, bn.js@npm:^4.1.0, bn.js@npm:^4.4.0":
   version: 4.11.9
   resolution: "bn.js@npm:4.11.9"
@@ -4904,6 +4925,8 @@ __metadata:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "body-parser@npm:1.19.0":
   version: 1.19.0
   resolution: "body-parser@npm:1.19.0"
@@ -4996,6 +5019,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "brorand@npm:^1.0.1":
   version: 1.1.0
   resolution: "brorand@npm:1.1.0"
@@ -5076,6 +5100,8 @@ __metadata:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "browserslist@npm:^4.0.0, browserslist@npm:^4.12.0, browserslist@npm:^4.8.5":
   version: 4.12.0
   resolution: "browserslist@npm:4.12.0"
@@ -5111,6 +5137,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "buffer-xor@npm:^1.0.3":
   version: 1.0.3
   resolution: "buffer-xor@npm:1.0.3"
@@ -5129,6 +5156,8 @@ __metadata:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "builtin-modules@npm:^3.0.0, builtin-modules@npm:^3.1.0":
   version: 3.1.0
   resolution: "builtin-modules@npm:3.1.0"
@@ -5136,6 +5165,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "builtin-status-codes@npm:^3.0.0":
   version: 3.0.0
   resolution: "builtin-status-codes@npm:3.0.0"
@@ -5143,6 +5173,8 @@ __metadata:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "builtins@npm:^1.0.3":
   version: 1.0.3
   resolution: "builtins@npm:1.0.3"
@@ -5199,7 +5231,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cacache@npm:^12.0.0, cacache@npm:^12.0.2, cacache@npm:^12.0.3":
+"cacache@npm:^12.0.0, cacache@npm:^12.0.3":
   version: 12.0.4
   resolution: "cacache@npm:12.0.4"
   dependencies:
@@ -5563,6 +5595,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "cipher-base@npm:^1.0.0, cipher-base@npm:^1.0.1, cipher-base@npm:^1.0.3":
   version: 1.0.4
   resolution: "cipher-base@npm:1.0.4"
@@ -5573,6 +5606,8 @@ __metadata:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "class-utils@npm:^0.3.5":
   version: 0.3.6
   resolution: "class-utils@npm:0.3.6"
@@ -5953,6 +5988,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "console-browserify@npm:^1.1.0":
   version: 1.2.0
   resolution: "console-browserify@npm:1.2.0"
@@ -5960,6 +5996,8 @@ __metadata:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "console-control-strings@npm:^1.0.0, console-control-strings@npm:~1.1.0":
   version: 1.1.0
   resolution: "console-control-strings@npm:1.1.0"
@@ -5967,6 +6005,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "constants-browserify@npm:^1.0.0":
   version: 1.0.0
   resolution: "constants-browserify@npm:1.0.0"
@@ -5974,6 +6013,8 @@ __metadata:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "contains-path@npm:^0.1.0":
   version: 0.1.0
   resolution: "contains-path@npm:0.1.0"
@@ -6200,6 +6241,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "create-ecdh@npm:^4.0.0":
   version: 4.0.3
   resolution: "create-ecdh@npm:4.0.3"
@@ -6237,6 +6279,8 @@ __metadata:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "cross-spawn@npm:6.0.5, cross-spawn@npm:^6.0.0":
   version: 6.0.5
   resolution: "cross-spawn@npm:6.0.5"
@@ -6271,6 +6315,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "crypto-browserify@npm:^3.11.0":
   version: 3.12.0
   resolution: "crypto-browserify@npm:3.12.0"
@@ -6290,6 +6335,8 @@ __metadata:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "crypto-random-string@npm:^2.0.0":
   version: 2.0.0
   resolution: "crypto-random-string@npm:2.0.0"
@@ -6858,6 +6905,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "des.js@npm:^1.0.0":
   version: 1.0.1
   resolution: "des.js@npm:1.0.1"
@@ -6868,6 +6916,8 @@ __metadata:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "destroy@npm:~1.0.4":
   version: 1.0.4
   resolution: "destroy@npm:1.0.4"
@@ -6919,6 +6969,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "diffie-hellman@npm:^5.0.0":
   version: 5.0.3
   resolution: "diffie-hellman@npm:5.0.3"
@@ -6930,6 +6981,8 @@ __metadata:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "dir-glob@npm:^2.2.2":
   version: 2.2.2
   resolution: "dir-glob@npm:2.2.2"
@@ -7021,6 +7074,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "domain-browser@npm:^1.1.1":
   version: 1.2.0
   resolution: "domain-browser@npm:1.2.0"
@@ -7028,6 +7082,8 @@ __metadata:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "domelementtype@npm:1, domelementtype@npm:^1.3.1":
   version: 1.3.1
   resolution: "domelementtype@npm:1.3.1"
@@ -7169,6 +7225,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "elliptic@npm:^6.0.0, elliptic@npm:^6.5.2":
   version: 6.5.2
   resolution: "elliptic@npm:6.5.2"
@@ -7184,6 +7241,8 @@ __metadata:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "emoji-regex@npm:^7.0.1, emoji-regex@npm:^7.0.2":
   version: 7.0.3
   resolution: "emoji-regex@npm:7.0.3"
@@ -7240,7 +7299,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"enhanced-resolve@npm:^4.0.0, enhanced-resolve@npm:^4.1.0":
+"enhanced-resolve@npm:^4.0.0":
   version: 4.1.1
   resolution: "enhanced-resolve@npm:4.1.1"
   dependencies:
@@ -7623,6 +7682,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "eslint-scope@npm:^4.0.3":
   version: 4.0.3
   resolution: "eslint-scope@npm:4.0.3"
@@ -7633,6 +7693,8 @@ __metadata:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "eslint-scope@npm:^5.0.0":
   version: 5.0.0
   resolution: "eslint-scope@npm:5.0.0"
@@ -7809,6 +7871,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "evp_bytestokey@npm:^1.0.0, evp_bytestokey@npm:^1.0.3":
   version: 1.0.3
   resolution: "evp_bytestokey@npm:1.0.3"
@@ -7820,6 +7883,8 @@ __metadata:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "execa@npm:^1.0.0":
   version: 1.0.0
   resolution: "execa@npm:1.0.0"
@@ -9055,6 +9120,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "hash-base@npm:^3.0.0":
   version: 3.1.0
   resolution: "hash-base@npm:3.1.0"
@@ -9076,6 +9142,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "hex-color-regex@npm:^1.1.0":
   version: 1.1.0
   resolution: "hex-color-regex@npm:1.1.0"
@@ -9097,6 +9165,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "hmac-drbg@npm:^1.0.0":
   version: 1.0.1
   resolution: "hmac-drbg@npm:1.0.1"
@@ -9108,6 +9177,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "hoist-non-react-statics@npm:^3.0.0, hoist-non-react-statics@npm:^3.1.0, hoist-non-react-statics@npm:^3.3.0, hoist-non-react-statics@npm:^3.3.1, hoist-non-react-statics@npm:^3.3.2":
   version: 3.3.2
   resolution: "hoist-non-react-statics@npm:3.3.2"
@@ -9291,6 +9362,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "https-browserify@npm:^1.0.0":
   version: 1.0.0
   resolution: "https-browserify@npm:1.0.0"
@@ -9298,6 +9370,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "https-proxy-agent@npm:^2.2.3":
   version: 2.2.4
   resolution: "https-proxy-agent@npm:2.2.4"
@@ -9370,6 +9444,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "ieee754@npm:^1.1.4":
   version: 1.1.13
   resolution: "ieee754@npm:1.1.13"
@@ -9377,6 +9452,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "iferr@npm:^0.1.5":
   version: 0.1.5
   resolution: "iferr@npm:0.1.5"
@@ -9537,13 +9614,14 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"inherits@npm:2, inherits@npm:2.0.4, inherits@npm:^2.0.1, inherits@npm:^2.0.3, inherits@npm:^2.0.4, inherits@npm:~2.0.0, inherits@npm:~2.0.1, inherits@npm:~2.0.3":
+"inherits@npm:2, inherits@npm:2.0.4, inherits@npm:^2.0.1, inherits@npm:^2.0.3, inherits@npm:~2.0.0, inherits@npm:~2.0.3":
   version: 2.0.4
   resolution: "inherits@npm:2.0.4"
   checksum: 3/98426da247ddfc3dcd7d7daedd90c3ca32d5b08deca08949726f12d49232aef94772a07b36cf4ff833e105ae2ef931777f6de4a6dd8245a216b9299ad4a50bea
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "inherits@npm:2.0.1":
   version: 2.0.1
   resolution: "inherits@npm:2.0.1"
@@ -9551,6 +9629,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "inherits@npm:2.0.3":
   version: 2.0.3
   resolution: "inherits@npm:2.0.3"
@@ -10730,6 +10810,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "loader-runner@npm:^2.4.0":
   version: 2.4.0
   resolution: "loader-runner@npm:2.4.0"
@@ -10737,6 +10818,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "loader-runner@npm:^3.1.0":
   version: 3.1.0
   resolution: "loader-runner@npm:3.1.0"
@@ -11096,6 +11179,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "md5.js@npm:^1.3.4":
   version: 1.3.5
   resolution: "md5.js@npm:1.3.5"
@@ -11107,6 +11191,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "mdn-data@npm:2.0.4":
   version: 2.0.4
   resolution: "mdn-data@npm:2.0.4"
@@ -11279,6 +11365,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "miller-rabin@npm:^4.0.0":
   version: 4.0.1
   resolution: "miller-rabin@npm:4.0.1"
@@ -11291,6 +11378,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "mime-db@npm:1.44.0, mime-db@npm:>= 1.43.0 < 2":
   version: 1.44.0
   resolution: "mime-db@npm:1.44.0"
@@ -11387,13 +11476,14 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"minimalistic-assert@npm:^1.0.0, minimalistic-assert@npm:^1.0.1":
+"minimalistic-assert@npm:^1.0.0":
   version: 1.0.1
   resolution: "minimalistic-assert@npm:1.0.1"
   checksum: 3/28f1de3cf9edfb82613428a58eb3dd38ec6d33ab761b98abf2d130c81104ea86be540c7e5eb8284f13e0a065ead8b17501de09419b9a98987ed27268ad538dba
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "minimalistic-crypto-utils@npm:^1.0.0, minimalistic-crypto-utils@npm:^1.0.1":
   version: 1.0.1
   resolution: "minimalistic-crypto-utils@npm:1.0.1"
@@ -11401,6 +11491,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "minimatch@npm:^3.0.4, minimatch@npm:~3.0.2":
   version: 3.0.4
   resolution: "minimatch@npm:3.0.4"
@@ -11731,7 +11823,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"neo-async@npm:^2.5.0, neo-async@npm:^2.6.0, neo-async@npm:^2.6.1":
+"neo-async@npm:^2.6.0, neo-async@npm:^2.6.1":
   version: 2.6.1
   resolution: "neo-async@npm:2.6.1"
   checksum: 3/b359ccaa5cc3eea9c49605b830382e2ec7661f1746b7210dc1f997645a40f9daf3084328151ecb21800e0e78d891dbf8d46f70c3cb5e8c5dab8a909b5597f9a1
@@ -11840,6 +11932,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "node-libs-browser@npm:^2.2.1":
   version: 2.2.1
   resolution: "node-libs-browser@npm:2.2.1"
@@ -11871,6 +11964,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "node-releases@npm:^1.1.53":
   version: 1.1.58
   resolution: "node-releases@npm:1.1.58"
@@ -12413,6 +12508,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "os-browserify@npm:^0.3.0":
   version: 0.3.0
   resolution: "os-browserify@npm:0.3.0"
@@ -12420,6 +12516,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "os-homedir@npm:^1.0.0":
   version: 1.0.2
   resolution: "os-homedir@npm:1.0.2"
@@ -12649,6 +12747,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "pako@npm:~1.0.5":
   version: 1.0.11
   resolution: "pako@npm:1.0.11"
@@ -12656,6 +12755,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "parallel-transform@npm:^1.1.0":
   version: 1.2.0
   resolution: "parallel-transform@npm:1.2.0"
@@ -12676,6 +12777,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "parse-asn1@npm:^5.0.0, parse-asn1@npm:^5.1.5":
   version: 5.1.5
   resolution: "parse-asn1@npm:5.1.5"
@@ -12690,6 +12792,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "parse-github-repo-url@npm:^1.3.0":
   version: 1.4.1
   resolution: "parse-github-repo-url@npm:1.4.1"
@@ -12764,6 +12868,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "path-browserify@npm:0.0.1":
   version: 0.0.1
   resolution: "path-browserify@npm:0.0.1"
@@ -12771,6 +12876,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "path-dirname@npm:^1.0.0":
   version: 1.0.2
   resolution: "path-dirname@npm:1.0.2"
@@ -12888,6 +12995,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "pbkdf2@npm:^3.0.3":
   version: 3.1.0
   resolution: "pbkdf2@npm:3.1.0"
@@ -12901,6 +13009,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "performance-now@npm:^2.1.0":
   version: 2.1.0
   resolution: "performance-now@npm:2.1.0"
@@ -13591,6 +13701,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "process@npm:^0.11.10":
   version: 0.11.10
   resolution: "process@npm:0.11.10"
@@ -13598,6 +13709,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "progress@npm:^2.0.0":
   version: 2.0.3
   resolution: "progress@npm:2.0.3"
@@ -13731,6 +13844,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "public-encrypt@npm:^4.0.0":
   version: 4.0.3
   resolution: "public-encrypt@npm:4.0.3"
@@ -13745,6 +13859,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "pump@npm:^2.0.0, pump@npm:^2.0.1":
   version: 2.0.1
   resolution: "pump@npm:2.0.1"
@@ -13783,6 +13899,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "punycode@npm:^1.2.4":
   version: 1.4.1
   resolution: "punycode@npm:1.4.1"
@@ -13790,6 +13907,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "punycode@npm:^2.1.0, punycode@npm:^2.1.1":
   version: 2.1.1
   resolution: "punycode@npm:2.1.1"
@@ -13811,7 +13930,7 @@ fsevents@~2.1.2:
   resolution: "purgecss-webpack-plugin@npm:2.2.0"
   dependencies:
     purgecss: ^2.2.0
-    webpack: ^4.42.1
+    webpack: "npm:next"
     webpack-sources: ^1.4.3
   peerDependencies:
     webpack: "*"
@@ -13864,6 +13983,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "querystring-es3@npm:^0.2.0":
   version: 0.2.1
   resolution: "querystring-es3@npm:0.2.1"
@@ -13871,6 +13991,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "querystring@npm:0.2.0":
   version: 0.2.0
   resolution: "querystring@npm:0.2.0"
@@ -13920,7 +14042,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"randombytes@npm:^2.0.0, randombytes@npm:^2.0.1, randombytes@npm:^2.0.5, randombytes@npm:^2.1.0":
+"randombytes@npm:^2.1.0":
   version: 2.1.0
   resolution: "randombytes@npm:2.1.0"
   dependencies:
@@ -13929,6 +14051,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "randomfill@npm:^1.0.3":
   version: 1.0.4
   resolution: "randomfill@npm:1.0.4"
@@ -13939,6 +14062,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "range-parser@npm:^1.2.1, range-parser@npm:~1.2.1":
   version: 1.2.1
   resolution: "range-parser@npm:1.2.1"
@@ -14206,7 +14331,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"readable-stream@npm:1 || 2, readable-stream@npm:^2.0.0, readable-stream@npm:^2.0.1, readable-stream@npm:^2.0.2, readable-stream@npm:^2.0.6, readable-stream@npm:^2.1.5, readable-stream@npm:^2.2.2, readable-stream@npm:^2.3.3, readable-stream@npm:^2.3.6, readable-stream@npm:~2.3.6":
+"readable-stream@npm:1 || 2, readable-stream@npm:^2.0.0, readable-stream@npm:^2.0.1, readable-stream@npm:^2.0.2, readable-stream@npm:^2.0.6, readable-stream@npm:^2.1.5, readable-stream@npm:^2.2.2, readable-stream@npm:^2.3.6, readable-stream@npm:~2.3.6":
   version: 2.3.7
   resolution: "readable-stream@npm:2.3.7"
   dependencies:
@@ -14221,7 +14346,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"readable-stream@npm:2 || 3, readable-stream@npm:^3.0.2, readable-stream@npm:^3.0.6, readable-stream@npm:^3.1.1, readable-stream@npm:^3.6.0":
+"readable-stream@npm:2 || 3, readable-stream@npm:^3.0.2, readable-stream@npm:^3.0.6, readable-stream@npm:^3.1.1":
   version: 3.6.0
   resolution: "readable-stream@npm:3.6.0"
   dependencies:
@@ -14678,6 +14803,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "ripemd160@npm:^2.0.0, ripemd160@npm:^2.0.1":
   version: 2.0.2
   resolution: "ripemd160@npm:2.0.2"
@@ -14688,6 +14814,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "rollup@npm:^2.3.0":
   version: 2.13.0
   resolution: "rollup@npm:2.13.0"
@@ -15044,6 +15172,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "setimmediate@npm:^1.0.4":
   version: 1.0.5
   resolution: "setimmediate@npm:1.0.5"
@@ -15051,6 +15180,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "setprototypeof@npm:1.1.0":
   version: 1.1.0
   resolution: "setprototypeof@npm:1.1.0"
@@ -15065,6 +15196,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "sha.js@npm:^2.4.0, sha.js@npm:^2.4.8":
   version: 2.4.11
   resolution: "sha.js@npm:2.4.11"
@@ -15077,6 +15209,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "shallow-clone@npm:^3.0.0":
   version: 3.0.1
   resolution: "shallow-clone@npm:3.0.1"
@@ -15644,6 +15778,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "stream-browserify@npm:^2.0.1":
   version: 2.0.2
   resolution: "stream-browserify@npm:2.0.2"
@@ -15654,6 +15789,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "stream-buffers@npm:^3.0.2":
   version: 3.0.2
   resolution: "stream-buffers@npm:3.0.2"
@@ -15671,6 +15808,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "stream-http@npm:^2.7.2":
   version: 2.8.3
   resolution: "stream-http@npm:2.8.3"
@@ -15684,6 +15822,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "stream-shift@npm:^1.0.0":
   version: 1.0.1
   resolution: "stream-shift@npm:1.0.1"
@@ -15824,7 +15964,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"string_decoder@npm:^1.0.0, string_decoder@npm:^1.1.1":
+"string_decoder@npm:^1.1.1":
   version: 1.3.0
   resolution: "string_decoder@npm:1.3.0"
   dependencies:
@@ -16088,7 +16228,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"tapable@npm:^1.0.0, tapable@npm:^1.1.3":
+"tapable@npm:^1.0.0":
   version: 1.1.3
   resolution: "tapable@npm:1.1.3"
   checksum: 3/b2c2ab20260394b867fd249d8b6ab3e4645e00f9cce16b558b0de5a86291ef05f536f578744549d1618c9032c7f99bc1d6f68967e4aa11cb0dca4461dc4714bc
@@ -16163,6 +16303,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "terser-webpack-plugin@npm:^1.4.3":
   version: 1.4.4
   resolution: "terser-webpack-plugin@npm:1.4.4"
@@ -16182,6 +16323,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "terser-webpack-plugin@npm:^3.0.1, terser-webpack-plugin@npm:^3.0.2":
   version: 3.0.3
   resolution: "terser-webpack-plugin@npm:3.0.3"
@@ -16201,7 +16344,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"terser@npm:^4.1.2, terser@npm:^4.3.9, terser@npm:^4.6.13":
+"terser@npm:^4.3.9, terser@npm:^4.6.13":
   version: 4.7.0
   resolution: "terser@npm:4.7.0"
   dependencies:
@@ -16288,6 +16431,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "timers-browserify@npm:^2.0.4":
   version: 2.0.11
   resolution: "timers-browserify@npm:2.0.11"
@@ -16297,6 +16441,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "timsort@npm:^0.3.0":
   version: 0.3.0
   resolution: "timsort@npm:0.3.0"
@@ -16327,6 +16473,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "to-arraybuffer@npm:^1.0.0":
   version: 1.0.1
   resolution: "to-arraybuffer@npm:1.0.1"
@@ -16334,6 +16481,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "to-fast-properties@npm:^2.0.0":
   version: 2.0.0
   resolution: "to-fast-properties@npm:2.0.0"
@@ -16499,6 +16648,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "tty-browserify@npm:0.0.0":
   version: 0.0.0
   resolution: "tty-browserify@npm:0.0.0"
@@ -16506,6 +16656,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "tunnel-agent@npm:^0.6.0":
   version: 0.6.0
   resolution: "tunnel-agent@npm:0.6.0"
@@ -16969,6 +17121,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "util@npm:0.10.3":
   version: 0.10.3
   resolution: "util@npm:0.10.3"
@@ -16987,6 +17140,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "utila@npm:^0.4.0, utila@npm:~0.4":
   version: 0.4.0
   resolution: "utila@npm:0.4.0"
@@ -17077,6 +17232,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "vm-browserify@npm:^1.0.1":
   version: 1.1.2
   resolution: "vm-browserify@npm:1.1.2"
@@ -17084,6 +17240,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "vtex-tachyons@npm:^3.2.0":
   version: 3.2.0
   resolution: "vtex-tachyons@npm:3.2.0"
@@ -17091,6 +17249,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "watchpack-chokidar2@npm:^2.0.0":
   version: 2.0.0
   resolution: "watchpack-chokidar2@npm:2.0.0"
@@ -17100,6 +17259,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "watchpack@npm:2.0.0-beta.13":
   version: 2.0.0-beta.13
   resolution: "watchpack@npm:2.0.0-beta.13"
@@ -17110,6 +17271,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "watchpack@npm:^1.6.1":
   version: 1.7.2
   resolution: "watchpack@npm:1.7.2"
@@ -17127,6 +17289,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "wbuf@npm:^1.1.0, wbuf@npm:^1.7.3":
   version: 1.7.3
   resolution: "wbuf@npm:1.7.3"
@@ -17281,7 +17445,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"webpack-sources@npm:^1.1.0, webpack-sources@npm:^1.4.0, webpack-sources@npm:^1.4.1, webpack-sources@npm:^1.4.3":
+"webpack-sources@npm:^1.1.0, webpack-sources@npm:^1.4.3":
   version: 1.4.3
   resolution: "webpack-sources@npm:1.4.3"
   dependencies:
@@ -17291,6 +17455,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "webpack@npm:4.43.0, webpack@npm:^4.0.0, webpack@npm:^4.42.1":
   version: 4.43.0
   resolution: "webpack@npm:4.43.0"
@@ -17324,6 +17489,8 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+=======
+>>>>>>> enforce webpack next in yarn resolutions
 "webpack@npm:5.0.0-beta.17, webpack@npm:next":
   version: 5.0.0-beta.17
   resolution: "webpack@npm:5.0.0-beta.17"
@@ -17460,7 +17627,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"worker-farm@npm:^1.5.2, worker-farm@npm:^1.7.0":
+"worker-farm@npm:^1.5.2":
   version: 1.7.0
   resolution: "worker-farm@npm:1.7.0"
   dependencies:
@@ -17608,7 +17775,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"xtend@npm:^4.0.0, xtend@npm:~4.0.1":
+"xtend@npm:~4.0.1":
   version: 4.0.2
   resolution: "xtend@npm:4.0.2"
   checksum: 3/37ee522a3e9fb9b143a400c30b21dc122aa8c9c9411c6afae1005a4617dc20a21765c114d544e37a6bb60c2733dd8ee0a44ed9e80d884ac78cccd30b5e0ab0da

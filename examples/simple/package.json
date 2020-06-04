@@ -24,6 +24,7 @@
   "module": "./dist/build/es6/components/index.js",
   "browser": "./components/index.ts",
   "dependencies": {
+    "@babel/core": "^7.10.2",
     "@loadable/component": "^5.12.0",
     "@vtex/micro-assets": "^1.1.1-alpha.21",
     "@vtex/micro-cli": "^1.1.1-alpha.21",
@@ -35,7 +36,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "vtex-tachyons": "^3.2.0",
-    "webpack-blocks": "^2.1.0"
+    "webpack-blocks": "^2.1.0",
+    "webpack": "next"
   },
   "devDependencies": {
     "@types/loadable__component": "^5.10.0",

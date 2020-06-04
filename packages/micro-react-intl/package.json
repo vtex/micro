@@ -36,6 +36,7 @@
     "@vtex/micro-cli": "^1.1.1-alpha.21"
   },
   "peerDependencies": {
+    "@babel/core": "*",
     "@loadable/component": "*",
     "react": "*",
     "react-dom": "*",

@@ -3421,6 +3421,7 @@ __metadata:
     typescript: ^3.8.3
     webpack-blocks: ^2.1.0
   peerDependencies:
+    "@babel/core": "*"
     webpack: "*"
   languageName: unknown
   linkType: soft
@@ -3513,6 +3514,7 @@ __metadata:
     typescript: ^3.8.3
     webpack-blocks: ^2.1.0
   peerDependencies:
+    "@babel/core": "*"
     webpack: "*"
   languageName: unknown
   linkType: soft
@@ -3535,6 +3537,7 @@ __metadata:
     react-intl: ^4.6.0
     webpack-blocks: ^2.1.0
   peerDependencies:
+    "@babel/core": "*"
     "@loadable/component": "*"
     react: "*"
     react-dom: "*"
@@ -3563,6 +3566,7 @@ __metadata:
     typescript: ^3.8.3
     webpack-blocks: ^2.1.0
   peerDependencies:
+    "@babel/core": "*"
     "@loadable/component": "*"
     react: "*"
     react-dom: "*"

@@ -3,8 +3,14 @@
 # dependencies
 node_modules
 **/node_modules
-.yarn
+
 **/.yarn
+
+.yarn/cache
+.yarn/install-state.*
+.yarn/build-state.yml
+.yarn/unplugged
+
 .pnp.js
 
 **/dist

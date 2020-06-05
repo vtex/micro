@@ -1,35 +1,18 @@
-import { join } from 'path'
-
 import chalk from 'chalk'
-import { ensureDir, pathExists } from 'fs-extra'
 
-import { BuildCompiler, Mode } from '@vtex/micro-core/lib'
+import { Mode } from '@vtex/micro-core/lib'
 
 import { newProject } from '../../common/project'
 import { clean, getBuilders, rejectDeclarationFiles } from './builder'
-import { installWebModules } from './installer'
 
 interface Options {
   dev?: boolean
-  install?: boolean
 }
 
 const lifecycle = 'build'
 
-const shouldInstallDepsAutomatically = async (
-  compiler: BuildCompiler,
-  userland: string[]
-) => {
-  const hasWebModules = await pathExists(
-    join(compiler.dist, 'es6', 'web_modules')
-  )
-  const hasPages = userland.some((x) => x.includes('/pages/'))
-  return !hasWebModules && hasPages
-}
-
 const main = async (options: Options) => {
   const dev = !!options.dev
-  const forceInstall = !!options.install
   const mode: Mode = dev ? 'development' : 'production'
   process.env.NODE_ENV = mode
 
@@ -67,23 +50,8 @@ const main = async (options: Options) => {
     console.timeEnd(prebuildMsg)
   }
 
-  const { build, compiler: buildCompiler } = await createBuild()
+  const { build } = await createBuild()
   if (userland.length > 0) {
-    if (
-      (await shouldInstallDepsAutomatically(buildCompiler, userland)) ||
-      forceInstall
-    ) {
-      // Somehow, Snopack needs a node_modules directory in order to work properly.
-      // This is not true in a monorepo, where node_modules is in the parent folder,
-      // so let's emulate a node_modules in the project's root folder
-      await ensureDir(join(project.rootPath, 'node_modules'))
-
-      const installMsg = `🦄 [${lifecycle}]: web_modules installation took`
-      console.time(installMsg)
-      await installWebModules(buildCompiler)
-      console.timeEnd(installMsg)
-    }
-
     const buildMsg = `🦄 [${lifecycle}]: Performing build ${userland.length} files finished in`
     console.time(buildMsg)
     await Promise.all(userland.map((f) => build(f, false)))

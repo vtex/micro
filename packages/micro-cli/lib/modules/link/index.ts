@@ -9,13 +9,8 @@ import { createGetFolderFromFile, lifecycle } from '../build/builder'
 const waitForReady = (watcher: chokidar.FSWatcher) =>
   new Promise((resolve) => watcher.on('ready', resolve))
 
-interface Options {
-  install?: boolean
-}
-
-const main = async (options: Options) => {
+const main = async () => {
   const { project, prebuild, build } = await buildCommand({
-    install: options.install,
     dev: true,
   })
 

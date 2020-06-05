@@ -1,15 +1,7 @@
-import { join } from 'path'
-
 import { TransformOptions } from '@babel/core'
-import deepmerge from 'deepmerge'
 import babelmerge from 'babel-merge'
 
-import {
-  BuildPlugin,
-  BuildTarget,
-  SnowpackConfig,
-} from '../../lib/lifecycles/build'
-import { MICRO_BUILD_DIR } from '../../lib/constants'
+import { BuildPlugin, BuildTarget } from '../../lib/lifecycles/build'
 
 export default class Build extends BuildPlugin {
   public getBabelConfig = async (
@@ -61,26 +53,6 @@ export default class Build extends BuildPlugin {
         '@babel/plugin-proposal-class-properties',
         '@babel/plugin-proposal-optional-chaining',
       ].map(require.resolve as (x: string) => string),
-    })
-  }
-
-  public getSnowpackConfig = async (
-    previous: SnowpackConfig
-  ): Promise<SnowpackConfig> => {
-    return deepmerge(previous, {
-      exclude: [
-        'router/*', // TODO: remove this from here once server extensibility is solved
-        `${MICRO_BUILD_DIR}/**/*`,
-        'plugins/**/*',
-        '!**/*.ts?(x)',
-        '**/*.d.ts',
-      ],
-      installOptions: {
-        dest: join(this.project.dist, this.target, 'es6', 'web_modules'),
-        env: {
-          NODE_ENV: this.mode,
-        },
-      },
     })
   }
 }

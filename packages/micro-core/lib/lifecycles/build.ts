@@ -46,14 +46,6 @@ export class BuildCompiler extends Compiler<BuildPlugin> {
     )
   }
 
-  public getSnowpackConfig = async () => {
-    const initialConfig: SnowpackConfig = {}
-    return this.plugins.reduce(
-      async (acc, plugin) => plugin.getSnowpackConfig(await acc),
-      Promise.resolve(initialConfig)
-    )
-  }
-
   public getAliases = async (
     onConflict: 'throw' | 'warn' | 'skip' = 'warn'
   ): Promise<Alias[]> => {
@@ -128,10 +120,6 @@ export class BuildPlugin extends Plugin {
     _target: BuildTarget
   ): Promise<TransformOptions> => previous
 
-  public getSnowpackConfig = async (
-    previous: SnowpackConfig
-  ): Promise<SnowpackConfig> => previous
-
   public getAliases = async (previous: Alias[]): Promise<Alias[]> => previous
 }
 
@@ -145,27 +133,3 @@ export const packageToAlias = async (
 }
 
 type EnvVarReplacements = Record<string, string | number | true>
-
-type RollupPlugin = (...args: any) => any
-
-// Copied from
-// https://github.com/pikapkg/snowpack/blob/ad9b6d87776c92e27a6316e6e0b5b38b07dac32f/src/config.ts#L85
-export interface SnowpackConfig {
-  extends?: string
-  exclude?: string[]
-  knownEntrypoints?: string[]
-  webDependencies?: { [packageName: string]: string }
-  installOptions?: {
-    dest?: string
-    env?: EnvVarReplacements
-    installTypes: boolean
-    sourceMap?: boolean | 'inline'
-    externalPackage?: string[]
-    alias?: { [key: string]: string }
-    rollup?: {
-      plugins?: RollupPlugin[]
-      dedupe?: string[]
-      namedExports?: { [filepath: string]: string[] }
-    }
-  }
-}

@@ -1,5 +1,6 @@
-import { startDevServer } from '@vtex/micro-server'
 import chokidar from 'chokidar'
+
+import { startDevServer } from '@vtex/micro-server'
 
 import { HOST, PUBLIC_PATHS, SERVER_PORT } from '../../constants'
 import buildCommand from '../build'
@@ -8,13 +9,8 @@ import { createGetFolderFromFile, lifecycle } from '../build/builder'
 const waitForReady = (watcher: chokidar.FSWatcher) =>
   new Promise((resolve) => watcher.on('ready', resolve))
 
-interface Options {
-  install?: boolean
-}
-
-const main = async (options: Options) => {
+const main = async () => {
   const { project, prebuild, build } = await buildCommand({
-    install: options.install,
     dev: true,
   })
 

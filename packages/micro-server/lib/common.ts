@@ -1,4 +1,4 @@
-import { Plugins, Project } from '@vtex/micro-core/lib'
+import { Plugins, Project } from '@vtex/micro-core'
 
 const reportPlugin = (lifecycle: string, pkg: string) => {
   console.log(`🔌 [${lifecycle}]: Plugin found ${pkg}`)

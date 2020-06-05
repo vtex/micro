@@ -1,7 +1,8 @@
-import { HtmlCompiler, Project, PublicPaths } from '@vtex/micro-core/lib'
 import compress from 'compression'
 import express from 'express'
 import logger from 'morgan'
+
+import { HtmlCompiler, Project, PublicPaths } from '@vtex/micro-core'
 
 import { HtmlPlugin, resolvePlugins, RouterPlugin } from './common'
 import { middleware as streamAssets } from './middlewares/assets'
@@ -11,7 +12,7 @@ import { middleware as router } from './middlewares/router'
 import { middleware as ssr } from './middlewares/ssr'
 import { Next, Req, Res } from './typings'
 
-interface ProdServerOptions {
+export interface ProdServerOptions {
   statsJson: any // TODO: fix this as any
   project: Project
   publicPaths: PublicPaths

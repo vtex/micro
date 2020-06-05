@@ -1,5 +1,5 @@
 import loadable from '@loadable/component'
-import { Link, NavLink } from '@vtex/micro-react-router/components'
+import { Link, NavLink } from '@vtex/micro-plugin-react-router'
 import React from 'react'
 
 import Huge from '../hugeComponent1'

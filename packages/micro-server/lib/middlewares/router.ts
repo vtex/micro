@@ -6,7 +6,7 @@ import {
   Project,
   PublicPaths,
   RouteCompiler,
-} from '@vtex/micro-core/lib'
+} from '@vtex/micro-core'
 
 import { Next, Req, Res } from '../typings'
 import { RouterPlugin } from '../common'

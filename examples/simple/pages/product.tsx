@@ -1,7 +1,7 @@
 import 'vtex-tachyons/tachyons.css'
 
-import { LoadMicroComponent } from '@vtex/micro-react/components'
-import { withRouter } from '@vtex/micro-react-router/components'
+import { LoadMicroComponent } from '@vtex/micro-plugin-react'
+import { withRouter } from '@vtex/micro-plugin-react-router'
 
 import { AsyncImport } from '../components/asyncPages'
 import Page from '../components/pages/product'

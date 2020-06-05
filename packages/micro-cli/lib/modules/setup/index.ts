@@ -1,11 +1,8 @@
 import { join } from 'path'
 
-import {
-  genManifest,
-  genTSConfig,
-  PackageStructure,
-} from '@vtex/micro-core/lib'
 import { outputFile, readJSON } from 'fs-extra'
+
+import { genManifest, genTSConfig, PackageStructure } from '@vtex/micro-core'
 
 import { prettyPrint } from '../../common/print'
 

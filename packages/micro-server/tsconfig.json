@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "types": ["webpack/next"],
     "typeRoots": [
       "lib/typings",
       "router/typings",

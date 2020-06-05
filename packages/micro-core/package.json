@@ -1,6 +1,6 @@
 {
   "name": "@vtex/micro-core",
-  "version": "1.1.1-alpha.21",
+  "version": "1.1.1-alpha.22",
   "license": "MIT",
   "micro": {
     "plugins": []
@@ -37,8 +37,7 @@
     "@types/globby": "^9.1.0",
     "@types/pnpapi": "^0.0.0",
     "@types/ramda": "^0.27.4",
-    "@types/webpack": "^4.41.12",
     "@types/webpack-blocks": "^2.0.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.5"
   }
 }

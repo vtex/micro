@@ -1,5 +1,6 @@
-import { BundleCompiler, Mode } from '@vtex/micro-core/lib'
 import chalk from 'chalk'
+
+import { BundleCompiler, Mode } from '@vtex/micro-core'
 
 import {
   newProject,

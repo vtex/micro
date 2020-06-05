@@ -1,9 +1,10 @@
 import { join } from 'path'
 
-import { Mode } from '@vtex/micro-core/lib'
-import { startDevServer, startProdServer } from '@vtex/micro-server'
 import chalk from 'chalk'
 import { readJSON } from 'fs-extra'
+
+import { Mode } from '@vtex/micro-core'
+import { startDevServer, startProdServer } from '@vtex/micro-server'
 
 import { newProject } from '../../common/project'
 import { BUILD, HOST, PUBLIC_PATHS, SERVER_PORT } from '../../constants'

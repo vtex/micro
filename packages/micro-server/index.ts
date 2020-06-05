@@ -1,1 +1,2 @@
-export * from './lib'
+export * from './lib/dev'
+export * from './lib/prod'

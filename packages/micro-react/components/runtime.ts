@@ -1,5 +1,6 @@
-import { PublicPaths } from '@vtex/micro-core/components'
 import { canUseDOM } from 'exenv'
+
+import { PublicPaths } from '@vtex/micro-core/components'
 
 export interface RuntimeData {
   publicPaths: PublicPaths

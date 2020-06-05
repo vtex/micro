@@ -1,7 +1,8 @@
 import loadable from '@loadable/component'
-import { canUseDOM } from '@vtex/micro-react/components'
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
+
+import { canUseDOM } from '@vtex/micro-react/components'
 
 import { RouterDOM } from './DynamicRouterDOM'
 import { AsyncPageProps, PageProps, RouterProps } from './Router'

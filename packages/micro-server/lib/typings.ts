@@ -1,7 +1,8 @@
-import { ResolvedPage } from '@vtex/micro-core/components'
-import { HtmlCompiler } from '@vtex/micro-core/lib'
 import express, { NextFunction, Request, Response } from 'express'
 import { Stats } from 'webpack'
+
+import { ResolvedPage } from '@vtex/micro-core/components'
+import { HtmlCompiler } from '@vtex/micro-core/lib'
 
 interface Locals {
   compiler: HtmlCompiler<unknown>

@@ -1,8 +1,9 @@
 import { join } from 'path'
 
-import { BuildCompiler, Mode } from '@vtex/micro-core/lib'
 import chalk from 'chalk'
 import { ensureDir, pathExists } from 'fs-extra'
+
+import { BuildCompiler, Mode } from '@vtex/micro-core/lib'
 
 import { newProject } from '../../common/project'
 import { clean, getBuilders, rejectDeclarationFiles } from './builder'

@@ -1,5 +1,6 @@
-import { BundlePlugin } from '@vtex/micro-core/lib'
 import { Block, file, group, match } from 'webpack-blocks'
+
+import { BundlePlugin } from '@vtex/micro-core/lib'
 
 export default class Bundle extends BundlePlugin {
   public getWebpackConfig = async (config: Block): Promise<Block> => {

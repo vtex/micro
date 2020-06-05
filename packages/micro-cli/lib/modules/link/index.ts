@@ -1,5 +1,6 @@
-import { startDevServer } from '@vtex/micro-server'
 import chokidar from 'chokidar'
+
+import { startDevServer } from '@vtex/micro-server'
 
 import { HOST, PUBLIC_PATHS, SERVER_PORT } from '../../constants'
 import buildCommand from '../build'

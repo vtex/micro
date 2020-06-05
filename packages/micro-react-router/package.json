@@ -35,10 +35,9 @@
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.7",
     "@types/react-router-dom": "^5.1.5",
-    "@types/webpack": "^4.41.13",
     "@types/webpack-blocks": "^2.0.0",
     "@vtex/micro-cli": "^1.1.1-alpha.21",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.5"
   },
   "peerDependencies": {
     "@loadable/component": "*",

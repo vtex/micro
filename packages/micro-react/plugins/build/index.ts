@@ -1,11 +1,12 @@
 import { TransformOptions } from '@babel/core'
+import merge from 'babel-merge'
+
 import {
   Alias,
   BuildPlugin,
   BuildTarget,
   packageToAlias,
 } from '@vtex/micro-core/lib'
-import merge from 'babel-merge'
 
 import { aliases } from '../aliases'
 

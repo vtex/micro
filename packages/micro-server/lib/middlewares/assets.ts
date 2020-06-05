@@ -1,9 +1,10 @@
 import assert from 'assert'
 import { basename, extname, join } from 'path'
 
-import { Project, PublicPaths } from '@vtex/micro-core/lib'
 import { createReadStream, pathExists } from 'fs-extra'
 import mime from 'mime-types'
+
+import { Project, PublicPaths } from '@vtex/micro-core/lib'
 
 import { Req, Res } from '../typings'
 

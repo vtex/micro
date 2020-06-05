@@ -4,7 +4,7 @@ import { join } from 'path'
 import { parse } from './common/semver'
 import { MICRO_BUILD_DIR } from './constants'
 import { Package, PackageRootEntries, Plugins } from './package/base'
-import { ModulesPackage } from './package/modules'
+import { PnpPackage } from './package/pnp'
 
 export type LifeCycle = 'serve' | 'bundle' | 'build'
 
@@ -137,7 +137,7 @@ export class Project {
       linker === 'node-modules',
       '💣 Only NodeModules linker is implemented yet'
     ) // TODO: implement other linkers
-    this.root = new ModulesPackage()
+    this.root = new PnpPackage()
     await this.root.resolve(this.rootPath)
   }
 

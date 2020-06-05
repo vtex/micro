@@ -35,9 +35,8 @@
     "@types/mini-css-extract-plugin": "^0.9.1",
     "@types/optimize-css-assets-webpack-plugin": "^5.0.1",
     "@types/terser-webpack-plugin": "^2.2.0",
-    "@types/webpack": "^4.41.12",
     "@types/webpack-blocks": "^2.0.0",
     "@vtex/micro-cli": "^1.1.1-alpha.21",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.5"
   }
 }

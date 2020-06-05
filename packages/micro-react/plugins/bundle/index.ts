@@ -1,13 +1,6 @@
 import { basename } from 'path'
 
 import LoadablePlugin from '@loadable/webpack-plugin'
-import {
-  BundlePlugin,
-  BundleTarget,
-  pagesFrameworkName,
-  pagesRuntimeName,
-  Project,
-} from '@vtex/micro-core/lib'
 import PnpPlugin from 'pnp-webpack-plugin'
 import TerserJSPlugin from 'terser-webpack-plugin'
 import {
@@ -22,9 +15,15 @@ import {
   performance,
   resolve,
 } from 'webpack-blocks'
-import DynamicPublicPathPlugin from 'webpack-dynamic-public-path'
 
-import { externalPublicPathVariable } from '../../components/publicPaths'
+import {
+  BundlePlugin,
+  BundleTarget,
+  pagesFrameworkName,
+  pagesRuntimeName,
+  Project,
+} from '@vtex/micro-core/lib'
+
 import { aliases } from '../aliases'
 import { cacheGroup } from './modules/cacheGroups'
 import { webnewBabel } from './webnew'
@@ -53,9 +52,6 @@ export default class Bundle extends BundlePlugin {
         new LoadablePlugin({
           outputAsset: false,
           writeToDisk: false,
-        }),
-        new DynamicPublicPathPlugin({
-          externalPublicPath: externalPublicPathVariable,
         }),
       ]),
       resolve({

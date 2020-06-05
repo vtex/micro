@@ -1,6 +1,7 @@
-import { HtmlPlugin } from '@vtex/micro-core/lib'
 import { createElement } from 'react'
 import { StaticRouter } from 'react-router-dom'
+
+import { HtmlPlugin } from '@vtex/micro-core/lib'
 
 export class Html extends HtmlPlugin<JSX.Element> {
   public render = (children: JSX.Element | null): JSX.Element => {

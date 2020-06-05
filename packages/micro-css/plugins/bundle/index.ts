@@ -1,6 +1,7 @@
-import { BundlePlugin } from '@vtex/micro-core/lib'
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'
 import { Block, css, env, group, match, optimization } from 'webpack-blocks'
+
+import { BundlePlugin } from '@vtex/micro-core/lib'
 
 import { extractCss } from './modules/extractCSS'
 import { purgeCSS } from './modules/purgeCSS'

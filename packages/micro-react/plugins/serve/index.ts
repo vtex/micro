@@ -1,14 +1,14 @@
 import { join } from 'path'
 
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server'
-import { HtmlFrameworkPlugin, HtmlPluginOptions } from '@vtex/micro-core/lib'
 import { readFileSync } from 'fs-extra'
 import { createElement } from 'react'
 import { renderToString } from 'react-dom/server'
 
+import { HtmlFrameworkPlugin, HtmlPluginOptions } from '@vtex/micro-core/lib'
+
 import { withAppContainerTags } from '../../components/container'
 import { withPageDataTags } from '../../components/data'
-import { externalPublicPathVariable } from '../../components/publicPaths'
 import { withRuntimeTags } from '../../components/runtime'
 import { CJSChunkExtractor, Extractor } from './cjsChunkExtractor'
 
@@ -55,9 +55,6 @@ class Html extends HtmlFrameworkPlugin<JSX.Element> {
     const { publicPaths } = this.options
     const tags: string[] = []
     tags.push(withRuntimeTags({ publicPaths }))
-    tags.push(
-      `<script type="application/javascript">${externalPublicPathVariable}="${this.options.publicPaths.assets}"</script>`
-    )
     tags.push(this.extractor.getScriptTags())
     return tags.join('\n')
   }

@@ -1,6 +1,7 @@
 import { TransformOptions } from '@babel/core'
-import { BuildPlugin } from '@vtex/micro-core/lib'
 import merge from 'babel-merge'
+
+import { BuildPlugin } from '@vtex/micro-core/lib'
 
 export default class Build extends BuildPlugin {
   public getBabelConfig = async (

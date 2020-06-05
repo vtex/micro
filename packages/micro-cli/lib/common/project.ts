@@ -1,5 +1,8 @@
 import { join } from 'path'
 
+import chalk from 'chalk'
+import { ensureDir } from 'fs-extra'
+
 import {
   LifeCycle,
   MICRO_BUILD_DIR,
@@ -7,8 +10,6 @@ import {
   Project,
   walk,
 } from '@vtex/micro-core/lib'
-import chalk from 'chalk'
-import { ensureDir } from 'fs-extra'
 
 export const newProject = async () => {
   const projectPath = process.cwd()

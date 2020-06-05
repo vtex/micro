@@ -1,8 +1,9 @@
 import { join } from 'path'
 
-import { PublicPaths, HtmlCompiler } from '@vtex/micro-core/lib'
 import { pathExists, readJson } from 'fs-extra'
 import pretty from 'pretty'
+
+import { HtmlCompiler, PublicPaths } from '@vtex/micro-core/lib'
 
 import { featuresFromReq } from '../features'
 import { Req, Res } from '../typings'

@@ -1,9 +1,10 @@
 import { join } from 'path'
 
 import { transformFileAsync, TransformOptions } from '@babel/core'
-import { BuildCompiler, BuildTarget, Mode, Project } from '@vtex/micro-core/lib'
 import chalk from 'chalk'
 import { outputFile } from 'fs-extra'
+
+import { BuildCompiler, BuildTarget, Mode, Project } from '@vtex/micro-core/lib'
 
 import {
   ensureDist,

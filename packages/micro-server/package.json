@@ -25,7 +25,8 @@
     "fs-extra": "^9.0.0",
     "mime-types": "^2.1.27",
     "morgan": "^1.10.0",
-    "pretty": "^2.0.0"
+    "pretty": "^2.0.0",
+    "webpack": "next"
   },
   "devDependencies": {
     "@types/compression": "^1.7.0",
@@ -37,8 +38,7 @@
     "@types/morgan": "^1.9.0",
     "@types/pnpapi": "^0.0.0",
     "@types/pretty": "^2.0.0",
-    "@types/webpack": "^4.41.12",
     "@types/webpack-dev-middleware": "^3.7.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.5"
   }
 }

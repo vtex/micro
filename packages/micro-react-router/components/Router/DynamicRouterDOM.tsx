@@ -1,13 +1,14 @@
 import { LoadableComponent } from '@loadable/component'
+import { LocationDescriptorObject } from 'history'
+import React from 'react'
+import { matchPath, Route, useLocation } from 'react-router-dom'
+
 import {
   inflight,
   join,
   Runtime,
   RuntimeData,
 } from '@vtex/micro-react/components'
-import { LocationDescriptorObject } from 'history'
-import React from 'react'
-import { matchPath, Route, useLocation } from 'react-router-dom'
 
 import { FetchCurrentPage, isPage, Page } from '../Page'
 import {

@@ -1,10 +1,11 @@
+import { Block, group, resolve } from 'webpack-blocks'
+
 import {
   BundlePlugin,
   pagesFrameworkName,
   pagesRuntimeName,
 } from '@vtex/micro-core/lib'
 import { cacheGroup } from '@vtex/micro-react/plugins'
-import { Block, group, resolve } from 'webpack-blocks'
 
 import { aliases } from '../aliases'
 

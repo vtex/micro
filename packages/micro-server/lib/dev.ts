@@ -1,7 +1,8 @@
-import { HtmlCompiler, Project, PublicPaths } from '@vtex/micro-core/lib'
 import compress from 'compression'
 import express from 'express'
 import logger from 'morgan'
+
+import { HtmlCompiler, Project, PublicPaths } from '@vtex/micro-core/lib'
 
 import { HtmlPlugin, resolvePlugins, RouterPlugin } from './common'
 import { middleware as streamAssets } from './middlewares/assets'

@@ -1,14 +1,7 @@
 import { TransformOptions } from '@babel/core'
 import merge from 'babel-merge'
 
-import {
-  Alias,
-  BuildPlugin,
-  BuildTarget,
-  packageToAlias,
-} from '@vtex/micro-core'
-
-import { aliases } from '../aliases'
+import { BuildPlugin, BuildTarget } from '@vtex/micro-core'
 
 export default class Build extends BuildPlugin {
   public getBabelConfig = async (
@@ -32,12 +25,5 @@ export default class Build extends BuildPlugin {
         ...loadablePlugin,
       ],
     })
-  }
-
-  public getAliases = async (previous: Alias[]): Promise<Alias[]> => {
-    const modules = await Promise.all(
-      aliases.map((a) => packageToAlias(a, require.resolve))
-    )
-    return [...previous, ...modules]
   }
 }

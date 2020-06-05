@@ -3395,7 +3395,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vtex/micro-cli@^1.1.1-alpha.21, @vtex/micro-cli@workspace:packages/micro-cli":
+"@vtex/micro-cli@^1.1.1-alpha.22, @vtex/micro-cli@workspace:packages/micro-cli":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-cli@workspace:packages/micro-cli"
   dependencies:
@@ -3408,8 +3408,8 @@ __metadata:
     "@types/node": ^14.0.11
     "@types/open": ^6.2.1
     "@types/ramda": ^0.27.4
-    "@vtex/micro-core": ^1.1.1-alpha.21
-    "@vtex/micro-server": ^1.1.1-alpha.21
+    "@vtex/micro-core": ^1.1.1-alpha.22
+    "@vtex/micro-server": ^1.1.1-alpha.22
     chalk: ^4.0.0
     chokidar: ^3.4.0
     findhelp: ^1.1.0
@@ -3428,7 +3428,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-core@^1.1.1-alpha.21, @vtex/micro-core@workspace:packages/micro-core":
+"@vtex/micro-core@^1.1.1-alpha.22, @vtex/micro-core@workspace:packages/micro-core":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-core@workspace:packages/micro-core"
   dependencies:
@@ -3459,7 +3459,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-plugin-assets@^1.1.1-alpha.21, @vtex/micro-plugin-assets@workspace:packages/micro-plugin-assets":
+"@vtex/micro-plugin-assets@^1.1.1-alpha.22, @vtex/micro-plugin-assets@workspace:packages/micro-plugin-assets":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-plugin-assets@workspace:packages/micro-plugin-assets"
   dependencies:
@@ -3467,8 +3467,8 @@ __metadata:
     "@types/babel__core": ^7.1.7
     "@types/node": ^14.0.11
     "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro-cli": ^1.1.1-alpha.21
-    "@vtex/micro-core": ^1.1.1-alpha.21
+    "@vtex/micro-cli": ^1.1.1-alpha.22
+    "@vtex/micro-core": ^1.1.1-alpha.22
     babel-merge: ^3.0.0
     babel-plugin-inline-json-import: ^0.3.2
     babel-plugin-transform-remove-imports: ^1.3.2
@@ -3478,7 +3478,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-plugin-css@^1.1.1-alpha.21, @vtex/micro-plugin-css@workspace:packages/micro-plugin-css":
+"@vtex/micro-plugin-css@^1.1.1-alpha.22, @vtex/micro-plugin-css@workspace:packages/micro-plugin-css":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-plugin-css@workspace:packages/micro-plugin-css"
   dependencies:
@@ -3489,8 +3489,8 @@ __metadata:
     "@types/optimize-css-assets-webpack-plugin": ^5.0.1
     "@types/terser-webpack-plugin": ^2.2.0
     "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro-cli": ^1.1.1-alpha.21
-    "@vtex/micro-core": ^1.1.1-alpha.21
+    "@vtex/micro-cli": ^1.1.1-alpha.22
+    "@vtex/micro-core": ^1.1.1-alpha.22
     babel-merge: ^3.0.0
     babel-plugin-ignore-html-and-css-imports: ^0.0.2
     css-loader: ^3.5.3
@@ -3504,7 +3504,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-plugin-react-intl@^1.1.1-alpha.21, @vtex/micro-plugin-react-intl@workspace:packages/micro-plugin-react-intl":
+"@vtex/micro-plugin-react-intl@^1.1.1-alpha.22, @vtex/micro-plugin-react-intl@workspace:packages/micro-plugin-react-intl":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-plugin-react-intl@workspace:packages/micro-plugin-react-intl"
   dependencies:
@@ -3514,9 +3514,9 @@ __metadata:
     "@types/react": ^16.9.35
     "@types/react-intl": ^3.0.0
     "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro-cli": ^1.1.1-alpha.21
-    "@vtex/micro-core": ^1.1.1-alpha.21
-    "@vtex/micro-plugin-react": ^1.1.1-alpha.21
+    "@vtex/micro-cli": ^1.1.1-alpha.22
+    "@vtex/micro-core": ^1.1.1-alpha.22
+    "@vtex/micro-plugin-react": ^1.1.1-alpha.22
     babel-merge: ^3.0.0
     babel-plugin-inline-json-import: ^0.3.2
     babel-plugin-react-intl: ^7.5.14
@@ -3532,7 +3532,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-plugin-react-router@^1.1.1-alpha.21, @vtex/micro-plugin-react-router@workspace:packages/micro-plugin-react-router":
+"@vtex/micro-plugin-react-router@^1.1.1-alpha.22, @vtex/micro-plugin-react-router@workspace:packages/micro-plugin-react-router":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-plugin-react-router@workspace:packages/micro-plugin-react-router"
   dependencies:
@@ -3544,9 +3544,9 @@ __metadata:
     "@types/react-dom": ^16.9.7
     "@types/react-router-dom": ^5.1.5
     "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro-cli": ^1.1.1-alpha.21
-    "@vtex/micro-core": ^1.1.1-alpha.21
-    "@vtex/micro-plugin-react": ^1.1.1-alpha.21
+    "@vtex/micro-cli": ^1.1.1-alpha.22
+    "@vtex/micro-core": ^1.1.1-alpha.22
+    "@vtex/micro-plugin-react": ^1.1.1-alpha.22
     babel-merge: ^3.0.0
     history: ^4.10.1
     react-in-viewport: ^1.0.0-alpha.11
@@ -3561,7 +3561,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-plugin-react@^1.1.1-alpha.21, @vtex/micro-plugin-react@workspace:packages/micro-plugin-react":
+"@vtex/micro-plugin-react@^1.1.1-alpha.22, @vtex/micro-plugin-react@workspace:packages/micro-plugin-react":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-plugin-react@workspace:packages/micro-plugin-react"
   dependencies:
@@ -3588,8 +3588,8 @@ __metadata:
     "@types/react-dom": ^16.9.7
     "@types/terser-webpack-plugin": ^2.2.0
     "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro-cli": ^1.1.1-alpha.21
-    "@vtex/micro-core": ^1.1.1-alpha.21
+    "@vtex/micro-cli": ^1.1.1-alpha.22
+    "@vtex/micro-core": ^1.1.1-alpha.22
     babel-loader: ^8.1.0
     babel-merge: ^3.0.0
     css-loader: ^3.5.3
@@ -3610,7 +3610,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-server@^1.1.1-alpha.21, @vtex/micro-server@workspace:packages/micro-server":
+"@vtex/micro-server@^1.1.1-alpha.22, @vtex/micro-server@workspace:packages/micro-server":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-server@workspace:packages/micro-server"
   dependencies:
@@ -3624,7 +3624,7 @@ __metadata:
     "@types/pnpapi": ^0.0.0
     "@types/pretty": ^2.0.0
     "@types/webpack-dev-middleware": ^3.7.0
-    "@vtex/micro-core": ^1.1.1-alpha.21
+    "@vtex/micro-core": ^1.1.1-alpha.22
     "@yarnpkg/fslib": ^2.0.0-rc.20
     "@yarnpkg/libzip": ^2.0.0-rc.11
     compression: ^1.7.4
@@ -14670,13 +14670,13 @@ fsevents@~2.1.2:
     "@types/react": ^16.9.34
     "@types/react-dom": ^16.9.7
     "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro-cli": ^1.1.1-alpha.21
-    "@vtex/micro-core": ^1.1.1-alpha.21
-    "@vtex/micro-plugin-assets": ^1.1.1-alpha.21
-    "@vtex/micro-plugin-css": ^1.1.1-alpha.21
-    "@vtex/micro-plugin-react": ^1.1.1-alpha.21
-    "@vtex/micro-plugin-react-intl": ^1.1.1-alpha.21
-    "@vtex/micro-plugin-react-router": ^1.1.1-alpha.21
+    "@vtex/micro-cli": ^1.1.1-alpha.22
+    "@vtex/micro-core": ^1.1.1-alpha.22
+    "@vtex/micro-plugin-assets": ^1.1.1-alpha.22
+    "@vtex/micro-plugin-css": ^1.1.1-alpha.22
+    "@vtex/micro-plugin-react": ^1.1.1-alpha.22
+    "@vtex/micro-plugin-react-intl": ^1.1.1-alpha.22
+    "@vtex/micro-plugin-react-router": ^1.1.1-alpha.22
     css-loader: ^3.5.3
     react: ^16.13.1
     react-dom: ^16.13.1

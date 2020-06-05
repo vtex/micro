@@ -82,6 +82,7 @@ export class Project {
       this.root,
       '💣 Could not find a package. Did you forget to resolve/restore packages ?'
     )
+    const { name } = this.root.manifest
     const dependencies = this.root.manifest.dependencies ?? {}
     const locators: string[] | undefined = this.root!.manifest.micro.plugins
     if (!locators) {
@@ -90,18 +91,21 @@ export class Project {
     const packages: Package[] = []
     walk(this.root, async (curr) => {
       const index = locators.findIndex((x) => curr.manifest.name === x)
+
       if (index < 0) {
         return
       }
-      const maybeVersion = dependencies[curr.manifest.name]
-      // eslint-disable-next-line vtex/prefer-early-return
-      if (
-        maybeVersion &&
-        parse(maybeVersion).major === parse(curr.manifest.version).major
-      ) {
-        const idx = locators.findIndex((x) => curr.manifest.name === x)
-        packages.splice(idx, 0, curr)
+
+      const maybeVersion = dependencies[curr.manifest.name] || ''
+      const versionsMatch =
+        parse(maybeVersion).major !== parse(curr.manifest.version).major
+      const isSelfPlugin = curr.manifest.name === name
+
+      if (!isSelfPlugin && !versionsMatch) {
+        return
       }
+
+      packages.splice(index, 0, curr)
     })
     const plugins = await packages.reduce(async (accPromise, pkg) => {
       const [acc, plugin] = await Promise.all([
@@ -114,20 +118,6 @@ export class Project {
       return acc
     }, Promise.resolve({} as Record<string, NonNullable<Plugins[T]>>))
     return plugins
-  }
-
-  public getSelfPlugin = async <T extends LifeCycle>(
-    target: T
-  ): Promise<NonNullable<Plugins[T]> | null> => {
-    const { plugins } = this.root!.manifest.micro
-    const index = plugins?.findIndex((p) => p === this.root.manifest.name)
-    if (index !== undefined && index > -1) {
-      const targetPlugin = await this.root.getPlugin(target)
-      if (targetPlugin) {
-        return targetPlugin as NonNullable<Plugins[T]>
-      }
-    }
-    return null
   }
 
   public resolvePackages = async (linker: 'pnp' | 'node-modules' = 'pnp') => {

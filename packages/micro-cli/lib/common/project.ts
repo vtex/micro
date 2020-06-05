@@ -52,17 +52,4 @@ export const resolvePlugins = async <T extends LifeCycle>(
   return Object.values(plugins)
 }
 
-export const resolveSelfPlugin = async <T extends LifeCycle>(
-  project: Project,
-  lifecycle: T
-): Promise<Plugins[T] | null> => {
-  const plugin = await project.getSelfPlugin(lifecycle)
-
-  if (plugin) {
-    reportPlugin(lifecycle, project.root.manifest.name)
-  }
-
-  return plugin
-}
-
 export const loadProject = () => {}

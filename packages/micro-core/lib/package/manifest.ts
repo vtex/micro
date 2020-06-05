@@ -1,7 +1,7 @@
 import { pick } from '../common/pick'
 import { isSemver } from '../common/semver'
 import { MICRO_BUILD_DIR } from '../constants'
-import { lifecycle } from '../lifecycles/build'
+import { BUILD_LIFECYCLE } from '../lifecycles/build'
 
 type MicroOptions = {
   plugins: string[]
@@ -9,15 +9,16 @@ type MicroOptions = {
 
 export const BaseManifest = {
   sideEffects: false,
-  main: `./${MICRO_BUILD_DIR}/${lifecycle}/cjs/index.js`,
-  module: `./${MICRO_BUILD_DIR}/${lifecycle}/es6/index.js`,
+  main: `./${MICRO_BUILD_DIR}/${BUILD_LIFECYCLE}/cjs/index.js`,
+  types: `./${MICRO_BUILD_DIR}/${BUILD_LIFECYCLE}/cjs/index.d.ts`,
+  // module: `./${MICRO_BUILD_DIR}/${buildLifecycle}/es6/index.js`,
   browser: './components/index.ts',
   micro: {
     plugins: [],
   } as MicroOptions,
   scripts: {
     build: 'yarn run micro build',
-    watch: 'yarn run micro link',
+    watch: 'yarn run micro dev',
     clean: `rm -r ${MICRO_BUILD_DIR}`,
     prepublish: 'yarn build',
   },

@@ -2989,7 +2989,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/ramda@npm:^0.27.4":
+"@types/ramda@npm:^0.27.4, @types/ramda@npm:^0.27.6":
   version: 0.27.6
   resolution: "@types/ramda@npm:0.27.6"
   dependencies:
@@ -3442,12 +3442,11 @@ __metadata:
     "@types/fs-extra": ^8.1.0
     "@types/globby": ^9.1.0
     "@types/pnpapi": ^0.0.0
-    "@types/ramda": ^0.27.4
+    "@types/ramda": ^0.27.6
     "@types/webpack-blocks": ^2.0.0
     "@yarnpkg/fslib": ^2.0.0-rc.20
     "@yarnpkg/libzip": ^2.0.0-rc.11
     babel-merge: ^3.0.0
-    deepmerge: ^4.2.2
     fs-extra: ^9.0.0
     globby: ^11.0.0
     pnpapi: ^0.0.0

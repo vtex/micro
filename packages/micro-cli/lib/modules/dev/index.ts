@@ -1,23 +1,16 @@
-import { join } from 'path'
-
 import chalk from 'chalk'
-import { outputJSON } from 'fs-extra'
+import { webpack } from 'webpack'
 
 import { BuildCompiler, Mode } from '@vtex/micro-core'
+import { startDevServer } from '@vtex/micro-server'
 
 import { newProject, resolvePlugins } from '../../common/project'
-import { run } from '../../common/webpack'
-import { BUILD } from '../../constants'
-import { clean, tscCompiler } from './builder'
+import { watch } from '../../common/webpack'
+import { BUILD, HOST, PUBLIC_PATHS, SERVER_PORT } from '../../constants'
+import { clean, lifecycle, tscCompiler, tscWatcher } from '../build/builder'
 
-interface Options {
-  dev?: boolean
-}
-
-const lifecycle = 'build'
-
-const main = async (options: Options) => {
-  const dev = !!options.dev
+const main = async () => {
+  const dev = true
   const mode: Mode = dev ? 'development' : 'production'
   process.env.NODE_ENV = mode
 
@@ -38,6 +31,11 @@ const main = async (options: Options) => {
   await tscCompiler(project)
   console.timeEnd(tscCompilerMsg)
 
+  const tscWatcherMsg = '🦄 Watching for tsc file changes'
+  console.time(tscWatcherMsg)
+  tscWatcher(project)
+  console.timeEnd(tscWatcherMsg)
+
   // Sometimes the package only contains `plugins` or `lib`.
   // In this case, there is nothing to bundle and the build is complete
   const frontend = await project.root.getFiles('pages', 'components')
@@ -52,17 +50,28 @@ const main = async (options: Options) => {
   const configs = await Promise.all([
     compiler.getWepbackConfig('node-federation'),
     compiler.getWepbackConfig('web-federation'),
-    compiler.getWepbackConfig('web'),
   ])
   console.timeEnd(pluginsResolutionsMsg)
 
-  const statsJSON = run(configs, lifecycle)
+  const wp = webpack(configs)
 
-  const dist = join(compiler.dist, BUILD)
-  console.log(
-    `🦄 [${lifecycle}]: Persisting Build on ${dist.replace(process.cwd(), '')}`
-  )
-  await outputJSON(dist, statsJSON, { spaces: 2 })
+  const hasPages = (await project.root.getFiles('pages')).length > 0
+  const hasRouter =
+    typeof (await project.root.getPlugin('serve'))?.router === 'function'
+
+  // eslint-disable-next-line vtex/prefer-early-return
+  if (hasRouter && hasPages) {
+    console.log(`🦄 [${lifecycle}]: Starting DevServer`)
+
+    await startDevServer({
+      publicPaths: PUBLIC_PATHS,
+      project,
+      host: HOST,
+      port: SERVER_PORT,
+    } as any)
+  } else {
+    watch(wp, BUILD)
+  }
 }
 
 export default main

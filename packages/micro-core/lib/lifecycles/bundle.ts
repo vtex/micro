@@ -8,13 +8,32 @@ import { Compiler, CompilerOptions } from '../compiler'
 import { Plugin } from '../plugin'
 import { Project } from '../project'
 
-const lifecycle = 'bundle'
+export const BUNDLE_LIFECYCLE = 'bundle'
 
-export const pagesRuntimeName = 'micro-runtime'
-export const webpackRuntimeName = 'webpack-runtime'
-export const pagesFrameworkName = 'micro-framework'
+export type BundleTarget = 'web' | 'web-legacy'
 
-export type BundleTarget = 'webnew' | 'webold'
+export interface BundlePluginOptions {
+  mode: Mode
+  project: Project
+}
+
+export abstract class BundlePlugin extends Plugin {
+  public mode: Mode
+  public project: Project
+
+  constructor(options: BundlePluginOptions) {
+    super({ target: BUNDLE_LIFECYCLE })
+    this.project = options.project
+    this.mode = options.mode
+  }
+
+  public abstract getWebpackConfig = async (
+    config: Block,
+    target: BundleTarget
+  ): Promise<Block> => {
+    throw new Error(`💣 not implemented: ${target}, ${config}`)
+  }
+}
 
 export type BundleCompilerOptions = Omit<
   CompilerOptions<BundlePlugin>,
@@ -26,7 +45,7 @@ export type BundleCompilerOptions = Omit<
 
 export class BundleCompiler extends Compiler<BundlePlugin> {
   constructor({ project, plugins, mode }: BundleCompilerOptions) {
-    super({ project, plugins: [], target: lifecycle })
+    super({ project, plugins: [], target: BUNDLE_LIFECYCLE })
     this.plugins = plugins.map((P) => new P({ project, mode }))
   }
 
@@ -42,28 +61,5 @@ export class BundleCompiler extends Compiler<BundlePlugin> {
       Promise.resolve(initialConfig)
     )
     return createConfig(merged)
-  }
-}
-
-export interface BundlePluginOptions {
-  project: Project
-  mode: Mode
-}
-
-export abstract class BundlePlugin extends Plugin {
-  public project: Project
-  public mode: Mode
-
-  constructor(options: BundlePluginOptions) {
-    super({ target: lifecycle })
-    this.project = options.project
-    this.mode = options.mode
-  }
-
-  public abstract getWebpackConfig = async (
-    config: Block,
-    target: BundleTarget
-  ): Promise<Block> => {
-    throw new Error(`💣 not implemented: ${target}, ${config}`)
   }
 }

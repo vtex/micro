@@ -1,39 +1,39 @@
+import { concat, mergeDeepWith, uniq } from 'ramda'
+
 import { MICRO_BUILD_DIR } from '../constants'
-import { lifecycle } from '../lifecycles/build'
+import { BUILD_LIFECYCLE } from '../lifecycles/build'
 
 export const BaseTSConfig = {
   compilerOptions: {
-    typeRoots: [
-      'lib/typings',
-      'router/typings',
-      'plugins/typings',
-      'components/typings',
-    ],
+    types: ['node'],
+    typeRoots: ['lib/typings', 'plugins/typings', 'components/typings'],
     target: 'es2019',
     module: 'commonjs',
     moduleResolution: 'node',
-    outDir: `${MICRO_BUILD_DIR}/${lifecycle}/cjs`,
+    outDir: `${MICRO_BUILD_DIR}/${BUILD_LIFECYCLE}/cjs`,
     jsx: 'preserve',
-    strict: true,
     esModuleInterop: true,
     forceConsistentCasingInFileNames: false,
     skipLibCheck: true,
     declaration: true,
+    strict: true,
   },
-  include: ['index.ts', 'lib', 'router', 'plugins', 'components'],
-  exclude: [MICRO_BUILD_DIR, 'pages'],
+  exclude: [MICRO_BUILD_DIR],
 }
 
 export type TSConfig = typeof BaseTSConfig
 
-// TODO: Maybe implement a deep merge in here with priority to BaseTSConfig
-export const genTSConfig = (partial: any): TSConfig => {
-  return {
-    ...partial,
-    ...BaseTSConfig,
-    compilerOptions: {
-      ...partial?.compilerOptions,
-      ...BaseTSConfig.compilerOptions,
+export const mergeTSConfig = (a: any, b: any) =>
+  mergeDeepWith(
+    (c: any, d: any) => {
+      if (Array.isArray(c) && Array.isArray(d)) {
+        return uniq(concat(c, d))
+      }
+      return d
     },
-  }
-}
+    a,
+    b
+  )
+
+export const genTSConfig = (original: any) =>
+  mergeTSConfig(original, BaseTSConfig)

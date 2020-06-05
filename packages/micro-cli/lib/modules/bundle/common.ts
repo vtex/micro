@@ -2,11 +2,7 @@ import chalk from 'chalk'
 
 import { BundleCompiler, Mode } from '@vtex/micro-core'
 
-import {
-  newProject,
-  resolvePlugins,
-  resolveSelfPlugin,
-} from '../../common/project'
+import { newProject, resolvePlugins } from '../../common/project'
 
 const lifecycle = 'bundle'
 
@@ -27,9 +23,7 @@ export const getBundleCompiler = async (options: Options) => {
     )}:${chalk.blue(mode)}`
   )
 
-  const partial = await resolvePlugins(project, lifecycle)
-  const self = await resolveSelfPlugin(project, lifecycle)
-  const plugins = self ? [self, ...partial] : partial
+  const plugins = await resolvePlugins(project, lifecycle)
 
   console.log(`🦄 [${lifecycle}]: Creating Compiler`)
   return new BundleCompiler({ project, plugins, mode })

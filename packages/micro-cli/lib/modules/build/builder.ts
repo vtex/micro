@@ -1,16 +1,12 @@
+import { spawn } from 'child_process'
 import { join } from 'path'
 
-import { transformFileAsync, TransformOptions } from '@babel/core'
-import chalk from 'chalk'
-import { outputFile } from 'fs-extra'
+import { outputJSON, pathExists } from 'fs-extra'
 
-import { BuildCompiler, BuildTarget, Mode, Project } from '@vtex/micro-core'
+import { BaseTSConfig, PackageStructure, Project } from '@vtex/micro-core'
 
-import {
-  ensureDist,
-  resolvePlugins,
-  resolveSelfPlugin,
-} from '../../common/project'
+import { ensureDist } from '../../common/project'
+import { MAX_RESPAWNS } from '../../constants'
 
 export const lifecycle = 'build'
 
@@ -19,92 +15,62 @@ export const createGetFolderFromFile = (project: Project) => (file: string) => {
   return folder
 }
 
-const hrtimeToMilis = ([s, ns]: [number, number]) => s * 1e3 + ns / 1e6
+const createTSCSpawner = <T>(watch: boolean, options: T) => {
+  let respawns = 0
+  return () => {
+    respawns += 1
+    if (respawns < MAX_RESPAWNS) {
+      console.log('📓 Spawning tsc ...')
+      const args = watch ? ['--watch'] : []
+      return spawn('tsc', args, options)
+    }
+    return null
+  }
+}
 
 export const rejectDeclarationFiles = (files: string[]) =>
   files.filter((f) => !f.endsWith('.d.ts'))
 
-export const getBuilders = async (project: Project, mode: Mode) => {
-  const plugins = await resolvePlugins(project, lifecycle)
-
-  // File Watcher does not starts with Project Path. We need to fix it to get absolute paths
-  const fixWatcherPath = (f: string) =>
-    f.startsWith(project.rootPath) ? f : join(project.rootPath, f)
-
-  const createPreBuild = async () => {
-    const target: BuildTarget = 'cjs'
-    const compiler = new BuildCompiler({ project, plugins, mode })
-    const config = await compiler.getBabelConfig(target) // TODO: It may take a while to get all configs every time
-    const dist = compiler.getDist(target)
-
-    const prebuild = async (f: string, printFile = true) => {
-      const start = process.hrtime()
-      const file = fixWatcherPath(f)
-      const transformed = await transformFileAsync(file, config)
-      const targetFile = file
-        .replace(project.rootPath, dist)
-        .replace(/.tsx?$/, '.js')
-      if (printFile) {
-        console.log(
-          `📃 [${chalk.blue(lifecycle)}:${chalk.magenta(target)}] ${chalk.green(
-            'Compiling'
-          )} ${f.replace(project.rootPath, '')} ${chalk.green(
-            '->'
-          )} ${targetFile.replace(project.rootPath, '.')} took ${chalk.yellow(
-            hrtimeToMilis(process.hrtime(start))
-          )}ms`
-        )
-      }
-      await outputFile(targetFile, transformed?.code)
-    }
-
-    return {
-      prebuild,
-      compiler,
-    }
+export const tscCompiler = async (project: Project) => {
+  const tsconfigPath = join(project.rootPath, PackageStructure.tsconfig)
+  const exists = await pathExists(tsconfigPath)
+  if (!exists) {
+    await outputJSON(tsconfigPath, BaseTSConfig)
   }
+  const spawnTSC = createTSCSpawner(false, {
+    cwd: project.rootPath,
+    env: process.env,
+    shell: true,
+    detached: false,
+    stdio: 'inherit',
+  })
+  const tsc = spawnTSC()
+  return new Promise((resolve) => {
+    tsc?.on('close', (code) => (code !== 0 ? process.exit(code) : resolve()))
+  })
+}
 
-  const createBuild = async () => {
-    const selfPlugin = await resolveSelfPlugin(project, lifecycle)
-    const allPlugins = selfPlugin ? [selfPlugin, ...plugins] : plugins
-    const compiler = new BuildCompiler({ project, plugins: allPlugins, mode })
-    const targetConfigs: Array<[BuildTarget, string, TransformOptions]> = [
-      ['cjs', compiler.getDist('cjs'), await compiler.getBabelConfig('cjs')],
-      ['es6', compiler.getDist('es6'), await compiler.getBabelConfig('es6')],
-    ]
+export const tscWatcher = (project: Project) => {
+  const spawnTSC = createTSCSpawner(true, {
+    cwd: project.rootPath,
+    env: process.env,
+    shell: true,
+    detached: false,
+    stdio: 'pipe',
+  })
+  const tsc = spawnTSC()
+  tsc?.stdout.on('data', (data) => console.log(data.toString()))
 
-    const build = async (f: string, printFile = true) => {
-      const start = process.hrtime()
-      const file = fixWatcherPath(f)
-      for await (const [target, dist, config] of targetConfigs) {
-        const transformed = await transformFileAsync(file, config)
-        const targetFile = file
-          .replace(project.rootPath, dist)
-          .replace(/.tsx?$/, '.js')
-        if (printFile) {
-          console.log(
-            `📃 [${chalk.blue(lifecycle)}:${
-              target === 'cjs' ? chalk.magenta(target) : chalk.red(target)
-            }] ${chalk.green('Compiling')} ${f.replace(
-              project.rootPath,
-              ''
-            )} ${chalk.green('->')} ${targetFile.replace(
-              project.rootPath,
-              '.'
-            )} took ${chalk.yellow(hrtimeToMilis(process.hrtime(start)))}ms`
-          )
-        }
-        await outputFile(targetFile, transformed?.code)
-      }
+  // TODO: Make it possible to receive this kind of feedback
+  // tsc?.stderr.on('data', (data) => console.log(data.toString()))
+
+  tsc?.on('close', (code) => {
+    if (code !== 0) {
+      console.log(`💣 tsc process exited with code ${code}`)
     }
-
-    return {
-      build,
-      compiler,
-    }
-  }
-
-  return { createBuild, createPreBuild }
+    spawnTSC()
+  })
+  return tsc
 }
 
 export const clean = (project: Project, path: string) =>

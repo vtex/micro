@@ -1,21 +1,40 @@
 import { join } from 'path'
 
-import { TransformOptions } from '@babel/core'
-import { readJSON } from 'fs-extra'
+import { Configuration } from 'webpack'
+import { Block, createConfig, setOutput } from 'webpack-blocks'
 
 import { Mode } from '../common/mode'
 import { Compiler, CompilerOptions } from '../compiler'
 import { Plugin } from '../plugin'
 import { Project } from '../project'
 
-export const lifecycle = 'build'
+export const BUILD_LIFECYCLE = 'build'
 
-export type BuildTarget = 'es6' | 'cjs'
+export type WebpackBuildTarget = 'node-federation' | 'web-federation' | 'web'
 
-export interface Alias {
-  name: string
-  version: string
-  resolve?: string
+export type BuildTarget = 'cjs' | WebpackBuildTarget
+
+export interface BuildPluginOptions {
+  mode: Mode
+  project: Project
+}
+
+export abstract class BuildPlugin extends Plugin {
+  public mode: Mode
+  public project: Project
+
+  constructor(options: BuildPluginOptions) {
+    super({ target: BUILD_LIFECYCLE })
+    this.mode = options.mode
+    this.project = options.project
+  }
+
+  public abstract getWebpackConfig = async (
+    config: Block,
+    target: WebpackBuildTarget
+  ): Promise<Block> => {
+    throw new Error(`💣 not implemented: ${target}, ${config}`)
+  }
 }
 
 export type BuildCompilerOptions = Omit<
@@ -27,51 +46,22 @@ export type BuildCompilerOptions = Omit<
 }
 
 export class BuildCompiler extends Compiler<BuildPlugin> {
-  private mode: Mode
-
   constructor({ project, plugins, mode }: BuildCompilerOptions) {
-    super({ project, plugins: [], target: lifecycle })
+    super({ project, plugins: [], target: BUILD_LIFECYCLE })
     this.plugins = plugins.map((P) => new P({ project, mode }))
-    this.mode = mode
   }
 
-  public getDist = (target: BuildTarget) => join(this.dist, target)
-
-  public getBabelConfig = async (target: BuildTarget) => {
-    const initialConfig: TransformOptions = {}
-    return this.plugins.reduce(
-      async (acc, plugin) => plugin.getBabelConfig(await acc, target),
+  public getWepbackConfig = async (
+    target: WebpackBuildTarget
+  ): Promise<Configuration> => {
+    const initialConfig = setOutput({
+      path: join(this.dist, target),
+      publicPath: '/assets/',
+    })
+    const merged = await this.plugins.reduce(
+      async (acc, plugin) => plugin.getWebpackConfig(await acc, target),
       Promise.resolve(initialConfig)
     )
+    return createConfig(merged)
   }
-}
-
-export interface BuildPluginOptions {
-  mode: Mode
-  project: Project
-}
-
-export class BuildPlugin extends Plugin {
-  public mode: Mode
-  public project: Project
-
-  constructor(options: BuildPluginOptions) {
-    super({ target: lifecycle })
-    this.mode = options.mode
-    this.project = options.project
-  }
-
-  public getBabelConfig = async (
-    previous: TransformOptions,
-    _target: BuildTarget
-  ): Promise<TransformOptions> => previous
-}
-
-export const packageToAlias = async (
-  name: string,
-  resolve: (x: string) => string
-): Promise<Alias> => {
-  const packageJSONPath = resolve(`${name}/package.json`)
-  const { version } = await readJSON(packageJSONPath)
-  return { name, version: `^${version}` }
 }

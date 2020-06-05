@@ -1,18 +1,10 @@
-import { TransformOptions } from '@babel/core'
-import merge from 'babel-merge'
+import { Block } from 'webpack-blocks'
 
-import { BuildPlugin, BuildTarget } from '@vtex/micro-core'
+import { BuildPlugin, WebpackBuildTarget } from '@vtex/micro-core'
 
 export default class Build extends BuildPlugin {
-  public getBabelConfig = async (
-    previous: TransformOptions,
-    target: BuildTarget
-  ): Promise<TransformOptions> => {
-    // TODO: Do we really need this ?
-    const plugins =
-      target === 'cjs'
-        ? [require.resolve('babel-plugin-ignore-html-and-css-imports')]
-        : []
-    return merge(previous, { plugins })
-  }
+  public getWebpackConfig = async (
+    config: Block,
+    target: WebpackBuildTarget
+  ): Promise<Block> => config
 }

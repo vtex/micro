@@ -1,6 +1,6 @@
 {
   "name": "simple",
-  "version": "1.1.1-alpha.21",
+  "version": "1.1.1-alpha.22",
   "license": "MIT",
   "micro": {
     "plugins": [
@@ -26,13 +26,13 @@
   "dependencies": {
     "@babel/core": "^7.10.2",
     "@loadable/component": "^5.12.0",
-    "@vtex/micro-cli": "^1.1.1-alpha.21",
-    "@vtex/micro-core": "^1.1.1-alpha.21",
-    "@vtex/micro-plugin-assets": "^1.1.1-alpha.21",
-    "@vtex/micro-plugin-css": "^1.1.1-alpha.21",
-    "@vtex/micro-plugin-react": "^1.1.1-alpha.21",
-    "@vtex/micro-plugin-react-intl": "^1.1.1-alpha.21",
-    "@vtex/micro-plugin-react-router": "^1.1.1-alpha.21",
+    "@vtex/micro-cli": "^1.1.1-alpha.22",
+    "@vtex/micro-core": "^1.1.1-alpha.22",
+    "@vtex/micro-plugin-assets": "^1.1.1-alpha.22",
+    "@vtex/micro-plugin-css": "^1.1.1-alpha.22",
+    "@vtex/micro-plugin-react": "^1.1.1-alpha.22",
+    "@vtex/micro-plugin-react-intl": "^1.1.1-alpha.22",
+    "@vtex/micro-plugin-react-router": "^1.1.1-alpha.22",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "vtex-tachyons": "^3.2.0",

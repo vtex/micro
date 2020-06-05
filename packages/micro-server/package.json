@@ -1,6 +1,6 @@
 {
   "name": "@vtex/micro-server",
-  "version": "1.1.1-alpha.21",
+  "version": "1.1.1-alpha.22",
   "license": "MIT",
   "main": "./dist/build/cjs/index.js",
   "types": "./dist/build/cjs/index.js",
@@ -11,7 +11,7 @@
     "prepublish": "yarn build"
   },
   "dependencies": {
-    "@vtex/micro-core": "^1.1.1-alpha.21",
+    "@vtex/micro-core": "^1.1.1-alpha.22",
     "@yarnpkg/fslib": "^2.0.0-rc.20",
     "@yarnpkg/libzip": "^2.0.0-rc.11",
     "compression": "^1.7.4",

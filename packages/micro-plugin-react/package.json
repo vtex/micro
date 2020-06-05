@@ -1,6 +1,6 @@
 {
   "name": "@vtex/micro-plugin-react",
-  "version": "1.1.1-alpha.21",
+  "version": "1.1.1-alpha.22",
   "license": "MIT",
   "micro": {
     "plugins": [
@@ -31,7 +31,7 @@
     "@loadable/babel-plugin": "^5.12.0",
     "@loadable/server": "^5.12.0",
     "@loadable/webpack-plugin": "^5.12.0",
-    "@vtex/micro-core": "^1.1.1-alpha.21",
+    "@vtex/micro-core": "^1.1.1-alpha.22",
     "babel-loader": "^8.1.0",
     "babel-merge": "^3.0.0",
     "css-loader": "^3.5.3",
@@ -58,7 +58,7 @@
     "@types/react-dom": "^16.9.7",
     "@types/terser-webpack-plugin": "^2.2.0",
     "@types/webpack-blocks": "^2.0.0",
-    "@vtex/micro-cli": "^1.1.1-alpha.21",
+    "@vtex/micro-cli": "^1.1.1-alpha.22",
     "typescript": "^3.9.5"
   },
   "peerDependencies": {

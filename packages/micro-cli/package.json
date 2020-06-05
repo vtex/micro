@@ -1,6 +1,6 @@
 {
   "name": "@vtex/micro-cli",
-  "version": "1.1.1-alpha.21",
+  "version": "1.1.1-alpha.22",
   "license": "MIT",
   "main": "./dist/build/cjs/index.js",
   "bin": {
@@ -15,8 +15,8 @@
   "dependencies": {
     "@babel/core": "^7.9.6",
     "@types/babel__core": "^7.1.7",
-    "@vtex/micro-core": "^1.1.1-alpha.21",
-    "@vtex/micro-server": "^1.1.1-alpha.21",
+    "@vtex/micro-core": "^1.1.1-alpha.22",
+    "@vtex/micro-server": "^1.1.1-alpha.22",
     "chalk": "^4.0.0",
     "chokidar": "^3.4.0",
     "findhelp": "^1.1.0",

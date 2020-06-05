@@ -1,6 +1,6 @@
 {
   "name": "@vtex/micro-plugin-react-intl",
-  "version": "1.1.1-alpha.21",
+  "version": "1.1.1-alpha.22",
   "license": "MIT",
   "micro": {
     "plugins": [
@@ -21,8 +21,8 @@
   "types": "./index.ts",
   "dependencies": {
     "@babel/core": "^7.10.2",
-    "@vtex/micro-core": "^1.1.1-alpha.21",
-    "@vtex/micro-plugin-react": "^1.1.1-alpha.21",
+    "@vtex/micro-core": "^1.1.1-alpha.22",
+    "@vtex/micro-plugin-react": "^1.1.1-alpha.22",
     "babel-merge": "^3.0.0",
     "babel-plugin-inline-json-import": "^0.3.2",
     "babel-plugin-react-intl": "^7.5.14",
@@ -37,7 +37,7 @@
     "@types/react": "^16.9.35",
     "@types/react-intl": "^3.0.0",
     "@types/webpack-blocks": "^2.0.0",
-    "@vtex/micro-cli": "^1.1.1-alpha.21",
+    "@vtex/micro-cli": "^1.1.1-alpha.22",
     "typescript": "^3.9.5"
   },
   "peerDependencies": {

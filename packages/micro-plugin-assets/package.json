@@ -1,6 +1,6 @@
 {
   "name": "@vtex/micro-plugin-assets",
-  "version": "1.1.1-alpha.21",
+  "version": "1.1.1-alpha.22",
   "license": "MIT",
   "micro": {
     "plugins": [
@@ -19,7 +19,7 @@
   "browser": "./components/index.ts",
   "dependencies": {
     "@babel/core": "^7.10.2",
-    "@vtex/micro-core": "^1.1.1-alpha.21",
+    "@vtex/micro-core": "^1.1.1-alpha.22",
     "babel-merge": "^3.0.0",
     "babel-plugin-inline-json-import": "^0.3.2",
     "babel-plugin-transform-remove-imports": "^1.3.2",
@@ -30,7 +30,7 @@
     "@types/babel__core": "^7.1.7",
     "@types/node": "^14.0.11",
     "@types/webpack-blocks": "^2.0.0",
-    "@vtex/micro-cli": "^1.1.1-alpha.21",
+    "@vtex/micro-cli": "^1.1.1-alpha.22",
     "typescript": "^3.9.5"
   }
 }

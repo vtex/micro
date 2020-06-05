@@ -131,5 +131,3 @@ export const packageToAlias = async (
   const { version } = await readJSON(packageJSONPath)
   return { name, version: `^${version}` }
 }
-
-type EnvVarReplacements = Record<string, string | number | true>

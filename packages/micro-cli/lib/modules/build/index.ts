@@ -1,6 +1,6 @@
 import chalk from 'chalk'
 
-import { Mode } from '@vtex/micro-core/lib'
+import { Mode } from '@vtex/micro-core'
 
 import { newProject } from '../../common/project'
 import { clean, getBuilders, rejectDeclarationFiles } from './builder'

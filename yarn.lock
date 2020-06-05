@@ -1347,48 +1347,48 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/intl-displaynames@npm:^2.2.3":
-  version: 2.2.3
-  resolution: "@formatjs/intl-displaynames@npm:2.2.3"
+"@formatjs/intl-displaynames@npm:^2.2.4":
+  version: 2.2.4
+  resolution: "@formatjs/intl-displaynames@npm:2.2.4"
   dependencies:
-    "@formatjs/intl-utils": ^3.3.0
-  checksum: 3/80389b6cd1461b73bb04acba39f631ae1ae74df7a8086e3fc455250042bda5e380fb25b9d6b704c7db73d8f0d86ad0bd406fbfd3176ee71e720c466b408338d0
+    "@formatjs/intl-utils": ^3.3.1
+  checksum: 3/ca4accfa77f48ce126360c4f6a0945719b6d7d4da210700df2acf272ce15f922fc11f8cdc545756e6ab3f75ca04fd412c2af4e95faf33435c2dc22d3f0149b29
   languageName: node
   linkType: hard
 
-"@formatjs/intl-listformat@npm:^2.2.3":
-  version: 2.2.3
-  resolution: "@formatjs/intl-listformat@npm:2.2.3"
+"@formatjs/intl-listformat@npm:^2.2.4":
+  version: 2.2.4
+  resolution: "@formatjs/intl-listformat@npm:2.2.4"
   dependencies:
-    "@formatjs/intl-utils": ^3.3.0
-  checksum: 3/43f94492d0e27b0b1e3385f60f023cf7d227a48ca7809c5a0e2f73f7448e37939928fb5fbcf7243204aff6713990b93e2d234fb708c1f71429143bcf2086ddda
+    "@formatjs/intl-utils": ^3.3.1
+  checksum: 3/a6de80cf3f8fdfed70395bac1e27174a449ada55a1654cbb4d4d1962d696d21c4c28cb5a645ae053536e1440f6f57f91ce8b5c18fdd278d9a6f7ac473da8e9a3
   languageName: node
   linkType: hard
 
-"@formatjs/intl-numberformat@npm:^4.2.3":
-  version: 4.2.3
-  resolution: "@formatjs/intl-numberformat@npm:4.2.3"
+"@formatjs/intl-numberformat@npm:^4.2.4":
+  version: 4.2.4
+  resolution: "@formatjs/intl-numberformat@npm:4.2.4"
   dependencies:
-    "@formatjs/intl-utils": ^3.3.0
-  checksum: 3/f41161f037fe99af7a3caf3b4e687367e2b575ef349530f9ada461edf4cdeb4c59192687477846e9455efb81a8c3654421c11306be0b3824760a078088152fcd
+    "@formatjs/intl-utils": ^3.3.1
+  checksum: 3/d018bb10ed2d4de066ff4994968355f681278b2965023565a9adb400634e279a0fe8c6c8adce61426a58b9d64bb44b263d93be6fd3e2731a1e6c03447005612a
   languageName: node
   linkType: hard
 
-"@formatjs/intl-relativetimeformat@npm:^5.2.3":
-  version: 5.2.3
-  resolution: "@formatjs/intl-relativetimeformat@npm:5.2.3"
+"@formatjs/intl-relativetimeformat@npm:^5.2.4":
+  version: 5.2.4
+  resolution: "@formatjs/intl-relativetimeformat@npm:5.2.4"
   dependencies:
-    "@formatjs/intl-utils": ^3.3.0
-  checksum: 3/c84b042605cd868609c2a5b1493324b745fd339d71ae0eedaf6e5c438a5383f714c65867a5947dfe6a09f9a8179ee4e7e2dd65d8718f30c850f999e5ea68e6cb
+    "@formatjs/intl-utils": ^3.3.1
+  checksum: 3/3bd6eb9aa39fce0d770f2da219d696973c0a82af974c8bfec4240500eba93c47f1b2cf73d148c2ae0d224374a322c82c9db9ae6bb12c84af196440fc755b773a
   languageName: node
   linkType: hard
 
-"@formatjs/intl-utils@npm:^3.3.0":
-  version: 3.3.0
-  resolution: "@formatjs/intl-utils@npm:3.3.0"
+"@formatjs/intl-utils@npm:^3.3.1":
+  version: 3.3.1
+  resolution: "@formatjs/intl-utils@npm:3.3.1"
   dependencies:
     emojis-list: ^3.0.0
-  checksum: 3/ca2a5b871ae2f02ad3c6512c74532ea23eae2b72c960c96b4dbcf904160b06708cddc53d9f6aa113fb4c702c0a79759b501f0311deade5723626e8772e14824c
+  checksum: 3/eb75fd17b12c440dc9043e3f0f8f219b52b974fa968affcd51d935783353457dbc4c31ddd05032bbadf6c6d24ef0d799017938b8c238e200dcba541c82554684
   languageName: node
   linkType: hard
 
@@ -2431,22 +2431,22 @@ __metadata:
   linkType: hard
 
 "@octokit/types@npm:^4.0.1":
-  version: 4.1.6
-  resolution: "@octokit/types@npm:4.1.6"
+  version: 4.1.7
+  resolution: "@octokit/types@npm:4.1.7"
   dependencies:
     "@types/node": ">= 8"
-  checksum: 3/9d9148eb247dedb9a993e7b3ed9467983a192816417924d031b91fb8ecd7ae1b1fbf9977bd4c00867481adc0734ddbac841d2dc08f602f66d922fad8f3b6c252
+  checksum: 3/1b97352dfc80aa347b12853454fe55eca6941710270ff80fda2b44e112b1407a08933a3ad990f49b6a9c58565fe505d22c819c784c90484546475e06232dc0e8
   languageName: node
   linkType: hard
 
 "@rollup/plugin-alias@npm:^3.0.1":
-  version: 3.1.0
-  resolution: "@rollup/plugin-alias@npm:3.1.0"
+  version: 3.1.1
+  resolution: "@rollup/plugin-alias@npm:3.1.1"
   dependencies:
     slash: ^3.0.0
   peerDependencies:
     rollup: ^1.20.0||^2.0.0
-  checksum: 3/4ce60b39bbbc0c01c002e48261cc615d869d7628adda3a4276fd533a64a9bf6b66301f29d05dc1066db0b5263831186f582d1de4883e6924d1b22f6d8960d437
+  checksum: 3/785d8a4283e59bbd76447e2ea5128e34c9ebf59b626841a82d5c8366687439c2fe7d0690be04e73e51ada5264d1efdfd4de8ec2528f4f9428f9541040311262c
   languageName: node
   linkType: hard
 
@@ -2466,13 +2466,13 @@ __metadata:
   linkType: hard
 
 "@rollup/plugin-json@npm:^4.0.0":
-  version: 4.0.3
-  resolution: "@rollup/plugin-json@npm:4.0.3"
+  version: 4.1.0
+  resolution: "@rollup/plugin-json@npm:4.1.0"
   dependencies:
     "@rollup/pluginutils": ^3.0.8
   peerDependencies:
     rollup: ^1.20.0 || ^2.0.0
-  checksum: 3/3882df270cb4667b9c9f935139c44ca1b46f47285f840d2bfbae22296d54edede4d3d8d2ed10e2fe407e0dc5828433347292b42396a6deec7f8cdc285c5622a5
+  checksum: 3/07bc6bc83d07aefd35278e4e1a125e65210061b3dcab50c0f01273c54f43a60a3e01c1a0fed451e35d592ef1cbc8288ec8148a6229cf8cca9cdbf11a6d2d7d1c
   languageName: node
   linkType: hard
 
@@ -2492,27 +2492,27 @@ __metadata:
   linkType: hard
 
 "@rollup/plugin-replace@npm:^2.1.0":
-  version: 2.3.2
-  resolution: "@rollup/plugin-replace@npm:2.3.2"
+  version: 2.3.3
+  resolution: "@rollup/plugin-replace@npm:2.3.3"
   dependencies:
     "@rollup/pluginutils": ^3.0.8
     magic-string: ^0.25.5
   peerDependencies:
     rollup: ^1.20.0 || ^2.0.0
-  checksum: 3/b84fa38bb44a671eeadf5edd4ccce711bfca107c3b7acf01bad288f98884064e16825ddbd4becd041c2db2942bcf6308bba04b9fe4cdfe4a4f0c1b57ee200c32
+  checksum: 3/d08a514b8f446a3fe3db7e9de7d1a57c4aaeaaa3d6f70c2e18925d893ed81480dbfd29fe939f61c1ef31194b036ab7b1df22a744ffd33196335f9fa1925d3c22
   languageName: node
   linkType: hard
 
 "@rollup/pluginutils@npm:^3.0.0, @rollup/pluginutils@npm:^3.0.8":
-  version: 3.0.10
-  resolution: "@rollup/pluginutils@npm:3.0.10"
+  version: 3.1.0
+  resolution: "@rollup/pluginutils@npm:3.1.0"
   dependencies:
     "@types/estree": 0.0.39
     estree-walker: ^1.0.1
     picomatch: ^2.2.2
   peerDependencies:
     rollup: ^1.20.0||^2.0.0
-  checksum: 3/6fe0b0c1cd0b512736dcb5dbaa168c8dead83183e27f9ccc1450dbacbdf11803249b75eeca8ff0d6cd1af6d099e0bd6896d05b2e217f167d9cb3765cfb890580
+  checksum: 3/45da6411e045d1b034242a8144f4a5e8c02ff1b68a2e0857807f5bb4b091c416f2015e075057f0f0dec200e7b35efe6ed4e301b43e365cedea09192f01a6839b
   languageName: node
   linkType: hard
 
@@ -2555,55 +2555,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/babel-core@npm:^6.25.6":
-  version: 6.25.6
-  resolution: "@types/babel-core@npm:6.25.6"
-  dependencies:
-    "@types/babel-generator": "*"
-    "@types/babel-template": "*"
-    "@types/babel-traverse": "*"
-    "@types/babel-types": "*"
-    "@types/babylon": "*"
-  checksum: 3/dd753827262390b8f1845fec507819c78bf5638bd429360f9d0ff892f10cacfaaeac70ac748aa89d4b2e1353ae9553406e2460344d1c8195125189b5f27d1800
-  languageName: node
-  linkType: hard
-
-"@types/babel-generator@npm:*":
-  version: 6.25.3
-  resolution: "@types/babel-generator@npm:6.25.3"
-  dependencies:
-    "@types/babel-types": "*"
-  checksum: 3/5655ac6972e329874ade7db07fc00ec3ae6cfce6a55f1719cd6a296aef9396f1d7805f6746dcca45b11579e34b9b9aaac7076c1ad617ddfdb72b44d7a816c750
-  languageName: node
-  linkType: hard
-
-"@types/babel-template@npm:*":
-  version: 6.25.2
-  resolution: "@types/babel-template@npm:6.25.2"
-  dependencies:
-    "@types/babel-types": "*"
-    "@types/babylon": "*"
-  checksum: 3/4ded2831302ce15f85a8a6680ea3f93203ea7b5b749abc0670be7ee34857f9a26eca55027732193ef183c7307126ecaeaa7bf80d462843a56d3dcff5a3ec52df
-  languageName: node
-  linkType: hard
-
-"@types/babel-traverse@npm:*":
-  version: 6.25.5
-  resolution: "@types/babel-traverse@npm:6.25.5"
-  dependencies:
-    "@types/babel-types": "*"
-  checksum: 3/f35d2f575af3e2a2ec687ef04b0a86941aca1ec5c18b8fee3d6b61a6978d6604ac8632486e4d085c37a1a5337e61212942b39c22678ad1a66a4d2a2e2d363773
-  languageName: node
-  linkType: hard
-
-"@types/babel-types@npm:*":
-  version: 7.0.7
-  resolution: "@types/babel-types@npm:7.0.7"
-  checksum: 3/9d641f54dd7988561f16ddcba603f091f9afa331b61ac3864322c510319d466329d08e4dd3803b4cea444a6e7d8c8a787f82c36f90475e1ff46c13e9ec16f750
-  languageName: node
-  linkType: hard
-
-"@types/babel__core@npm:^7.1.7":
+"@types/babel__core@npm:^7.1.7, @types/babel__core@npm:^7.1.8":
   version: 7.1.8
   resolution: "@types/babel__core@npm:7.1.8"
   dependencies:
@@ -2641,15 +2593,6 @@ __metadata:
   dependencies:
     "@babel/types": ^7.3.0
   checksum: 3/b59b0c196d7b37966b49471b517bbbe227705ba6a939d4a9d30a9667dd9aae8683bf2abf17ebdf6791a118da461d90fbc1c044f0c0a71271e17ae1d3b8dc05d7
-  languageName: node
-  linkType: hard
-
-"@types/babylon@npm:*":
-  version: 6.16.5
-  resolution: "@types/babylon@npm:6.16.5"
-  dependencies:
-    "@types/babel-types": "*"
-  checksum: 3/1d03d7008fd467aab346270ed47868f94436829522ac3fa0f640a84f5f2bec258d5d3dd7f1745866b88daff50381677cb043dd11883634c5f5dff8c5fed081f4
   languageName: node
   linkType: hard
 
@@ -2769,13 +2712,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/events@npm:*":
-  version: 3.0.0
-  resolution: "@types/events@npm:3.0.0"
-  checksum: 3/1407d79d6d5291caa89f27ef0f180eb133bc5a12f11886bd68f9ef9cffb962a575571d1b4d02d30a7329fe9b85d29b7c10543ed6dc516ad20f9a1e89c1e9c9b8
-  languageName: node
-  linkType: hard
-
 "@types/exenv@npm:^1.2.0":
   version: 1.2.0
   resolution: "@types/exenv@npm:1.2.0"
@@ -2825,13 +2761,12 @@ __metadata:
   linkType: hard
 
 "@types/glob@npm:^7.1.1":
-  version: 7.1.1
-  resolution: "@types/glob@npm:7.1.1"
+  version: 7.1.2
+  resolution: "@types/glob@npm:7.1.2"
   dependencies:
-    "@types/events": "*"
     "@types/minimatch": "*"
     "@types/node": "*"
-  checksum: 3/f74ae67cb205302da0d452e925529f817a253c4dce5d59ae6077d592238b921db750da143b8a5f8427a5011e202937d8a7b264f7d14b0ddc7f8137ca5e1af1b6
+  checksum: 3/28bc8b1c10b141173c0d8f287729e727bd864c652c8887fd471b2841de5227b08757a13dd7090133e915cd0e1753800cb69cb251525171972140655c390737b3
   languageName: node
   linkType: hard
 
@@ -2973,10 +2908,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:>= 8, @types/node@npm:^13.13.4, @types/node@npm:^13.7.0":
-  version: 13.13.9
-  resolution: "@types/node@npm:13.13.9"
-  checksum: 3/fd13f4106913baa04bf6cf0b4606a5313ec2755cf9ea182cdfc253179ae0d1d27f30127c97ba6e878f5e570af31e45dc1719f3bbc40f651a71ac64cc11420f06
+"@types/node@npm:*, @types/node@npm:>= 8, @types/node@npm:^14.0.11":
+  version: 14.0.11
+  resolution: "@types/node@npm:14.0.11"
+  checksum: 3/96b1a437ff7d1bbd20d8cfc54b94c865e934906db13d20ac9e3d2d86509433a4433abe7fd4e091f894633d5728c5c7e25b5ef1e641e4c165bfb66de38da9a609
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^13.13.4, @types/node@npm:^13.7.0":
+  version: 13.13.10
+  resolution: "@types/node@npm:13.13.10"
+  checksum: 3/e8887cc043ca804edd4debcf42d8d0160602e79f28d594e25454871ce868528b64c065e184a90b94416f909e123c82d8787d4923c046e921b9f03f9edea653b3
   languageName: node
   linkType: hard
 
@@ -3453,24 +3395,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vtex/micro-assets@^1.1.1-alpha.21, @vtex/micro-assets@workspace:packages/micro-assets":
-  version: 0.0.0-use.local
-  resolution: "@vtex/micro-assets@workspace:packages/micro-assets"
-  dependencies:
-    "@babel/core": ^7.10.2
-    "@types/babel__core": ^7.1.7
-    "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro-cli": ^1.1.1-alpha.21
-    "@vtex/micro-core": ^1.1.1-alpha.21
-    babel-merge: ^3.0.0
-    babel-plugin-inline-json-import: ^0.3.2
-    babel-plugin-transform-remove-imports: ^1.3.2
-    typescript: ^3.9.5
-    webpack: next
-    webpack-blocks: ^2.1.0
-  languageName: unknown
-  linkType: soft
-
 "@vtex/micro-cli@^1.1.1-alpha.21, @vtex/micro-cli@workspace:packages/micro-cli":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-cli@workspace:packages/micro-cli"
@@ -3481,6 +3405,7 @@ __metadata:
     "@types/chokidar": ^2.1.3
     "@types/fs-extra": ^8.1.0
     "@types/glob": ^7.1.1
+    "@types/node": ^14.0.11
     "@types/open": ^6.2.1
     "@types/ramda": ^0.27.4
     "@vtex/micro-core": ^1.1.1-alpha.21
@@ -3499,7 +3424,7 @@ __metadata:
     typescript: ^3.9.5
     webpack: next
   bin:
-    micro: ./dist/build/cjs/lib/index.js
+    micro: ./dist/build/cjs/index.js
   languageName: unknown
   linkType: soft
 
@@ -3534,13 +3459,33 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-css@^1.1.1-alpha.21, @vtex/micro-css@workspace:packages/micro-css":
+"@vtex/micro-plugin-assets@^1.1.1-alpha.21, @vtex/micro-plugin-assets@workspace:packages/micro-plugin-assets":
   version: 0.0.0-use.local
-  resolution: "@vtex/micro-css@workspace:packages/micro-css"
+  resolution: "@vtex/micro-plugin-assets@workspace:packages/micro-plugin-assets"
+  dependencies:
+    "@babel/core": ^7.10.2
+    "@types/babel__core": ^7.1.7
+    "@types/node": ^14.0.11
+    "@types/webpack-blocks": ^2.0.0
+    "@vtex/micro-cli": ^1.1.1-alpha.21
+    "@vtex/micro-core": ^1.1.1-alpha.21
+    babel-merge: ^3.0.0
+    babel-plugin-inline-json-import: ^0.3.2
+    babel-plugin-transform-remove-imports: ^1.3.2
+    typescript: ^3.9.5
+    webpack: next
+    webpack-blocks: ^2.1.0
+  languageName: unknown
+  linkType: soft
+
+"@vtex/micro-plugin-css@^1.1.1-alpha.21, @vtex/micro-plugin-css@workspace:packages/micro-plugin-css":
+  version: 0.0.0-use.local
+  resolution: "@vtex/micro-plugin-css@workspace:packages/micro-plugin-css"
   dependencies:
     "@babel/core": ^7.10.2
     "@types/babel__core": ^7.1.7
     "@types/mini-css-extract-plugin": ^0.9.1
+    "@types/node": ^14.0.11
     "@types/optimize-css-assets-webpack-plugin": ^5.0.1
     "@types/terser-webpack-plugin": ^2.2.0
     "@types/webpack-blocks": ^2.0.0
@@ -3559,18 +3504,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-react-intl@^1.1.1-alpha.21, @vtex/micro-react-intl@workspace:packages/micro-react-intl":
+"@vtex/micro-plugin-react-intl@^1.1.1-alpha.21, @vtex/micro-plugin-react-intl@workspace:packages/micro-plugin-react-intl":
   version: 0.0.0-use.local
-  resolution: "@vtex/micro-react-intl@workspace:packages/micro-react-intl"
+  resolution: "@vtex/micro-plugin-react-intl@workspace:packages/micro-plugin-react-intl"
   dependencies:
     "@babel/core": ^7.10.2
-    "@types/babel-core": ^6.25.6
+    "@types/babel__core": ^7.1.8
+    "@types/node": ^14.0.11
     "@types/react": ^16.9.35
     "@types/react-intl": ^3.0.0
     "@types/webpack-blocks": ^2.0.0
     "@vtex/micro-cli": ^1.1.1-alpha.21
     "@vtex/micro-core": ^1.1.1-alpha.21
-    "@vtex/micro-react": ^1.1.1-alpha.21
+    "@vtex/micro-plugin-react": ^1.1.1-alpha.21
     babel-merge: ^3.0.0
     babel-plugin-inline-json-import: ^0.3.2
     babel-plugin-react-intl: ^7.5.14
@@ -3586,20 +3532,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-react-router@^1.1.1-alpha.21, @vtex/micro-react-router@workspace:packages/micro-react-router":
+"@vtex/micro-plugin-react-router@^1.1.1-alpha.21, @vtex/micro-plugin-react-router@workspace:packages/micro-plugin-react-router":
   version: 0.0.0-use.local
-  resolution: "@vtex/micro-react-router@workspace:packages/micro-react-router"
+  resolution: "@vtex/micro-plugin-react-router@workspace:packages/micro-plugin-react-router"
   dependencies:
     "@babel/core": ^7.10.2
     "@types/history": ^4.7.5
     "@types/loadable__component": ^5.10.0
+    "@types/node": ^14.0.11
     "@types/react": ^16.9.35
     "@types/react-dom": ^16.9.7
     "@types/react-router-dom": ^5.1.5
     "@types/webpack-blocks": ^2.0.0
     "@vtex/micro-cli": ^1.1.1-alpha.21
     "@vtex/micro-core": ^1.1.1-alpha.21
-    "@vtex/micro-react": ^1.1.1-alpha.21
+    "@vtex/micro-plugin-react": ^1.1.1-alpha.21
     babel-merge: ^3.0.0
     history: ^4.10.1
     react-in-viewport: ^1.0.0-alpha.11
@@ -3614,9 +3561,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-react@^1.1.1-alpha.21, @vtex/micro-react@workspace:packages/micro-react":
+"@vtex/micro-plugin-react@^1.1.1-alpha.21, @vtex/micro-plugin-react@workspace:packages/micro-plugin-react":
   version: 0.0.0-use.local
-  resolution: "@vtex/micro-react@workspace:packages/micro-react"
+  resolution: "@vtex/micro-plugin-react@workspace:packages/micro-plugin-react"
   dependencies:
     "@babel/core": ^7.9.6
     "@babel/plugin-proposal-class-properties": ^7.8.3
@@ -3636,6 +3583,7 @@ __metadata:
     "@types/loadable__server": ^5.12.1
     "@types/loadable__webpack-plugin": ^5.7.0
     "@types/mini-css-extract-plugin": ^0.9.1
+    "@types/node": ^14.0.11
     "@types/react": ^16.9.35
     "@types/react-dom": ^16.9.7
     "@types/terser-webpack-plugin": ^2.2.0
@@ -4772,8 +4720,8 @@ __metadata:
   linkType: hard
 
 "babel-plugin-react-intl@npm:^7.5.14":
-  version: 7.5.17
-  resolution: "babel-plugin-react-intl@npm:7.5.17"
+  version: 7.5.18
+  resolution: "babel-plugin-react-intl@npm:7.5.18"
   dependencies:
     "@babel/core": ^7.9.0
     "@babel/helper-plugin-utils": ^7.8.3
@@ -4782,9 +4730,9 @@ __metadata:
     "@types/fs-extra": ^8.1.0
     "@types/schema-utils": ^2.4.0
     fs-extra: ^9.0.0
-    intl-messageformat-parser: ^5.1.0
+    intl-messageformat-parser: ^5.1.1
     schema-utils: ^2.6.6
-  checksum: 3/2e70a2072bf3eb448867b7516228460ed4060a95b65563004519614c3635c3361edea4514aabf027c3f94575a0ab1c5165797acf4d1e235873711c9afe4d2890
+  checksum: 3/52fc2e84685dd7844482ebf0f662cf99382f3ea775c31a985240348757e773247746f70edb2c1f5ee55b5d3196bda31d980d678904db5417387ec932024a9c02
   languageName: node
   linkType: hard
 
@@ -5332,9 +5280,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001043":
-  version: 1.0.30001077
-  resolution: "caniuse-lite@npm:1.0.30001077"
-  checksum: 3/8c57dfba3e0da11c01fdaad6a3517c0259ce24006b2c1d542827d725c5f5ed5be7a18d7efdbfe4ae879d2fc01e2fa5445c31e76835a8abc9013f7bfa35c42e8e
+  version: 1.0.30001078
+  resolution: "caniuse-lite@npm:1.0.30001078"
+  checksum: 3/b1b8ba57107b27b1d8b1eba01077cd52221a6ad5d4324a1dccee5a5092e1064920c09ed1c5656b4f93d7a33a4beaac9b9c044fd90e980539b47aeb35c42f4d9a
   languageName: node
   linkType: hard
 
@@ -6960,9 +6908,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.3.413":
-  version: 1.3.459
-  resolution: "electron-to-chromium@npm:1.3.459"
-  checksum: 3/9f44142b848dfe0b4c923acb97316990013d031c380f35f7fdbdd4cdc42f3eaa06ef0dde1dc5ab9ee58a87ac9f0cf8d4139938fa48550231f8eb7d6b321bce92
+  version: 1.3.462
+  resolution: "electron-to-chromium@npm:1.3.462"
+  checksum: 3/b6817aa6e444c4c6ffa869b3b29be409a274ecd06e7e423a98435c7f5ea08698b977787034549af777e646facfc0bb16b122c4b59096ac68b5148a35207fd546
   languageName: node
   linkType: hard
 
@@ -9368,29 +9316,29 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"intl-format-cache@npm:^4.2.35":
-  version: 4.2.35
-  resolution: "intl-format-cache@npm:4.2.35"
-  checksum: 3/9e46fc0512b367e6aea9fb489d8473013fbcee55421e318893e92ad3c6c7df364307b5e2ab9e85ba1535ddff5bf3f49242450f18ecc64070960d4f14e4f90420
+"intl-format-cache@npm:^4.2.36":
+  version: 4.2.36
+  resolution: "intl-format-cache@npm:4.2.36"
+  checksum: 3/f83af970c7aae501c970f914909fef0fe708da1853a5c9a0ef7641819fc13ce0626c25d6a619850e521407eb37f5558b0844919bcffcb2f14776717ebfe961b3
   languageName: node
   linkType: hard
 
-"intl-messageformat-parser@npm:^5.0.10, intl-messageformat-parser@npm:^5.1.0":
-  version: 5.1.0
-  resolution: "intl-messageformat-parser@npm:5.1.0"
+"intl-messageformat-parser@npm:^5.0.10, intl-messageformat-parser@npm:^5.1.1":
+  version: 5.1.1
+  resolution: "intl-messageformat-parser@npm:5.1.1"
   dependencies:
-    "@formatjs/intl-numberformat": ^4.2.3
-  checksum: 3/dd9541a894bf7ad64457d8e718d10ee4c4db6e72b4c4f4c3ccc1d4c5f7e1124768339ef8f8695336d8b4ec6098e05e54d9e3b4c88979d59dadccc000ce740fd2
+    "@formatjs/intl-numberformat": ^4.2.4
+  checksum: 3/05cd831f02bc0259b0380f9712aa6d7beddae4707adab4ac44a97af033b83bd5b027822ba6aa82514dafcc53132eb92b6e45a3303115573ed1a496eb08d9e3ed
   languageName: node
   linkType: hard
 
-"intl-messageformat@npm:^8.3.20":
-  version: 8.3.20
-  resolution: "intl-messageformat@npm:8.3.20"
+"intl-messageformat@npm:^8.3.21":
+  version: 8.3.21
+  resolution: "intl-messageformat@npm:8.3.21"
   dependencies:
-    intl-format-cache: ^4.2.35
-    intl-messageformat-parser: ^5.1.0
-  checksum: 3/fbad689c2f5d746fc789122993dc40aca329ce95da8885cf78b8038728797114046062e5bf430e34154b9c3340dbe24c81473d6d02b4e892c1a48e3560c5df87
+    intl-format-cache: ^4.2.36
+    intl-messageformat-parser: ^5.1.1
+  checksum: 3/56be03ccbbe9e241e96b8f66f1f1343b9d890ccf30a75ee4544dbd480f9005ba73878ba33736171bc11b4a0cbb9afd939ca25a2240abbed5e81354a3a9716ac6
   languageName: node
   linkType: hard
 
@@ -10384,8 +10332,8 @@ fsevents@~2.1.2:
   linkType: hard
 
 "listr2@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "listr2@npm:2.1.0"
+  version: 2.1.3
+  resolution: "listr2@npm:2.1.3"
   dependencies:
     chalk: ^4.0.0
     cli-truncate: ^2.1.0
@@ -10397,7 +10345,7 @@ fsevents@~2.1.2:
     through: ^2.3.8
   peerDependencies:
     enquirer: ">= 2.3.0 < 3"
-  checksum: 3/25d8229fafba560c392cb8fad72c2b8cc1936e8e34a8902299b485e0f41934ba99319c461f3a69b6bc8b9ffabe608e44c1aa2f736fa3b691229ecbf34a838069
+  checksum: 3/1e63fc12fec77a3f3451a7496f96a8e06494b52b28c022e148e9ec65d01c7f4f223549842eba93a55f7be3e5eed30e330ec9062960edcf412c1b340f0d5d5124
   languageName: node
   linkType: hard
 
@@ -13581,24 +13529,24 @@ fsevents@~2.1.2:
   linkType: hard
 
 "react-intl@npm:*, react-intl@npm:^4.6.0":
-  version: 4.6.5
-  resolution: "react-intl@npm:4.6.5"
+  version: 4.6.6
+  resolution: "react-intl@npm:4.6.6"
   dependencies:
-    "@formatjs/intl-displaynames": ^2.2.3
-    "@formatjs/intl-listformat": ^2.2.3
-    "@formatjs/intl-numberformat": ^4.2.3
-    "@formatjs/intl-relativetimeformat": ^5.2.3
-    "@formatjs/intl-utils": ^3.3.0
+    "@formatjs/intl-displaynames": ^2.2.4
+    "@formatjs/intl-listformat": ^2.2.4
+    "@formatjs/intl-numberformat": ^4.2.4
+    "@formatjs/intl-relativetimeformat": ^5.2.4
+    "@formatjs/intl-utils": ^3.3.1
     "@types/hoist-non-react-statics": ^3.3.1
     "@types/invariant": ^2.2.31
     hoist-non-react-statics: ^3.3.2
-    intl-format-cache: ^4.2.35
-    intl-messageformat: ^8.3.20
-    intl-messageformat-parser: ^5.1.0
+    intl-format-cache: ^4.2.36
+    intl-messageformat: ^8.3.21
+    intl-messageformat-parser: ^5.1.1
     shallow-equal: ^1.2.1
   peerDependencies:
     react: ^16.3.0
-  checksum: 3/8ea3d02302cdc490e30afc425d63bbf18dcf9b2866173928cb6984ee377b23201951c5986101e172fb5cf5b8a04de3eed394655436473132485ae5d44c66322e
+  checksum: 3/34e6ad0ad21820582379a37ef411c7f6ff2cd555dd819d8592fdd0a9a0141758fd4783bc948c57e4173d3ef12bac10f4fe5782a54de3478038200a49806d1a59
   languageName: node
   linkType: hard
 
@@ -13886,9 +13834,9 @@ fsevents@~2.1.2:
   linkType: hard
 
 "regenerate@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "regenerate@npm:1.4.0"
-  checksum: 3/d797b035730c0b5cbb7c230220b6a34610f84c1ea2369f0025292613c1ec88068cd87819fccf9c08f002670f26d59e63bbc309358181a6186f7fda185e93618a
+  version: 1.4.1
+  resolution: "regenerate@npm:1.4.1"
+  checksum: 3/67fe7ea33291997b20634105c7b6787bcc03e137da348c1cc0d617b3d97d9ed1e05ce4b6dabcb86be7ddf198000f78275bcabd67e66889ba7daa296926f8eada
   languageName: node
   linkType: hard
 
@@ -14722,13 +14670,13 @@ fsevents@~2.1.2:
     "@types/react": ^16.9.34
     "@types/react-dom": ^16.9.7
     "@types/webpack-blocks": ^2.0.0
-    "@vtex/micro-assets": ^1.1.1-alpha.21
     "@vtex/micro-cli": ^1.1.1-alpha.21
     "@vtex/micro-core": ^1.1.1-alpha.21
-    "@vtex/micro-css": ^1.1.1-alpha.21
-    "@vtex/micro-react": ^1.1.1-alpha.21
-    "@vtex/micro-react-intl": ^1.1.1-alpha.21
-    "@vtex/micro-react-router": ^1.1.1-alpha.21
+    "@vtex/micro-plugin-assets": ^1.1.1-alpha.21
+    "@vtex/micro-plugin-css": ^1.1.1-alpha.21
+    "@vtex/micro-plugin-react": ^1.1.1-alpha.21
+    "@vtex/micro-plugin-react-intl": ^1.1.1-alpha.21
+    "@vtex/micro-plugin-react-router": ^1.1.1-alpha.21
     css-loader: ^3.5.3
     react: ^16.13.1
     react-dom: ^16.13.1
@@ -14838,8 +14786,8 @@ fsevents@~2.1.2:
   linkType: hard
 
 "snowpack@npm:^2.2.1":
-  version: 2.2.3
-  resolution: "snowpack@npm:2.2.3"
+  version: 2.2.4
+  resolution: "snowpack@npm:2.2.4"
   dependencies:
     "@babel/plugin-syntax-import-meta": ^7.8.3
     "@rollup/plugin-alias": ^3.0.1
@@ -14885,7 +14833,7 @@ fsevents@~2.1.2:
   bin:
     snowpack: dist-node/index.bin.js
     sp: dist-node/index.bin.js
-  checksum: 3/243c2019a02f7d396596be5328ae965cdd848be0956eaf7bc4f14499537a06dcef1eaa822673a3019070d7c3fd046736e307a6f92dc9dc412765052e6bf1dc9c
+  checksum: 3/be9efd7a23a6dc556a6014cfeedf10858105116160ceec8b44005bbf9c6895018605638a2c0265dec6adcddd05e51b1e5db573b174d6b558be6b3d7a3dd37201
   languageName: node
   linkType: hard
 
@@ -16113,17 +16061,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-typescript@^3.1.2:
-  version: 3.9.4
-  resolution: "typescript@npm:3.9.4"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 3/f364e86609679566abda039acf35030b78d738c456dae201bad71722b47aa753ea42f3076a2767b72b63a1b8641f1ffb3984dcbdf088bd401b4e7118e3601893
-  languageName: node
-  linkType: hard
-
-typescript@^3.9.5:
+"typescript@^3.1.2, typescript@^3.9.5":
   version: 3.9.5
   resolution: "typescript@npm:3.9.5"
   bin:
@@ -16133,17 +16071,7 @@ typescript@^3.9.5:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^3.1.2#builtin<compat/typescript>":
-  version: 3.9.4
-  resolution: "typescript@patch:typescript@npm%3A3.9.4#builtin<compat/typescript>::version=3.9.4&hash=8cac75"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 3/6fe6acffaf466fe06116a9adb089914b070b8363c38fa1c80a4728452eb8fc88b7977930b61a860ab37080733eddf4dacf25dc88f0dd14efe6d8312ed6fcfb12
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@^3.9.5#builtin<compat/typescript>":
+"typescript@patch:typescript@^3.1.2#builtin<compat/typescript>, typescript@patch:typescript@^3.9.5#builtin<compat/typescript>":
   version: 3.9.5
   resolution: "typescript@patch:typescript@npm%3A3.9.5#builtin<compat/typescript>::version=3.9.5&hash=8cac75"
   bin:

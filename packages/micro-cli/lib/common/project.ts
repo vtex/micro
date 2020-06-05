@@ -9,7 +9,7 @@ import {
   Plugins,
   Project,
   walk,
-} from '@vtex/micro-core/lib'
+} from '@vtex/micro-core'
 
 export const newProject = async () => {
   const projectPath = process.cwd()

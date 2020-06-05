@@ -130,13 +130,8 @@ export class Project {
     return null
   }
 
-  public resolvePackages = async (
-    linker: 'pnp' | 'node-modules' = 'node-modules'
-  ) => {
-    assert(
-      linker === 'node-modules',
-      '💣 Only NodeModules linker is implemented yet'
-    ) // TODO: implement other linkers
+  public resolvePackages = async (linker: 'pnp' | 'node-modules' = 'pnp') => {
+    assert(linker === 'pnp', '💣 Only NodeModules linker is implemented yet') // TODO: implement other linkers
     this.root = new PnpPackage()
     await this.root.resolve(this.rootPath)
   }

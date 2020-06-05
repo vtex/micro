@@ -4,7 +4,7 @@ import { transformFileAsync, TransformOptions } from '@babel/core'
 import chalk from 'chalk'
 import { outputFile } from 'fs-extra'
 
-import { BuildCompiler, BuildTarget, Mode, Project } from '@vtex/micro-core/lib'
+import { BuildCompiler, BuildTarget, Mode, Project } from '@vtex/micro-core'
 
 import {
   ensureDist,

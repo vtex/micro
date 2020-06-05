@@ -1,6 +1,6 @@
 import loadable from '@loadable/component'
-import { FormattedMessage } from '@vtex/micro-react-intl/components'
-import { Link, NavLink } from '@vtex/micro-react-router/components'
+import { FormattedMessage } from '@vtex/micro-plugin-react-intl'
+import { Link, NavLink } from '@vtex/micro-plugin-react-router'
 import React from 'react'
 
 import { Layout } from '../layout'

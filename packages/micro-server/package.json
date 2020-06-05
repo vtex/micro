@@ -2,17 +2,12 @@
   "name": "@vtex/micro-server",
   "version": "1.1.1-alpha.21",
   "license": "MIT",
-  "types": "./index.ts",
   "main": "./dist/build/cjs/index.js",
-  "module": "./dist/build/es6/components/index.js",
-  "browser": "./components/index.ts",
-  "micro": {
-    "plugins": {}
-  },
+  "types": "./dist/build/cjs/index.js",
   "scripts": {
     "build": "yarn run tsc",
     "watch": "yarn run tsc --watch",
-    "clean": "rm -r .micro",
+    "clean": "rm -r dist",
     "prepublish": "yarn build"
   },
   "dependencies": {

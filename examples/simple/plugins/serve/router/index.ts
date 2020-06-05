@@ -1,12 +1,12 @@
-import { MicroRequest, Resolved, RoutePlugin } from '@vtex/micro-core/lib'
+import { MicroRequest, Resolved, RoutePlugin } from '@vtex/micro-core'
 
-const removeSlash = (x: string) => x.startsWith('/') ? x.slice(1) : x
+const removeSlash = (x: string) => (x.startsWith('/') ? x.slice(1) : x)
 
 const menu = {
   '/': 'Home',
   '/about': 'About',
   '/500': '500',
-  '/404': '404'
+  '/404': '404',
 }
 
 const locales = new Set(['en', 'pt'])
@@ -24,7 +24,7 @@ export class Router extends RoutePlugin {
     return {
       name: locale ? `${name}.${locale}` : name,
       data: { menu },
-      status: 200
+      status: 200,
     }
   }
 }

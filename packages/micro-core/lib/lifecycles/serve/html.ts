@@ -50,7 +50,7 @@ export class HtmlCompiler<T> extends Compiler<HtmlPlugin<T>> {
     )
     if (frameworkIndex < 0) {
       throw new Error(
-        '💣 At least one framework plugin is required. Take a look at @vtex/micro-react for using the React Framework'
+        '💣 At least one framework plugin is required. Take a look at @vtex/micro-plugin-react for using the React Framework'
       )
     }
     this.frameworkPlugin = this.plugins[frameworkIndex] as HtmlFrameworkPlugin<

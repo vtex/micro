@@ -4,7 +4,7 @@ import { basename, extname, join } from 'path'
 import { createReadStream, pathExists } from 'fs-extra'
 import mime from 'mime-types'
 
-import { Project, PublicPaths } from '@vtex/micro-core/lib'
+import { Project, PublicPaths } from '@vtex/micro-core'
 
 import { Req, Res } from '../typings'
 

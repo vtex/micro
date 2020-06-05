@@ -46,8 +46,8 @@ export class PnpPackage extends Package {
   public getPlugin = async (target: LifeCycle) => {
     try {
       const { default: plugins } = requirePnp<{ default: Plugins }>(
-        target,
-        `${this.manifest.name}/plugins`,
+        `plugins/${target}`,
+        this.manifest.name,
         this.issuer
       )
       return plugins

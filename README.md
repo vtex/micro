@@ -76,7 +76,7 @@ After finding no solution was a perfect fit for us, we've decided to build our o
 
 After many discussions, we've decided all our framework has to do is to opinionate your project's lifecycle and which build tools should be used in each lifecycle. The configuration of such tools (webpack/babel) is done via plugins and all the core `micro` framework knows is how to look after these plugins in your package.json's dependencies and run them.
 
-For instance. If you want to make a React app using `micro`, you will need, at least, the `@vtex/micro-react` plugin. This plugin will actually fill the webpack/babel configuration with usable stuff for transpiling your code and putting it in a page. Using only the `@vtex/micro` won't make your React app renderable.
+For instance. If you want to make a React app using `micro`, you will need, at least, the `@vtex/micro-plugin-react` plugin. This plugin will actually fill the webpack/babel configuration with usable stuff for transpiling your code and putting it in a page. Using only the `@vtex/micro` won't make your React app renderable.
 
 With this architecture, we hope to make a plugin based framework where new technology can be adopted incrementally. If you don't use a feature, say i18n, you don't get the bloatware that comes with it because, by desing, not even your build system knows about it. 
 
@@ -196,10 +196,10 @@ This should open a dev server with your page on it. To understand more about how
 ### Plugins
 
 Plugins are a core concept in `micro`. If you want to develop a plugin, keep reading. If you want to use a plugin, this is the right place.
-First of all, choose a plugin. For example purposes, I will use a routing plugin called `@vtex/micro-react-router`. Plugins are a normal npm package, so let's add it to our project. On your project root's folder run
+First of all, choose a plugin. For example purposes, I will use a routing plugin called `@vtex/micro-plugin-react-router`. Plugins are a normal npm package, so let's add it to our project. On your project root's folder run
 
 ```sh
-yarn add @vtex/micro-react-router
+yarn add @vtex/micro-plugin-react-router
 ```
 
 Now, we need to tell `micro` that we want to use this plugin for certain lifecycles. To do so, open your project's package.json. Under the `micro` section (if there is no micro section run `yarn micro setup` in your project) add the following in plugins
@@ -209,16 +209,16 @@ Now, we need to tell `micro` that we want to use this plugin for certain lifecyc
 "micro": {
   "plugins": {
     "onRequest": [
-      "@vtex/micro-react-router"
+      "@vtex/micro-plugin-react-router"
     ],
     "onAssemble": [
-      "@vtex/micro-react-router"
+      "@vtex/micro-plugin-react-router"
     ]
   }
 }
 ```
 
-This tells `micro` to use the `@vtex/micro-react-router` plugin on these lifecycles. Read more about lifecycles in their section
+This tells `micro` to use the `@vtex/micro-plugin-react-router` plugin on these lifecycles. Read more about lifecycles in their section
 
 ### Libs
 
@@ -242,7 +242,7 @@ Plugin development is based on lifecycles. Each lifecycle has plugins hooks. To 
 ```
 
 > Note: remember to `export default` your plugin class inside each `index.ts`.
-> Tip: A simple plugin to start getting examples is the `@vtex/micro-react-router`. 
+> Tip: A simple plugin to start getting examples is the `@vtex/micro-plugin-react-router`. 
 
 ### OnBuild
 
@@ -311,19 +311,19 @@ $ yarn micro link
 🦄 Resolving dependencies
 📦 `micro` package found: simple@1.x
 📦 `micro` package found: @vtex/micro@1.x
-📦 `micro` package found: @vtex/micro-react@1.x
-📦 `micro` package found: @vtex/micro-react-router@1.x
+📦 `micro` package found: @vtex/micro-plugin-react@1.x
+📦 `micro` package found: @vtex/micro-plugin-react-router@1.x
 🦄 [onBuild]: Resolving plugins
 🔌 [onBuild]: Plugin found @vtex/micro
-🔌 [onBuild]: Plugin found @vtex/micro-react
+🔌 [onBuild]: Plugin found @vtex/micro-plugin-react
 🎯 [onBuild]: Creating dist folder in .micro/onBuild
 🦄 [onBuild]: Starting the build
 🦄 [onBuild]: The build of 26 files finished in: 1.717s
 🦄 [onBuild]: Starting DevServer
 🦄 [onRequest]: Resolving plugins
 🔌 [onRequest]: Plugin found @vtex/micro
-🔌 [onRequest]: Plugin found @vtex/micro-react
-🔌 [onRequest]: Plugin found @vtex/micro-react-router
+🔌 [onRequest]: Plugin found @vtex/micro-plugin-react
+🔌 [onRequest]: Plugin found @vtex/micro-plugin-react-router
 🐙 [router]: Found router config
 🦄 DevServer is UP on http://localhost:3000
 ```
@@ -350,7 +350,7 @@ This is a hack and I don't really know how to solve this problem now. We'll surv
   - [x] Preloaded Data Fetching 
   - [ ] CSS
 
-2. `@vtex/micro-react`
+2. `@vtex/micro-plugin-react`
   - [x] Code Splitting
   - [x] Dinamic Chunk Loading
   - [x] Preload/Prefetch Scripts
@@ -358,7 +358,7 @@ This is a hack and I don't really know how to solve this problem now. We'll surv
   - [x] React Strict
   - [ ] Preloaded Data Fetching with Cuncurrent mode
 
-3. `@vtex/micro-react-router`
+3. `@vtex/micro-plugin-react-router`
   - [x] Dynamic Routing
   - [x] Link Prefetching via Props
   - [x] Asset Prefetching
@@ -369,10 +369,10 @@ This is a hack and I don't really know how to solve this problem now. We'll surv
   - [ ] Fetch over Prefetch Priority
   - [ ] Prefetch Budget
 
-4. `@vtex/micro-react-i18n` [comming...]
-5. `@vtex/micro-react-images` [comming...]
-6. `@vtex/micro-react-graphql` [comming...]
-7. `@vtex/micro-react-storybook` [comming...]
+4. `@vtex/micro-plugin-react-i18n` [comming...]
+5. `@vtex/micro-plugin-react-images` [comming...]
+6. `@vtex/micro-plugin-react-graphql` [comming...]
+7. `@vtex/micro-plugin-react-storybook` [comming...]
 
 ## Specifics
 

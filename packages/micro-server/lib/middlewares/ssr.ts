@@ -3,7 +3,7 @@ import { join } from 'path'
 import { pathExists, readJson } from 'fs-extra'
 import pretty from 'pretty'
 
-import { HtmlCompiler, PublicPaths } from '@vtex/micro-core/lib'
+import { HtmlCompiler, PublicPaths } from '@vtex/micro-core'
 
 import { featuresFromReq } from '../features'
 import { Req, Res } from '../typings'

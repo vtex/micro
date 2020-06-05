@@ -1,3 +1,3 @@
-import { BuildPlugin } from '@vtex/micro-core/lib'
+import { BuildPlugin } from '@vtex/micro-core'
 
 export default class Build extends BuildPlugin {}

@@ -64,6 +64,9 @@ export const tree = {
       },
     ],
   },
+  test: {
+    description: 'Use Jest to run tests in the current project.',
+  },
   options: [
     {
       description: 'Show help information',

@@ -1,10 +1,12 @@
 import { join } from 'path'
 
 import { outputFile, readJSON } from 'fs-extra'
+import spawn from 'cross-spawn'
 
 import { genManifest, genTSConfig, PackageStructure } from '@vtex/micro-core'
 
 import { prettyLog } from '../../common/print'
+import { DEFAULT_DEV_DEPENDENCIES } from '../../constants'
 
 interface Options {
   dry?: boolean
@@ -19,8 +21,8 @@ const main = async ({ dry, d }: Options) => {
   const manifestPath = join(projectPath, PackageStructure.manifest)
   const tsconfigPath = join(projectPath, PackageStructure.tsconfig)
 
-  const originalManifest = await readJSON(manifestPath).catch(() => { })
-  const originalTSConfig = await readJSON(tsconfigPath).catch(() => { })
+  const originalManifest = await readJSON(manifestPath).catch(() => {})
+  const originalTSConfig = await readJSON(tsconfigPath).catch(() => {})
 
   const manifest = genManifest(originalManifest)
   const tsconfig = genTSConfig(originalTSConfig)
@@ -34,10 +36,10 @@ const main = async ({ dry, d }: Options) => {
     return
   }
 
-  console.log('📓 Writting new manifest file for your project')
+  console.log('📓 Writing new manifest file for your project')
   await outputFile(manifestPath, JSON.stringify(manifest, null, 2))
 
-  console.log('📓 Writting new tsconfig file for your project')
+  console.log('📓 Writing new tsconfig file for your project')
   await outputFile(tsconfigPath, JSON.stringify(tsconfig, null, 2))
 
   // Should we support NPM in the future?

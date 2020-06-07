@@ -12,15 +12,26 @@ process.on('unhandledRejection', (err) => {
   throw err
 })
 
-export function startTests(...processArgs: any) {
+export function startTests(...processArgs: string[]) {
   const args = processArgs ? processArgs.slice(0) : []
 
-  const config = createJestConfig(
-    (relativePath) => path.resolve(__dirname, relativePath),
-    resolveAppPath
-  )
+  const shouldGenerateJestConfig = !args.some((arg) => {
+    const isConfigArg = arg.includes('--config')
 
-  args.push('--config', JSON.stringify(config))
+    return isConfigArg
+  })
+
+  if (shouldGenerateJestConfig) {
+    console.log(
+      '🧪 No --config argument provided, using default Jest configuration from micro'
+    )
+    const config = createJestConfig(
+      (relativePath) => path.resolve(__dirname, relativePath),
+      resolveAppPath
+    )
+
+    args.push('--config', JSON.stringify(config))
+  }
 
   run(args)
 }

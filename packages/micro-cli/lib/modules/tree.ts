@@ -65,7 +65,8 @@ export const tree = {
     ],
   },
   test: {
-    description: 'Use Jest to run tests in the current project.',
+    description:
+      'Use Jest to run tests in the current project. Available options are the same ones supported by jest',
   },
   options: [
     {

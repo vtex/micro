@@ -1,33 +1,24 @@
 import { Block } from 'webpack-blocks'
 
-import { babel } from './modules/babel'
+import { babel } from './babel'
 
-export const webnewBabel: Block = babel({
+export const babelConfig: Block = babel({
   comments: true,
   minified: false,
   retainLines: true,
   shouldPrintComment: () => true,
-  caller: { target: 'webnew' },
+  caller: {
+    target: 'web-legacy',
+  },
   presets: [
     [
       require.resolve('@babel/preset-env'),
       {
         targets: {
-          esmodules: true,
+          browsers: 'cover 99.5%',
         },
         modules: false,
         bugfixes: true,
-        exclude: [
-          '@babel/plugin-proposal-object-rest-spread',
-          '@babel/plugin-proposal-async-generator-functions',
-          '@babel/plugin-transform-async-to-generator',
-          '@babel/plugin-transform-regenerator',
-          '@babel/plugin-transform-arrow-functions',
-          '@babel/plugin-transform-destructuring',
-          '@babel/plugin-transform-for-of',
-          '@babel/plugin-transform-spread',
-          '@babel/plugin-transform-typeof-symbol',
-        ],
       },
     ],
     [
@@ -48,5 +39,5 @@ export const webnewBabel: Block = babel({
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-syntax-dynamic-import',
     '@loadable/babel-plugin',
-  ].map(require.resolve as any),
+  ].map((p) => require.resolve(p)),
 } as any)

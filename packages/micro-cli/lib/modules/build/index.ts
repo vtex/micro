@@ -40,8 +40,12 @@ const main = async (options: Options) => {
 
   // Sometimes the package only contains `plugins` or `lib`.
   // In this case, there is nothing to bundle and the build is complete
-  const frontend = await project.root.getFiles('pages', 'components')
-  if (frontend.length === 0) {
+  const [hasComponents, hasPages] = await Promise.all([
+    project.root.hasEntry('components'),
+    project.root.hasEntry('pages'),
+  ])
+
+  if (!hasPages && !hasComponents) {
     return
   }
 
@@ -52,11 +56,11 @@ const main = async (options: Options) => {
   const configs = await Promise.all([
     compiler.getWepbackConfig('node-federation'),
     compiler.getWepbackConfig('web-federation'),
-    compiler.getWepbackConfig('web'),
+    // compiler.getWepbackConfig('web'),
   ])
   console.timeEnd(pluginsResolutionsMsg)
 
-  const statsJSON = run(configs, lifecycle)
+  const statsJSON = await run(configs, lifecycle)
 
   const dist = join(compiler.dist, BUILD)
   console.log(

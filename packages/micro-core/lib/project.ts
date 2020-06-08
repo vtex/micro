@@ -98,7 +98,7 @@ export class Project {
 
       const maybeVersion = dependencies[curr.manifest.name] || ''
       const versionsMatch =
-        parse(maybeVersion).major !== parse(curr.manifest.version).major
+        parse(maybeVersion).major === parse(curr.manifest.version).major
       const isSelfPlugin = curr.manifest.name === name
 
       if (!isSelfPlugin && !versionsMatch) {
@@ -123,7 +123,7 @@ export class Project {
   public resolvePackages = async (linker: 'pnp' | 'node-modules' = 'pnp') => {
     assert(linker === 'pnp', '💣 Only NodeModules linker is implemented yet') // TODO: implement other linkers
     this.root = new PnpPackage()
-    await this.root.resolve(this.rootPath)
+    await this.root.resolveDepTree(this.rootPath)
   }
 
   public toString = () => {

@@ -35,9 +35,18 @@ export const globPnp = async (pkg: string, issuer: string, query: string) => {
     `${pkg}/${PackageStructure.manifest}`,
     issuer
   )
-  const path = locator.replace(`/${PackageStructure.manifest}`, '')
+  const path = join(locator, '..')
   const matches = await globby(query, { cwd: path })
   return matches.map((p) => join(path, p))
+}
+
+export const pathExistsPnp = (pkg: string, issuer: string, path: string) => {
+  const locator: string = (pnp as any).resolveRequest(
+    `${pkg}/${PackageStructure.manifest}`,
+    issuer
+  )
+  const fullPath = join(locator, '..', path)
+  return crossFs.existsPromise(fullPath)
 }
 
 export const readJsonPnp = async (

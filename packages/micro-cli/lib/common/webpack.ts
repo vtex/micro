@@ -50,8 +50,6 @@ export const run = async (configs: Configuration[], lifecycle: string) => {
     printStats(stats, json)
 
     return json
-  } catch (err) {
-    console.error(prettyError(err))
   } finally {
     await close()
   }

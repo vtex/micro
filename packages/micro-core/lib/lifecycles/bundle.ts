@@ -54,7 +54,6 @@ export class BundleCompiler extends Compiler<BundlePlugin> {
   ): Promise<Configuration> => {
     const initialConfig = setOutput({
       path: join(this.dist, target),
-      publicPath: '/assets/',
     })
     const merged = await this.plugins.reduce(
       async (acc, plugin) => plugin.getWebpackConfig(await acc, target),

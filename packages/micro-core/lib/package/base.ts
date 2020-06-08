@@ -42,8 +42,14 @@ export abstract class Package {
   public dependencies: Package[] = []
   public structure = PackageStructure
 
-  public abstract resolve = async (projectRoot: string): Promise<void> => {
+  public abstract resolveDepTree = async (
+    projectRoot: string
+  ): Promise<void> => {
     throw new Error(`💣 not implemented: ${projectRoot}`)
+  }
+
+  public abstract resolve = (): string => {
+    throw new Error(`💣 not implemented`)
   }
 
   public abstract hydrate = async (projectRoot: string): Promise<void> => {
@@ -58,6 +64,12 @@ export abstract class Package {
     ...targets: PackageRootEntries[]
   ): Promise<string[]> => {
     throw new Error(`💣 not implemented: ${targets}`)
+  }
+
+  public abstract hasEntry = async (
+    target: PackageRootEntries
+  ): Promise<boolean> => {
+    throw new Error(`💣 not implemented: ${target}`)
   }
 
   public abstract getPlugin = async <T extends LifeCycle>(

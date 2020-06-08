@@ -1,19 +1,20 @@
 import assert from 'assert'
 import { join } from 'path'
 
+import pnp from 'pnpapi'
 import { readJSON } from 'fs-extra'
 
 import { LifeCycle } from '../../project'
-import { Package, PackageRootEntries, Plugins } from '../base'
+import { Package, PackageRootEntries, PackageStructure, Plugins } from '../base'
 import { isManifest } from '../manifest'
 import { getLocatorFromPackageInWorkspace } from './common'
-import { createDepTree, globPnp, requirePnp } from './dfs'
+import { createDepTree, globPnp, pathExistsPnp, requirePnp } from './dfs'
 
 export class PnpPackage extends Package {
   public issuer = ''
 
   // TODO: Make it resolve based on major and not only on the package name
-  public resolve = async (projectRoot: string) => {
+  public resolveDepTree = async (projectRoot: string) => {
     const manifestPath = join(projectRoot, this.structure.manifest)
     const manifest = await readJSON(manifestPath)
     assert(
@@ -34,6 +35,9 @@ export class PnpPackage extends Package {
     this.issuer = this.manifest.name
     this.tsconfig = resolved.tsconfig
   }
+
+  public resolve = () =>
+    (pnp as any).resolveRequest(this.manifest.name, this.issuer)
 
   public hydrate = (projectRoot: string) => {
     throw new Error(`💣 not implemented: ${projectRoot}`)
@@ -58,4 +62,7 @@ export class PnpPackage extends Package {
 
   public getFiles = async (...targets: PackageRootEntries[]) =>
     globPnp(this.manifest.name, this.issuer, this.getGlobby(...targets))
+
+  public hasEntry = async (target: PackageRootEntries) =>
+    pathExistsPnp(this.manifest.name, this.issuer, PackageStructure[target])
 }

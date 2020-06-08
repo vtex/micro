@@ -1,52 +1,38 @@
-import { basename } from 'path'
-
 import LoadablePlugin from '@loadable/webpack-plugin'
-import PnpPlugin from 'pnp-webpack-plugin'
 import TerserJSPlugin from 'terser-webpack-plugin'
+import { Configuration } from 'webpack'
 import {
   addPlugins,
   Block,
-  customConfig,
   entryPoint,
   env,
   group,
   match,
   optimization,
-  performance,
   resolve,
 } from 'webpack-blocks'
 
 import {
   BundlePlugin,
   BundleTarget,
+  entriesFromProject,
   pagesFrameworkName,
   pagesRuntimeName,
-  Project,
+  sharedDepsFromProject,
 } from '@vtex/micro-core'
 
-import { aliases } from '../aliases'
-import { cacheGroup } from './modules/cacheGroups'
-import { webnewBabel } from './webnew'
-import { weboldBabel } from './webold'
-
-const entriesFromPages = async (project: Project) => {
-  const files = await project.root.getFiles('pages')
-  return files.reduce((acc, path) => {
-    if (path.endsWith('.tsx')) {
-      const name = basename(path, '.tsx')
-      acc[name] = path.replace(project.rootPath, '.')
-    }
-    return acc
-  }, {} as Record<string, string>)
-}
+import { babelConfig as moduleBabelConfig } from '../utils/babel/web'
+import { babelConfig as legacyBabelConfig } from '../utils/babel/web-legacy'
+import { cacheGroup } from '../utils/cacheGroups'
 
 export default class Bundle extends BundlePlugin {
   public getWebpackConfig = async (
     config: Block,
     target: BundleTarget
   ): Promise<Block> => {
-    const entrypoints = await entriesFromPages(this.project)
-    const block: Block[] = [
+    const entrypoints = await entriesFromProject(this.project)
+
+    const block: Array<Block | Configuration> = [
       entryPoint(entrypoints),
       addPlugins([
         new LoadablePlugin({
@@ -55,11 +41,7 @@ export default class Bundle extends BundlePlugin {
         }),
       ]),
       resolve({
-        alias: aliases.reduce((acc, packageName) => {
-          acc[packageName] = require.resolve(packageName)
-          return acc
-        }, {} as Record<string, string>),
-        plugins: [PnpPlugin],
+        alias: sharedDepsFromProject(this.project),
       }),
       cacheGroup(pagesRuntimeName, /\/react\/|\/react-dom\/|\/@loadable\//),
       cacheGroup(pagesFrameworkName, /\/micro-react\/components\//),
@@ -69,16 +51,6 @@ export default class Bundle extends BundlePlugin {
           maxAsyncRequests: 10,
         },
       } as any),
-      customConfig({
-        name: target,
-        target: 'web',
-        bail: true,
-        node: false,
-        profile: true,
-        resolveLoader: {
-          plugins: [PnpPlugin.moduleLoader(module)],
-        },
-      }) as Block,
       env('production', [
         optimization({
           noEmitOnErrors: true,
@@ -100,19 +72,13 @@ export default class Bundle extends BundlePlugin {
             }),
           ],
         } as any),
-        performance({
-          hints: 'warning',
-        }),
       ]),
-    ]
-
-    return group([
-      config,
-      ...block,
       match(
         ['*.tsx', '*.ts'],
-        [target === 'webnew' ? webnewBabel : weboldBabel]
+        [target === 'web' ? moduleBabelConfig : legacyBabelConfig]
       ),
-    ])
+    ]
+
+    return group([config, ...(block as any)])
   }
 }

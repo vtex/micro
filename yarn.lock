@@ -3449,6 +3449,7 @@ __metadata:
     babel-merge: ^3.0.0
     fs-extra: ^9.0.0
     globby: ^11.0.0
+    pnp-webpack-plugin: ^1.6.4
     pnpapi: ^0.0.0
     ramda: ^0.27.0
     time-fix-plugin: ^2.0.6
@@ -3573,6 +3574,7 @@ __metadata:
     "@babel/preset-typescript": ^7.9.0
     "@hot-loader/react-dom": ^16.13.0
     "@loadable/babel-plugin": ^5.12.0
+    "@loadable/component": ^5.12.0
     "@loadable/server": ^5.12.0
     "@loadable/webpack-plugin": ^5.12.0
     "@types/babel__core": ^7.1.7
@@ -3597,15 +3599,13 @@ __metadata:
     fs-extra: ^9.0.0
     pnp-webpack-plugin: ^1.6.4
     purgecss-webpack-plugin: ^2.2.0
+    react: ^16.13.1
+    react-dom: ^16.13.1
     terser-webpack-plugin: ^3.0.1
     typescript: ^3.9.5
     webpack: ^4.43.0
     webpack-blocks: ^2.1.0
     webpack-dynamic-public-path: ^1.0.5
-  peerDependencies:
-    "@loadable/component": "*"
-    react: "*"
-    react-dom: "*"
   languageName: unknown
   linkType: soft
 

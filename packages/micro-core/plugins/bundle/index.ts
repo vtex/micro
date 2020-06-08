@@ -1,5 +1,6 @@
 import { join } from 'path'
 
+import PnpPlugin from 'pnp-webpack-plugin'
 import TimeFixPlugin from 'time-fix-plugin'
 import { Configuration } from 'webpack'
 import {
@@ -10,42 +11,49 @@ import {
   env,
   group,
   optimization,
+  performance,
   resolve,
   setContext,
   setMode,
   sourceMaps,
 } from 'webpack-blocks'
 
-import { BundlePlugin } from '../../lib/lifecycles/bundle'
+import { BundlePlugin, BundleTarget } from '../../lib/lifecycles/bundle'
 
 export default class Bundle extends BundlePlugin {
   public getWebpackConfig = async (
-    config: Block
-    // target: BundleTarget
+    config: Block,
+    target: BundleTarget
   ): Promise<Block> => {
     const wpInternalsDist = join(
       this.project.dist,
       this.target,
+      target,
       'webpack_internals'
     )
-    const cacheConfig: Configuration = {
-      cache: {
-        name: this.mode,
-        version: this.mode,
-        type: 'filesystem',
-        managedPaths: ['./node_modules'].map((p) =>
-          join(this.project.rootPath, p)
-        ),
-        cacheDirectory: join(wpInternalsDist, 'cache'),
-      },
-      recordsPath: join(wpInternalsDist, 'records.json'),
-    }
     const block: Array<Block | Configuration> = [
-      customConfig(cacheConfig),
       setMode(this.mode),
       setContext(this.project.rootPath),
       defineConstants({
         'process.env.NODE_ENV': this.mode,
+      }),
+      customConfig({
+        cache: {
+          name: this.mode,
+          version: `${target}::${this.mode}`,
+          type: 'filesystem',
+          managedPaths: ['./.yarn'].map((p) => join(this.project.rootPath, p)),
+          cacheDirectory: join(wpInternalsDist, 'cache'),
+        },
+        recordsPath: join(wpInternalsDist, 'records.json'),
+        target: 'web',
+        name: target,
+        bail: true,
+        node: false,
+        profile: true,
+        resolveLoader: {
+          plugins: [PnpPlugin.moduleLoader(module)],
+        },
       }),
       optimization({
         runtimeChunk: {
@@ -63,7 +71,11 @@ export default class Bundle extends BundlePlugin {
         }) as Block,
       ]),
       resolve({
+        plugins: [PnpPlugin],
         extensions: ['.tsx', '.ts', '.js', '.jsx', '.json'],
+      }),
+      performance({
+        hints: 'warning',
       }),
     ]
 

@@ -28,8 +28,8 @@ const getRegexFromCacheGroup = (
   if (!cacheGroup) {
     return
   }
-  if (isRegExp(cacheGroup.test)) {
-    return cacheGroup.test
+  if (isRegExp((cacheGroup as any).test)) {
+    return (cacheGroup as any).test
   }
 }
 

@@ -11,8 +11,8 @@ export const BaseManifest = {
   sideEffects: false,
   main: `./${MICRO_BUILD_DIR}/${BUILD_LIFECYCLE}/cjs/index.js`,
   types: `./${MICRO_BUILD_DIR}/${BUILD_LIFECYCLE}/cjs/index.d.ts`,
-  // module: `./${MICRO_BUILD_DIR}/${buildLifecycle}/es6/index.js`,
   browser: './components/index.ts',
+  // module: `./${MICRO_BUILD_DIR}/${buildLifecycle}/es6/index.js`,
   micro: {
     plugins: [],
   } as MicroOptions,
@@ -24,7 +24,7 @@ export const BaseManifest = {
   },
 }
 
-const necessary = pick(BaseManifest, ['main'])
+const necessary = pick(BaseManifest, ['main', 'types', 'browser'])
 const required = pick(BaseManifest, ['micro'])
 
 type Base = typeof BaseManifest

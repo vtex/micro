@@ -1,29 +1,61 @@
-import { TransformOptions } from '@babel/core'
-import merge from 'babel-merge'
+import TerserJSPlugin from 'terser-webpack-plugin'
+import webpack, { Configuration } from 'webpack'
+import {
+  Block,
+  customConfig,
+  entryPoint,
+  env,
+  group,
+  match,
+  optimization,
+} from 'webpack-blocks'
 
-import { BuildPlugin, BuildTarget } from '@vtex/micro-core'
+import {
+  BuildPlugin,
+  entriesFromProject,
+  sharedDepsFromProject,
+  WebpackBuildTarget,
+} from '@vtex/micro-core'
+
+import { babelConfig as moduleBabelConfig } from '../utils/babel/web'
 
 export default class Build extends BuildPlugin {
-  public getBabelConfig = async (
-    previous: TransformOptions,
-    target: BuildTarget
-  ): Promise<TransformOptions> => {
-    // TODO: Be able to include this plugin for es6
-    const loadablePlugin =
-      target === 'es6' ? [] : [require.resolve('@loadable/babel-plugin')]
-    return merge(previous, {
-      presets: [
-        [
-          require.resolve('@babel/preset-react'),
-          {
-            useBuiltIns: true,
-          },
-        ],
-      ],
-      plugins: [
-        require.resolve('@babel/plugin-syntax-dynamic-import'),
-        ...loadablePlugin,
-      ],
-    })
+  public getWebpackConfig = async (config: Block): Promise<Block> => {
+    const entrypoints = await entriesFromProject(this.project)
+
+    const block: Array<Configuration | Block> = [
+      entryPoint(entrypoints),
+      customConfig({
+        externals: Object.keys(sharedDepsFromProject(this.project)),
+      }),
+      env('production', [
+        optimization({
+          noEmitOnErrors: true,
+          moduleIds: 'size',
+          chunkIds: 'total-size',
+          nodeEnv: 'production',
+          removeAvailableModules: true,
+          removeEmptyChunks: true,
+          mergeDuplicateChunks: true,
+          flagIncludedChunks: true,
+          providedExports: true,
+          usedExports: true,
+          concatenateModules: true,
+          sideEffects: true,
+          portableRecords: false,
+          minimizer: [
+            new TerserJSPlugin({
+              extractComments: true,
+            }),
+          ],
+        } as any),
+      ]),
+    ]
+
+    return group([
+      config,
+      ...(block as any),
+      match(['*.tsx', '*.ts'], [moduleBabelConfig]),
+    ])
   }
 }

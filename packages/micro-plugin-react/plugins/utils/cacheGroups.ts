@@ -35,7 +35,7 @@ const getRegexFromCacheGroup = (
 
 export const cacheGroup = (name: string, regexp: RegExp) => (
   _: Context,
-  util: any
+  util: any // TODO: fix this any
 ) => (prevConfig: Configuration) => {
   const previousRegexp = getRegexFromCacheGroup(name, prevConfig.optimization)
 

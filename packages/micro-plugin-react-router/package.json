@@ -5,7 +5,8 @@
   "micro": {
     "plugins": [
       "@vtex/micro-core",
-      "@vtex/micro-plugin-react"
+      "@vtex/micro-plugin-react",
+      "@vtex/micro-plugin-react-router"
     ]
   },
   "scripts": {
@@ -21,13 +22,16 @@
   "types": "./index.ts",
   "dependencies": {
     "@babel/core": "^7.10.2",
+    "@loadable/component": "^5.12.0",
     "@vtex/micro-core": "^1.1.1-alpha.22",
     "@vtex/micro-plugin-react": "^1.1.1-alpha.22",
     "babel-merge": "^3.0.0",
     "history": "^4.10.1",
+    "react": "^16.13.1",
     "react-in-viewport": "^1.0.0-alpha.11",
+    "react-router": "^5.2.0",
     "react-router-dom": "^5.1.2",
-    "webpack": "next",
+    "webpack": "^4.43.0",
     "webpack-blocks": "^2.1.0"
   },
   "devDependencies": {
@@ -40,10 +44,5 @@
     "@types/webpack-blocks": "^2.0.0",
     "@vtex/micro-cli": "^1.1.1-alpha.22",
     "typescript": "^3.9.5"
-  },
-  "peerDependencies": {
-    "@loadable/component": "*",
-    "react": "*",
-    "react-dom": "*"
   }
 }

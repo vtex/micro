@@ -1,8 +1,7 @@
 import TerserJSPlugin from 'terser-webpack-plugin'
-import webpack, { Configuration } from 'webpack'
+import { Configuration } from 'webpack'
 import {
   Block,
-  customConfig,
   entryPoint,
   env,
   group,
@@ -10,13 +9,9 @@ import {
   optimization,
 } from 'webpack-blocks'
 
-import {
-  BuildPlugin,
-  entriesFromProject,
-  sharedDepsFromProject,
-  WebpackBuildTarget,
-} from '@vtex/micro-core'
+import { alias, BuildPlugin, entriesFromProject } from '@vtex/micro-core'
 
+import { aliases } from '../alias'
 import { babelConfig as moduleBabelConfig } from '../utils/babel/web'
 
 export default class Build extends BuildPlugin {
@@ -25,9 +20,7 @@ export default class Build extends BuildPlugin {
 
     const block: Array<Configuration | Block> = [
       entryPoint(entrypoints),
-      customConfig({
-        externals: Object.keys(sharedDepsFromProject(this.project)),
-      }),
+      alias(aliases, module),
       env('production', [
         optimization({
           noEmitOnErrors: true,

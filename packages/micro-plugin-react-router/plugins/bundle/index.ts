@@ -1,6 +1,7 @@
 import { Block, group, resolve } from 'webpack-blocks'
 
 import {
+  alias,
   BundlePlugin,
   pagesFrameworkName,
   pagesRuntimeName,
@@ -13,6 +14,7 @@ export default class Bundle extends BundlePlugin {
   public getWebpackConfig = async (config: Block): Promise<Block> => {
     return group([
       config,
+      alias(aliases, module),
       resolve({
         alias: aliases.reduce((acc, packageName) => {
           acc[packageName] = require.resolve(packageName)

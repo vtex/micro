@@ -21,11 +21,7 @@ import {
 
 import { BuildPlugin, WebpackBuildTarget } from '../../lib/lifecycles/build'
 import { Project } from '../../lib/project'
-import {
-  exposesFromProject,
-  remotesFromProject,
-  sharedDepsFromProject,
-} from '../utils/shared'
+import { exposesFromProject, remotesFromProject } from '../utils/common'
 
 const nodeConfig = async (project: Project): Promise<Block[]> => [
   customConfig({
@@ -43,7 +39,7 @@ const nodeConfig = async (project: Project): Promise<Block[]> => [
       library: { type: 'commonjs2' },
       filename: 'micro_entrypoint.js',
       exposes: await exposesFromProject(project),
-      shared: sharedDepsFromProject(project),
+      // shared: project.root.manifest.dependencies ?? {},
       remotes: remotesFromProject(project),
     }),
   ]),
@@ -59,8 +55,8 @@ const webFederationConfig = async (project: Project): Promise<Block[]> => [
       },
       filename: 'micro_entrypoint.js',
       exposes: await exposesFromProject(project),
-      shared: sharedDepsFromProject(project),
-      remotes: remotesFromProject(project),
+      // shared: project.root.manifest.dependencies ?? {},
+      remotes: Object.keys(remotesFromProject(project)),
     }),
   ]),
   customConfig({
@@ -112,6 +108,9 @@ export default class Build extends BuildPlugin {
         resolveLoader: {
           plugins: [PnpPlugin.moduleLoader(module)],
         },
+        externals: Object.keys(
+          this.project.root.manifest.peerDependencies ?? {}
+        ),
       }),
       env('development', [
         addPlugins([new TimeFixPlugin()]),

@@ -54,6 +54,9 @@ export default class Bundle extends BundlePlugin {
         resolveLoader: {
           plugins: [PnpPlugin.moduleLoader(module)],
         },
+        externals: Object.keys(
+          this.project.root.manifest.peerDependencies ?? {}
+        ),
       }),
       optimization({
         runtimeChunk: {

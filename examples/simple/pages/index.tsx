@@ -1,4 +1,4 @@
-import 'vtex-tachyons/tachyons.css'
+// import 'vtex-tachyons/tachyons.css'
 
 import { LoadMicroComponent } from '@vtex/micro-plugin-react'
 

@@ -9,18 +9,18 @@ import {
   group,
   match,
   optimization,
-  resolve,
 } from 'webpack-blocks'
 
 import {
+  alias,
   BundlePlugin,
   BundleTarget,
   entriesFromProject,
   pagesFrameworkName,
   pagesRuntimeName,
-  sharedDepsFromProject,
 } from '@vtex/micro-core'
 
+import { aliases } from '../alias'
 import { babelConfig as moduleBabelConfig } from '../utils/babel/web'
 import { babelConfig as legacyBabelConfig } from '../utils/babel/web-legacy'
 import { cacheGroup } from '../utils/cacheGroups'
@@ -34,15 +34,13 @@ export default class Bundle extends BundlePlugin {
 
     const block: Array<Block | Configuration> = [
       entryPoint(entrypoints),
+      alias(aliases, module),
       addPlugins([
         new LoadablePlugin({
           outputAsset: false,
           writeToDisk: false,
         }),
       ]),
-      resolve({
-        alias: sharedDepsFromProject(this.project),
-      }),
       cacheGroup(pagesRuntimeName, /\/react\/|\/react-dom\/|\/@loadable\//),
       cacheGroup(pagesFrameworkName, /\/micro-react\/components\//),
       optimization({

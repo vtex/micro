@@ -2,9 +2,6 @@ import { basename, extname } from 'path'
 
 import { Project, walk } from '../../lib/project'
 
-export const sharedDepsFromProject = (project: Project) =>
-  project.root.manifest.peerDependencies ?? {}
-
 export const exposesFromProject = async (project: Project) => {
   const allFiles = await project.root.getFiles('components')
   return allFiles

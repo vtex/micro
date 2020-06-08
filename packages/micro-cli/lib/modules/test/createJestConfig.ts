@@ -4,27 +4,24 @@ export default function createJestConfig(
 ) {
   const pkg = require(resolveAppPath('package.json'))
 
-  // let setupFilesAfterEnv = [resolve('modules/jest/setup.js')]
-  // if (pkg.jest && pkg.jest.setupFilesAfterEnv) {
-  //   setupFilesAfterEnv = setupFilesAfterEnv.concat(pkg.jest.setupFilesAfterEnv)
-  // }
+  let setupFilesAfterEnv = [resolve('afterEnvSetup.js')]
   const coverageThreshold =
     pkg.jest && pkg.jest.coverageThreshold ? pkg.jest.coverageThreshold : {}
 
+  if (pkg.jest && pkg.jest.setupFilesAfterEnv) {
+    setupFilesAfterEnv = setupFilesAfterEnv.concat(pkg.jest.setupFilesAfterEnv)
+  }
+
   const config = {
     rootDir: resolveAppPath('.'),
-    // setupFilesAfterEnv,
+    setupFilesAfterEnv,
     coverageThreshold,
-    // moduleNameMapper: {
-    //   '^.+\\.css$': require.resolve('identity-obj-proxy'),
-    //   '^react$': require.resolve('react'),
-    // },
     transform: {
       // '\\.(gql|graphql)$': require.resolve('jest-transform-graphql'),
       '^.+\\.(js|jsx|mjs|ts|tsx)$': resolve('babelTransform.js'),
-      // '^(?!.*\\.(js|jsx|mjs|css|ts|tsx|json|graphql|gql)$)': resolve(
-      //   'modules/jest/fileTransform.js'
-      // ),
+      '^(?!.*\\.(js|jsx|mjs|css|ts|tsx|json|graphql|gql)$)': resolve(
+        'fileTransform.js'
+      ),
     },
   }
 

@@ -36,6 +36,8 @@
     "webpack-blocks": "^2.1.0"
   },
   "devDependencies": {
+    "@babel/runtime": "^7.10.2",
+    "@testing-library/react": "^10.2.1",
     "@types/jest": "^25.2.3",
     "@types/loadable__component": "^5.10.0",
     "@types/node": "^13.13.4",

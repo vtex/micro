@@ -54,17 +54,6 @@ const main = async ({ dry, d }: Options) => {
     return
   }
 
-  // Setup the project to use yarn@2.x
-  // https://yarnpkg.com/getting-started/install
-  args = ['set', 'version', 'berry']
-
-  console.log(`📓 Setting up the project to use yarn@2.x`)
-  const yarnSetupProcess = spawn.sync(command, args, { stdio: 'inherit' })
-
-  if (yarnSetupProcess.status !== 0) {
-    console.error(`\`${command} ${args.join(' ')}\` failed`)
-  }
-
   // Setup Editor SDKs for proper TypeScript support
   // since we're using yarn PnP https://yarnpkg.com/advanced/editor-sdks
   args = ['dlx', '@yarnpkg/pnpify', '--sdk']

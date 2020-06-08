@@ -8,6 +8,7 @@ const main = () => {
    * Jest's API.
    */
   const args = process.argv.slice(2)
+  console.log('🧪 Running tests using jest')
 
   startTests(...args.slice(1))
 }

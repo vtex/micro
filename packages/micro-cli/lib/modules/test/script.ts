@@ -23,7 +23,7 @@ export function startTests(...processArgs: string[]) {
 
   if (shouldGenerateJestConfig) {
     console.log(
-      '🧪 No --config argument provided, using default Jest configuration from micro'
+      '🧪 No --config argument provided, using default jest config from micro'
     )
     const config = createJestConfig(
       (relativePath) => path.resolve(__dirname, relativePath),

@@ -153,6 +153,12 @@ To start a `micro` project, just [start your usual yarn project](https://yarnpkg
 yarn init
 ```
 
+Setup `yarn` so that `yarn@2.x` is used for the project, as described at [`yarn` docs](https://yarnpkg.com/getting-started/install)
+
+```sh
+yarn set version berry
+```
+
 Add packages as usual (with `yarn add` etc etc). Also, add `micro`'s CLI so managing your project becomes easier
 
 ```sh

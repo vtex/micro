@@ -84,6 +84,7 @@ export const genManifest = (
     dependencies,
     devDependencies,
     peerDependencies,
+    eslintConfig: BaseManifest.eslintConfig,
     ...rest,
   }
 }

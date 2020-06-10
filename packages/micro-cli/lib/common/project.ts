@@ -18,7 +18,7 @@ export const newProject = async () => {
 
   console.log('🦄 Resolving dependencies')
   await project.resolvePackages()
-  walk(project.root, (curr) => {
+  await walk(project.root, async (curr) => {
     console.info(`📦 Micro package found: ${curr.toString()}`)
   })
 
@@ -43,13 +43,13 @@ export const resolvePlugins = async <T extends LifeCycle>(
   lifecycle: T
 ): Promise<Array<NonNullable<Plugins[T]>>> => {
   console.log(`🦄 [${lifecycle}]: Resolving plugins`)
-  const plugins = await project.resolvePlugins(lifecycle)
+  const resolvedPlugins = await project.resolvePlugins(lifecycle)
 
-  for (const pkg of Object.keys(plugins)) {
-    reportPlugin(lifecycle, pkg)
+  for (const [pluginName] of resolvedPlugins) {
+    reportPlugin(lifecycle, pluginName)
   }
 
-  return Object.values(plugins)
+  return resolvedPlugins.map(([, plugin]) => plugin)
 }
 
 export const loadProject = () => {}

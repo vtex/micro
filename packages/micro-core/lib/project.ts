@@ -8,13 +8,13 @@ import { PnpPackage } from './package/pnp'
 
 export type LifeCycle = 'serve' | 'bundle' | 'build'
 
-export type WalkFn = (r: Package, p: Package | null) => void
+export type WalkFn = (r: Package, p: Package | null) => Promise<void>
 
 export interface ProjectOptions {
   rootPath: string
 }
 
-const walkRec = ({
+const walkRec = async ({
   root,
   parent,
   fn,
@@ -30,18 +30,20 @@ const walkRec = ({
   if (seen.has(node)) {
     return
   }
-
   seen.add(node)
-  fn(root, parent)
 
-  for (const dependency of root.dependencies) {
-    walkRec({ root: dependency, parent: root, fn, seen })
-  }
+  await fn(root, parent)
+
+  await Promise.all(
+    root.dependencies.map((dependency) =>
+      walkRec({ root: dependency, parent: root, fn, seen })
+    )
+  )
 }
 
-export const walk = (root: Package, fn: WalkFn) => {
+export const walk = async (root: Package, fn: WalkFn) => {
   const seen = new Set<string>()
-  walkRec({ root, parent: null, fn, seen })
+  await walkRec({ root, parent: null, fn, seen })
   return root
 }
 
@@ -66,18 +68,17 @@ export class Project {
       this.root,
       '💣 Could not find a package. Did you forget to resolve/restore packages ?'
     )
-    let promises: Array<Promise<string[]>> = []
-    walk(this.root, (curr) => {
-      const filtered = curr.getFiles(...targets)
-      promises = promises.concat(filtered)
+    let files: string[] = []
+    await walk(this.root, async (curr) => {
+      const f = await curr.getFiles(...targets)
+      files = files.concat(f)
     })
-    const files = await Promise.all(promises)
-    return files.flat()
+    return files
   }
 
   public resolvePlugins = async <T extends LifeCycle>(
     target: T
-  ): Promise<Record<string, NonNullable<Plugins[T]>>> => {
+  ): Promise<Array<[string, NonNullable<Plugins[T]>]>> => {
     assert(
       this.root,
       '💣 Could not find a package. Did you forget to resolve/restore packages ?'
@@ -86,10 +87,10 @@ export class Project {
     const dependencies = this.root.manifest.dependencies ?? {}
     const locators: string[] | undefined = this.root!.manifest.micro.plugins
     if (!locators) {
-      return {}
+      return []
     }
-    const packages: Package[] = []
-    walk(this.root, async (curr) => {
+    const packages: Array<[string, Plugins[T]]> = []
+    await walk(this.root, async (curr) => {
       const index = locators.findIndex((x) => curr.manifest.name === x)
 
       if (index < 0) {
@@ -105,19 +106,14 @@ export class Project {
         return
       }
 
-      packages.splice(index, 0, curr)
-    })
-    const plugins = await packages.reduce(async (accPromise, pkg) => {
-      const [acc, plugin] = await Promise.all([
-        accPromise,
-        pkg.getPlugin(target),
-      ])
+      const plugin = await curr.getPlugin(target)
       if (plugin) {
-        acc[pkg.manifest.name] = plugin as NonNullable<Plugins[T]>
+        packages.splice(index, 0, [curr.manifest.name, plugin])
       }
-      return acc
-    }, Promise.resolve({} as Record<string, NonNullable<Plugins[T]>>))
-    return plugins
+    })
+    return packages.filter((x): x is [string, NonNullable<Plugins[T]>] =>
+      Array.isArray(x)
+    )
   }
 
   public resolvePackages = async (linker: 'pnp' | 'node-modules' = 'pnp') => {

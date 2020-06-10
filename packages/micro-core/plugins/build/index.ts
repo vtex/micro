@@ -2,12 +2,13 @@ import { join } from 'path'
 
 import PnpPlugin from 'pnp-webpack-plugin'
 import TimeFixPlugin from 'time-fix-plugin'
-import webpack, { Configuration } from 'webpack'
+import { Configuration } from 'webpack'
 import {
   addPlugins,
   Block,
   customConfig,
   defineConstants,
+  entryPoint,
   env,
   group,
   optimization,
@@ -21,47 +22,48 @@ import {
 
 import { BuildPlugin, WebpackBuildTarget } from '../../lib/lifecycles/build'
 import { Project } from '../../lib/project'
-import { exposesFromProject, remotesFromProject } from '../utils/common'
+import { nodeEntryFromProject, webEntriesFromProject } from '../utils/common'
+
+export const MICRO_ENTRYPOINT = 'micro.entrypoint'
 
 const nodeConfig = async (project: Project): Promise<Block[]> => [
+  entryPoint(await nodeEntryFromProject(project)),
   customConfig({
-    target: 'async-node',
+    target: 'node',
+    // externals: await nodeExternalsFromProject(project),
   }) as Block,
   setOutput({
-    libraryTarget: 'commonjs2',
+    library: project.root.toString(),
+    libraryTarget: 'global',
   }),
   optimization({
     minimize: false,
   }),
-  addPlugins([
-    new webpack.container.ModuleFederationPlugin({
-      name: project.root.manifest.name,
-      library: { type: 'commonjs2' },
-      filename: 'micro_entrypoint.js',
-      exposes: await exposesFromProject(project),
-      // shared: project.root.manifest.dependencies ?? {},
-      remotes: remotesFromProject(project),
-    }),
-  ]),
 ]
 
 const webFederationConfig = async (project: Project): Promise<Block[]> => [
+  entryPoint(await webEntriesFromProject(project)),
   addPlugins([
-    new webpack.container.ModuleFederationPlugin({
-      name: project.root.manifest.name,
-      library: {
-        type: 'var',
-        name: 'Exposed', // project.root.manifest.name,
-      },
-      filename: 'micro_entrypoint.js',
-      exposes: await exposesFromProject(project),
-      // shared: project.root.manifest.dependencies ?? {},
-      remotes: Object.keys(remotesFromProject(project)),
-    }),
+    // new webpack.container.ModuleFederationPlugin({
+    //   name: project.root.manifest.name,
+    //   library: {
+    //     type: 'var',
+    //     name: slugify(project.root.manifest.name),
+    //   },
+    //   filename: MICRO_ENTRYPOINT,
+    //   exposes: await exposesFromProject(project),
+    //   // shared: project.root.manifest.dependencies ?? {},
+    //   remotes: await webFederationRemotesFromProject(project),
+    // }),
   ]),
   customConfig({
     target: 'web',
   }) as Block,
+  optimization({
+    runtimeChunk: {
+      name: 'webpack-runtime',
+    },
+  } as any), // TODO: why this as any ?
   setOutput({
     publicPath: '/assets/',
   }),
@@ -79,13 +81,9 @@ export default class Build extends BuildPlugin {
       'webpack_internals'
     )
     const targetConfigs =
-      target === 'node-federation'
+      target === 'node'
         ? await nodeConfig(this.project)
         : await webFederationConfig(this.project)
-
-    if (target === 'web') {
-      throw new Error('💣 Target web is not supported yet')
-    }
 
     const blocks: Array<Block | Configuration> = [
       setMode(this.mode),
@@ -94,6 +92,16 @@ export default class Build extends BuildPlugin {
         'process.env.NODE_ENV': this.mode,
       }),
       customConfig({
+        stats: {
+          hash: true,
+          publicPath: true,
+          assets: true,
+          chunks: false,
+          modules: false,
+          source: false,
+          errorDetails: false,
+          timings: false,
+        },
         cache: {
           name: this.mode,
           version: `${target}::${this.mode}`,

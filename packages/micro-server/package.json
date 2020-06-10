@@ -21,7 +21,8 @@
     "mime-types": "^2.1.27",
     "morgan": "^1.10.0",
     "pretty": "^2.0.0",
-    "webpack": "next"
+    "webpack": "next",
+    "webpack-dev-middleware": "next"
   },
   "devDependencies": {
     "@types/compression": "^1.7.0",

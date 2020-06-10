@@ -38,6 +38,16 @@ export default class Bundle extends BundlePlugin {
         'process.env.NODE_ENV': this.mode,
       }),
       customConfig({
+        stats: {
+          hash: true,
+          publicPath: true,
+          assets: true,
+          chunks: false,
+          modules: false,
+          source: false,
+          errorDetails: false,
+          timings: false,
+        },
         cache: {
           name: this.mode,
           version: `${target}::${this.mode}`,
@@ -77,9 +87,11 @@ export default class Bundle extends BundlePlugin {
         plugins: [PnpPlugin],
         extensions: ['.tsx', '.ts', '.js', '.jsx', '.json'],
       }),
-      performance({
-        hints: 'warning',
-      }),
+      env('production', [
+        performance({
+          hints: 'warning',
+        }),
+      ]),
     ]
 
     return group([config, ...(block as any)])

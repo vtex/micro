@@ -10,7 +10,7 @@ import { Project } from '../project'
 
 export const BUILD_LIFECYCLE = 'build'
 
-export type WebpackBuildTarget = 'node-federation' | 'web-federation' | 'web'
+export type WebpackBuildTarget = 'node' | 'web'
 
 export type BuildTarget = 'cjs' | WebpackBuildTarget
 

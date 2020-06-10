@@ -15,17 +15,9 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": false,
     "skipLibCheck": true,
-    "declaration": true
+    "declaration": true,
+    "types": ["node"]
   },
-  "include": [
-    "index.ts",
-    "lib",
-    "router",
-    "plugins",
-    "components"
-  ],
-  "exclude": [
-    "dist",
-    "pages"
-  ]
+  "include": ["index.tsx", "pages", "lib", "router", "plugins", "components"],
+  "exclude": ["dist", "pages"]
 }

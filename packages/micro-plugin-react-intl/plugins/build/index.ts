@@ -1,13 +1,17 @@
-import { TransformOptions } from '@babel/core'
-import merge from 'babel-merge'
+import { Block, defineConstants, group } from 'webpack-blocks'
 
-import { BuildPlugin } from '@vtex/micro-core'
+import { alias, BuildPlugin } from '@vtex/micro-core'
+
+import { aliases } from '../aliases'
 
 export default class Build extends BuildPlugin {
-  public getBabelConfig = async (
-    previous: TransformOptions
-  ): Promise<TransformOptions> =>
-    merge(previous, {
-      plugins: [require.resolve('babel-plugin-inline-json-import')],
-    })
+  public getWebpackConfig = async (config: Block): Promise<Block> => {
+    return group([
+      config,
+      defineConstants({
+        'process.platform': false,
+      }),
+      alias(aliases, module),
+    ])
+  }
 }

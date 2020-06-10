@@ -16,18 +16,18 @@
     "prepublish": "yarn build"
   },
   "sideEffects": false,
+  "main-federation": "./dist/build/node/micro.entrypoint.js",
+  "browser-federation": "./dist/build/web-federation/micro.entrypoint.js",
   "main": "./dist/build/cjs/index.js",
+  "types": "./dist/build/cjs/index.d.ts",
   "module": "./dist/build/es6/index.js",
   "browser": "./components/index.ts",
-  "types": "./index.ts",
   "dependencies": {
     "@babel/core": "^7.10.2",
-    "@loadable/component": "^5.12.0",
     "@vtex/micro-core": "^1.1.1-alpha.22",
     "@vtex/micro-plugin-react": "^1.1.1-alpha.22",
     "babel-merge": "^3.0.0",
     "history": "^4.10.1",
-    "react": "^16.13.1",
     "react-in-viewport": "^1.0.0-alpha.11",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.1.2",
@@ -44,5 +44,9 @@
     "@types/webpack-blocks": "^2.0.0",
     "@vtex/micro-cli": "^1.1.1-alpha.22",
     "typescript": "^3.9.5"
+  },
+  "peerDependencies": {
+    "@lodable/component": "*",
+    "react": "*"
   }
 }

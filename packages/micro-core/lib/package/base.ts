@@ -7,9 +7,9 @@ import {
   HtmlPluginOptions,
 } from '../lifecycles/serve/html'
 import { RoutePlugin, RoutePluginOptions } from '../lifecycles/serve/router'
+import { LifeCycle } from '../project'
 import { Manifest } from './manifest'
 import { TSConfig } from './tsconfig'
-import { LifeCycle } from '../project'
 
 export interface Plugins {
   serve?: {
@@ -48,7 +48,7 @@ export abstract class Package {
     throw new Error(`💣 not implemented: ${projectRoot}`)
   }
 
-  public abstract resolve = (): string => {
+  public abstract resolve = (field = 'main'): Promise<string | null> => {
     throw new Error(`💣 not implemented`)
   }
 
@@ -66,9 +66,7 @@ export abstract class Package {
     throw new Error(`💣 not implemented: ${targets}`)
   }
 
-  public abstract hasEntry = async (
-    target: PackageRootEntries
-  ): Promise<boolean> => {
+  public abstract pathExists = async (target: string): Promise<boolean> => {
     throw new Error(`💣 not implemented: ${target}`)
   }
 

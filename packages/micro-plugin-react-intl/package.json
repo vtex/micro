@@ -5,7 +5,8 @@
   "micro": {
     "plugins": [
       "@vtex/micro-core",
-      "@vtex/micro-plugin-react"
+      "@vtex/micro-plugin-react",
+      "@vtex/micro-plugin-react-intl"
     ]
   },
   "scripts": {
@@ -15,10 +16,12 @@
     "prepublish": "yarn build"
   },
   "sideEffects": false,
+  "main-federation": "./dist/build/node/micro.entrypoint.js",
+  "browser-federation": "./dist/build/web-federation/micro.entrypoint.js",
   "main": "./dist/build/cjs/index.js",
+  "types": "./dist/build/cjs/index.d.ts",
   "module": "./dist/build/es6/index.js",
   "browser": "./components/index.ts",
-  "types": "./index.ts",
   "dependencies": {
     "@babel/core": "^7.10.2",
     "@vtex/micro-core": "^1.1.1-alpha.22",

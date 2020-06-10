@@ -41,8 +41,8 @@ const main = async (options: Options) => {
   // Sometimes the package only contains `plugins` or `lib`.
   // In this case, there is nothing to bundle and the build is complete
   const [hasComponents, hasPages] = await Promise.all([
-    project.root.hasEntry('components'),
-    project.root.hasEntry('pages'),
+    project.root.pathExists('components'),
+    project.root.pathExists('pages'),
   ])
 
   if (!hasPages && !hasComponents) {
@@ -54,9 +54,9 @@ const main = async (options: Options) => {
   const plugins = await resolvePlugins(project, lifecycle)
   const compiler = new BuildCompiler({ project, plugins, mode })
   const configs = await Promise.all([
-    compiler.getWepbackConfig('node-federation'),
-    compiler.getWepbackConfig('web-federation'),
-    // compiler.getWepbackConfig('web'),
+    compiler.getWepbackConfig('node'),
+    // compiler.getWepbackConfig('web-federation'),
+    compiler.getWepbackConfig('web'),
   ])
   console.timeEnd(pluginsResolutionsMsg)
 

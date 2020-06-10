@@ -3472,6 +3472,7 @@ __metadata:
     babel-merge: ^3.0.0
     babel-plugin-inline-json-import: ^0.3.2
     babel-plugin-transform-remove-imports: ^1.3.2
+    file-loader: ^6.0.0
     typescript: ^3.9.5
     webpack: next
     webpack-blocks: ^2.1.0
@@ -3537,7 +3538,6 @@ __metadata:
   resolution: "@vtex/micro-plugin-react-router@workspace:packages/micro-plugin-react-router"
   dependencies:
     "@babel/core": ^7.10.2
-    "@loadable/component": ^5.12.0
     "@types/history": ^4.7.5
     "@types/loadable__component": ^5.10.0
     "@types/node": ^14.0.11
@@ -3550,13 +3550,15 @@ __metadata:
     "@vtex/micro-plugin-react": ^1.1.1-alpha.22
     babel-merge: ^3.0.0
     history: ^4.10.1
-    react: ^16.13.1
     react-in-viewport: ^1.0.0-alpha.11
     react-router: ^5.2.0
     react-router-dom: ^5.1.2
     typescript: ^3.9.5
     webpack: ^4.43.0
     webpack-blocks: ^2.1.0
+  peerDependencies:
+    "@lodable/component": "*"
+    react: "*"
   languageName: unknown
   linkType: soft
 
@@ -3634,6 +3636,7 @@ __metadata:
     pretty: ^2.0.0
     typescript: ^3.9.5
     webpack: next
+    webpack-dev-middleware: next
   languageName: unknown
   linkType: soft
 
@@ -8157,6 +8160,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fs-monkey@npm:1.0.1":
+  version: 1.0.1
+  resolution: "fs-monkey@npm:1.0.1"
+  checksum: 3/2ecb8ef5896fc66a5d6fbb9af6e1f9c5723b46ff46cbd91c815262c405318dad8cb6f1bbb36d9c63ec257131731fbdfa433683bc1fea34b4be17b07e64c826cc
+  languageName: node
+  linkType: hard
+
 "fs-write-stream-atomic@npm:^1.0.8":
   version: 1.0.10
   resolution: "fs-write-stream-atomic@npm:1.0.10"
@@ -10719,6 +10729,15 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"map-age-cleaner@npm:^0.1.3":
+  version: 0.1.3
+  resolution: "map-age-cleaner@npm:0.1.3"
+  dependencies:
+    p-defer: ^1.0.0
+  checksum: 3/0f0b8114925d9f9d528c5d5c9cbde83fea203b8edb1cfdb10d31aa2ce1ddccfcefe0bd6924b0d2e3928ff9d895496bf817a22b259fe05f3c4865702e65b71fd3
+  languageName: node
+  linkType: hard
+
 "map-cache@npm:^0.2.2":
   version: 0.2.2
   resolution: "map-cache@npm:0.2.2"
@@ -10774,6 +10793,25 @@ fsevents@~2.1.2:
   version: 0.3.0
   resolution: "media-typer@npm:0.3.0"
   checksum: 3/be1c825782df7f38eebd451d778f6407bb15a59c8807a69e7f2ad74a25440e474536441c6bf583fdf2803ea23b866e91ff68f565cda297211dd89147758c8df3
+  languageName: node
+  linkType: hard
+
+"mem@npm:^6.0.1":
+  version: 6.1.0
+  resolution: "mem@npm:6.1.0"
+  dependencies:
+    map-age-cleaner: ^0.1.3
+    mimic-fn: ^3.0.0
+  checksum: 3/5511779abf875c9303af0d1bc2a5f7a9b7db20a4e2dd0b41d4c7c34a9c21e616745252b53eaeb6c6d9867730ad09cf8aefbc29b1a4a76623eb175857bc33252c
+  languageName: node
+  linkType: hard
+
+"memfs@npm:^3.1.1":
+  version: 3.2.0
+  resolution: "memfs@npm:3.2.0"
+  dependencies:
+    fs-monkey: 1.0.1
+  checksum: 3/48bf758246937c6ceadaecc31e81050d4745dac5e031e3080961c28311bcc4b29e99f9cc4110103a0cb9f004c30c59926eaf15d10f4ac9a00b773b256a918ae2
   languageName: node
   linkType: hard
 
@@ -10908,6 +10946,9 @@ fsevents@~2.1.2:
     regexpp: ^3.1.0
     typescript: ^3.9.5
     typescript-eslint: ^0.0.1-alpha.0
+  dependenciesMeta:
+    webpack:
+      unplugged: true
   languageName: unknown
   linkType: soft
 
@@ -10987,6 +11028,13 @@ fsevents@~2.1.2:
   version: 2.1.0
   resolution: "mimic-fn@npm:2.1.0"
   checksum: 3/f7d2d7febe3d7dd71da0700b1d455ec6c951a96b463ffcc303c93771b9fe4e45318152ea677c241505b19b39e41d906e5052cfb382d59a44bdb6d3d57f8b467b
+  languageName: node
+  linkType: hard
+
+"mimic-fn@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "mimic-fn@npm:3.0.0"
+  checksum: 3/d3f3414ab2896a6164f3377a791c5cb95f8051c7d2793110bed67675a426a12388da805a4e89f7094cf1b81477609a6390b02a4f98be593dc30c74f2307cadc1
   languageName: node
   linkType: hard
 
@@ -12071,6 +12119,13 @@ fsevents@~2.1.2:
   version: 2.0.0
   resolution: "p-cancelable@npm:2.0.0"
   checksum: 3/966065f056a116a1ca3b6c7064d4d27a65bc1740c25cc60729faa5deea385bbd0f2317aedabb8e64c0cfc3c6b2dafe7f3ea65c267373d6d9be1602af443b4f12
+  languageName: node
+  linkType: hard
+
+"p-defer@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "p-defer@npm:1.0.0"
+  checksum: 3/ffaabb161334dd9b471f7136038c9322f5288fdd86e070d75a6c65f1b28893d5ef084d9b94401e285117da65906c2952a96404a45a57ecd010393445ac2b6159
   languageName: node
   linkType: hard
 
@@ -14353,7 +14408,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"schema-utils@npm:*, schema-utils@npm:^2.5.0, schema-utils@npm:^2.6.1, schema-utils@npm:^2.6.5, schema-utils@npm:^2.6.6":
+"schema-utils@npm:*, schema-utils@npm:^2.5.0, schema-utils@npm:^2.6.1, schema-utils@npm:^2.6.4, schema-utils@npm:^2.6.5, schema-utils@npm:^2.6.6":
   version: 2.7.0
   resolution: "schema-utils@npm:2.7.0"
   dependencies:
@@ -14662,7 +14717,6 @@ fsevents@~2.1.2:
   resolution: "simple@workspace:examples/simple"
   dependencies:
     "@babel/core": ^7.10.2
-    "@loadable/component": ^5.12.0
     "@types/loadable__component": ^5.10.0
     "@types/node": ^13.13.4
     "@types/react": ^16.9.34
@@ -14676,8 +14730,6 @@ fsevents@~2.1.2:
     "@vtex/micro-plugin-react-intl": ^1.1.1-alpha.22
     "@vtex/micro-plugin-react-router": ^1.1.1-alpha.22
     css-loader: ^3.5.3
-    react: ^16.13.1
-    react-dom: ^16.13.1
     snowpack: ^2.2.1
     typescript: ^3.9.5
     vtex-tachyons: ^3.2.0
@@ -16576,6 +16628,21 @@ fsevents@~2.1.2:
   peerDependencies:
     webpack: ^4.0.0
   checksum: 3/88480e7d7f8116f2a992a4f4b3ca5f2ce93e11edbedd029858f43a789109fcd001bad9fcf34df7bb0e8cb33d342205a789abafd6f6315e9fc54bc436e6caa78f
+  languageName: node
+  linkType: hard
+
+"webpack-dev-middleware@npm:next":
+  version: 4.0.0-rc.1
+  resolution: "webpack-dev-middleware@npm:4.0.0-rc.1"
+  dependencies:
+    mem: ^6.0.1
+    memfs: ^3.1.1
+    mime-types: ^2.1.26
+    range-parser: ^1.2.1
+    schema-utils: ^2.6.4
+  peerDependencies:
+    webpack: ^4.0.0
+  checksum: 3/e77d0f64aa558e021e6bf716cd2554967e9e0d3c78c8db483ad36e7879f64c7cf54789166399c4a4c76540edfc338e7607da37e716460b1633f397336886bd04
   languageName: node
   linkType: hard
 

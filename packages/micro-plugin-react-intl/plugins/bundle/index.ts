@@ -1,6 +1,7 @@
-import { Block, defineConstants, group, resolve } from 'webpack-blocks'
+import { Block, defineConstants, group } from 'webpack-blocks'
 
 import {
+  alias,
   BundlePlugin,
   pagesFrameworkName,
   pagesRuntimeName,
@@ -16,17 +17,7 @@ export default class Bundle extends BundlePlugin {
       defineConstants({
         'process.platform': false,
       }),
-      resolve({
-        alias: aliases.reduce(
-          (acc, packageName) => {
-            acc[packageName] = require.resolve(packageName)
-            return acc
-          },
-          {
-            crypto: false,
-          } as Record<string, string | boolean>
-        ),
-      }),
+      alias(aliases, module),
       cacheGroup(pagesRuntimeName, /\/react-intl\//),
       cacheGroup(pagesFrameworkName, /\/micro-react-intl\//),
     ])

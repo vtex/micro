@@ -8,19 +8,11 @@ import { Project, PublicPaths } from '@vtex/micro-core'
 
 import { Req, Res } from '../typings'
 
-const resolveBundleAssets = (assetsRootPath: string, path: string) => {
-  return join(assetsRootPath, path)
-}
-
-const resolveES6Assets = (assetsRootPath: string, path: string) => {
-  return join(assetsRootPath, path)
-}
-
 export const middleware = (project: Project, publicPaths: PublicPaths) => {
   const assetsRootPath =
     process.env.NODE_ENV === 'production'
-      ? join(project.dist, 'bundle/webnew')
-      : join(project.dist, 'build/es6')
+      ? join(project.dist, 'bundle/web')
+      : join(project.dist, 'build/web')
 
   return async (req: Req, res: Res) => {
     try {
@@ -37,10 +29,7 @@ export const middleware = (project: Project, publicPaths: PublicPaths) => {
         res.set('content-type', contentType)
       }
 
-      const assetPath =
-        process.env.NODE_ENV === 'production'
-          ? resolveBundleAssets(assetsRootPath, path)
-          : resolveES6Assets(assetsRootPath, path)
+      const assetPath = join(assetsRootPath, path)
 
       const assetExists = await pathExists(assetPath)
       assert(assetExists, `💣 Could not find asset: ${assetPath}`)

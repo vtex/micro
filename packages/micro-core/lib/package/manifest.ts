@@ -2,6 +2,7 @@ import { pick } from '../common/pick'
 import { isSemver } from '../common/semver'
 import { MICRO_BUILD_DIR } from '../constants'
 import { BUILD_LIFECYCLE } from '../lifecycles/build'
+import { MICRO_ENTRYPOINT } from '../../plugins/build'
 
 type MicroOptions = {
   plugins: string[]
@@ -9,10 +10,11 @@ type MicroOptions = {
 
 export const BaseManifest = {
   sideEffects: false,
-  main: `./${MICRO_BUILD_DIR}/${BUILD_LIFECYCLE}/cjs/index.js`,
-  types: `./${MICRO_BUILD_DIR}/${BUILD_LIFECYCLE}/cjs/index.d.ts`,
+  main: `./${MICRO_BUILD_DIR}/${BUILD_LIFECYCLE}/node/${MICRO_ENTRYPOINT}.js`,
+  // module: `./${MICRO_BUILD_DIR}/${BUILD_LIFECYCLE}/web/${MICRO_ENTRYPOINT}.js`,
+  'browser-federation': `./${MICRO_BUILD_DIR}/${BUILD_LIFECYCLE}/web-federation/${MICRO_ENTRYPOINT}.js`,
   browser: './components/index.ts',
-  // module: `./${MICRO_BUILD_DIR}/${buildLifecycle}/es6/index.js`,
+  // types: `./${MICRO_BUILD_DIR}/${BUILD_LIFECYCLE}/cjs/index.d.ts`,
   micro: {
     plugins: [],
   } as MicroOptions,
@@ -24,7 +26,12 @@ export const BaseManifest = {
   },
 }
 
-const necessary = pick(BaseManifest, ['main', 'types', 'browser'])
+const necessary = pick(BaseManifest, [
+  'main',
+  // 'types',
+  'browser',
+  'browser-federation',
+])
 const required = pick(BaseManifest, ['micro'])
 
 type Base = typeof BaseManifest
@@ -44,7 +51,7 @@ export const isManifest = (obj: any): obj is Manifest => {
   return (
     typeof obj?.name === 'string' &&
     isSemver(obj.version) &&
-    obj.main === BaseManifest.main &&
+    typeof obj.main === 'string' &&
     isMicro(obj.micro)
   )
 }
@@ -60,10 +67,12 @@ export const genManifest = (
     title,
     license,
     micro,
+    sideEffects,
     main,
     types,
     module,
     browser,
+    'browser-federation': webFederation,
     type,
     scripts,
     dependencies,
@@ -88,10 +97,12 @@ export const genManifest = (
       ...BaseManifest.scripts,
       ...scripts,
     },
+    sideEffects,
     main,
     types,
     module,
     browser,
+    'browser-federation': webFederation,
     dependencies,
     devDependencies,
     peerDependencies,

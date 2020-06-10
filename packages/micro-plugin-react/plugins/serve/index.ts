@@ -1,76 +1,110 @@
-import { join } from 'path'
-
-import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server'
-import { readFileSync } from 'fs-extra'
-import { createElement } from 'react'
+import * as LoadableComponent from '@loadable/component'
+import { ChunkExtractor } from '@loadable/server'
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 import { renderToString } from 'react-dom/server'
+import { Stats } from 'webpack'
 
-import { HtmlFrameworkPlugin, HtmlPluginOptions } from '@vtex/micro-core'
+import {
+  HtmlFrameworkPlugin,
+  HtmlPluginOptions,
+  MICRO_ENTRYPOINT,
+} from '@vtex/micro-core'
 
 import { withAppContainerTags } from '../../components/container'
 import { withPageDataTags } from '../../components/data'
 import { withRuntimeTags } from '../../components/runtime'
-import { CJSChunkExtractor, Extractor } from './cjsChunkExtractor'
+
+global.React = React
+;(global as any).ReactDOM = ReactDOM
+;(global as any).LoadableComponent = LoadableComponent
 
 class Html extends HtmlFrameworkPlugin<JSX.Element> {
-  public extractor: Extractor
+  public webExtractor: ChunkExtractor | null = null
+  public nodeExtractor: ChunkExtractor | null = null
 
   constructor(options: HtmlPluginOptions) {
     super(options)
-    if (this.options.lifecycleTarget === 'bundle') {
-      this.extractor = new ChunkExtractor({
-        entrypoints: [options.page.name],
+
+    if (!this.options.stats?.children) {
+      return
+    }
+
+    let webStats: Stats | null = null
+    let nodeStats: Stats | null = null
+    for (const child of options.stats.children) {
+      switch (child.name) {
+        case 'web-federation':
+        case 'web-legacy':
+        case 'web':
+          webStats = child
+          break
+        case 'node':
+          nodeStats = child
+          break
+        default:
+          throw new Error('💣 Stats name not expected')
+      }
+    }
+
+    if (webStats) {
+      this.webExtractor = new ChunkExtractor({
+        entrypoints: [MICRO_ENTRYPOINT],
         publicPath: options.publicPaths.assets,
-        stats: options.stats,
-      }) as any // TODO: fix this as any
-    } else {
-      this.extractor = new CJSChunkExtractor(options)
+        stats: webStats!,
+      })
+    }
+
+    if (nodeStats) {
+      this.nodeExtractor = new ChunkExtractor({
+        entrypoints: [MICRO_ENTRYPOINT],
+        stats: nodeStats!,
+      })
     }
   }
 
   public renderToString = (element: JSX.Element | null) => {
     let ssr = ''
     if (element) {
-      ssr = renderToString(
-        createElement(ChunkExtractorManager, {
-          extractor: this.extractor,
-          children: element,
-        } as any)
-      ) // TODO: fix this as any
+      const wrapped = this.webExtractor
+        ? this.webExtractor.collectChunks(element)
+        : element
+      ssr = renderToString(wrapped)
     }
     return withAppContainerTags(ssr)
   }
 
   public requireEntrypoint = (): JSX.Element => {
-    const {
-      page: { data, name },
-    } = this.options
-    const locator = join(this.options.assetsDist.nodejs, 'pages', name)
-    const { default: App } = require(locator)
+    const { name, data } = this.options.page
+
+    this.nodeExtractor!.requireEntrypoint()
+
+    const { default: App } = (global as any)['simple@1.x']
+
     // TODO: Figure out a way to the error come from the router
-    return createElement(App, { data, error: null } as any)
+    return React.createElement(App, { name, data, error: null } as any)
   }
 
   public getScriptTags = () => {
-    const { publicPaths } = this.options
+    const { publicPaths, page } = this.options
     const tags: string[] = []
-    tags.push(withRuntimeTags({ publicPaths }))
-    tags.push(this.extractor.getScriptTags())
+    tags.push(withRuntimeTags({ publicPaths, page }))
+    tags.push(this.webExtractor?.getScriptTags() ?? '')
     return tags.join('\n')
   }
 
   public getStyleTags = () => {
-    if (typeof (this.extractor as any).getMainAssets === 'function') {
-      const assets = (this.extractor as any).getMainAssets('style')
-      return assets
-        .map(({ path, chunk }: { path: string; chunk: string }) => {
-          const content = readFileSync(path)
-          return `<style data-chunk="${chunk}" rel="stylesheet">${content}</style>`
-        })
-        .join('\n')
-    }
-    return ''
-    // return this.extractor.getStyleTags()
+    // if (typeof (this.webExtractor as any).getMainAssets === 'function') {
+    //   const assets = (this.webExtractor as any).getMainAssets('style')
+    //   return assets
+    //     .map(({ path, chunk }: { path: string; chunk: string }) => {
+    //       const content = readFileSync(path)
+    //       return `<style data-chunk="${chunk}" rel="stylesheet">${content}</style>`
+    //     })
+    //     .join('\n')
+    // }
+    // return ''
+    return this.webExtractor?.getStyleTags() ?? ''
   }
 
   public getLinkTags = () => {
@@ -79,10 +113,10 @@ class Html extends HtmlFrameworkPlugin<JSX.Element> {
       publicPaths: { data: rootPath },
       path,
     } = this.options
-    const tagsNoCSS = this.extractor!.getLinkTags()
-      .split('\n')
-      .filter((x) => !x.includes('as="style"'))
-      .join('\n')
+    const tagsNoCSS = this.webExtractor?.getLinkTags()
+    // .split('\n')
+    // .filter((x) => !x.includes('as="style"'))
+    // .join('\n')
     const dataTags = withPageDataTags({ name, data, rootPath, path })
     return [tagsNoCSS, dataTags].join('\n')
     // return [

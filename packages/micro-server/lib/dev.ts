@@ -1,6 +1,8 @@
 import compress from 'compression'
 import express from 'express'
 import logger from 'morgan'
+import { MultiCompiler } from 'webpack'
+import webpackDevMiddleware from 'webpack-dev-middleware'
 
 import { HtmlCompiler, Project, PublicPaths } from '@vtex/micro-core'
 
@@ -13,7 +15,7 @@ import { devSSR } from './middlewares/ssr'
 import { Next, Req, Res } from './typings'
 
 export interface DevServerOptions {
-  statsJson: any // TODO: Fix this as any
+  compiler: MultiCompiler
   project: Project
   publicPaths: PublicPaths
   host: string
@@ -23,19 +25,19 @@ export interface DevServerOptions {
 const context = ({
   project,
   plugins,
-  statsJson,
   publicPaths,
 }: {
   project: Project
   plugins: Array<NonNullable<HtmlPlugin>>
-  statsJson: any
   publicPaths: PublicPaths
 }) => (req: Req, res: Res, next: Next) => {
   const {
     locals: {
       route: { page, path },
+      webpack,
     },
   } = res
+  const statsJson = webpack?.devMiddleware?.stats?.toJson()
   res.locals.compiler = new HtmlCompiler({
     project,
     plugins,
@@ -53,7 +55,7 @@ const context = ({
 
 export const startDevServer = async ({
   publicPaths,
-  statsJson,
+  compiler,
   project,
   host,
   port,
@@ -70,7 +72,6 @@ export const startDevServer = async ({
   const contextMiddleware = context({
     project,
     plugins: htmlPlugins,
-    statsJson,
     publicPaths,
   })
 
@@ -91,12 +92,18 @@ export const startDevServer = async ({
     contextMiddleware,
     respondData
   )
-  app.get(
-    '/*',
+
+  // TODO: Why do we need this as any ?
+  app.use(
+    webpackDevMiddleware(compiler, {
+      serverSideRender: true,
+      writeToDisk: true,
+      publicPath: publicPaths.assets,
+    }),
     headers,
     routerMiddleware,
     contextMiddleware,
-    devSSR(publicPaths)
+    devSSR
   )
 
   app.listen(port, () => console.log(`🦄 DevServer is UP on ${host}:${port}`))

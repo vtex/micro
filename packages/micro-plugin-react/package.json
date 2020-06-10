@@ -14,9 +14,11 @@
     "clean": "rm -r dist",
     "prepublish": "yarn build"
   },
-  "main": "./dist/build/cjs/index.js",
+  "sideEffects": false,
+  "main": "./dist/build/node/micro.entrypoint.js",
   "types": "./dist/build/cjs/index.d.ts",
   "browser": "./components/index.ts",
+  "browser-federation": "./dist/build/web-federation/micro.entrypoint.js",
   "dependencies": {
     "@babel/core": "^7.9.6",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
@@ -61,6 +63,5 @@
     "@types/webpack-blocks": "^2.0.0",
     "@vtex/micro-cli": "^1.1.1-alpha.22",
     "typescript": "^3.9.5"
-  },
-  "sideEffects": false
+  }
 }

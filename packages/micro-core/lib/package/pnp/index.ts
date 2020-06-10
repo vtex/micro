@@ -1,14 +1,19 @@
 import assert from 'assert'
 import { join } from 'path'
 
-import pnp from 'pnpapi'
 import { readJSON } from 'fs-extra'
+import pnp from 'pnpapi'
 
 import { LifeCycle } from '../../project'
-import { Package, PackageRootEntries, PackageStructure, Plugins } from '../base'
+import { Package, PackageRootEntries } from '../base'
 import { isManifest } from '../manifest'
-import { getLocatorFromPackageInWorkspace } from './common'
-import { createDepTree, globPnp, pathExistsPnp, requirePnp } from './dfs'
+import {
+  getLocatorFromPackageInWorkspace,
+  globPnp,
+  pathExistsPnp,
+  resolve,
+} from './common'
+import { createDepTree } from './dfs'
 
 export class PnpPackage extends Package {
   public issuer = ''
@@ -36,8 +41,8 @@ export class PnpPackage extends Package {
     this.tsconfig = resolved.tsconfig
   }
 
-  public resolve = () =>
-    (pnp as any).resolveRequest(this.manifest.name, this.issuer)
+  public resolve = (field = 'main') =>
+    resolve(field, this.manifest.name, this.issuer)
 
   public hydrate = (projectRoot: string) => {
     throw new Error(`💣 not implemented: ${projectRoot}`)
@@ -49,12 +54,19 @@ export class PnpPackage extends Package {
 
   public getPlugin = async (target: LifeCycle) => {
     try {
-      const { default: plugins } = requirePnp<{ default: Plugins }>(
-        `plugins/${target}`,
+      const unqualified = pnp.resolveToUnqualified(
         this.manifest.name,
         this.issuer
       )
-      return plugins
+      if (!unqualified) {
+        return null
+      }
+      const locator = join(
+        unqualified,
+        `dist/build/cjs/plugins/${target}/index.js`
+      )
+      const { default: exports } = require(locator)
+      return exports
     } catch (err) {
       return null
     }
@@ -63,6 +75,6 @@ export class PnpPackage extends Package {
   public getFiles = async (...targets: PackageRootEntries[]) =>
     globPnp(this.manifest.name, this.issuer, this.getGlobby(...targets))
 
-  public hasEntry = async (target: PackageRootEntries) =>
-    pathExistsPnp(this.manifest.name, this.issuer, PackageStructure[target])
+  public pathExists = async (path: string) =>
+    pathExistsPnp(this.manifest.name, this.issuer, path)
 }

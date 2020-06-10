@@ -1,2 +1,3 @@
-export * from './components/index'
 export * from './plugins/utils/cacheGroups'
+
+export * from './components/index'

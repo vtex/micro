@@ -2,7 +2,7 @@ import { pick } from '../common/pick'
 import { isSemver } from '../common/semver'
 import { MICRO_BUILD_DIR } from '../constants'
 import { BUILD_LIFECYCLE } from '../lifecycles/build'
-import { MICRO_ENTRYPOINT } from '../../plugins/build'
+import { MICRO_ENTRYPOINT } from '../../hooks/build'
 
 type MicroOptions = {
   plugins: string[]

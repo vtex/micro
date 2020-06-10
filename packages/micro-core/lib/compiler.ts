@@ -1,16 +1,16 @@
 import { join } from 'path'
 
-import { Plugins } from './package/base'
-import { Plugin } from './plugin'
+import { Hooks } from './package/base'
+import { Hook } from './hook'
 import { Project } from './project'
 
 export interface CompilerOptions<T> {
   plugins: T[]
   project: Project
-  target: keyof Plugins
+  target: keyof Hooks
 }
 
-export class Compiler<T extends Plugin> {
+export class Compiler<T extends Hook> {
   protected plugins: T[]
   public dist: string
   public project: Project

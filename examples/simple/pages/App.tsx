@@ -1,5 +1,4 @@
 import loadable from '@loadable/component'
-import React from 'react'
 
 import { load } from '@vtex/micro-plugin-react'
 
@@ -8,18 +7,11 @@ interface Props {
   data: any
 }
 
-const AsyncPage = loadable<Props>(({ name }) => import(
-  /* webpackExclude: /App.tsx$/ */
-  `./${name}`
-))
-
-const Page: React.SFC<Props> = ({ name, data }) => {
-  return (
-    <React.Fragment>
-      <div>Something wrong is not right</div>
-      <AsyncPage name={name} data={data} fallback={<div>really?</div>} />
-    </React.Fragment>
+const AsyncPage = loadable<Props>(({ name }) =>
+  import(
+    /* webpackExclude: /App.tsx$/ */
+    `./${name}`
   )
-}
+)
 
-export default load(Page)
+export default load(AsyncPage)

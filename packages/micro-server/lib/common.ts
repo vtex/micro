@@ -1,17 +1,20 @@
-import { Plugins, Project } from '@vtex/micro-core'
+import { Hooks, LifeCycle, Project } from '@vtex/micro-core'
 
 const reportPlugin = (lifecycle: string, pkg: string) => {
   console.log(`🔌 [${lifecycle}]: Plugin found ${pkg}`)
 }
 
-export type HtmlPlugin = NonNullable<Plugins['serve']>['html']
-export type RouterPlugin = NonNullable<Plugins['serve']>['router']
+export type RenderHook = NonNullable<Hooks['render']>
+export type RouterHook = NonNullable<Hooks['route']>
 
-export const resolvePlugins = async (project: Project) => {
-  console.log('🦄 [serve]: Resolving plugins')
-  const resolvedPlugins = await project.resolvePlugins('serve')
+export const resolvePlugins = async <T extends LifeCycle>(
+  project: Project,
+  target: T
+): Promise<Array<NonNullable<Hooks[T]>>> => {
+  console.log(`🦄 [${target}]: Resolving plugins`)
+  const resolvedPlugins = await project.resolvePlugins(target)
   for (const [name] of resolvedPlugins) {
-    reportPlugin('serve', name)
+    reportPlugin(target, name)
   }
   return resolvedPlugins.map(([, plugin]) => plugin)
 }

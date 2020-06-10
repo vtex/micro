@@ -1,7 +1,7 @@
 import chalk from 'chalk'
 import { webpack } from 'webpack'
 
-import { BuildCompiler, Mode } from '@vtex/micro-core'
+import { BuildCompiler, Mode, RouterHook } from '@vtex/micro-core'
 import { startDevServer } from '@vtex/micro-server'
 
 import { newProject, resolvePlugins } from '../../common/project'
@@ -60,10 +60,8 @@ const main = async () => {
   const wp = webpack(configs)
 
   const hasPages = (await project.root.getFiles('pages')).length > 0
-  const hasRouter =
-    typeof (await project.root.getPlugin('serve'))?.router === 'function'
+  const hasRouter = typeof (await project.root.getHook('route')) === 'function'
 
-  // eslint-disable-next-line vtex/prefer-early-return
   if (hasRouter && hasPages) {
     console.log(`🦄 [${lifecycle}]: Starting DevServer`)
 

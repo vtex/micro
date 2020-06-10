@@ -6,7 +6,7 @@ import { ensureDir } from 'fs-extra'
 import {
   LifeCycle,
   MICRO_BUILD_DIR,
-  Plugins,
+  Hooks,
   Project,
   walk,
 } from '@vtex/micro-core'
@@ -41,7 +41,7 @@ const reportPlugin = (lifecycle: string, pkg: string) => {
 export const resolvePlugins = async <T extends LifeCycle>(
   project: Project,
   lifecycle: T
-): Promise<Array<NonNullable<Plugins[T]>>> => {
+): Promise<Array<NonNullable<Hooks[T]>>> => {
   console.log(`🦄 [${lifecycle}]: Resolving plugins`)
   const resolvedPlugins = await project.resolvePlugins(lifecycle)
 

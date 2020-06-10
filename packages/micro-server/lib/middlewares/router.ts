@@ -9,11 +9,11 @@ import {
 } from '@vtex/micro-core'
 
 import { Next, Req, Res } from '../typings'
-import { RouterPlugin } from '../common'
+import { RouterHook } from '../common'
 
 export const middleware = async (
   project: Project,
-  plugins: Array<NonNullable<RouterPlugin>>,
+  plugins: Array<NonNullable<RouterHook>>,
   publicPaths: PublicPaths
 ) => {
   assert(

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "types": ["node"],
-    "typeRoots": ["lib/typings", "plugins/typings", "components/typings"],
+    "typeRoots": ["lib/typings", "hooks/typings", "components/typings"],
     "target": "es2019",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -13,5 +13,6 @@
     "declaration": true,
     "strict": true
   },
+  "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["dist"]
 }

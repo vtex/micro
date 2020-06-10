@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express'
 
-import { HtmlCompiler, ResolvedPage } from '@vtex/micro-core'
+import { RenderCompiler, ResolvedPage } from '@vtex/micro-core'
 
 interface Locals {
-  compiler: HtmlCompiler<unknown>
+  compiler: RenderCompiler<unknown>
   route: {
     page: ResolvedPage<any>
     path: string

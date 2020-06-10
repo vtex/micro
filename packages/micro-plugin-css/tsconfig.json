@@ -4,7 +4,7 @@
     "typeRoots": [
       "lib/typings",
       "router/typings",
-      "plugins/typings",
+      "hooks/typings",
       "components/typings"
     ],
     "target": "es2019",
@@ -19,6 +19,6 @@
     "skipLibCheck": true,
     "declaration": true
   },
-  "include": ["index.ts", "lib", "router", "plugins", "components"],
-  "exclude": ["dist", "pages"]
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["dist"]
 }

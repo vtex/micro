@@ -3,10 +3,10 @@ import { join } from 'path'
 
 import { parse } from './common/semver'
 import { MICRO_BUILD_DIR } from './constants'
-import { Package, PackageRootEntries, Plugins } from './package/base'
+import { Package, PackageRootEntries, Hooks } from './package/base'
 import { PnpPackage } from './package/pnp'
 
-export type LifeCycle = 'serve' | 'bundle' | 'build'
+export type LifeCycle = 'render' | 'route' | 'bundle' | 'build'
 
 export type WalkFn = (r: Package, p: Package | null) => Promise<void>
 export type WalkFnSync = (r: Package, p: Package | null) => void
@@ -110,7 +110,7 @@ export class Project {
 
   public resolvePlugins = async <T extends LifeCycle>(
     target: T
-  ): Promise<Array<[string, NonNullable<Plugins[T]>]>> => {
+  ): Promise<Array<[string, NonNullable<Hooks[T]>]>> => {
     assert(
       this.root,
       '💣 Could not find a package. Did you forget to resolve/restore packages ?'
@@ -121,7 +121,7 @@ export class Project {
     if (!locators) {
       return []
     }
-    const packages: Array<[string, Plugins[T]]> = []
+    const packages: Array<[string, Hooks[T]]> = []
     await walk(this.root, async (curr) => {
       const index = locators.findIndex((x) => curr.manifest.name === x)
 
@@ -138,12 +138,12 @@ export class Project {
         return
       }
 
-      const plugin = await curr.getPlugin(target)
+      const plugin = await curr.getHook(target)
       if (plugin) {
         packages.splice(index, 0, [curr.manifest.name, plugin])
       }
     })
-    return packages.filter((x): x is [string, NonNullable<Plugins[T]>] =>
+    return packages.filter((x): x is [string, NonNullable<Hooks[T]>] =>
       Array.isArray(x)
     )
   }

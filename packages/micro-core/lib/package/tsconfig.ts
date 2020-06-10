@@ -6,7 +6,7 @@ import { BUILD_LIFECYCLE } from '../lifecycles/build'
 export const BaseTSConfig = {
   compilerOptions: {
     types: ['node'],
-    typeRoots: ['lib/typings', 'plugins/typings', 'components/typings'],
+    typeRoots: ['typings'],
     target: 'es2019',
     module: 'commonjs',
     moduleResolution: 'node',

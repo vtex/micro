@@ -4,9 +4,9 @@ import logger from 'morgan'
 import { MultiCompiler } from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 
-import { HtmlCompiler, Project, PublicPaths } from '@vtex/micro-core'
+import { RenderCompiler, Project, PublicPaths } from '@vtex/micro-core'
 
-import { HtmlPlugin, resolvePlugins, RouterPlugin } from './common'
+import { RenderHook, resolvePlugins } from './common'
 import { middleware as streamAssets } from './middlewares/assets'
 import { middleware as respondData } from './middlewares/data'
 import { middleware as headers } from './middlewares/headers'
@@ -28,7 +28,7 @@ const context = ({
   publicPaths,
 }: {
   project: Project
-  plugins: Array<NonNullable<HtmlPlugin>>
+  plugins: Array<NonNullable<RenderHook>>
   publicPaths: PublicPaths
 }) => (req: Req, res: Res, next: Next) => {
   const {
@@ -38,7 +38,7 @@ const context = ({
     },
   } = res
   const statsJson = webpack?.devMiddleware?.stats?.toJson()
-  res.locals.compiler = new HtmlCompiler({
+  res.locals.compiler = new RenderCompiler({
     project,
     plugins,
     options: {
@@ -60,18 +60,15 @@ export const startDevServer = async ({
   host,
   port,
 }: DevServerOptions) => {
-  const plugins = await resolvePlugins(project)
-  const htmlPlugins = plugins
-    .map((p) => p?.html)
-    .filter((p): p is NonNullable<HtmlPlugin> => !!p)
-  const routerPlugins = plugins
-    .map((p) => p?.router)
-    .filter((p): p is NonNullable<RouterPlugin> => !!p)
+  const [renderPlugins, routerPlugins] = await Promise.all([
+    resolvePlugins(project, 'render'),
+    resolvePlugins(project, 'route'),
+  ])
 
   const routerMiddleware = await router(project, routerPlugins, publicPaths)
   const contextMiddleware = context({
     project,
-    plugins: htmlPlugins,
+    plugins: renderPlugins,
     publicPaths,
   })
 

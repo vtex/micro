@@ -1,12 +1,12 @@
 import pretty from 'pretty'
 
-import { HtmlCompiler } from '@vtex/micro-core'
+import { RenderCompiler } from '@vtex/micro-core'
 
 import { featuresFromReq } from '../features'
 import { Req, Res } from '../typings'
 
 const htmlTemplate = (
-  compiler: HtmlCompiler<unknown>,
+  compiler: RenderCompiler<unknown>,
   body: string
 ) => `<!DOCTYPE html>
 <html>

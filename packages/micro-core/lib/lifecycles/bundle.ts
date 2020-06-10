@@ -5,23 +5,23 @@ import { Block, createConfig, setOutput } from 'webpack-blocks'
 
 import { Mode } from '../common/mode'
 import { Compiler, CompilerOptions } from '../compiler'
-import { Plugin } from '../plugin'
+import { Hook } from '../hook'
 import { Project } from '../project'
 
 export const BUNDLE_LIFECYCLE = 'bundle'
 
 export type BundleTarget = 'web' | 'web-legacy'
 
-export interface BundlePluginOptions {
+export interface BundleHookOptions {
   mode: Mode
   project: Project
 }
 
-export abstract class BundlePlugin extends Plugin {
+export abstract class BundleHook extends Hook {
   public mode: Mode
   public project: Project
 
-  constructor(options: BundlePluginOptions) {
+  constructor(options: BundleHookOptions) {
     super({ target: BUNDLE_LIFECYCLE })
     this.project = options.project
     this.mode = options.mode
@@ -36,14 +36,14 @@ export abstract class BundlePlugin extends Plugin {
 }
 
 export type BundleCompilerOptions = Omit<
-  CompilerOptions<BundlePlugin>,
+  CompilerOptions<BundleHook>,
   'target' | 'plugins'
 > & {
-  plugins: Array<new (options: BundlePluginOptions) => BundlePlugin>
+  plugins: Array<new (options: BundleHookOptions) => BundleHook>
   mode: Mode
 }
 
-export class BundleCompiler extends Compiler<BundlePlugin> {
+export class BundleCompiler extends Compiler<BundleHook> {
   constructor({ project, plugins, mode }: BundleCompilerOptions) {
     super({ project, plugins: [], target: BUNDLE_LIFECYCLE })
     this.plugins = plugins.map((P) => new P({ project, mode }))

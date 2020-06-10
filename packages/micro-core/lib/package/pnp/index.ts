@@ -50,7 +50,7 @@ export class PnpPackage extends Package {
     throw new Error(`💣 not implemented: ${projectRoot}`)
   }
 
-  public getPlugin = async (target: LifeCycle) => {
+  public getHook = async (target: LifeCycle) => {
     try {
       const unqualified = pnp.resolveToUnqualified(
         this.manifest.name,
@@ -61,7 +61,7 @@ export class PnpPackage extends Package {
       }
       const locator = join(
         unqualified,
-        `dist/build/cjs/plugins/${target}/index.js`
+        `dist/build/cjs/hooks/${target}/index.js`
       )
       const { default: exports } = require(locator)
       return exports

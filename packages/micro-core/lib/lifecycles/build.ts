@@ -5,7 +5,7 @@ import { Block, createConfig, setOutput } from 'webpack-blocks'
 
 import { Mode } from '../common/mode'
 import { Compiler, CompilerOptions } from '../compiler'
-import { Plugin } from '../plugin'
+import { Hook } from '../hook'
 import { Project } from '../project'
 
 export const BUILD_LIFECYCLE = 'build'
@@ -14,16 +14,16 @@ export type WebpackBuildTarget = 'node' | 'web'
 
 export type BuildTarget = 'cjs' | WebpackBuildTarget
 
-export interface BuildPluginOptions {
+export interface BuildHookOptions {
   mode: Mode
   project: Project
 }
 
-export abstract class BuildPlugin extends Plugin {
+export abstract class BuildHook extends Hook {
   public mode: Mode
   public project: Project
 
-  constructor(options: BuildPluginOptions) {
+  constructor(options: BuildHookOptions) {
     super({ target: BUILD_LIFECYCLE })
     this.mode = options.mode
     this.project = options.project
@@ -38,14 +38,14 @@ export abstract class BuildPlugin extends Plugin {
 }
 
 export type BuildCompilerOptions = Omit<
-  CompilerOptions<BuildPlugin>,
+  CompilerOptions<BuildHook>,
   'target' | 'plugins'
 > & {
-  plugins: Array<new (opts: BuildPluginOptions) => BuildPlugin>
+  plugins: Array<new (opts: BuildHookOptions) => BuildHook>
   mode: Mode
 }
 
-export class BuildCompiler extends Compiler<BuildPlugin> {
+export class BuildCompiler extends Compiler<BuildHook> {
   constructor({ project, plugins, mode }: BuildCompilerOptions) {
     super({ project, plugins: [], target: BUILD_LIFECYCLE })
     this.plugins = plugins.map((P) => new P({ project, mode }))

@@ -3,7 +3,7 @@
     "typeRoots": [
       "lib/typings",
       "router/typings",
-      "plugins/typings",
+      "hooks/typings",
       "components/typings"
     ],
     "target": "es2019",

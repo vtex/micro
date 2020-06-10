@@ -11,7 +11,6 @@ import {
   getLocatorFromPackageInWorkspace,
   globPnp,
   pathExistsPnp,
-  resolve,
 } from './common'
 import { createDepTree } from './dfs'
 

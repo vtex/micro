@@ -18,6 +18,6 @@
     "declaration": true,
     "types": ["node"]
   },
-  "include": ["index.tsx", "pages", "lib", "router", "plugins", "components"],
-  "exclude": ["dist", "pages"]
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["dist"]
 }

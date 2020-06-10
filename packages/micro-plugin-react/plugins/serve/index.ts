@@ -98,7 +98,7 @@ class Html extends HtmlFrameworkPlugin<JSX.Element> {
     this.nodeExtractor!.requireEntrypoint()
 
     // TODO: we don't need to hard code this
-    const { default: App } = (global as any)[project.root.toString()]
+    const { App } = (global as any)[project.root.toString()]
 
     // TODO: Figure out a way to the error come from the router
     return React.createElement(App, { name, data, error: null } as any)

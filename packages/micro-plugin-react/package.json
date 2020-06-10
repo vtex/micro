@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build": "yarn run micro build",
-    "watch": "yarn run micro link",
+    "watch": "yarn run micro dev",
     "clean": "rm -r dist",
     "prepublish": "yarn build"
   },

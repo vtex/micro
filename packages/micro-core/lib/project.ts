@@ -9,6 +9,7 @@ import { PnpPackage } from './package/pnp'
 export type LifeCycle = 'serve' | 'bundle' | 'build'
 
 export type WalkFn = (r: Package, p: Package | null) => Promise<void>
+export type WalkFnSync = (r: Package, p: Package | null) => void
 
 export interface ProjectOptions {
   rootPath: string
@@ -44,6 +45,37 @@ const walkRec = async ({
 export const walk = async (root: Package, fn: WalkFn) => {
   const seen = new Set<string>()
   await walkRec({ root, parent: null, fn, seen })
+  return root
+}
+
+const walkRecSync = ({
+  root,
+  parent,
+  fn,
+  seen,
+}: {
+  root: Package
+  parent: Package | null
+  fn: WalkFnSync
+  seen: Set<string>
+}) => {
+  const node = root.toString()
+
+  if (seen.has(node)) {
+    return
+  }
+  seen.add(node)
+
+  fn(root, parent)
+
+  for (const dependency of root.dependencies) {
+    walkRecSync({ root: dependency, parent: root, fn, seen })
+  }
+}
+
+export const walkSync = (root: Package, fn: WalkFnSync) => {
+  const seen = new Set<string>()
+  walkRecSync({ root, parent: null, fn, seen })
   return root
 }
 

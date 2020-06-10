@@ -48,7 +48,7 @@ export abstract class Package {
     throw new Error(`💣 not implemented: ${projectRoot}`)
   }
 
-  public abstract resolve = (field = 'main'): Promise<string | null> => {
+  public abstract resolve = (): string | null => {
     throw new Error(`💣 not implemented`)
   }
 

@@ -41,8 +41,7 @@ export class PnpPackage extends Package {
     this.tsconfig = resolved.tsconfig
   }
 
-  public resolve = (field = 'main') =>
-    resolve(field, this.manifest.name, this.issuer)
+  public resolve = () => pnp.resolveRequest(this.manifest.name, this.issuer)
 
   public hydrate = (projectRoot: string) => {
     throw new Error(`💣 not implemented: ${projectRoot}`)

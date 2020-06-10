@@ -14,7 +14,7 @@
     "prepublish": "yarn build"
   },
   "sideEffects": false,
-  "main": "./dist/build/node/index.js",
+  "main": "./dist/build/cjs/index.js",
   "types": "./dist/build/cjs/index.d.ts",
   "module": "./dist/build/es6/index.js",
   "browser": "./components/index.ts",

@@ -58,10 +58,18 @@ export const nodeExternalsFromProject = async (project: Project) => {
     // Parent null means we are the tree root. Tree root
     // does not need to be on remote, since it has all code
     // in place
-    const resolved = await c.resolve('main')
-    if (typeof resolved === 'string') {
-      remotes[c.manifest.name] = resolved
+    if (!p) {
+      return
     }
+
+    // TODO: Make the server do this
+    // const resolved = await c.resolve('main')
+    // if (!resolved) {
+    //   return
+    // }
+
+    // require(resolved)
+    remotes[c.manifest.name] = c.manifest.name
   })
   return remotes
 }

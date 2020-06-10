@@ -22,7 +22,11 @@ import {
 
 import { BuildPlugin, WebpackBuildTarget } from '../../lib/lifecycles/build'
 import { Project } from '../../lib/project'
-import { nodeEntryFromProject, webEntriesFromProject } from '../utils/common'
+import {
+  nodeEntryFromProject,
+  nodeExternalsFromProject,
+  webEntriesFromProject,
+} from '../utils/common'
 
 export const MICRO_ENTRYPOINT = 'micro.entrypoint'
 
@@ -30,7 +34,7 @@ const nodeConfig = async (project: Project): Promise<Block[]> => [
   entryPoint(await nodeEntryFromProject(project)),
   customConfig({
     target: 'node',
-    // externals: await nodeExternalsFromProject(project),
+    externals: await nodeExternalsFromProject(project),
   }) as Block,
   setOutput({
     library: project.root.toString(),

@@ -22,28 +22,6 @@ const zipOpenFs = new ZipOpenFS({ libzip })
 // This will convert all paths into a Posix variant, required for cross-platform compatibility
 const crossFs = new PosixFS(zipOpenFs)
 
-export const resolve = async (field: string, pkg: string, issuer: string) => {
-  const manifestPath = (pnp as any).resolveRequest(
-    `${pkg}/${PackageStructure.manifest}`,
-    issuer
-  )
-  const manifest = await crossFs.readJsonPromise(manifestPath)
-  const locator = manifest[field]
-
-  if (typeof locator !== 'string') {
-    return null
-  }
-
-  const path = join(manifestPath, '..', locator)
-
-  const exists = await crossFs.existsPromise(path)
-  if (!exists) {
-    return null
-  }
-
-  return path
-}
-
 // TODO: Does it work for packages inside .pnp.js file ?
 export const requirePnp = <T>(
   target: string,

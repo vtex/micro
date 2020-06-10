@@ -3505,7 +3505,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-plugin-react-intl@^1.1.1-alpha.22, @vtex/micro-plugin-react-intl@workspace:packages/micro-plugin-react-intl":
+"@vtex/micro-plugin-react-intl@workspace:packages/micro-plugin-react-intl":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-plugin-react-intl@workspace:packages/micro-plugin-react-intl"
   dependencies:
@@ -3533,7 +3533,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-plugin-react-router@^1.1.1-alpha.22, @vtex/micro-plugin-react-router@workspace:packages/micro-plugin-react-router":
+"@vtex/micro-plugin-react-router@workspace:packages/micro-plugin-react-router":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-plugin-react-router@workspace:packages/micro-plugin-react-router"
   dependencies:
@@ -14727,8 +14727,6 @@ fsevents@~2.1.2:
     "@vtex/micro-plugin-assets": ^1.1.1-alpha.22
     "@vtex/micro-plugin-css": ^1.1.1-alpha.22
     "@vtex/micro-plugin-react": ^1.1.1-alpha.22
-    "@vtex/micro-plugin-react-intl": ^1.1.1-alpha.22
-    "@vtex/micro-plugin-react-router": ^1.1.1-alpha.22
     css-loader: ^3.5.3
     snowpack: ^2.2.1
     typescript: ^3.9.5

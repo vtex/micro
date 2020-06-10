@@ -9,6 +9,7 @@ import {
   HtmlFrameworkPlugin,
   HtmlPluginOptions,
   MICRO_ENTRYPOINT,
+  walkSync,
 } from '@vtex/micro-core'
 
 import { withAppContainerTags } from '../../components/container'
@@ -63,6 +64,8 @@ class Html extends HtmlFrameworkPlugin<JSX.Element> {
     }
   }
 
+  public render = (element: JSX.Element) => element
+
   public renderToString = (element: JSX.Element | null) => {
     let ssr = ''
     if (element) {
@@ -75,12 +78,27 @@ class Html extends HtmlFrameworkPlugin<JSX.Element> {
   }
 
   public requireEntrypoint = (): JSX.Element => {
-    const { name, data } = this.options.page
+    const {
+      project,
+      page: { name, data },
+    } = this.options
+
+    walkSync(project.root, (c, p) => {
+      const globalHasDep = (global as any)[c.toString()]
+      if (globalHasDep || !p) {
+        return
+      }
+      const resolved = c.resolve()
+      if (!resolved) {
+        return
+      }
+      require(resolved)
+    })
 
     this.nodeExtractor!.requireEntrypoint()
 
     // TODO: we don't need to hard code this
-    const { default: App } = (global as any)['simple@1.x']
+    const { default: App } = (global as any)[project.root.toString()]
 
     // TODO: Figure out a way to the error come from the router
     return React.createElement(App, { name, data, error: null } as any)

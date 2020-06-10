@@ -4,7 +4,7 @@ import { ResolvedPage } from '../../../components/page'
 import { PublicPaths } from '../../../components/publicPaths'
 import { Compiler, CompilerOptions } from '../../compiler'
 import { Plugin } from '../../plugin'
-import { LifeCycle } from '../../project'
+import { LifeCycle, Project } from '../../project'
 
 const LIFECYCLE = 'serve'
 
@@ -15,21 +15,20 @@ export type HtmlCompilerOptions<T> = Omit<
   plugins: Array<
     new (options: HtmlPluginOptions) => HtmlPlugin<T> | HtmlFrameworkPlugin<T>
   >
-  options: Omit<HtmlPluginOptions, 'assetsDist'>
+  options: Omit<HtmlPluginOptions, 'assetsDist' | 'project'>
 }
 
 const assetsDistForLifecycle = (root: string, lifecycle: LifeCycle) => {
   if (lifecycle === 'build') {
     return {
-      webnew: join(root, 'build/es6'),
-      nodejs: join(root, 'build/cjs'),
+      web: join(root, 'build/web'),
+      node: join(root, 'build/node'),
     }
   }
   if (lifecycle === 'bundle') {
     return {
-      webnew: join(root, 'bundle/webnew'),
-      webold: join(root, 'bundle/webold'),
-      nodejs: join(root, 'build/cjs'),
+      web: join(root, 'bundle/web'),
+      legacy: join(root, 'bundle/web-legacy'),
     }
   }
   throw new Error('💣 Targeting this lifecycle makes no sense')
@@ -42,6 +41,7 @@ export class HtmlCompiler<T> extends Compiler<HtmlPlugin<T>> {
     super({ project, plugins: [], target: LIFECYCLE })
     const fullOptions = {
       ...options,
+      project,
       assetsDist: assetsDistForLifecycle(project.dist, options.lifecycleTarget),
     }
     this.plugins = plugins.map((P) => new P(fullOptions))
@@ -94,12 +94,13 @@ export class HtmlCompiler<T> extends Compiler<HtmlPlugin<T>> {
 }
 
 interface AssetsDist {
-  webnew: string
-  nodejs: string
-  webold?: string
+  web: string
+  legacy?: string
+  node?: string
 }
 
 export interface HtmlPluginOptions {
+  project: Project
   mode: 'production' | 'development'
   lifecycleTarget: 'build' | 'bundle'
   stats: any
@@ -114,15 +115,15 @@ export abstract class HtmlPlugin<T> extends Plugin {
     super({ target: LIFECYCLE })
   }
 
-  public render = (element: T): T => element
+  public abstract render = (element: T): T => element
 
-  public getScriptTags = () => ''
+  public abstract getScriptTags = () => ''
 
-  public getStyleTags = () => ''
+  public abstract getStyleTags = () => ''
 
-  public getLinkTags = () => ''
+  public abstract getLinkTags = () => ''
 
-  public getMetaTags = () => ''
+  public abstract getMetaTags = () => ''
 }
 
 export abstract class HtmlFrameworkPlugin<T> extends HtmlPlugin<T> {

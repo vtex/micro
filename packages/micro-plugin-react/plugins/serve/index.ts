@@ -79,6 +79,7 @@ class Html extends HtmlFrameworkPlugin<JSX.Element> {
 
     this.nodeExtractor!.requireEntrypoint()
 
+    // TODO: we don't need to hard code this
     const { default: App } = (global as any)['simple@1.x']
 
     // TODO: Figure out a way to the error come from the router

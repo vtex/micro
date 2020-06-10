@@ -8,7 +8,7 @@ interface Props {
   data: any
 }
 
-const AsyncPage = loadable<Props>(() => import(`./pages/reactOnly`))
+const AsyncPage = loadable<Props>(({ name }) => import(`./pages/${name}`))
 
 const Page: React.SFC<Props> = ({ name, data }) => {
   return (

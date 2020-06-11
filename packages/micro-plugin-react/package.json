@@ -1,6 +1,6 @@
 {
   "name": "@vtex/micro-plugin-react",
-  "version": "1.1.1-alpha.22",
+  "version": "1.1.1-alpha.23",
   "license": "MIT",
   "micro": {
     "plugins": [
@@ -29,7 +29,7 @@
     "@loadable/component": "^5.12.0",
     "@loadable/server": "^5.12.0",
     "@loadable/webpack-plugin": "^5.12.0",
-    "@vtex/micro-core": "^1.1.1-alpha.22",
+    "@vtex/micro-core": "^1.1.1-alpha.23",
     "babel-loader": "^8.1.0",
     "babel-merge": "^3.0.0",
     "css-loader": "^3.5.3",
@@ -58,7 +58,7 @@
     "@types/react-dom": "^16.9.7",
     "@types/terser-webpack-plugin": "^2.2.0",
     "@types/webpack-blocks": "^2.0.0",
-    "@vtex/micro-cli": "^1.1.1-alpha.22",
+    "@vtex/micro-cli": "^1.1.1-alpha.23",
     "typescript": "^3.9.5"
   }
 }

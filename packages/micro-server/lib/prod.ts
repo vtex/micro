@@ -2,7 +2,7 @@ import compress from 'compression'
 import express from 'express'
 import logger from 'morgan'
 
-import { Project, PublicPaths, RenderCompiler } from '@vtex/micro-core'
+import { Project, PublicPaths, RenderCompiler, walk } from '@vtex/micro-core'
 
 import { RenderHook, resolvePlugins } from './common'
 import { middleware as streamAssets } from './middlewares/assets'
@@ -62,6 +62,15 @@ export const startProdServer = async ({
     resolvePlugins(project, 'render'),
     resolvePlugins(project, 'route'),
   ])
+
+  // DFS to require all bundles needed to SSR
+  await walk(project.root, async (curr, p) => {
+    // We don't need to require the root project
+    if (p === null) {
+      return
+    }
+    await curr.getHook('components' as any)
+  })
 
   const routerMiddleware = await router(project, routerPlugins, publicPaths)
   const contextMiddleware = context({

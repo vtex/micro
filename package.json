@@ -55,5 +55,10 @@
   },
   "resolutions": {
     "webpack": "next"
+  },
+  "dependenciesMeta": {
+    "webpack": {
+      "unplugged": true
+    }
   }
 }

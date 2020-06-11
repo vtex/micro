@@ -1,2 +1,3 @@
-export * from './plugins/bundle/modules/purgeCSS'
-export * from './plugins/bundle/modules/htmlTags'
+export * from './lib/extractCSS'
+export * from './lib/htmlTags'
+export * from './lib/purgeCSS'

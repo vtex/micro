@@ -1,18 +1,16 @@
-import { LoadableComponent } from '@loadable/component'
 import { LocationDescriptorObject } from 'history'
 import React from 'react'
 import { matchPath, Route, useLocation } from 'react-router-dom'
 
-import { inflight, join, Runtime, RuntimeData } from '@vtex/micro-plugin-react'
+import {
+  inflight,
+  join,
+  Runtime,
+  RuntimeData,
+} from '@vtex/micro-plugin-react/components'
 
 import { FetchCurrentPage, isPage, Page } from '../Page'
-import {
-  AsyncPageProps,
-  MicroRouterContext,
-  PageProps,
-  RouterProps,
-  RouterStateModifier,
-} from './Router'
+import { MicroRouterContext, RouterProps, RouterStateModifier } from './Router'
 
 interface RouterState extends RouterStateModifier {
   assets: Set<string>
@@ -23,8 +21,6 @@ interface RouterState extends RouterStateModifier {
 interface RouterDOMProps extends RouterProps {
   runtime: RuntimeData // root paths to prefetch
   location: LocationDescriptorObject // window location
-  InitialPage: React.ElementType<PageProps> // Page that was SSR
-  AsyncPage: LoadableComponent<AsyncPageProps> // Async Page loader
 }
 
 class PrivateRouterDOM extends React.Component<RouterDOMProps, RouterState> {
@@ -105,7 +101,7 @@ class PrivateRouterDOM extends React.Component<RouterDOMProps, RouterState> {
   }
 
   public render = () => {
-    const { data, InitialPage, AsyncPage, location } = this.props
+    const { name, data, AsyncPage, location } = this.props
     const { pages } = this.state
 
     const isInitialPage = matchPath(location.pathname ?? '', {
@@ -118,7 +114,7 @@ class PrivateRouterDOM extends React.Component<RouterDOMProps, RouterState> {
       return (
         <MicroRouterContext.Provider value={this.state}>
           <Route path={location.pathname}>
-            <InitialPage data={data.data} />
+            <AsyncPage name={name} data={data.data} />
           </Route>
         </MicroRouterContext.Provider>
       )
@@ -165,9 +161,9 @@ type InjectionProps = Omit<RouterDOMProps, 'runtime' | 'location'>
 // only I know how to inject runtime and location to it, I've created
 // this simple component
 export const RouterDOM: React.SFC<InjectionProps> = ({
+  name,
   data,
   error,
-  InitialPage,
   AsyncPage,
 }) => {
   const location = useLocation()
@@ -177,9 +173,9 @@ export const RouterDOM: React.SFC<InjectionProps> = ({
     <PrivateRouterDOM
       runtime={runtime}
       location={location}
+      name={name}
       data={data}
       error={error}
-      InitialPage={InitialPage}
       AsyncPage={AsyncPage}
     />
   )

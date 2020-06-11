@@ -1,3 +1,4 @@
+import { LoadableComponent } from '@loadable/component'
 import { LocationDescriptorObject } from 'history'
 import React from 'react'
 
@@ -9,11 +10,14 @@ export interface PageProps {
 
 export interface AsyncPageProps extends PageProps {
   name: string
+  data: string
 }
 
 export interface RouterProps {
-  data: Page
+  AsyncPage: LoadableComponent<AsyncPageProps>
+  name: string
   error: any
+  data: Page
 }
 
 export interface RouterStateModifier {

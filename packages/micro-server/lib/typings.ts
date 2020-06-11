@@ -1,16 +1,15 @@
-import express, { NextFunction, Request, Response } from 'express'
-import { Stats } from 'webpack'
+import { NextFunction, Request, Response } from 'express'
 
-import { HtmlCompiler, ResolvedPage } from '@vtex/micro-core'
+import { RenderCompiler, ResolvedPage } from '@vtex/micro-core'
 
 interface Locals {
-  compiler: HtmlCompiler<unknown>
+  compiler: RenderCompiler<unknown>
   route: {
     page: ResolvedPage<any>
     path: string
   }
-  webpackStats?: {
-    stats: Stats[]
+  webpack?: {
+    devMiddleware: any
   }
 }
 
@@ -21,5 +20,3 @@ export type Res = Omit<Response, 'locals'> & {
 export type Req = Request
 
 export type Next = NextFunction
-
-// export default express

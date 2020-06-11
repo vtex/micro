@@ -1,9 +1,37 @@
-import 'vtex-tachyons/tachyons.css'
+import loadable from '@loadable/component'
+import React from 'react'
 
-import { LoadMicroComponent } from '@vtex/micro-plugin-react'
-import { withRouter } from '@vtex/micro-plugin-react-router'
+import { Link, NavLink } from '@vtex/micro-plugin-react-router/components'
 
-import { AsyncImport } from '../components/asyncPages'
-import Page from '../components/pages/search'
+import { Layout } from '../components/layout'
+import { Loading } from '../components/loading'
+import { PlaceHolder } from '../components/placeholder'
 
-export default LoadMicroComponent(withRouter(Page, AsyncImport))
+const BelowTheFold = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "BelowTheFold" */
+      /* webpackPreload: true */
+      '../components/hugeComponent1'
+    ),
+  { ssr: false }
+)
+
+interface Props {
+  data: {
+    menu: Record<string, string>
+  }
+  error: any
+}
+
+const Page: React.SFC<Props> = ({ data }) => {
+  const { menu } = data
+  return (
+    <Layout menu={menu} NavLink={NavLink} Link={Link}>
+      <PlaceHolder />
+      <BelowTheFold fallback={<Loading />} />
+    </Layout>
+  )
+}
+
+export default Page

@@ -4,7 +4,7 @@ import { outputFile, readJSON } from 'fs-extra'
 
 import { genManifest, genTSConfig, PackageStructure } from '@vtex/micro-core'
 
-import { prettyPrint } from '../../common/print'
+import { prettyLog } from '../../common/print'
 
 interface Options {
   dry?: boolean
@@ -31,10 +31,10 @@ const main = async ({ dry, d }: Options) => {
 
   if (dryRun) {
     console.log(PackageStructure.manifest)
-    prettyPrint(manifest)
+    prettyLog(manifest)
     console.log('')
     console.log(PackageStructure.tsconfig)
-    prettyPrint(tsconfig)
+    prettyLog(tsconfig)
     return
   }
 

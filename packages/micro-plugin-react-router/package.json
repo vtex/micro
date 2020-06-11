@@ -5,20 +5,18 @@
   "micro": {
     "plugins": [
       "@vtex/micro-core",
-      "@vtex/micro-plugin-react"
+      "@vtex/micro-plugin-react",
+      "@vtex/micro-plugin-react-router"
     ]
   },
   "scripts": {
     "build": "yarn run micro build",
-    "watch": "yarn run micro link",
+    "watch": "yarn run micro dev",
     "clean": "rm -r dist",
     "prepublish": "yarn build"
   },
   "sideEffects": false,
-  "main": "./dist/build/cjs/index.js",
-  "module": "./dist/build/es6/index.js",
   "browser": "./components/index.ts",
-  "types": "./index.ts",
   "dependencies": {
     "@babel/core": "^7.10.2",
     "@vtex/micro-core": "^1.1.1-alpha.22",
@@ -27,7 +25,7 @@
     "history": "^4.10.1",
     "react-in-viewport": "^1.0.0-alpha.11",
     "react-router-dom": "^5.1.2",
-    "webpack": "next",
+    "webpack": "^4.43.0",
     "webpack-blocks": "^2.1.0"
   },
   "devDependencies": {
@@ -42,8 +40,7 @@
     "typescript": "^3.9.5"
   },
   "peerDependencies": {
-    "@loadable/component": "*",
-    "react": "*",
-    "react-dom": "*"
+    "@lodable/component": "*",
+    "react": "*"
   }
 }

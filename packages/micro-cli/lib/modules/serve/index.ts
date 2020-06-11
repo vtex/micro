@@ -46,14 +46,19 @@ const main = async (options: Options) => {
       port,
     })
   } else if (mode === 'development') {
-    console.log(`🦄 [${lifecycle}]: Starting DevServer`)
+    console.log(
+      `🦄 Reading build state on ${project.dist.replace(project.rootPath, '.')}`
+    )
+    const statsJson = await readJSON(join(project.dist, 'build', BUILD))
 
-    await startDevServer({
+    console.log(`🦄 [${lifecycle}]: Starting ProdServer`)
+    await startProdServer({
       publicPaths: PUBLIC_PATHS,
+      statsJson,
       project,
-      port,
       host: HOST,
-    } as any)
+      port,
+    })
   }
 }
 

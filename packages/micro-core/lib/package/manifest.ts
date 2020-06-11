@@ -1,7 +1,6 @@
 import { pick } from '../common/pick'
 import { isSemver } from '../common/semver'
 import { MICRO_BUILD_DIR } from '../constants'
-import { lifecycle } from '../lifecycles/build'
 
 type MicroOptions = {
   plugins: string[]
@@ -9,21 +8,17 @@ type MicroOptions = {
 
 export const BaseManifest = {
   sideEffects: false,
-  main: `./${MICRO_BUILD_DIR}/${lifecycle}/cjs/index.js`,
-  module: `./${MICRO_BUILD_DIR}/${lifecycle}/es6/index.js`,
-  browser: './components/index.ts',
   micro: {
     plugins: [],
   } as MicroOptions,
   scripts: {
     build: 'yarn run micro build',
-    watch: 'yarn run micro link',
+    watch: 'yarn run micro dev',
     clean: `rm -r ${MICRO_BUILD_DIR}`,
     prepublish: 'yarn build',
   },
 }
 
-const necessary = pick(BaseManifest, ['main'])
 const required = pick(BaseManifest, ['micro'])
 
 type Base = typeof BaseManifest
@@ -41,10 +36,7 @@ const isMicro = (x: any): x is MicroOptions => Array.isArray(x?.plugins)
 
 export const isManifest = (obj: any): obj is Manifest => {
   return (
-    typeof obj?.name === 'string' &&
-    isSemver(obj.version) &&
-    obj.main === BaseManifest.main &&
-    isMicro(obj.micro)
+    typeof obj?.name === 'string' && isSemver(obj.version) && isMicro(obj.micro)
   )
 }
 
@@ -59,10 +51,7 @@ export const genManifest = (
     title,
     license,
     micro,
-    main,
-    types,
-    module,
-    browser,
+    sideEffects,
     type,
     scripts,
     dependencies,
@@ -72,7 +61,6 @@ export const genManifest = (
   } = {
     ...required,
     ...partial,
-    ...necessary,
   } as any
 
   return {
@@ -84,13 +72,11 @@ export const genManifest = (
     license,
     micro,
     scripts: {
-      ...BaseManifest.scripts,
       ...scripts,
+      ...BaseManifest.scripts,
     },
-    main,
-    types,
+    sideEffects,
     module,
-    browser,
     dependencies,
     devDependencies,
     peerDependencies,

@@ -1,21 +1,29 @@
 import { canUseDOM } from 'exenv'
 
-import { PublicPaths } from '@vtex/micro-core'
+import { Page, PublicPaths } from '@vtex/micro-core'
 
 export interface RuntimeData {
   publicPaths: PublicPaths
+  page: {
+    name: string
+  }
 }
 
 const runtimeContainerId = '__MICRO_REACT_RUNTIME__'
 
-export const withRuntimeTags = (runtime: RuntimeData) =>
-  `<script id="${runtimeContainerId}" type="application/json">${JSON.stringify(
-    runtime.publicPaths
-  )}</script>`
+export const withRuntimeTags = ({ publicPaths, page: { name } }: RuntimeData) =>
+  `<script id="${runtimeContainerId}" type="application/json">${JSON.stringify({
+    publicPaths,
+    page: { name },
+  })}</script>`
 
 const isRuntimeData = (obj: any): obj is RuntimeData => {
   const paths = obj?.publicPaths
-  return typeof paths?.assets === 'string' && typeof paths?.data === 'string'
+  return (
+    typeof paths?.assets === 'string' &&
+    typeof paths?.data === 'string' &&
+    typeof obj?.page?.name === 'string'
+  )
 }
 
 const ensureRuntime = (obj: any): RuntimeData => {
@@ -34,5 +42,5 @@ export const getRuntimeData = () => {
   )
   const dataElement = document.getElementById(runtimeContainerId)
   const maybeRuntime = JSON.parse(dataElement?.textContent ?? '{}')
-  return ensureRuntime({ publicPaths: maybeRuntime })
+  return ensureRuntime(maybeRuntime)
 }

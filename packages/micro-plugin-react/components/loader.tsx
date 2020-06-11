@@ -36,7 +36,7 @@ const renderOrHydrate = (App: React.ReactType) => async () => {
   const AppWithContext = (
     <StrictMode>
       <Runtime.Provider value={runtimeData}>
-        <App data={data} error={error} />
+        <App name={runtimeData.page.name} data={data} error={error} />
       </Runtime.Provider>
     </StrictMode>
   )
@@ -64,7 +64,7 @@ const renderOrHydrate = (App: React.ReactType) => async () => {
   printPerformance()
 }
 
-export const LoadMicroComponent = (App: React.ReactType) => {
+export const load = (App: React.ReactType) => {
   if (canUseDOM) {
     const renderOnce = once(renderOrHydrate(App))
     setTimeout(renderOnce, 6e3)

@@ -1,4 +1,4 @@
-import { prettyPrint } from '../../../common/print'
+import { prettyLog } from '../../../common/print'
 import { getBundleCompiler } from '../common'
 
 interface Options {
@@ -7,9 +7,12 @@ interface Options {
 
 const main = async (options: Options) => {
   const compiler = await getBundleCompiler(options)
-  const configs = await compiler.getWebpackConfig('webnew')
+  const configs = await Promise.all([
+    compiler.getWebpackConfig('web'),
+    compiler.getWebpackConfig('web-legacy'),
+  ])
 
-  prettyPrint(configs)
+  prettyLog(configs)
 }
 
 export default main

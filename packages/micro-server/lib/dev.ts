@@ -1,10 +1,12 @@
 import compress from 'compression'
 import express from 'express'
 import logger from 'morgan'
+import { MultiCompiler } from 'webpack'
+import webpackDevMiddleware from 'webpack-dev-middleware'
 
-import { HtmlCompiler, Project, PublicPaths } from '@vtex/micro-core'
+import { Project, PublicPaths, RenderCompiler, walk } from '@vtex/micro-core'
 
-import { HtmlPlugin, resolvePlugins, RouterPlugin } from './common'
+import { RenderHook, resolvePlugins } from './common'
 import { middleware as streamAssets } from './middlewares/assets'
 import { middleware as respondData } from './middlewares/data'
 import { middleware as headers } from './middlewares/headers'
@@ -13,7 +15,7 @@ import { devSSR } from './middlewares/ssr'
 import { Next, Req, Res } from './typings'
 
 export interface DevServerOptions {
-  statsJson: any // TODO: Fix this as any
+  compiler: MultiCompiler
   project: Project
   publicPaths: PublicPaths
   host: string
@@ -23,20 +25,20 @@ export interface DevServerOptions {
 const context = ({
   project,
   plugins,
-  statsJson,
   publicPaths,
 }: {
   project: Project
-  plugins: Array<NonNullable<HtmlPlugin>>
-  statsJson: any
+  plugins: Array<NonNullable<RenderHook>>
   publicPaths: PublicPaths
 }) => (req: Req, res: Res, next: Next) => {
   const {
     locals: {
       route: { page, path },
+      webpack,
     },
   } = res
-  res.locals.compiler = new HtmlCompiler({
+  const statsJson = webpack?.devMiddleware?.stats?.toJson()
+  res.locals.compiler = new RenderCompiler({
     project,
     plugins,
     options: {
@@ -53,24 +55,27 @@ const context = ({
 
 export const startDevServer = async ({
   publicPaths,
-  statsJson,
+  compiler,
   project,
   host,
   port,
 }: DevServerOptions) => {
-  const plugins = await resolvePlugins(project)
-  const htmlPlugins = plugins
-    .map((p) => p?.html)
-    .filter((p): p is NonNullable<HtmlPlugin> => !!p)
-  const routerPlugins = plugins
-    .map((p) => p?.router)
-    .filter((p): p is NonNullable<RouterPlugin> => !!p)
+  const renderPlugins = await resolvePlugins(project, 'render')
+  const routerPlugins = await resolvePlugins(project, 'route')
+
+  // DFS to require all bundles needed to SSR
+  await walk(project.root, async (curr, p) => {
+    // We don't need to require the root project
+    if (p === null) {
+      return
+    }
+    await curr.getHook('components' as any)
+  })
 
   const routerMiddleware = await router(project, routerPlugins, publicPaths)
   const contextMiddleware = context({
     project,
-    plugins: htmlPlugins,
-    statsJson,
+    plugins: renderPlugins,
     publicPaths,
   })
 
@@ -91,12 +96,18 @@ export const startDevServer = async ({
     contextMiddleware,
     respondData
   )
-  app.get(
-    '/*',
+
+  // TODO: Why do we need this as any ?
+  app.use(
+    webpackDevMiddleware(compiler, {
+      serverSideRender: true,
+      writeToDisk: true,
+      publicPath: publicPaths.assets,
+    }),
     headers,
     routerMiddleware,
     contextMiddleware,
-    devSSR(publicPaths)
+    devSSR
   )
 
   app.listen(port, () => console.log(`🦄 DevServer is UP on ${host}:${port}`))

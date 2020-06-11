@@ -6,7 +6,7 @@ import { ensureDir } from 'fs-extra'
 import {
   LifeCycle,
   MICRO_BUILD_DIR,
-  Plugins,
+  Hooks,
   Project,
   walk,
 } from '@vtex/micro-core'
@@ -18,7 +18,7 @@ export const newProject = async () => {
 
   console.log('🦄 Resolving dependencies')
   await project.resolvePackages()
-  walk(project.root, (curr) => {
+  await walk(project.root, async (curr) => {
     console.info(`📦 Micro package found: ${curr.toString()}`)
   })
 
@@ -35,34 +35,21 @@ export const ensureDist = async (target: string, path: string) => {
 }
 
 const reportPlugin = (lifecycle: string, pkg: string) => {
-  console.log(`🔌 [${lifecycle}]: Plugin found ${pkg}`)
+  console.log(`🔌 [${lifecycle}]: Plugin found ${chalk.blue(pkg)}`)
 }
 
 export const resolvePlugins = async <T extends LifeCycle>(
   project: Project,
   lifecycle: T
-): Promise<Array<NonNullable<Plugins[T]>>> => {
+): Promise<Array<NonNullable<Hooks[T]>>> => {
   console.log(`🦄 [${lifecycle}]: Resolving plugins`)
-  const plugins = await project.resolvePlugins(lifecycle)
+  const resolvedPlugins = await project.resolvePlugins(lifecycle)
 
-  for (const pkg of Object.keys(plugins)) {
-    reportPlugin(lifecycle, pkg)
+  for (const [pluginName] of resolvedPlugins) {
+    reportPlugin(lifecycle, pluginName)
   }
 
-  return Object.values(plugins)
-}
-
-export const resolveSelfPlugin = async <T extends LifeCycle>(
-  project: Project,
-  lifecycle: T
-): Promise<Plugins[T] | null> => {
-  const plugin = await project.getSelfPlugin(lifecycle)
-
-  if (plugin) {
-    reportPlugin(lifecycle, project.root.manifest.name)
-  }
-
-  return plugin
+  return resolvedPlugins.map(([, plugin]) => plugin)
 }
 
 export const loadProject = () => {}

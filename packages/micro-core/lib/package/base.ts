@@ -1,34 +1,29 @@
 import { parse } from '../common/semver'
-import { BuildPlugin, BuildPluginOptions } from '../lifecycles/build'
-import { BundlePlugin, BundlePluginOptions } from '../lifecycles/bundle'
+import { BuildHook, BuildHookOptions } from '../lifecycles/build'
+import { BundleHook, BundleHookOptions } from '../lifecycles/bundle'
 import {
-  HtmlFrameworkPlugin,
-  HtmlPlugin,
-  HtmlPluginOptions,
-} from '../lifecycles/serve/html'
-import { RoutePlugin, RoutePluginOptions } from '../lifecycles/serve/router'
+  RenderFrameworkHook,
+  RenderHook,
+  RenderHookOptions,
+} from '../lifecycles/render'
+import { RouterHook, RouteHookOptions } from '../lifecycles/route'
+import { LifeCycle } from '../project'
 import { Manifest } from './manifest'
 import { TSConfig } from './tsconfig'
-import { LifeCycle } from '../project'
 
-export interface Plugins {
-  serve?: {
-    html?: new (options: HtmlPluginOptions) =>
-      | HtmlPlugin<any>
-      | HtmlFrameworkPlugin<any>
-    router?: new (options: RoutePluginOptions) => RoutePlugin
-    assets?: (x: string) => string
-  }
-  bundle?: new (options: BundlePluginOptions) => BundlePlugin
-  build?: new (options: BuildPluginOptions) => BuildPlugin
+export interface Hooks {
+  render?: new (options: RenderHookOptions) =>
+    | RenderHook<any>
+    | RenderFrameworkHook<any>
+  route?: new (options: RouteHookOptions) => RouterHook
+  bundle?: new (options: BundleHookOptions) => BundleHook
+  build?: new (options: BuildHookOptions) => BuildHook
 }
 
 export const PackageStructure = {
-  lib: 'lib',
-  pages: 'pages',
-  router: 'router',
   index: 'index.ts',
-  plugins: 'plugins',
+  hooks: 'hooks',
+  pages: 'pages',
   components: 'components',
   manifest: 'package.json',
   tsconfig: 'tsconfig.json',
@@ -42,8 +37,14 @@ export abstract class Package {
   public dependencies: Package[] = []
   public structure = PackageStructure
 
-  public abstract resolve = async (projectRoot: string): Promise<void> => {
+  public abstract resolveDepTree = async (
+    projectRoot: string
+  ): Promise<void> => {
     throw new Error(`💣 not implemented: ${projectRoot}`)
+  }
+
+  public abstract resolve = (): string | null => {
+    throw new Error(`💣 not implemented`)
   }
 
   public abstract hydrate = async (projectRoot: string): Promise<void> => {
@@ -60,15 +61,18 @@ export abstract class Package {
     throw new Error(`💣 not implemented: ${targets}`)
   }
 
-  public abstract getPlugin = async <T extends LifeCycle>(
+  public abstract pathExists = async (target: string): Promise<boolean> => {
+    throw new Error(`💣 not implemented: ${target}`)
+  }
+
+  public abstract getHook = async <T extends LifeCycle>(
     _target: T
-  ): Promise<Plugins[T]> => {
+  ): Promise<Hooks[T]> => {
     throw new Error('💣 not implemented')
   }
 
   public getGlobby = (...targets: PackageRootEntries[]) =>
     `@(${targets.map((t) => PackageStructure[t]).join('|')})?(/**/*.ts?(x))`
 
-  public toString = () =>
-    `${this.manifest.name}@${parse(this.manifest.version).major}.x`
+  public toString = () => `${this.manifest.name}@${this.manifest.version}`
 }

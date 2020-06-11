@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
-    "typeRoots": [
-      "lib/typings",
-      "router/typings",
-      "plugins/typings",
-      "components/typings"
-    ],
+    "types": ["node"],
+    "typeRoots": ["typings"],
     "target": "es2019",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -14,18 +10,10 @@
     "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": false,
+    "resolveJsonModule": true,
     "skipLibCheck": true,
     "declaration": true
   },
-  "include": [
-    "index.ts",
-    "lib",
-    "router",
-    "plugins",
-    "components"
-  ],
-  "exclude": [
-    "dist",
-    "pages"
-  ]
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["dist"]
 }

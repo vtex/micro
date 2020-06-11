@@ -8,6 +8,13 @@ export const tree = {
         type: 'boolean',
       },
     ],
+    report: {
+      description: 'Generate a report using the web build',
+    },
+    config: {
+      description:
+        'Print webpack config that would be generated in a normal build',
+    },
   },
   bundle: {
     description: 'Access for Bundle Micro lifecycle',
@@ -26,7 +33,7 @@ export const tree = {
         'Print webpack config that would be generated in a normal bundle assembly',
     },
   },
-  link: {
+  dev: {
     description: 'Develop a Micro project',
     options: [],
   },

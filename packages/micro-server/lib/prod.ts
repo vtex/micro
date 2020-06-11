@@ -2,9 +2,9 @@ import compress from 'compression'
 import express from 'express'
 import logger from 'morgan'
 
-import { HtmlCompiler, Project, PublicPaths } from '@vtex/micro-core'
+import { Project, PublicPaths, RenderCompiler } from '@vtex/micro-core'
 
-import { HtmlPlugin, resolvePlugins, RouterPlugin } from './common'
+import { RenderHook, resolvePlugins } from './common'
 import { middleware as streamAssets } from './middlewares/assets'
 import { middleware as respondData } from './middlewares/data'
 import { middleware as headers } from './middlewares/headers'
@@ -27,7 +27,7 @@ const context = ({
   publicPaths,
 }: {
   project: Project
-  plugins: Array<NonNullable<HtmlPlugin>>
+  plugins: Array<NonNullable<RenderHook>>
   statsJson: any
   publicPaths: PublicPaths
 }) => (req: Req, res: Res, next: Next) => {
@@ -36,7 +36,7 @@ const context = ({
       route: { page, path },
     },
   } = res
-  res.locals.compiler = new HtmlCompiler({
+  res.locals.compiler = new RenderCompiler({
     project,
     plugins,
     options: {
@@ -58,18 +58,15 @@ export const startProdServer = async ({
   host,
   port,
 }: ProdServerOptions) => {
-  const plugins = await resolvePlugins(project)
-  const htmlPlugins = plugins
-    .map((p) => p?.html)
-    .filter((p): p is NonNullable<HtmlPlugin> => !!p)
-  const routerPlugins = plugins
-    .map((p) => p?.router)
-    .filter((p): p is NonNullable<RouterPlugin> => !!p)
+  const [renderPlugins, routerPlugins] = await Promise.all([
+    resolvePlugins(project, 'render'),
+    resolvePlugins(project, 'route'),
+  ])
 
   const routerMiddleware = await router(project, routerPlugins, publicPaths)
   const contextMiddleware = context({
     project,
-    plugins: htmlPlugins,
+    plugins: renderPlugins,
     statsJson,
     publicPaths,
   })

@@ -3,18 +3,19 @@ import { join } from 'path'
 
 import { parse } from './common/semver'
 import { MICRO_BUILD_DIR } from './constants'
-import { Package, PackageRootEntries, Plugins } from './package/base'
+import { Hooks, Package, PackageRootEntries } from './package/base'
 import { PnpPackage } from './package/pnp'
 
-export type LifeCycle = 'serve' | 'bundle' | 'build'
+export type LifeCycle = 'render' | 'route' | 'bundle' | 'build'
 
-export type WalkFn = (r: Package, p: Package | null) => void
+export type WalkFn = (r: Package, p: Package | null) => Promise<void>
+export type WalkFnSync = (r: Package, p: Package | null) => void
 
 export interface ProjectOptions {
   rootPath: string
 }
 
-const walkRec = ({
+const walkRec = async ({
   root,
   parent,
   fn,
@@ -30,18 +31,51 @@ const walkRec = ({
   if (seen.has(node)) {
     return
   }
-
   seen.add(node)
+
+  await fn(root, parent)
+
+  await Promise.all(
+    root.dependencies.map((dependency) =>
+      walkRec({ root: dependency, parent: root, fn, seen })
+    )
+  )
+}
+
+export const walk = async (root: Package, fn: WalkFn) => {
+  const seen = new Set<string>()
+  await walkRec({ root, parent: null, fn, seen })
+  return root
+}
+
+const walkRecSync = ({
+  root,
+  parent,
+  fn,
+  seen,
+}: {
+  root: Package
+  parent: Package | null
+  fn: WalkFnSync
+  seen: Set<string>
+}) => {
+  const node = root.toString()
+
+  if (seen.has(node)) {
+    return
+  }
+  seen.add(node)
+
   fn(root, parent)
 
   for (const dependency of root.dependencies) {
-    walkRec({ root: dependency, parent: root, fn, seen })
+    walkRecSync({ root: dependency, parent: root, fn, seen })
   }
 }
 
-export const walk = (root: Package, fn: WalkFn) => {
+export const walkSync = (root: Package, fn: WalkFnSync) => {
   const seen = new Set<string>()
-  walkRec({ root, parent: null, fn, seen })
+  walkRecSync({ root, parent: null, fn, seen })
   return root
 }
 
@@ -66,74 +100,62 @@ export class Project {
       this.root,
       '💣 Could not find a package. Did you forget to resolve/restore packages ?'
     )
-    let promises: Array<Promise<string[]>> = []
-    walk(this.root, (curr) => {
-      const filtered = curr.getFiles(...targets)
-      promises = promises.concat(filtered)
+    let files: string[] = []
+    await walk(this.root, async (curr) => {
+      const f = await curr.getFiles(...targets)
+      files = files.concat(f)
     })
-    const files = await Promise.all(promises)
-    return files.flat()
+    return files
   }
 
   public resolvePlugins = async <T extends LifeCycle>(
     target: T
-  ): Promise<Record<string, NonNullable<Plugins[T]>>> => {
+  ): Promise<Array<[string, NonNullable<Hooks[T]>]>> => {
     assert(
       this.root,
       '💣 Could not find a package. Did you forget to resolve/restore packages ?'
     )
+    const { name } = this.root.manifest
     const dependencies = this.root.manifest.dependencies ?? {}
     const locators: string[] | undefined = this.root!.manifest.micro.plugins
     if (!locators) {
-      return {}
+      return []
     }
     const packages: Package[] = []
-    walk(this.root, async (curr) => {
+    await walk(this.root, async (curr) => {
       const index = locators.findIndex((x) => curr.manifest.name === x)
+
       if (index < 0) {
         return
       }
-      const maybeVersion = dependencies[curr.manifest.name]
-      // eslint-disable-next-line vtex/prefer-early-return
-      if (
-        maybeVersion &&
-        parse(maybeVersion).major === parse(curr.manifest.version).major
-      ) {
-        const idx = locators.findIndex((x) => curr.manifest.name === x)
-        packages.splice(idx, 0, curr)
-      }
-    })
-    const plugins = await packages.reduce(async (accPromise, pkg) => {
-      const [acc, plugin] = await Promise.all([
-        accPromise,
-        pkg.getPlugin(target),
-      ])
-      if (plugin) {
-        acc[pkg.manifest.name] = plugin as NonNullable<Plugins[T]>
-      }
-      return acc
-    }, Promise.resolve({} as Record<string, NonNullable<Plugins[T]>>))
-    return plugins
-  }
 
-  public getSelfPlugin = async <T extends LifeCycle>(
-    target: T
-  ): Promise<NonNullable<Plugins[T]> | null> => {
-    const { plugins } = this.root!.manifest.micro
-    const index = plugins?.findIndex((p) => p === this.root.manifest.name)
-    if (index !== undefined && index > -1) {
-      const targetPlugin = await this.root.getPlugin(target)
-      if (targetPlugin) {
-        return targetPlugin as NonNullable<Plugins[T]>
+      const maybeVersion = dependencies[curr.manifest.name] || ''
+      const versionsMatch =
+        maybeVersion.startsWith('workspace:') ||
+        parse(maybeVersion).major === parse(curr.manifest.version).major
+      const isSelfPlugin = curr.manifest.name === name
+
+      if (!isSelfPlugin && !versionsMatch) {
+        return
       }
-    }
-    return null
+
+      packages.splice(index, 0, curr)
+    })
+    const maybePlugins = await Promise.all(
+      packages.map(async (pkg) => [
+        pkg.manifest.name,
+        await pkg.getHook(target),
+      ])
+    )
+    return maybePlugins.filter(
+      (x): x is [string, NonNullable<Hooks[T]>] => !!x[1]
+    )
   }
 
   public resolvePackages = async (linker: 'pnp' | 'node-modules' = 'pnp') => {
     assert(linker === 'pnp', '💣 Only NodeModules linker is implemented yet') // TODO: implement other linkers
     this.root = new PnpPackage()
-    await this.root.resolve(this.rootPath)
+    await this.root.resolveDepTree(this.rootPath)
   }
 
   public toString = () => {

@@ -1,16 +1,9 @@
 import React from 'react'
 
-import { unpack } from '../Page'
-import {
-  MicroRouterContext,
-  PageProps,
-  RouterProps,
-  RouterStateModifier,
-} from './Router'
+import { MicroRouterContext, RouterProps, RouterStateModifier } from './Router'
+import { unpack } from '../utils/page'
 
-interface RouterSSRProps extends RouterProps {
-  InitialPage: React.ElementType<PageProps>
-}
+type RouterSSRProps = RouterProps
 
 export class RouterSSR extends React.Component<
   RouterSSRProps,
@@ -29,10 +22,10 @@ export class RouterSSR extends React.Component<
   }
 
   public render = () => {
-    const { InitialPage } = this.props
+    const { AsyncPage, data, name } = this.props
     return (
       <MicroRouterContext.Provider value={this.state}>
-        <InitialPage data={unpack(this.props.data)} />
+        <AsyncPage name={name} data={unpack(data)} />
       </MicroRouterContext.Provider>
     )
   }

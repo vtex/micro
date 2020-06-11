@@ -2,18 +2,24 @@ import assert from 'assert'
 import { join } from 'path'
 
 import { readJSON } from 'fs-extra'
+import pnp from 'pnpapi'
 
 import { LifeCycle } from '../../project'
-import { Package, PackageRootEntries, Plugins } from '../base'
+import { Package, PackageRootEntries } from '../base'
 import { isManifest } from '../manifest'
-import { getLocatorFromPackageInWorkspace } from './common'
-import { createDepTree, globPnp, requirePnp } from './dfs'
+import {
+  getLocatorFromPackageInWorkspace,
+  globPnp,
+  pathExistsPnp,
+  pnpFS,
+} from './common'
+import { createDepTree } from './dfs'
 
 export class PnpPackage extends Package {
   public issuer = ''
 
   // TODO: Make it resolve based on major and not only on the package name
-  public resolve = async (projectRoot: string) => {
+  public resolveDepTree = async (projectRoot: string) => {
     const manifestPath = join(projectRoot, this.structure.manifest)
     const manifest = await readJSON(manifestPath)
     assert(
@@ -35,6 +41,9 @@ export class PnpPackage extends Package {
     this.tsconfig = resolved.tsconfig
   }
 
+  public resolve = () =>
+    pnp.resolveToUnqualified(this.manifest.name, this.issuer)
+
   public hydrate = (projectRoot: string) => {
     throw new Error(`💣 not implemented: ${projectRoot}`)
   }
@@ -43,19 +52,38 @@ export class PnpPackage extends Package {
     throw new Error(`💣 not implemented: ${projectRoot}`)
   }
 
-  public getPlugin = async (target: LifeCycle) => {
-    try {
-      const { default: plugins } = requirePnp<{ default: Plugins }>(
-        `plugins/${target}`,
-        this.manifest.name,
-        this.issuer
-      )
-      return plugins
-    } catch (err) {
+  public getHook = async (target: LifeCycle) => {
+    const unqualified = pnp.resolveToUnqualified(
+      this.manifest.name,
+      this.issuer
+    )
+    if (!unqualified) {
       return null
     }
+    const isGlobalExport = !(target === 'build' || target === 'bundle')
+    const path = isGlobalExport
+      ? `dist/build/${target}/index.js`
+      : `dist/build/cjs/hooks/${target}/index.js`
+
+    const locator = join(unqualified, path)
+
+    const exists = await pnpFS.existsPromise(locator)
+    if (!exists) {
+      return null
+    }
+
+    const required = require(locator)
+
+    const { default: exports } = isGlobalExport
+      ? (global as any)[`${this.toString()}/${target}`]
+      : required
+
+    return exports
   }
 
   public getFiles = async (...targets: PackageRootEntries[]) =>
     globPnp(this.manifest.name, this.issuer, this.getGlobby(...targets))
+
+  public pathExists = async (path: string) =>
+    pathExistsPnp(this.manifest.name, this.issuer, path)
 }

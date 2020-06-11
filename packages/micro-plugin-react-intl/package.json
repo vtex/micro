@@ -5,20 +5,17 @@
   "micro": {
     "plugins": [
       "@vtex/micro-core",
-      "@vtex/micro-plugin-react"
+      "@vtex/micro-plugin-react",
+      "@vtex/micro-plugin-react-intl"
     ]
   },
   "scripts": {
     "build": "yarn run micro build",
-    "watch": "yarn run micro link",
+    "watch": "yarn run micro dev",
     "clean": "rm -r dist",
     "prepublish": "yarn build"
   },
   "sideEffects": false,
-  "main": "./dist/build/cjs/index.js",
-  "module": "./dist/build/es6/index.js",
-  "browser": "./components/index.ts",
-  "types": "./index.ts",
   "dependencies": {
     "@babel/core": "^7.10.2",
     "@vtex/micro-core": "^1.1.1-alpha.22",

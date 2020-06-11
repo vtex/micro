@@ -8,3 +8,5 @@ export const PUBLIC_PATHS = {
   assets: '/assets/',
   data: '/api/',
 }
+
+export const MAX_RESPAWNS = 3

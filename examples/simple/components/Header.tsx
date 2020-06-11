@@ -1,5 +1,6 @@
-import { NavLinkProps } from '@vtex/micro-plugin-react-router'
 import React from 'react'
+
+import { NavLinkProps } from '@vtex/micro-plugin-react-router/components'
 
 interface Props extends Omit<NavLinkProps, 'to'> {
   to: string

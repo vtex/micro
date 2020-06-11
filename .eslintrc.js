@@ -23,7 +23,7 @@ module.exports = {
     },
     // Override for .ts components only
     {
-      files: 'packages/*/components/**/*',
+      files: ['packages/*/components/**/*', 'examples/*/components/**/*'],
       rules: {
         'no-console': 'off',
       },
@@ -35,6 +35,7 @@ module.exports = {
         'packages/micro-core/**/*',
         'packages/micro-cli/**/*',
         'packages/micro-server/**/*',
+        'examples/simple/**/*',
       ],
       rules: {
         'no-console': 'off',

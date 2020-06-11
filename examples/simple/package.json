@@ -5,27 +5,24 @@
   "micro": {
     "plugins": [
       "@vtex/micro-core",
-      "@vtex/micro-plugin-css",
       "@vtex/micro-plugin-react",
+      "simple",
+      "@vtex/micro-plugin-css",
       "@vtex/micro-plugin-assets",
-      "@vtex/micro-plugin-react-intl",
       "@vtex/micro-plugin-react-router",
-      "simple"
+      "@vtex/micro-plugin-react-intl"
     ]
   },
-  "private": true,
   "scripts": {
     "build": "yarn run micro build",
-    "watch": "yarn run micro link",
+    "watch": "yarn run micro dev",
     "clean": "rm -r dist",
     "prepublish": "yarn build"
   },
-  "main": "./dist/build/cjs/index.js",
-  "module": "./dist/build/es6/components/index.js",
+  "node": "./dist/build/node",
   "browser": "./components/index.ts",
   "dependencies": {
     "@babel/core": "^7.10.2",
-    "@loadable/component": "^5.12.0",
     "@vtex/micro-cli": "^1.1.1-alpha.22",
     "@vtex/micro-core": "^1.1.1-alpha.22",
     "@vtex/micro-plugin-assets": "^1.1.1-alpha.22",
@@ -33,8 +30,6 @@
     "@vtex/micro-plugin-react": "^1.1.1-alpha.22",
     "@vtex/micro-plugin-react-intl": "^1.1.1-alpha.22",
     "@vtex/micro-plugin-react-router": "^1.1.1-alpha.22",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
     "vtex-tachyons": "^3.2.0",
     "webpack": "next",
     "webpack-blocks": "^2.1.0"
@@ -46,7 +41,7 @@
     "@types/react-dom": "^16.9.7",
     "@types/webpack-blocks": "^2.0.0",
     "css-loader": "^3.5.3",
-    "snowpack": "^2.2.1",
     "typescript": "^3.9.5"
-  }
+  },
+  "private": true
 }

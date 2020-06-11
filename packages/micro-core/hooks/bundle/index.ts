@@ -19,6 +19,7 @@ import {
 } from 'webpack-blocks'
 
 import { BundleHook, BundleTarget } from '../../lib/lifecycles/bundle'
+import { webConfig } from '../build'
 
 export default class Bundle extends BundleHook {
   public getWebpackConfig = async (
@@ -31,6 +32,8 @@ export default class Bundle extends BundleHook {
       target,
       'webpack_internals'
     )
+    const configs = await webConfig(this.project)
+
     const block: Array<Block | Configuration> = [
       setMode(this.mode),
       setContext(this.project.rootPath),
@@ -68,11 +71,6 @@ export default class Bundle extends BundleHook {
           this.project.root.manifest.peerDependencies ?? {}
         ),
       }),
-      optimization({
-        runtimeChunk: {
-          name: 'webpack-runtime',
-        },
-      } as any), // TODO: why this as any ?
       env('development', [
         addPlugins([new TimeFixPlugin()]),
         sourceMaps('inline-source-map'),
@@ -92,6 +90,7 @@ export default class Bundle extends BundleHook {
           hints: 'warning',
         }),
       ]),
+      ...configs,
     ]
 
     return group([config, ...(block as any)])

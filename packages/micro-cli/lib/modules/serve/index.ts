@@ -35,7 +35,17 @@ const main = async (options: Options) => {
     console.log(
       `🦄 Reading build state on ${project.dist.replace(project.rootPath, '.')}`
     )
-    const statsJson = await readJSON(join(project.dist, 'bundle', BUILD))
+    const bundleStatsJson = await readJSON(join(project.dist, 'bundle', BUILD))
+    const buildStatsJson = await readJSON(join(project.dist, 'build', BUILD))
+
+    const pagesStatsJson = buildStatsJson.children.find(
+      (x: { name: string }) => x.name === 'pages'
+    )
+
+    const statsJson = {
+      ...bundleStatsJson,
+      children: [...bundleStatsJson.children, pagesStatsJson],
+    }
 
     console.log(`🦄 [${lifecycle}]: Starting ProdServer`)
     await startProdServer({

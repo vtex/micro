@@ -50,7 +50,7 @@ const nodeConfig = async (
   }),
 ]
 
-const webConfig = async (project: Project): Promise<Block[]> => [
+export const webConfig = async (project: Project): Promise<Block[]> => [
   entryPoint(await webEntriesFromProject(project)),
   customConfig({
     target: 'web',

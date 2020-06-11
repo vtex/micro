@@ -27,7 +27,7 @@ const main = async (options: Options) => {
     console.log(`📄 [${lifecycle}]: Page found: ${page}`)
   }
 
-  const statsJSON = run(configs, lifecycle)
+  const statsJSON = await run(configs, lifecycle)
 
   const dist = join(compiler.dist, BUILD)
   console.log(

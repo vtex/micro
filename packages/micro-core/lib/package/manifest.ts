@@ -14,8 +14,12 @@ export const BaseManifest = {
   scripts: {
     build: 'yarn run micro build',
     watch: 'yarn run micro dev',
+    test: 'yarn run micro test',
     clean: `rm -r ${MICRO_BUILD_DIR}`,
     prepublish: 'yarn build',
+  },
+  eslintConfig: {
+    extends: 'vtex',
   },
 }
 
@@ -80,6 +84,7 @@ export const genManifest = (
     dependencies,
     devDependencies,
     peerDependencies,
+    eslintConfig: BaseManifest.eslintConfig,
     ...rest,
   }
 }

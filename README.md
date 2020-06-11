@@ -153,6 +153,18 @@ To start a `micro` project, just [start your usual yarn project](https://yarnpkg
 yarn init
 ```
 
+Setup `yarn` so that `yarn@2.x` is used for the project, as described at [`yarn` docs](https://yarnpkg.com/getting-started/install)
+
+```sh
+yarn set version berry
+```
+
+Since we're using [Yarn PnP](https://yarnpkg.com/features/pnp) and some packages are still not completely ready for it, it's better to set `pnpMode` to `loose`
+
+```sh
+yarn config set pnpMode "loose"
+```
+
 Add packages as usual (with `yarn add` etc etc). Also, add `micro`'s CLI so managing your project becomes easier
 
 ```sh
@@ -167,7 +179,7 @@ yarn micro setup
 
 > Tip: You can run this command with a `--dry` option so the cli only prints the changes it will make to your project, instead of writting them
 
-This command will setup your Project to behave like a `micro` Project. 
+This command will setup your Project to behave like a `micro` Project.
 
 That's all for now.
 

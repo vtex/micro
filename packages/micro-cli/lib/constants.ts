@@ -10,3 +10,12 @@ export const PUBLIC_PATHS = {
 }
 
 export const MAX_RESPAWNS = 3
+
+export const DEFAULT_DEV_DEPENDENCIES = [
+  '@types/jest',
+  '@vtex/prettier-config',
+  'eslint',
+  'eslint-config-vtex',
+  'prettier',
+  'typescript',
+]

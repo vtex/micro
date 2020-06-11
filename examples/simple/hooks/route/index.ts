@@ -22,7 +22,7 @@ export default class Router extends RouterHook {
     }
 
     return {
-      name: 'customPage', // locale ? `${name}.${locale}` : name,
+      name: locale ? `${name}.${locale}` : name,
       data: { menu },
       status: 200,
     }

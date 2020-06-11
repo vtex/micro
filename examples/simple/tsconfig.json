@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
-    "typeRoots": [
-      "typings"
-    ],
+    "types": ["node"],
+    "typeRoots": ["typings"],
     "target": "es2019",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -11,9 +10,9 @@
     "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": false,
+    "resolveJsonModule": true,
     "skipLibCheck": true,
-    "declaration": true,
-    "types": ["node"]
+    "declaration": true
   },
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["dist"]

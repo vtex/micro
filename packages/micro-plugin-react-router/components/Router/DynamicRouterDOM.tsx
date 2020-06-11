@@ -2,7 +2,12 @@ import { LocationDescriptorObject } from 'history'
 import React from 'react'
 import { matchPath, Route, useLocation } from 'react-router-dom'
 
-import { inflight, join, Runtime, RuntimeData } from '@vtex/micro-plugin-react'
+import {
+  inflight,
+  join,
+  Runtime,
+  RuntimeData,
+} from '@vtex/micro-plugin-react/components'
 
 import { FetchCurrentPage, isPage, Page } from '../Page'
 import { MicroRouterContext, RouterProps, RouterStateModifier } from './Router'

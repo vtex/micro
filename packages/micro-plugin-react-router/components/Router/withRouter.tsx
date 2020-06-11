@@ -2,7 +2,7 @@ import { LoadableComponent } from '@loadable/component'
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 
-import { canUseDOM } from '@vtex/micro-plugin-react'
+import { canUseDOM } from '@vtex/micro-plugin-react/components'
 
 import { RouterDOM } from './DynamicRouterDOM'
 import { RouterProps } from './Router'

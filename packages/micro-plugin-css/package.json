@@ -15,10 +15,6 @@
   },
   "sideEffects": false,
   "main": "./dist/build/cjs/index.js",
-  "types": "./dist/build/cjs/index.d.ts",
-  "module": "./dist/build/es6/index.js",
-  "browser": "./components/index.ts",
-  "browser-federation": "./dist/build/web-federation/micro.entrypoint.js",
   "dependencies": {
     "@babel/core": "^7.10.2",
     "@vtex/micro-core": "^1.1.1-alpha.22",

@@ -11,8 +11,8 @@ export default class Bundle extends BundleHook {
     target: BundleTarget
   ): Promise<Block> => {
     const block: Array<Block | Configuration> = await getWebConfig(
-      target,
-      this.project
+      this.project,
+      target
     )
     return group([config, ...(block as any)])
   }

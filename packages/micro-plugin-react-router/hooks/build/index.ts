@@ -1,23 +1,43 @@
 import { Configuration } from 'webpack'
-import { Block, group } from 'webpack-blocks'
+import { Block, customConfig, group } from 'webpack-blocks'
 
-import { BuildHook, WebpackBuildTarget } from '@vtex/micro-core'
+import {
+  alias,
+  BuildHook,
+  cacheGroup,
+  pagesRuntimeName,
+  Project,
+  WebpackBuildTarget,
+} from '@vtex/micro-core'
 
-const getNodeConfig = (): Array<Block | Configuration> => [
-  // customConfig({
-  //   externals: {
-  //     'react-router-dom': 'ReactRouterDom',
-  //   },
-  //   externalsType: 'global',
-  // }),
-]
+import { aliases } from '../aliases'
+
+const getNodeConfig = (
+  project: Project,
+  target: WebpackBuildTarget
+): Array<Block | Configuration> => {
+  const externals =
+    project.root.manifest.name === '@vtex/micro-plugin-react-router' &&
+    target === 'render'
+      ? {}
+      : {
+          'react-router-dom': 'ReactRouterDOM',
+        }
+
+  return [
+    // TODO: Externals should respect at least the semver
+    customConfig({
+      externals,
+    }),
+  ]
+}
 
 const getWebConfig = (): Block[] => [
-  // [alias(aliases, module)]
-  // cacheGroup(
-  //   pagesRuntimeName,
-  //   /\/react-in-viewport\/|\/react-router\/|\/react-router-dom\//
-  // ),
+  alias(aliases, module),
+  cacheGroup(
+    pagesRuntimeName,
+    /\/react-in-viewport\/|\/react-router\/|\/react-router-dom\//
+  ),
 ]
 
 export default class Build extends BuildHook {
@@ -25,7 +45,8 @@ export default class Build extends BuildHook {
     config: Block,
     target: WebpackBuildTarget
   ): Promise<Block> => {
-    const block = target === 'node' ? getNodeConfig() : getWebConfig()
+    const block =
+      target === 'web' ? getWebConfig() : getNodeConfig(this.project, target)
     return group([config, ...(block as any)])
   }
 }

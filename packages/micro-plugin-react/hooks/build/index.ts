@@ -12,8 +12,8 @@ export default class Build extends BuildHook {
   ): Promise<Block> => {
     const blocks =
       target === 'web'
-        ? await getWebConfig(target, this.project)
-        : await getNodeConfig(target, this.project)
+        ? await getWebConfig(this.project, target)
+        : await getNodeConfig(this.project, target)
 
     return group([config, ...(blocks as any)])
   }

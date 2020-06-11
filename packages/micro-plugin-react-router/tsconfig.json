@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
-    "types": [
-      "node"
-    ],
-    "typeRoots": [
-      "typings"
-    ],
+    "types": ["node"],
+    "typeRoots": ["typings"],
     "target": "es2019",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -17,11 +13,6 @@
     "skipLibCheck": true,
     "declaration": true
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx"
-  ],
-  "exclude": [
-    "dist"
-  ]
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["dist"]
 }

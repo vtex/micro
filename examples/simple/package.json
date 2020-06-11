@@ -6,7 +6,11 @@
     "plugins": [
       "@vtex/micro-core",
       "@vtex/micro-plugin-react",
-      "simple"
+      "simple",
+      "@vtex/micro-plugin-css",
+      "@vtex/micro-plugin-assets",
+      "@vtex/micro-plugin-react-router",
+      "@vtex/micro-plugin-react-intl"
     ]
   },
   "scripts": {
@@ -24,6 +28,7 @@
     "@vtex/micro-plugin-assets": "^1.1.1-alpha.22",
     "@vtex/micro-plugin-css": "^1.1.1-alpha.22",
     "@vtex/micro-plugin-react": "^1.1.1-alpha.22",
+    "@vtex/micro-plugin-react-intl": "^1.1.1-alpha.22",
     "@vtex/micro-plugin-react-router": "^1.1.1-alpha.22",
     "vtex-tachyons": "^3.2.0",
     "webpack": "next",

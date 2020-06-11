@@ -16,10 +16,7 @@
     "prepublish": "yarn build"
   },
   "sideEffects": false,
-  "main": "./dist/build/node/micro.entrypoint.js",
-  "types": "./dist/build/cjs/index.d.ts",
   "browser": "./components/index.ts",
-  "browser-federation": "./dist/build/web-federation/micro.entrypoint.js",
   "dependencies": {
     "@babel/core": "^7.10.2",
     "@vtex/micro-core": "^1.1.1-alpha.22",
@@ -27,7 +24,6 @@
     "babel-merge": "^3.0.0",
     "history": "^4.10.1",
     "react-in-viewport": "^1.0.0-alpha.11",
-    "react-router": "^5.2.0",
     "react-router-dom": "^5.1.2",
     "webpack": "^4.43.0",
     "webpack-blocks": "^2.1.0"

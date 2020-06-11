@@ -35,7 +35,7 @@ export const ensureDist = async (target: string, path: string) => {
 }
 
 const reportPlugin = (lifecycle: string, pkg: string) => {
-  console.log(`🔌 [${lifecycle}]: Plugin found ${pkg}`)
+  console.log(`🔌 [${lifecycle}]: Plugin found ${chalk.blue(pkg)}`)
 }
 
 export const resolvePlugins = async <T extends LifeCycle>(

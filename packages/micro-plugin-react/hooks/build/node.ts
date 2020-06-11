@@ -15,11 +15,12 @@ import { Project, WebpackBuildTarget } from '@vtex/micro-core'
 import { babelConfig as moduleBabelConfig } from '../utils/babel/web'
 
 export const getNodeConfig = async (
-  _target: WebpackBuildTarget,
-  project: Project
+  project: Project,
+  target: WebpackBuildTarget
 ): Promise<Array<Block | Configuration>> => {
   const externals =
-    project.root.manifest.name === '@vtex/micro-plugin-react'
+    project.root.manifest.name === '@vtex/micro-plugin-react' &&
+    target === 'render'
       ? {}
       : {
           react: 'React',

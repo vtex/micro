@@ -1,6 +1,7 @@
 import loadable from '@loadable/component'
 
 import { load } from '@vtex/micro-plugin-react/components'
+import { withRouter } from '@vtex/micro-plugin-react-router/components'
 
 interface Props {
   name: string
@@ -14,4 +15,4 @@ const AsyncPage = loadable<Props>(({ name }) =>
   )
 )
 
-export default load(AsyncPage)
+export default load(withRouter(AsyncPage))

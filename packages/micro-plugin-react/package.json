@@ -15,9 +15,7 @@
     "prepublish": "yarn build"
   },
   "sideEffects": false,
-  "types": "./dist/build/cjs/index.d.ts",
   "browser": "./components/index.ts",
-  "browser-federation": "./dist/build/web-federation/micro.entrypoint.js",
   "dependencies": {
     "@babel/core": "^7.9.6",
     "@babel/plugin-proposal-class-properties": "^7.8.3",

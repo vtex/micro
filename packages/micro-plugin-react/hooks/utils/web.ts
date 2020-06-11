@@ -16,8 +16,8 @@ import { babelConfig as moduleBabelConfig } from './babel/web'
 import { babelConfig as legacyBabelConfig } from './babel/web-legacy'
 
 export const getWebConfig = async (
-  target: 'web' | 'web-legacy',
-  _project: Project
+  _project: Project,
+  target: 'web' | 'web-legacy'
 ): Promise<Array<Block | Configuration>> => {
   return [
     alias(aliases, module),

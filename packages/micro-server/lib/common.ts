@@ -1,7 +1,9 @@
+import chalk from 'chalk'
+
 import { Hooks, LifeCycle, Project } from '@vtex/micro-core'
 
 const reportPlugin = (lifecycle: string, pkg: string) => {
-  console.log(`🔌 [${lifecycle}]: Plugin found ${pkg}`)
+  console.log(`🔌 [${lifecycle}]: Plugin found ${chalk.blue(pkg)}`)
 }
 
 export type RenderHook = NonNullable<Hooks['render']>

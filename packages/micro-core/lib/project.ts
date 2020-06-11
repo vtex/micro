@@ -3,7 +3,7 @@ import { join } from 'path'
 
 import { parse } from './common/semver'
 import { MICRO_BUILD_DIR } from './constants'
-import { Package, PackageRootEntries, Hooks } from './package/base'
+import { Hooks, Package, PackageRootEntries } from './package/base'
 import { PnpPackage } from './package/pnp'
 
 export type LifeCycle = 'render' | 'route' | 'bundle' | 'build'
@@ -121,7 +121,7 @@ export class Project {
     if (!locators) {
       return []
     }
-    const packages: Array<[string, Hooks[T]]> = []
+    const packages: Package[] = []
     await walk(this.root, async (curr) => {
       const index = locators.findIndex((x) => curr.manifest.name === x)
 
@@ -139,13 +139,16 @@ export class Project {
         return
       }
 
-      const plugin = await curr.getHook(target)
-      if (plugin) {
-        packages.splice(index, 0, [curr.manifest.name, plugin])
-      }
+      packages.splice(index, 0, curr)
     })
-    return packages.filter((x): x is [string, NonNullable<Hooks[T]>] =>
-      Array.isArray(x)
+    const maybePlugins = await Promise.all(
+      packages.map(async (pkg) => [
+        pkg.manifest.name,
+        await pkg.getHook(target),
+      ])
+    )
+    return maybePlugins.filter(
+      (x): x is [string, NonNullable<Hooks[T]>] => !!x[1]
     )
   }
 

@@ -3401,7 +3401,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-plugin-react-intl@workspace:packages/micro-plugin-react-intl":
+"@vtex/micro-plugin-react-intl@^1.1.1-alpha.22, @vtex/micro-plugin-react-intl@workspace:packages/micro-plugin-react-intl":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-plugin-react-intl@workspace:packages/micro-plugin-react-intl"
   dependencies:
@@ -3429,7 +3429,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtex/micro-plugin-react-router@workspace:packages/micro-plugin-react-router":
+"@vtex/micro-plugin-react-router@^1.1.1-alpha.22, @vtex/micro-plugin-react-router@workspace:packages/micro-plugin-react-router":
   version: 0.0.0-use.local
   resolution: "@vtex/micro-plugin-react-router@workspace:packages/micro-plugin-react-router"
   dependencies:
@@ -3447,7 +3447,6 @@ __metadata:
     babel-merge: ^3.0.0
     history: ^4.10.1
     react-in-viewport: ^1.0.0-alpha.11
-    react-router: ^5.2.0
     react-router-dom: ^5.1.2
     typescript: ^3.9.5
     webpack: ^4.43.0
@@ -3523,6 +3522,7 @@ __metadata:
     "@vtex/micro-core": ^1.1.1-alpha.22
     "@yarnpkg/fslib": ^2.0.0-rc.20
     "@yarnpkg/libzip": ^2.0.0-rc.11
+    chalk: ^4.1.0
     compression: ^1.7.4
     cookie: ^0.4.1
     express: next
@@ -5172,7 +5172,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:*, chalk@npm:^4.0.0":
+"chalk@npm:*, chalk@npm:^4.0.0, chalk@npm:^4.1.0":
   version: 4.1.0
   resolution: "chalk@npm:4.1.0"
   dependencies:
@@ -13275,7 +13275,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"react-router@npm:5.2.0, react-router@npm:^5.2.0":
+"react-router@npm:5.2.0":
   version: 5.2.0
   resolution: "react-router@npm:5.2.0"
   dependencies:
@@ -14354,7 +14354,8 @@ fsevents@~2.1.2:
     "@vtex/micro-plugin-assets": ^1.1.1-alpha.22
     "@vtex/micro-plugin-css": ^1.1.1-alpha.22
     "@vtex/micro-plugin-react": ^1.1.1-alpha.22
-    "@vtex/micro-plugin-react-router": "workspace:packages/micro-plugin-react-router"
+    "@vtex/micro-plugin-react-intl": ^1.1.1-alpha.22
+    "@vtex/micro-plugin-react-router": ^1.1.1-alpha.22
     css-loader: ^3.5.3
     typescript: ^3.9.5
     vtex-tachyons: ^3.2.0

@@ -11,6 +11,7 @@ import {
   getLocatorFromPackageInWorkspace,
   globPnp,
   pathExistsPnp,
+  pnpFS,
 } from './common'
 import { createDepTree } from './dfs'
 
@@ -40,7 +41,8 @@ export class PnpPackage extends Package {
     this.tsconfig = resolved.tsconfig
   }
 
-  public resolve = () => pnp.resolveRequest(this.manifest.name, this.issuer)
+  public resolve = () =>
+    pnp.resolveToUnqualified(this.manifest.name, this.issuer)
 
   public hydrate = (projectRoot: string) => {
     throw new Error(`💣 not implemented: ${projectRoot}`)
@@ -51,23 +53,32 @@ export class PnpPackage extends Package {
   }
 
   public getHook = async (target: LifeCycle) => {
-    try {
-      const unqualified = pnp.resolveToUnqualified(
-        this.manifest.name,
-        this.issuer
-      )
-      if (!unqualified) {
-        return null
-      }
-      const locator = join(
-        unqualified,
-        `dist/build/cjs/hooks/${target}/index.js`
-      )
-      const { default: exports } = require(locator)
-      return exports
-    } catch (err) {
+    const unqualified = pnp.resolveToUnqualified(
+      this.manifest.name,
+      this.issuer
+    )
+    if (!unqualified) {
       return null
     }
+    const isGlobalExport = !(target === 'build' || target === 'bundle')
+    const path = isGlobalExport
+      ? `dist/build/${target}/index.js`
+      : `dist/build/cjs/hooks/${target}/index.js`
+
+    const locator = join(unqualified, path)
+
+    const exists = await pnpFS.existsPromise(locator)
+    if (!exists) {
+      return null
+    }
+
+    const required = require(locator)
+
+    const { default: exports } = isGlobalExport
+      ? (global as any)[`${this.toString()}/${target}`]
+      : required
+
+    return exports
   }
 
   public getFiles = async (...targets: PackageRootEntries[]) =>

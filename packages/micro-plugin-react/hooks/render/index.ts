@@ -5,13 +5,7 @@ import * as ReactDOM from 'react-dom'
 import { renderToString } from 'react-dom/server'
 import { Stats } from 'webpack'
 
-import {
-  MICRO_ENTRYPOINT,
-  Package,
-  RenderFrameworkHook,
-  RenderHookOptions,
-  walkSync,
-} from '@vtex/micro-core'
+import { RenderFrameworkHook, RenderHookOptions } from '@vtex/micro-core'
 
 import { withAppContainerTags } from '../../components/container'
 import { withPageDataTags } from '../../components/data'
@@ -20,8 +14,6 @@ import { withRuntimeTags } from '../../components/runtime'
 global.React = React
 ;(global as any).ReactDOM = ReactDOM
 ;(global as any).LoadableComponent = LoadableComponent
-
-const isAvailable = (pkg: Package) => !!(global as any)[pkg.toString()]
 
 export default class Render extends RenderFrameworkHook<JSX.Element> {
   public webExtractor: ChunkExtractor | null = null
@@ -38,13 +30,16 @@ export default class Render extends RenderFrameworkHook<JSX.Element> {
     let nodeStats: Stats | null = null
     for (const child of options.stats.children) {
       switch (child.name) {
-        case 'web-federation':
         case 'web-legacy':
         case 'web':
           webStats = child
           break
-        case 'node':
+        case 'pages':
           nodeStats = child
+          break
+        case 'components':
+        case 'route':
+        case 'render':
           break
         default:
           throw new Error('💣 Stats name not expected')
@@ -53,7 +48,7 @@ export default class Render extends RenderFrameworkHook<JSX.Element> {
 
     if (webStats) {
       this.webExtractor = new ChunkExtractor({
-        entrypoints: [MICRO_ENTRYPOINT],
+        entrypoints: ['index'],
         publicPath: options.publicPaths.assets,
         stats: webStats!,
       })
@@ -61,7 +56,7 @@ export default class Render extends RenderFrameworkHook<JSX.Element> {
 
     if (nodeStats) {
       this.nodeExtractor = new ChunkExtractor({
-        entrypoints: [MICRO_ENTRYPOINT],
+        entrypoints: ['index'],
         stats: nodeStats!,
       })
     }
@@ -86,29 +81,14 @@ export default class Render extends RenderFrameworkHook<JSX.Element> {
       page: { name, data },
     } = this.options
 
-    // We need to make sure all projects are correctly required before
-    // render Server Side, but after including react, react-dom etc
-    if (!isAvailable(project.root)) {
-      walkSync(project.root, (c, p) => {
-        const globalHasDep = isAvailable(c)
-        if (globalHasDep || !p) {
-          return
-        }
-        const resolved = c.resolve()
-        if (!resolved) {
-          return
-        }
-        // eslint-disable-next-line @typescript-eslint/no-require-imports, global-require
-        require(resolved)
-      })
+    this.nodeExtractor!.requireEntrypoint()
 
-      this.nodeExtractor!.requireEntrypoint()
-    }
-
-    const { App } = (global as any)[project.root.toString()]
+    const { default: Page } = (global as any)[
+      `${project.root.toString()}/pages`
+    ]
 
     // TODO: Figure out a way to the error come from the router
-    return React.createElement(App, { name, data, error: null } as any)
+    return React.createElement(Page, { name, data, error: null } as any)
   }
 
   public getScriptTags = () => {

@@ -4,7 +4,7 @@ import logger from 'morgan'
 import { MultiCompiler } from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 
-import { RenderCompiler, Project, PublicPaths } from '@vtex/micro-core'
+import { Project, PublicPaths, RenderCompiler, walk } from '@vtex/micro-core'
 
 import { RenderHook, resolvePlugins } from './common'
 import { middleware as streamAssets } from './middlewares/assets'
@@ -60,10 +60,17 @@ export const startDevServer = async ({
   host,
   port,
 }: DevServerOptions) => {
-  const [renderPlugins, routerPlugins] = await Promise.all([
-    resolvePlugins(project, 'render'),
-    resolvePlugins(project, 'route'),
-  ])
+  const renderPlugins = await resolvePlugins(project, 'render')
+  const routerPlugins = await resolvePlugins(project, 'route')
+
+  // DFS to require all bundles needed to SSR
+  await walk(project.root, async (curr, p) => {
+    // We don't need to require the root project
+    if (p === null) {
+      return
+    }
+    await curr.getHook('components' as any)
+  })
 
   const routerMiddleware = await router(project, routerPlugins, publicPaths)
   const contextMiddleware = context({

@@ -16,16 +16,21 @@ import { babelConfig as moduleBabelConfig } from '../utils/babel/web'
 
 export const getNodeConfig = async (
   _target: WebpackBuildTarget,
-  _project: Project
+  project: Project
 ): Promise<Array<Block | Configuration>> => {
+  const externals =
+    project.root.manifest.name === '@vtex/micro-plugin-react'
+      ? {}
+      : {
+          react: 'React',
+          'react-dom': 'ReactDOM',
+          '@loadable/component': 'LoadableComponent',
+        }
+
   return [
+    // TODO: Externals should respect at least the semver
     customConfig({
-      externals: {
-        react: 'React',
-        'react-dom': 'ReactDOM',
-        '@loadable/component': 'LoadableComponent',
-      },
-      externalsType: 'global',
+      externals,
     }),
     addPlugins([
       new LoadablePlugin({

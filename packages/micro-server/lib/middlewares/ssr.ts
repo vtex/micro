@@ -1,5 +1,3 @@
-import pretty from 'pretty'
-
 import { RenderCompiler } from '@vtex/micro-core'
 
 import { featuresFromReq } from '../features'
@@ -52,7 +50,7 @@ export const devSSR = async (req: Req, res: Res) => {
   const { compiler } = res.locals
 
   const body = compiler.renderToString(disableSSR)
-  const html = pretty(htmlTemplate(compiler, body))
+  const html = htmlTemplate(compiler, body)
 
   res.type('html')
   res.status(status).send(html)

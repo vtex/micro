@@ -23,21 +23,26 @@ import {
 import { BuildHook, WebpackBuildTarget } from '../../lib/lifecycles/build'
 import { Project } from '../../lib/project'
 import {
-  nodeEntryFromProject,
   nodeExternalsFromProject,
+  webAliasesFromProject,
   webEntriesFromProject,
+  entries,
 } from '../utils/common'
 
 export const MICRO_ENTRYPOINT = 'micro.entrypoint'
 
-const nodeConfig = async (project: Project): Promise<Block[]> => [
-  entryPoint(await nodeEntryFromProject(project)),
+const nodeConfig = async (
+  project: Project,
+  target: 'components' | 'render' | 'route' | 'pages'
+): Promise<Block[]> => [
+  entryPoint({ index: entries[target] }),
   customConfig({
     target: 'node',
     externals: await nodeExternalsFromProject(project),
+    externalsType: 'global',
   }) as Block,
   setOutput({
-    library: project.root.toString(),
+    library: `${project.root.toString()}/${target}`,
     libraryTarget: 'global',
   }),
   optimization({
@@ -45,32 +50,22 @@ const nodeConfig = async (project: Project): Promise<Block[]> => [
   }),
 ]
 
-const webFederationConfig = async (project: Project): Promise<Block[]> => [
+const webConfig = async (project: Project): Promise<Block[]> => [
   entryPoint(await webEntriesFromProject(project)),
-  addPlugins([
-    // new webpack.container.ModuleFederationPlugin({
-    //   name: project.root.manifest.name,
-    //   library: {
-    //     type: 'var',
-    //     name: slugify(project.root.manifest.name),
-    //   },
-    //   filename: MICRO_ENTRYPOINT,
-    //   exposes: await exposesFromProject(project),
-    //   // shared: project.root.manifest.dependencies ?? {},
-    //   remotes: await webFederationRemotesFromProject(project),
-    // }),
-  ]),
   customConfig({
     target: 'web',
   }) as Block,
+  resolve({
+    alias: await webAliasesFromProject(project),
+  }),
+  setOutput({
+    publicPath: '/assets/',
+  }),
   optimization({
     runtimeChunk: {
       name: 'webpack-runtime',
     },
   } as any), // TODO: why this as any ?
-  setOutput({
-    publicPath: '/assets/',
-  }),
 ]
 
 export default class Build extends BuildHook {
@@ -85,9 +80,9 @@ export default class Build extends BuildHook {
       'webpack_internals'
     )
     const targetConfigs =
-      target === 'node'
-        ? await nodeConfig(this.project)
-        : await webFederationConfig(this.project)
+      target === 'web'
+        ? await webConfig(this.project)
+        : await nodeConfig(this.project, target)
 
     const blocks: Array<Block | Configuration> = [
       setMode(this.mode),
@@ -107,7 +102,7 @@ export default class Build extends BuildHook {
           timings: false,
         },
         cache: {
-          name: this.mode,
+          name: `${target}::${this.mode}`,
           version: `${target}::${this.mode}`,
           type: 'filesystem',
           managedPaths: ['./.yarn'].map((p) => join(this.project.rootPath, p)),

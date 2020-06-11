@@ -2,10 +2,7 @@
   "compilerOptions": {
     "types": ["node"],
     "typeRoots": [
-      "lib/typings",
-      "router/typings",
-      "hooks/typings",
-      "components/typings"
+      "typings"
     ],
     "target": "es2019",
     "lib": ["ES2019"],

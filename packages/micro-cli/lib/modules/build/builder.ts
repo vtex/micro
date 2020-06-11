@@ -2,18 +2,20 @@ import { spawn } from 'child_process'
 import { join } from 'path'
 
 import { outputJSON, pathExists } from 'fs-extra'
+import { Configuration } from 'webpack'
 
-import { BaseTSConfig, PackageStructure, Project } from '@vtex/micro-core'
+import {
+  BaseTSConfig,
+  BuildCompiler,
+  Mode,
+  PackageStructure,
+  Project,
+} from '@vtex/micro-core'
 
-import { ensureDist } from '../../common/project'
+import { ensureDist, resolvePlugins } from '../../common/project'
 import { MAX_RESPAWNS } from '../../constants'
 
 export const lifecycle = 'build'
-
-export const createGetFolderFromFile = (project: Project) => (file: string) => {
-  const [folder] = file.replace(`${project.rootPath}/`, '').split('/')
-  return folder
-}
 
 const createTSCSpawner = <T>(watch: boolean, options: T) => {
   let respawns = 0
@@ -27,9 +29,6 @@ const createTSCSpawner = <T>(watch: boolean, options: T) => {
     return null
   }
 }
-
-export const rejectDeclarationFiles = (files: string[]) =>
-  files.filter((f) => !f.endsWith('.d.ts'))
 
 export const tscCompiler = async (project: Project) => {
   const tsconfigPath = join(project.rootPath, PackageStructure.tsconfig)
@@ -75,3 +74,34 @@ export const tscWatcher = (project: Project) => {
 
 export const clean = (project: Project, path: string) =>
   ensureDist(lifecycle, join(project.dist, path))
+
+export const getConfigs = async (project: Project, mode: Mode) => {
+  // Sometimes the package only contains `plugins` or `lib`.
+  // In this case, there is nothing to bundle and the build is complete
+  const [hasPages, hasComponents, hasRender, hasRoute] = await Promise.all([
+    project.root.pathExists('./pages/index.ts'),
+    project.root.pathExists('./components/index.ts'),
+    project.root.pathExists('./hooks/render/index.ts'),
+    project.root.pathExists('./hooks/route/index.ts'),
+  ])
+
+  if (!hasPages && !hasRender && !hasRoute && !hasComponents) {
+    return
+  }
+
+  const pluginsResolutionsMsg = '🦄 Plugins resolution took'
+  console.time(pluginsResolutionsMsg)
+  const plugins = await resolvePlugins(project, lifecycle)
+  const compiler = new BuildCompiler({ project, plugins, mode })
+  const maybeConfigs = await Promise.all([
+    hasPages ? compiler.getWepbackConfig('web') : null,
+    hasPages ? compiler.getWepbackConfig('pages') : null,
+    hasRender ? compiler.getWepbackConfig('render') : null,
+    hasRoute ? compiler.getWepbackConfig('route') : null,
+    hasComponents ? compiler.getWepbackConfig('components') : null,
+  ])
+  const configs = maybeConfigs.filter((c): c is Configuration => !!c)
+  console.timeEnd(pluginsResolutionsMsg)
+
+  return { configs, compiler }
+}

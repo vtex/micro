@@ -5,9 +5,9 @@ import {
   RouterHook,
 } from '@vtex/micro-core'
 
-import { pack } from '../../components/Page'
+import { pack } from '../../components/utils/page'
 
-export class Router extends RouterHook {
+export default class Router extends RouterHook {
   public route = async (resolved: Resolved<any>, request: MicroRequest) => {
     const { path } = request
 

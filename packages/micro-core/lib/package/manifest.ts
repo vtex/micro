@@ -1,8 +1,6 @@
 import { pick } from '../common/pick'
 import { isSemver } from '../common/semver'
 import { MICRO_BUILD_DIR } from '../constants'
-import { BUILD_LIFECYCLE } from '../lifecycles/build'
-import { MICRO_ENTRYPOINT } from '../../hooks/build'
 
 type MicroOptions = {
   plugins: string[]
@@ -10,11 +8,6 @@ type MicroOptions = {
 
 export const BaseManifest = {
   sideEffects: false,
-  main: `./${MICRO_BUILD_DIR}/${BUILD_LIFECYCLE}/node/${MICRO_ENTRYPOINT}.js`,
-  // module: `./${MICRO_BUILD_DIR}/${BUILD_LIFECYCLE}/web/${MICRO_ENTRYPOINT}.js`,
-  'browser-federation': `./${MICRO_BUILD_DIR}/${BUILD_LIFECYCLE}/web-federation/${MICRO_ENTRYPOINT}.js`,
-  browser: './components/index.ts',
-  // types: `./${MICRO_BUILD_DIR}/${BUILD_LIFECYCLE}/cjs/index.d.ts`,
   micro: {
     plugins: [],
   } as MicroOptions,
@@ -26,12 +19,6 @@ export const BaseManifest = {
   },
 }
 
-const necessary = pick(BaseManifest, [
-  'main',
-  // 'types',
-  'browser',
-  'browser-federation',
-])
 const required = pick(BaseManifest, ['micro'])
 
 type Base = typeof BaseManifest
@@ -49,10 +36,7 @@ const isMicro = (x: any): x is MicroOptions => Array.isArray(x?.plugins)
 
 export const isManifest = (obj: any): obj is Manifest => {
   return (
-    typeof obj?.name === 'string' &&
-    isSemver(obj.version) &&
-    typeof obj.main === 'string' &&
-    isMicro(obj.micro)
+    typeof obj?.name === 'string' && isSemver(obj.version) && isMicro(obj.micro)
   )
 }
 
@@ -68,11 +52,6 @@ export const genManifest = (
     license,
     micro,
     sideEffects,
-    main,
-    types,
-    module,
-    browser,
-    'browser-federation': webFederation,
     type,
     scripts,
     dependencies,
@@ -82,7 +61,6 @@ export const genManifest = (
   } = {
     ...required,
     ...partial,
-    ...necessary,
   } as any
 
   return {
@@ -94,15 +72,11 @@ export const genManifest = (
     license,
     micro,
     scripts: {
-      ...BaseManifest.scripts,
       ...scripts,
+      ...BaseManifest.scripts,
     },
     sideEffects,
-    main,
-    types,
     module,
-    browser,
-    'browser-federation': webFederation,
     dependencies,
     devDependencies,
     peerDependencies,

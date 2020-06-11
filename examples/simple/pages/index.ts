@@ -1,6 +1,6 @@
 import loadable from '@loadable/component'
 
-import { load } from '@vtex/micro-plugin-react'
+import { load } from '@vtex/micro-plugin-react/components'
 
 interface Props {
   name: string
@@ -9,7 +9,7 @@ interface Props {
 
 const AsyncPage = loadable<Props>(({ name }) =>
   import(
-    /* webpackExclude: /App.tsx$/ */
+    /* webpackExclude: /index.ts$/ */
     `./${name}`
   )
 )

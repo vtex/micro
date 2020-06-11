@@ -5,6 +5,7 @@ import { addPlugins, Block, env, match, optimization } from 'webpack-blocks'
 
 import {
   alias,
+  cacheGroup,
   pagesFrameworkName,
   pagesRuntimeName,
   Project,
@@ -13,7 +14,6 @@ import {
 import { aliases } from '../alias'
 import { babelConfig as moduleBabelConfig } from './babel/web'
 import { babelConfig as legacyBabelConfig } from './babel/web-legacy'
-import { cacheGroup } from './cacheGroups'
 
 export const getWebConfig = async (
   target: 'web' | 'web-legacy',

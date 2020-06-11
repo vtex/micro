@@ -6,7 +6,6 @@
     "plugins": [
       "@vtex/micro-core",
       "@vtex/micro-plugin-react",
-      "@vtex/micro-plugin-assets",
       "simple"
     ]
   },
@@ -16,9 +15,7 @@
     "clean": "rm -r dist",
     "prepublish": "yarn build"
   },
-  "browser-federation": "./dist/build/web-federation/micro.entrypoint.js",
-  "main": "./dist/build/node/micro.entrypoint.js",
-  "types": "./dist/build/cjs/index.d.ts",
+  "node": "./dist/build/node",
   "browser": "./components/index.ts",
   "dependencies": {
     "@babel/core": "^7.10.2",
@@ -27,6 +24,7 @@
     "@vtex/micro-plugin-assets": "^1.1.1-alpha.22",
     "@vtex/micro-plugin-css": "^1.1.1-alpha.22",
     "@vtex/micro-plugin-react": "^1.1.1-alpha.22",
+    "@vtex/micro-plugin-react-router": "^1.1.1-alpha.22",
     "vtex-tachyons": "^3.2.0",
     "webpack": "next",
     "webpack-blocks": "^2.1.0"
@@ -38,7 +36,6 @@
     "@types/react-dom": "^16.9.7",
     "@types/webpack-blocks": "^2.0.0",
     "css-loader": "^3.5.3",
-    "snowpack": "^2.2.1",
     "typescript": "^3.9.5"
   },
   "private": true

@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "typeRoots": [
-      "lib/typings",
-      "router/typings",
-      "hooks/typings",
-      "components/typings"
+      "typings"
     ],
     "target": "es2019",
     "module": "commonjs",
@@ -18,6 +17,11 @@
     "skipLibCheck": true,
     "declaration": true
   },
-  "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["dist"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "dist"
+  ]
 }

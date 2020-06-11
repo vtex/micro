@@ -131,6 +131,7 @@ export class Project {
 
       const maybeVersion = dependencies[curr.manifest.name] || ''
       const versionsMatch =
+        maybeVersion.startsWith('workspace:') ||
         parse(maybeVersion).major === parse(curr.manifest.version).major
       const isSelfPlugin = curr.manifest.name === name
 

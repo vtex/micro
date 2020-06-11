@@ -10,7 +10,12 @@ import { Project } from '../project'
 
 export const BUILD_LIFECYCLE = 'build'
 
-export type WebpackBuildTarget = 'node' | 'web'
+export type WebpackBuildTarget =
+  | 'web'
+  | 'components'
+  | 'render'
+  | 'route'
+  | 'pages'
 
 export type BuildTarget = 'cjs' | WebpackBuildTarget
 

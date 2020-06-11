@@ -3,12 +3,12 @@ import { join } from 'path'
 import chalk from 'chalk'
 import { outputJSON } from 'fs-extra'
 
-import { BuildCompiler, Mode } from '@vtex/micro-core'
+import { Mode } from '@vtex/micro-core'
 
-import { newProject, resolvePlugins } from '../../common/project'
+import { newProject } from '../../common/project'
 import { run } from '../../common/webpack'
 import { BUILD } from '../../constants'
-import { clean, tscCompiler } from './builder'
+import { clean, getConfigs, tscCompiler } from './builder'
 
 interface Options {
   dev?: boolean
@@ -38,27 +38,13 @@ const main = async (options: Options) => {
   await tscCompiler(project)
   console.timeEnd(tscCompilerMsg)
 
-  // Sometimes the package only contains `plugins` or `lib`.
-  // In this case, there is nothing to bundle and the build is complete
-  const [hasComponents, hasPages] = await Promise.all([
-    project.root.pathExists('components'),
-    project.root.pathExists('pages'),
-  ])
+  const maybeConfigs = await getConfigs(project, mode)
 
-  if (!hasPages && !hasComponents) {
+  if (!maybeConfigs) {
     return
   }
 
-  const pluginsResolutionsMsg = '🦄 Plugins resolution took'
-  console.time(pluginsResolutionsMsg)
-  const plugins = await resolvePlugins(project, lifecycle)
-  const compiler = new BuildCompiler({ project, plugins, mode })
-  const configs = await Promise.all([
-    compiler.getWepbackConfig('node'),
-    // compiler.getWepbackConfig('web-federation'),
-    compiler.getWepbackConfig('web'),
-  ])
-  console.timeEnd(pluginsResolutionsMsg)
+  const { configs, compiler } = maybeConfigs
 
   const statsJSON = await run(configs, lifecycle)
 

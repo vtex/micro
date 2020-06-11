@@ -3,8 +3,8 @@ import { Block, css, env, match, optimization } from 'webpack-blocks'
 
 import { Project } from '@vtex/micro-core'
 
-import { extractCss } from './bundle/modules/extractCSS'
-import { purgeCSS } from './bundle/modules/purgeCSS'
+import { extractCss } from '../lib/extractCSS'
+import { purgeCSS } from '../lib/purgeCSS'
 
 export const cssWebpackConfig = async (project: Project): Promise<Block[]> => [
   purgeCSS({

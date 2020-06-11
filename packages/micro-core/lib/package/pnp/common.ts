@@ -20,7 +20,7 @@ const libzip = yarnLibZip.getLibzipSync()
 const zipOpenFs = new ZipOpenFS({ libzip })
 
 // This will convert all paths into a Posix variant, required for cross-platform compatibility
-const crossFs = new PosixFS(zipOpenFs)
+export const pnpFS = new PosixFS(zipOpenFs)
 
 // TODO: Does it work for packages inside .pnp.js file ?
 export const requirePnp = <T>(
@@ -49,7 +49,7 @@ export const pathExistsPnp = (pkg: string, issuer: string, path: string) => {
     issuer
   )
   const fullPath = join(locator, '..', path)
-  return crossFs.existsPromise(fullPath)
+  return pnpFS.existsPromise(fullPath)
 }
 
 export const readJsonPnp = async (
@@ -64,7 +64,7 @@ export const readJsonPnp = async (
     `💣 Package path can not be null: Package: ${pkg.name}, Issuer: ${issuer.name}`
   )
   const fullPath = join(path, PackageStructure[target])
-  return crossFs.readJsonPromise(fullPath)
+  return pnpFS.readJsonPromise(fullPath)
 }
 
 export const readManifest = async (

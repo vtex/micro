@@ -1,13 +1,21 @@
+import { promisify } from 'util'
+
 import chalk from 'chalk'
 import { webpack } from 'webpack'
 
-import { BuildCompiler, Mode, RouterHook } from '@vtex/micro-core'
+import { Mode } from '@vtex/micro-core'
 import { startDevServer } from '@vtex/micro-server'
 
-import { newProject, resolvePlugins } from '../../common/project'
+import { newProject } from '../../common/project'
 import { watch } from '../../common/webpack'
 import { BUILD, HOST, PUBLIC_PATHS, SERVER_PORT } from '../../constants'
-import { clean, lifecycle, tscCompiler, tscWatcher } from '../build/builder'
+import {
+  clean,
+  getConfigs,
+  lifecycle,
+  tscCompiler,
+  tscWatcher,
+} from '../build/builder'
 
 const main = async () => {
   const dev = true
@@ -36,33 +44,23 @@ const main = async () => {
   tscWatcher(project)
   console.timeEnd(tscWatcherMsg)
 
-  // Sometimes the package only contains `plugins` or `lib`.
-  // In this case, there is nothing to bundle and the build is complete
-  const [allComponents, allPages] = await Promise.all([
-    project.root.pathExists('components'),
-    project.root.pathExists('pages'),
-  ])
-  if (!allPages && !allComponents) {
+  const maybeConfigs = await getConfigs(project, mode)
+
+  if (!maybeConfigs) {
     return
   }
 
-  const pluginsResolutionsMsg = '🦄 Plugins resolution took'
-  console.time(pluginsResolutionsMsg)
-  const plugins = await resolvePlugins(project, lifecycle)
-  const compiler = new BuildCompiler({ project, plugins, mode })
-  const configs = await Promise.all([
-    compiler.getWepbackConfig('node'),
-    // compiler.getWepbackConfig('web-federation'),
-    compiler.getWepbackConfig('web'),
-  ])
-  console.timeEnd(pluginsResolutionsMsg)
+  const { configs } = maybeConfigs
 
   const wp = webpack(configs)
 
-  const hasPages = (await project.root.getFiles('pages')).length > 0
-  const hasRouter = typeof (await project.root.getHook('route')) === 'function'
+  const run = promisify(wp.run.bind(wp))
 
-  if (hasRouter && hasPages) {
+  await run()
+
+  const hasPages = await project.root.pathExists('pages/index.ts')
+
+  if (hasPages) {
     console.log(`🦄 [${lifecycle}]: Starting DevServer`)
 
     await startDevServer({

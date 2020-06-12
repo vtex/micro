@@ -200,7 +200,7 @@ To understand more on how this magic is done, please read the `micro` Internals 
 Currently, there is a simple server in the `micro-server` package that is used for development. This server does not serves requests in a multi tenant way yet. We plan to release our production ready server called Render very soon. However, in the meanwhile using our toy server should be just fine. To serve a page, create a file inside the `/pages` folder and
 
 ```sh
-yarn micro link
+yarn micro dev
 ```
 
 This should open a dev server with your page on it. To understand more about how pages are built, read `micro` Internals section
@@ -311,7 +311,7 @@ lerna exec yarn build
 This should build everything. Now, go to your favorite example in `./examples` folder and run
 
 ```sh
-yarn micro link
+yarn micro dev
 ```
 
 This should generate the following terminal output

@@ -4,8 +4,6 @@
 node_modules
 **/node_modules
 
-**/.yarn
-
 .yarn/cache
 .yarn/install-state.*
 .yarn/build-state.yml
